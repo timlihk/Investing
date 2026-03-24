@@ -71,6 +71,7 @@ Inference pushes more data into fast storage and higher-capacity memory tiers. T
 
 - **Hanmi Semiconductor (042700.KS)**: TC bonder bottleneck for HBM stacks
 - **ASMPT (0522.HK)**: TCB leader pushing into HBM4 and advanced packaging
+- **TOWA (6315.T)**: compression and singulation equipment leveraged to memory and advanced packaging
 - **Advantest (6857.T)**: Memory tester demand tied to high-performance DRAM and AI memory
 - **FormFactor (FORM)**: Probe-card enabler shipping to all three major HBM makers
 
@@ -79,6 +80,7 @@ Inference pushes more data into fast storage and higher-capacity memory tiers. T
 - **Kioxia (285A.T)**: NAND / eSSD leverage if AI storage tightens further
 - **SanDisk (SNDK)**: Flash and enterprise SSD optionality
 - **Silicon Motion (SIMO)**: Merchant SSD controller leader with AI boot-drive and enterprise ramp
+- **Walton Advanced Engineering (8110.TW)**: memory packaging and test specialist with concentrated backend know-how
 - **Tokyo Electron (8035.T)** / **Lam Research (LRCX)**: Memory capex and cleanroom expansion leverage
 
 ## Key Risks To The Theme

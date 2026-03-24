@@ -23,6 +23,8 @@ See [results.tsv](results.tsv) for the full ranking.
 | FORM | 79 | Probe-card supplier already shipping in volume to all 3 HBM makers |
 | SIMO | 78 | Merchant NAND-controller bottleneck with AI SSD and boot-drive exposure |
 | SNDK | 77 | Flash pure-play with AI SSD demand outpacing supply |
+| 6315.T | 75 | Back-end equipment vendor with record compression orders and HBM4 packaging upside |
+| 8110.TW | 72 | Memory packaging/test specialist with concentrated backend know-how |
 
 ### Memory Supply Chain Map
 ```
