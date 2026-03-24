@@ -8,6 +8,7 @@ The AI data center buildout is creating an insatiable demand for optical interco
 ## Scorecard
 
 See [results.tsv](results.tsv) for the full scorecard.
+The scorecard now includes `chips_status` and `chips_detail` columns from the latest official CHIPS sweep.
 
 Interactive map:
 - [GitHub Pages map](https://timlihk.github.io/Investing/ai-photonics/supply-chain-map.html)

@@ -244,6 +244,7 @@ body {
 }
 .node.buy { border-color: #15803d; }
 .node.hold { border-color: #475569; }
+.node.avoid { border-color: #7f1d1d; }
 .node.context {
   width: 196px;
   border-style: dashed;
@@ -277,6 +278,7 @@ body {
   color: #f8fafc;
 }
 .node.buy .ticker { color: #bbf7d0; }
+.node.avoid .ticker { color: #fecaca; }
 .node.chokepoint .ticker { color: #fde68a; }
 .node .score {
   padding: 2px 8px;
@@ -290,6 +292,7 @@ body {
   color: #86efac;
 }
 .node.hold .score,
+.node.avoid .score,
 .node.context .score {
   background: rgba(71, 85, 105, 0.45);
   color: #cbd5e1;
@@ -328,6 +331,16 @@ body {
   color: #ddd6fe;
   border-color: rgba(192, 132, 252, 0.35);
   background: rgba(91, 33, 182, 0.18);
+}
+.meta-tag.chips-rd {
+  color: #bae6fd;
+  border-color: rgba(56, 189, 248, 0.35);
+  background: rgba(8, 47, 73, 0.3);
+}
+.meta-tag.chips-indirect {
+  color: #fecdd3;
+  border-color: rgba(251, 113, 133, 0.35);
+  background: rgba(76, 5, 25, 0.25);
 }
 .meta-tag.chips-none {
   color: #cbd5e1;
@@ -387,6 +400,7 @@ body {
 }
 .tag.buy { color: #86efac; border-color: rgba(34, 197, 94, 0.35); }
 .tag.hold { color: #cbd5e1; }
+.tag.avoid { color: #fca5a5; border-color: rgba(239, 68, 68, 0.35); }
 .tag.chokepoint { color: #fde68a; border-color: rgba(245, 158, 11, 0.45); }
 .tag.chips-final {
   color: #99f6e4;
@@ -395,6 +409,14 @@ body {
 .tag.chips-proposed {
   color: #ddd6fe;
   border-color: rgba(192, 132, 252, 0.35);
+}
+.tag.chips-rd {
+  color: #bae6fd;
+  border-color: rgba(56, 189, 248, 0.35);
+}
+.tag.chips-indirect {
+  color: #fecdd3;
+  border-color: rgba(251, 113, 133, 0.35);
 }
 .tag.chips-none,
 .tag.chips-na {
@@ -492,6 +514,7 @@ body {
 <div class="legend">
   <div class="legend-item"><div class="legend-swatch" style="background:#134e4a;border:1px solid #14b8a6"></div>BUY rated</div>
   <div class="legend-item"><div class="legend-swatch" style="background:#1e293b;border:1px solid #475569"></div>HOLD rated</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#2b1216;border:1px solid #7f1d1d"></div>AVOID rated</div>
   <div class="legend-item"><div class="legend-swatch" style="background:#f59e0b;border:1px solid #f59e0b"></div>Chokepoint</div>
   <div class="legend-item"><div class="legend-swatch" style="background:#60a5fa"></div>SiPh path</div>
   <div class="legend-item"><div class="legend-swatch" style="background:#fb923c"></div>InP / laser path</div>
@@ -499,6 +522,7 @@ body {
   <div class="legend-item"><div class="legend-swatch" style="background:#a78bfa"></div>Cross-path dependency</div>
   <div class="legend-item"><div class="legend-swatch" style="background:#0f766e;border:1px solid #2dd4bf"></div>CHIPS final</div>
   <div class="legend-item"><div class="legend-swatch" style="background:#5b21b6;border:1px solid #c084fc"></div>CHIPS proposed</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#082f49;border:1px solid #38bdf8"></div>CHIPS R&D / hub</div>
 </div>
 
 <div class="board-wrap">
@@ -538,7 +562,7 @@ body {
 </div>
 
 <div class="note">
-  This is a curated map of the key interlinks, not every company in the photonics universe. CHIPS labels track direct U.S. CHIPS incentives awards or publicly announced CHIPS-linked funding as of 2026-03-24; "no direct award found" means no company-specific Commerce incentives announcement was located.
+  This is a curated map of the key interlinks, not every company in the photonics universe. CHIPS labels track direct U.S. CHIPS incentives awards, CHIPS R&D awards, and CHIPS-linked hub funding as of 2026-03-24; the full scorecard sweep lives in the scorecard and CHIPS notes linked above.
 </div>
 
 <div class="panel" id="panel">
@@ -683,6 +707,24 @@ const nodes = [
     chipsLabel: "No direct CHIPS award found",
     chipsNote: "No Lumentum-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
     chipsSources: []
+  },
+  {
+    id: "SIVE", ticker: "SIVE.ST", name: "Sivers Semiconductors", score: 46, verdict: "AVOID", market: "Sweden",
+    x: 730, y: 665, chokepoint: false, chain: ["inp"], report: "SIVE.md",
+    role: "Micro-cap DFB laser and optical-amplifier developer on the InP component fringe.",
+    thesis: "Sivers belongs on the CHIPS-linked list, but with nuance: the funded programs sit in the Wireless division via NEMC / Microelectronics Commons rather than directly subsidizing the photonics unit.",
+    upstream: ["InP materials and epi know-how", "Laser design IP", "CHIPS-backed wireless R&D budget"],
+    downstream: ["Emerging external-light-source programs", "Future optical module and CPO experiments"],
+    metrics: { score: "46/100", target: "-", upside: "-", catalyst: "CHIPS-backed R&D + optical module demos" },
+    chipsStatus: "rd",
+    chipsLabel: "CHIPS R&D / hub award",
+    chipsAmount: "$11.6M first signed tranche; ~$30M potential over 3 years",
+    chipsNote: "Sivers disclosed NEMC / Microelectronics Commons awards funded by the CHIPS and Science Act. Important caveat: the awards were tied to Sivers Wireless programs, so this is balance-sheet support and ecosystem relevance, not a direct photonics-fab subsidy.",
+    chipsSources: [
+      { label: "Sivers annual report 2024", url: "https://www.sivers-semiconductors.com/wp-content/uploads/2025/04/Sivers_arsredovisning_2024.pdf" },
+      { label: "Sivers Q1 2025 report", url: "https://www.sivers-semiconductors.com/wp-content/uploads/2025/05/Sivers-Interim-report-Q125_FINAL.pdf" },
+      { label: "Sivers Q4 2025 report", url: "https://www.sivers-semiconductors.com/wp-content/uploads/2026/02/Sivers-Interim-report-Q425_Final.pdf" }
+    ]
   },
   {
     id: "MTSI", ticker: "MTSI", name: "MACOM", score: 76, verdict: "BUY", market: "United States",
@@ -837,8 +879,11 @@ const edges = [
   { from: "VNP", to: "AXTI", kind: "inp" },
   { from: "VNP", to: "JX", kind: "inp" },
   { from: "AXTI", to: "LITE", kind: "inp" },
+  { from: "AXTI", to: "SIVE", kind: "inp" },
   { from: "JX", to: "LITE", kind: "inp" },
+  { from: "JX", to: "SIVE", kind: "inp" },
   { from: "AIXTRON", to: "LITE", kind: "inp" },
+  { from: "AIXTRON", to: "SIVE", kind: "inp" },
 
   { from: "TSEM", to: "CRDO", kind: "siph" },
   { from: "TSEM", to: "AVGO", kind: "siph" },
@@ -866,6 +911,8 @@ const edges = [
   { from: "AAOI", to: "CLOUD", kind: "integration" }
 ];
 
+const chipsLinkedStatuses = new Set(["final", "proposed", "rd", "indirect"]);
+
 const filters = {
   all: node => true,
   siph: node => node.chain.includes("siph"),
@@ -873,7 +920,7 @@ const filters = {
   integration: node => node.chain.includes("integration"),
   buy: node => node.verdict === "BUY" || node.verdict === "context",
   chokepoint: node => node.chokepoint || node.verdict === "context",
-  chips: node => ["final", "proposed"].includes(node.chipsStatus)
+  chips: node => chipsLinkedStatuses.has(node.chipsStatus)
 };
 
 const nodesEl = document.getElementById("nodes");
@@ -893,7 +940,7 @@ function chipsClass(status) {
 }
 
 function chipsLinkedCount() {
-  return nodes.filter(node => ["final", "proposed"].includes(node.chipsStatus)).length;
+  return nodes.filter(node => chipsLinkedStatuses.has(node.chipsStatus)).length;
 }
 
 function renderStats() {
@@ -916,7 +963,7 @@ function renderNodes() {
   nodesEl.innerHTML = nodes.map(node => {
     const classes = [
       "node",
-      node.verdict === "BUY" ? "buy" : node.verdict === "HOLD" ? "hold" : "context",
+      node.verdict === "BUY" ? "buy" : node.verdict === "HOLD" ? "hold" : node.verdict === "AVOID" ? "avoid" : "context",
       node.chokepoint ? "chokepoint" : ""
     ].join(" ");
 
@@ -1018,7 +1065,7 @@ function openPanel(id) {
     <h2>${node.ticker}</h2>
     <div class="subtitle">${node.name} &middot; ${node.market}</div>
     <div class="panel-tags">
-      <span class="tag ${node.verdict === "BUY" ? "buy" : "hold"}">${node.verdict === "context" ? "Context" : node.verdict}</span>
+      <span class="tag ${node.verdict === "BUY" ? "buy" : node.verdict === "AVOID" ? "avoid" : "hold"}">${node.verdict === "context" ? "Context" : node.verdict}</span>
       ${node.chokepoint ? '<span class="tag chokepoint">Chokepoint</span>' : ''}
       ${node.chain.includes("siph") ? '<span class="tag hold">SiPh</span>' : ''}
       ${node.chain.includes("inp") ? '<span class="tag hold">InP</span>' : ''}

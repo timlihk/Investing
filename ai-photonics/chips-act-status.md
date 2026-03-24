@@ -1,31 +1,39 @@
-# AI Photonics Map - CHIPS Act Status
+# AI Photonics - CHIPS Act Sweep
 
-As of 2026-03-24. This note tracks direct U.S. CHIPS incentives awards or publicly announced CHIPS-linked funding for the companies visualized in `supply-chain-map.html`.
+As of 2026-03-24. This note summarizes the latest official CHIPS incentives and CHIPS R&D / hub announcements that overlap with the `ai-photonics` scorecard.
 
-Method:
-- `CHIPS final award` means a finalized Department of Commerce incentives award was publicly announced.
-- `CHIPS proposed funding` means the Department of Commerce announced a non-binding preliminary memorandum of terms or the company disclosed other public CHIPS-linked funding, but the main incentives award is not yet final.
-- `No direct CHIPS award found` means no company-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.
-- `Non-U.S. / no direct CHIPS award` means the company is outside the U.S.-grant perimeter for this map and no direct U.S. CHIPS incentives award was identified.
+Scope of the sweep:
+- Department of Commerce CHIPS incentives final awards and preliminary memoranda of terms
+- CHIPS NAPMP advanced-packaging awards
+- CHIPS-linked hub / Microelectronics Commons disclosures from companies when those directly touched a scorecard name
 
-| Ticker | Company | Status | Detail | Source |
+The full per-company status now lives in [results.tsv](results.tsv) under `chips_status` and `chips_detail`.
+
+## Positive matches
+
+| Ticker | Company | Status | Why it counts | Sources |
 |---|---|---|---|---|
-| SOI.PA | Soitec | Non-U.S. / no direct CHIPS award | French photonics-SOI leader; no direct U.S. CHIPS incentives award identified. | N/A |
-| AXTI | AXT | No direct CHIPS award found | No company-specific Commerce CHIPS incentives announcement located. | N/A |
-| 5016.T | JX Advanced Metals | Non-U.S. / no direct CHIPS award | Japan-based InP alternative; no direct U.S. CHIPS incentives award identified. | N/A |
-| VNP.TO | 5N Plus | Non-U.S. / no direct CHIPS award | Canada-based materials supplier; no direct U.S. CHIPS incentives award identified. | N/A |
-| ASML | ASML | Non-U.S. / no direct CHIPS award | Dutch lithography monopoly; no direct U.S. CHIPS incentives award identified. | N/A |
-| TSEM | Tower Semiconductor | No direct CHIPS award found | No Tower Semiconductor-specific Commerce CHIPS incentives announcement located. | N/A |
-| GFS | GlobalFoundries | CHIPS final award | Finalized CHIPS incentives award plus later amended funding for Malta advanced packaging, including photonic integrated circuit packaging. | [GF final award](https://gf.com/gf-press-release/globalfoundries-and-u-s-department-of-commerce-announce-award-agreement-on-chips-act-funding-for-essential-chip-manufacturing/); [Commerce amendment](https://www.commerce.gov/news/press-releases/2025/01/us-department-commerce-announces-chips-incentives-awards-corning) |
-| AIXA.DE | Aixtron | Non-U.S. / no direct CHIPS award | Germany-based MOCVD leader; no direct U.S. CHIPS incentives award identified. | N/A |
-| FORM | FormFactor | No direct CHIPS award found | No FormFactor-specific Commerce CHIPS incentives announcement located. | N/A |
-| LITE | Lumentum | No direct CHIPS award found | No Lumentum-specific Commerce CHIPS incentives announcement located. | N/A |
-| MTSI | MACOM | CHIPS proposed funding | Commerce announced up to $70M in proposed direct funding for Lowell and Durham manufacturing expansion. | [Commerce PMT](https://www.commerce.gov/news/press-releases/2025/01/us-department-commerce-announces-preliminary-terms-macom-help) |
-| CRDO | Credo | No direct CHIPS award found | No Credo-specific Commerce CHIPS incentives announcement located. | N/A |
-| AVGO | Broadcom | No direct CHIPS award found | No Broadcom-specific Commerce CHIPS incentives announcement located. | N/A |
-| 300308.SZ | Innolight | Non-U.S. / no direct CHIPS award | China-based transceiver leader; no direct U.S. CHIPS incentives award identified. | N/A |
-| COHR | Coherent | CHIPS proposed funding | Commerce announced up to $79M in proposed direct funding; Coherent also disclosed $15M in CHIPS-backed CLAWS Hub support and Sherman InP-line PMT support. | [Commerce PMT](https://www.commerce.gov/news/press-releases/2025/01/department-commerce-announces-preliminary-terms-analog-devices-coherent); [CLAWS Hub](https://www.coherent.com/news/press-releases/coherent-secures-chips-act-funding); [Sherman InP PMT](https://www.coherent.com/news/press-releases/pmt-for-expansion-of-worlds-first-150mm-inp-mfg-line) |
-| AAOI | Applied Optoelectronics | No direct CHIPS award found | U.S.-manufacturing optics beneficiary, but no company-specific Commerce CHIPS incentives announcement located. | N/A |
-| FN | Fabrinet | No direct CHIPS award found | No Fabrinet-specific Commerce CHIPS incentives announcement located. | N/A |
-| ANET | Arista | No direct CHIPS award found | No Arista-specific Commerce CHIPS incentives announcement located. | N/A |
-| CIEN | Ciena | No direct CHIPS award found | No Ciena-specific Commerce CHIPS incentives announcement located. | N/A |
+| GFS | GlobalFoundries | FINAL+AMENDED | Final CHIPS incentives award plus amended Malta advanced-packaging funding tied to photonic integrated circuit packaging. | [GF award agreement](https://investors.gf.com/node/9451/pdf), [Commerce amendment](https://www.commerce.gov/news/press-releases/2025/01/us-department-commerce-announces-chips-incentives-awards-corning) |
+| GLW | Corning | FINAL | Final CHIPS award for ULE / fused-silica lithography materials, relevant to the fab-tool chain. | [Commerce final awards](https://www.commerce.gov/news/press-releases/2025/01/us-department-commerce-announces-chips-incentives-awards-corning) |
+| INTC | Intel | FINAL | Final CHIPS incentives award for U.S. fab and packaging expansion. | [Commerce Intel award](https://www.commerce.gov/news/press-releases/2024/11/biden-harris-administration-announces-chips-incentives-award-intel) |
+| AMKR | Amkor | FINAL | Final CHIPS award for Arizona advanced packaging and test. | [Commerce Amkor award](https://www.commerce.gov/news/press-releases/2024/12/biden-harris-administration-announces-chips-incentives-award-amkor) |
+| MTSI | MACOM | PROPOSED | Commerce announced up to $70M in proposed direct funding for Lowell and Durham manufacturing expansion. | [Commerce MACOM PMT](https://www.commerce.gov/news/press-releases/2025/01/us-department-commerce-announces-preliminary-terms-macom-help) |
+| COHR | Coherent | PROPOSED+R&D | Commerce PMT for Easton plus company-disclosed CHIPS-backed CLAWS funding and Sherman InP PMT support. | [Commerce Coherent PMT](https://www.commerce.gov/news/press-releases/2025/01/department-commerce-announces-preliminary-terms-analog-devices-coherent), [Coherent CHIPS funding](https://www.coherent.com/news/press-releases/coherent-secures-chips-act-funding), [Coherent Sherman InP PMT](https://www.coherent.com/news/press-releases/pmt-for-expansion-of-worlds-first-150mm-inp-mfg-line) |
+| AMAT | Applied Materials | R&D_FINAL | Final CHIPS NAPMP award for silicon-core substrate packaging R&D. | [Commerce NAPMP awards](https://www.commerce.gov/news/press-releases/2025/01/us-department-commerce-announces-14-billion-final-awards-support-next) |
+| SIVE.ST | Sivers Semiconductors | R&D | CHIPS / Microelectronics Commons-backed NEMC awards. Important nuance: this funding sits in the `Wireless` division, not directly in the optical unit. | [Sivers annual report 2024](https://www.sivers-semiconductors.com/wp-content/uploads/2025/04/Sivers_arsredovisning_2024.pdf), [Sivers Q1 2025 interim report](https://www.sivers-semiconductors.com/wp-content/uploads/2025/05/Sivers-Interim-report-Q125_FINAL.pdf), [Sivers Q4 2025 interim report](https://www.sivers-semiconductors.com/wp-content/uploads/2026/02/Sivers-Interim-report-Q425_Final.pdf) |
+| NOK | Nokia | INDIRECT_FINAL | Nokia itself did not receive the award, but its acquired asset Infinera received a final CHIPS award before the February 2025 close. | [Commerce Infinera award](https://www.commerce.gov/news/press-releases/2025/01/us-department-commerce-announces-chips-incentives-awards-corning), [Nokia 2025 Q4 slides](https://www.nokia.com/system/files/2026-01/nokia_slides_2025_q4.pdf) |
+
+## Interpretation
+
+- `FINAL` and `FINAL+AMENDED` are the strongest labels. These are actual awarded CHIPS dollars, not just negotiations.
+- `PROPOSED` means the company has a signed PMT or equivalent but the award was not final in the latest official sweep I found.
+- `R&D` and `R&D_FINAL` are real CHIPS-linked support, but they are not the same as commercial-facility incentives.
+- `INDIRECT_FINAL` means the public company in the scorecard benefits through an acquired asset or inherited operating platform, not because the listed parent was the original direct awardee.
+
+## Important correction
+
+`SIVE.ST` should not have been omitted from the CHIPS-linked set. It does have CHIPS-backed funding via the NEMC / Microelectronics Commons pathway. The reason it was easy to miss is that the disclosed awards are tied to Sivers' wireless programs rather than the photonics unit used in this research project.
+
+## Everything else
+
+All other rows in [results.tsv](results.tsv) are currently marked `NONE`, meaning I did not find a direct or CHIPS-linked award in the latest official sweep through 2026-03-24.
