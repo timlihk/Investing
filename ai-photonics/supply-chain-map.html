@@ -478,8 +478,214 @@ body {
   font-size: 12px;
   color: #94a3b8;
 }
+.ticker-panel {
+  margin: 0 32px 24px;
+  border: 1px solid #1f2937;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(8, 13, 20, 0.94));
+  overflow: hidden;
+}
+.ticker-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 18px;
+  padding: 22px 24px 14px;
+  border-bottom: 1px solid #1f2937;
+}
+.ticker-panel-head h3 {
+  font-size: 18px;
+  font-weight: 760;
+}
+.ticker-panel-head p {
+  margin-top: 6px;
+  max-width: 860px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #94a3b8;
+}
+.ticker-panel-body {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  min-height: 840px;
+}
+.ticker-sidebar {
+  border-right: 1px solid #1f2937;
+  background: rgba(10, 15, 22, 0.76);
+}
+.ticker-search-wrap {
+  padding: 16px 16px 14px;
+  border-bottom: 1px solid #1f2937;
+}
+.ticker-search {
+  width: 100%;
+  padding: 11px 13px;
+  border-radius: 12px;
+  border: 1px solid #334155;
+  background: rgba(15, 23, 42, 0.9);
+  color: #e2e8f0;
+  font-size: 13px;
+}
+.ticker-search::placeholder {
+  color: #64748b;
+}
+.ticker-list {
+  max-height: 760px;
+  overflow-y: auto;
+  padding: 8px;
+}
+.ticker-row {
+  width: 100%;
+  padding: 12px 12px 11px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+}
+.ticker-row:hover {
+  background: rgba(30, 41, 59, 0.55);
+  border-color: rgba(96, 165, 250, 0.18);
+  transform: translateX(1px);
+}
+.ticker-row.active {
+  background: rgba(29, 78, 216, 0.18);
+  border-color: rgba(96, 165, 250, 0.38);
+}
+.ticker-row-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.ticker-row-symbol {
+  font-size: 13px;
+  font-weight: 800;
+  color: #f8fafc;
+}
+.ticker-row-name {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+.ticker-row-meta {
+  margin-top: 7px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.ticker-chip {
+  padding: 3px 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  border: 1px solid #334155;
+  color: #cbd5e1;
+}
+.ticker-chip.buy {
+  color: #86efac;
+  border-color: rgba(34, 197, 94, 0.35);
+}
+.ticker-chip.avoid {
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.35);
+}
+.ticker-chip.chokepoint {
+  color: #fde68a;
+  border-color: rgba(245, 158, 11, 0.38);
+}
+.ticker-stage {
+  font-size: 10px;
+  color: #7dd3fc;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.ticker-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.ticker-main-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 22px 24px 14px;
+  border-bottom: 1px solid #1f2937;
+}
+.ticker-main-title h3 {
+  font-size: 22px;
+  font-weight: 800;
+}
+.ticker-main-title p {
+  margin-top: 5px;
+  font-size: 13px;
+  color: #94a3b8;
+}
+.ticker-main-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ticker-main-links a {
+  color: #7dd3fc;
+  font-size: 12px;
+  text-decoration: none;
+}
+.chart-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 18px 24px 20px;
+}
+.chart-card {
+  border: 1px solid #223041;
+  border-radius: 18px;
+  background: rgba(8, 13, 20, 0.82);
+  overflow: hidden;
+  min-height: 338px;
+}
+.chart-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #1f2937;
+  background: rgba(15, 23, 42, 0.78);
+}
+.chart-card-head h4 {
+  font-size: 12px;
+  font-weight: 780;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.chart-card-head span {
+  font-size: 11px;
+  color: #94a3b8;
+}
+.chart-widget {
+  min-height: 292px;
+}
+.chart-note {
+  padding: 0 24px 20px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+.empty-state {
+  padding: 24px;
+  font-size: 13px;
+  color: #94a3b8;
+}
 @media (max-width: 980px) {
   .header, .controls, .legend, .note { padding-left: 18px; padding-right: 18px; }
+  .ticker-panel { margin-left: 18px; margin-right: 18px; }
+  .ticker-panel-body { grid-template-columns: 1fr; }
+  .ticker-sidebar { border-right: none; border-bottom: 1px solid #1f2937; }
+  .ticker-list { max-height: 280px; }
+  .chart-grid { grid-template-columns: 1fr; padding-left: 18px; padding-right: 18px; }
+  .ticker-main-head, .ticker-panel-head { padding-left: 18px; padding-right: 18px; }
 }
 </style>
 </head>
@@ -524,6 +730,38 @@ body {
   <div class="legend-item"><div class="legend-swatch" style="background:#5b21b6;border:1px solid #c084fc"></div>CHIPS proposed</div>
   <div class="legend-item"><div class="legend-swatch" style="background:#082f49;border:1px solid #38bdf8"></div>CHIPS R&D / hub</div>
 </div>
+
+<section class="ticker-panel" id="ticker-panel">
+  <div class="ticker-panel-head">
+    <div>
+      <h3>Ticker Explorer</h3>
+      <p>
+        Search every mapped company, then load a four-chart TradingView panel with daily candlesticks and separate 10, 20, 50, and 200 day SMA overlays.
+      </p>
+    </div>
+  </div>
+  <div class="ticker-panel-body">
+    <aside class="ticker-sidebar">
+      <div class="ticker-search-wrap">
+        <input id="ticker-search" class="ticker-search" type="search" placeholder="Search ticker, company, country, or chain">
+      </div>
+      <div id="ticker-list" class="ticker-list"></div>
+    </aside>
+    <div class="ticker-main">
+      <div class="ticker-main-head">
+        <div class="ticker-main-title">
+          <h3 id="ticker-main-symbol">Select a ticker</h3>
+          <p id="ticker-main-subtitle">The explorer covers the mapped photonics names with report links and TradingView chart embeds.</p>
+        </div>
+        <div class="ticker-main-links" id="ticker-main-links"></div>
+      </div>
+      <div class="chart-grid" id="chart-grid"></div>
+      <div class="chart-note">
+        TradingView embeds are loaded per selected symbol. Each card isolates one daily simple moving average so the full 10/20/50/200 trend stack is visible without requiring a custom indicator bundle.
+      </div>
+    </div>
+  </div>
+</section>
 
 <div class="board-wrap">
   <div class="board" id="board">
@@ -928,8 +1166,44 @@ const linksEl = document.getElementById("links");
 const statsEl = document.getElementById("stats");
 const panelEl = document.getElementById("panel");
 const panelContentEl = document.getElementById("panel-content");
+const tickerListEl = document.getElementById("ticker-list");
+const tickerSearchEl = document.getElementById("ticker-search");
+const tickerMainSymbolEl = document.getElementById("ticker-main-symbol");
+const tickerMainSubtitleEl = document.getElementById("ticker-main-subtitle");
+const tickerMainLinksEl = document.getElementById("ticker-main-links");
+const chartGridEl = document.getElementById("chart-grid");
 let activeFilter = "all";
 let activeNodeId = null;
+let activeTickerId = null;
+
+const chartPeriods = [10, 20, 50, 200];
+const defaultTickerId = "CRDO";
+
+function tradingViewSymbol(node) {
+  const symbolMap = {
+    "SOI": "EPA:SOI",
+    "AXTI": "NASDAQ:AXTI",
+    "JX": "TSE:5016",
+    "VNP": "TSX:VNP",
+    "ASML": "NASDAQ:ASML",
+    "TSEM": "NASDAQ:TSEM",
+    "GFS": "NASDAQ:GFS",
+    "AIXTRON": "ETR:AIXA",
+    "FORM": "NASDAQ:FORM",
+    "LITE": "NASDAQ:LITE",
+    "SIVE": "OMXSTO:SIVE",
+    "MTSI": "NASDAQ:MTSI",
+    "CRDO": "NASDAQ:CRDO",
+    "AVGO": "NASDAQ:AVGO",
+    "INNOLIGHT": "SZSE:300308",
+    "COHR": "NYSE:COHR",
+    "AAOI": "NASDAQ:AAOI",
+    "FN": "NYSE:FN",
+    "ANET": "NYSE:ANET",
+    "CIEN": "NYSE:CIEN"
+  };
+  return symbolMap[node.id] || node.ticker;
+}
 
 function repoReportUrl(file) {
   return `https://github.com/timlihk/Investing/blob/main/ai-photonics/reports/${file}`;
@@ -1003,6 +1277,147 @@ function renderNodes() {
     const el = document.getElementById(`node-${node.id}`);
     el.addEventListener("click", () => openPanel(node.id));
   });
+}
+
+function tickerUniverse() {
+  return nodes.filter(node => node.report).sort((a, b) => {
+    if (b.score !== a.score) return (b.score || 0) - (a.score || 0);
+    return a.ticker.localeCompare(b.ticker);
+  });
+}
+
+function tickerSearchMatches(node, query) {
+  if (!query) return true;
+  const haystack = [
+    node.ticker,
+    node.name,
+    node.market,
+    node.role,
+    ...node.chain
+  ].join(" ").toLowerCase();
+  return haystack.includes(query);
+}
+
+function renderTickerList() {
+  const query = tickerSearchEl.value.trim().toLowerCase();
+  const items = tickerUniverse().filter(node => tickerSearchMatches(node, query));
+
+  if (!items.length) {
+    tickerListEl.innerHTML = '<div class="empty-state">No mapped ticker matches that search.</div>';
+    return;
+  }
+
+  tickerListEl.innerHTML = items.map(node => `
+    <button class="ticker-row ${node.id === activeTickerId ? "active" : ""}" data-ticker-id="${node.id}">
+      <div class="ticker-row-head">
+        <div>
+          <div class="ticker-row-symbol">${node.ticker}</div>
+          <div class="ticker-row-name">${node.name}</div>
+        </div>
+        <div class="ticker-stage">${node.chain.join(" / ")}</div>
+      </div>
+      <div class="ticker-row-meta">
+        <span class="ticker-chip ${node.verdict === "BUY" ? "buy" : node.verdict === "AVOID" ? "avoid" : ""}">${node.verdict}</span>
+        <span class="ticker-chip">${node.market}</span>
+        ${node.chokepoint ? '<span class="ticker-chip chokepoint">Chokepoint</span>' : ""}
+      </div>
+    </button>
+  `).join("");
+
+  tickerListEl.querySelectorAll(".ticker-row").forEach(button => {
+    button.addEventListener("click", () => selectTicker(button.dataset.tickerId));
+  });
+}
+
+function widgetMarkup(node, length, index) {
+  const symbol = tradingViewSymbol(node);
+  return `
+    <div class="chart-card">
+      <div class="chart-card-head">
+        <h4>SMA ${length}</h4>
+        <span>${symbol}</span>
+      </div>
+      <div class="chart-widget">
+        <div class="tradingview-widget-container" style="height:100%;width:100%">
+          <div id="tv-widget-${index}" class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function appendTradingViewWidget(containerId, symbol, length) {
+  const host = document.getElementById(containerId);
+  if (!host) return;
+  host.innerHTML = "";
+  const script = document.createElement("script");
+  script.type = "text/javascript";
+  script.async = true;
+  script.src = "https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js";
+  script.text = JSON.stringify({
+    symbols: [[symbol, `${symbol}|12M`]],
+    chartOnly: true,
+    width: "100%",
+    height: "100%",
+    locale: "en",
+    colorTheme: "dark",
+    autosize: true,
+    showVolume: false,
+    showMA: true,
+    hideDateRanges: false,
+    hideMarketStatus: false,
+    hideSymbolLogo: true,
+    scalePosition: "right",
+    scaleMode: "Normal",
+    fontFamily: "-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",
+    fontSize: "10",
+    noTimeScale: false,
+    valuesTracking: "1",
+    changeMode: "price-and-percent",
+    chartType: "candlesticks",
+    maLineColor: "#f59e0b",
+    maLineWidth: 2,
+    maLength: length,
+    lineWidth: 2,
+    lineType: 0,
+    dateRanges: ["1m|1D", "3m|1D", "6m|1D", "12m|1D"],
+    upColor: "#22c55e",
+    downColor: "#ef4444",
+    borderUpColor: "#22c55e",
+    borderDownColor: "#ef4444",
+    wickUpColor: "#22c55e",
+    wickDownColor: "#ef4444",
+    backgroundColor: "rgba(8, 13, 20, 1)",
+    gridLineColor: "rgba(51, 65, 85, 0.45)",
+    widgetFontColor: "#e2e8f0",
+    trendLineColor: "rgba(125, 211, 252, 1)",
+    underLineColor: "rgba(14, 165, 233, 0.2)",
+    underLineBottomColor: "rgba(14, 165, 233, 0)",
+    isTransparent: false,
+    support_host: "https://www.tradingview.com"
+  });
+  host.appendChild(script);
+}
+
+function renderTickerCharts(node) {
+  chartGridEl.innerHTML = chartPeriods.map((length, index) => widgetMarkup(node, length, index)).join("");
+  chartPeriods.forEach((length, index) => {
+    appendTradingViewWidget(`tv-widget-${index}`, tradingViewSymbol(node), length);
+  });
+}
+
+function selectTicker(id) {
+  const node = nodes.find(item => item.id === id && item.report);
+  if (!node) return;
+  activeTickerId = id;
+  tickerMainSymbolEl.textContent = `${node.ticker} · ${node.name}`;
+  tickerMainSubtitleEl.textContent = `${node.market} · ${node.role}`;
+  tickerMainLinksEl.innerHTML = `
+    <a href="${repoReportUrl(node.report)}" target="_blank" rel="noreferrer">Open report</a>
+    <a href="https://www.tradingview.com/symbols/${tradingViewSymbol(node).replace(":", "-")}/" target="_blank" rel="noreferrer">Open on TradingView</a>
+  `;
+  renderTickerList();
+  renderTickerCharts(node);
 }
 
 function nodeCenter(node) {
@@ -1141,10 +1556,13 @@ document.getElementById("panel-close").addEventListener("click", closePanel);
 document.querySelectorAll(".filter-btn").forEach(btn => {
   btn.addEventListener("click", () => setFilter(btn.dataset.filter));
 });
+tickerSearchEl.addEventListener("input", renderTickerList);
 
 renderStats();
 renderNodes();
 renderEdges();
+selectTicker(defaultTickerId);
+renderTickerList();
 updateVisibility();
 </script>
 </body>
