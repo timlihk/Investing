@@ -74,3 +74,6 @@ UMC	59	HOLD	N/A	N/A	N/A	Emerging	imec iSiPP300 SiPh license + risk production 20
 000988.SZ	58	HOLD	45.15	N/A	N/A	Moderate	400G-1.6T transceivers + laser equipment + SiPh	Medium	China's first laser IPO. CNY 9B rev +23%. Optical comms division testing 1.6T with leading clients.
 JEN.DE	50	AVOID	23.40	N/A	N/A	Moderate	Semi equipment photonics + industrial optical	Medium	German photonics co with €1.05B rev (-6%). Weak semi cycle. Not directly AI DC-focused.
 STM	62	HOLD	N/A	N/A	N/A	Emerging	PIC100 SiPh in HV production + 4x capacity by 2027	Low	5th SiPh foundry entrant. PIC100 for 800G/1.6T. Quadrupling capacity. Diversified $13B semi co.
+AMAT	65	HOLD	N/A	N/A	N/A	Strong	GF Singapore photonics fab + deposition tools in every SiPh fab	Low	#1 semi equipment co. Deposition essential for all SiPh manufacturing. Photonics is tiny fraction.
+LRCX	63	HOLD	N/A	N/A	N/A	Strong	Etch tools for SiPh waveguide patterning	Low	#2 semi equipment. Etch tools define optical structures in every SiPh chip. Photonics tiny fraction.
+ASML	68	HOLD	N/A	N/A	N/A	Exceptional	DUV lithography monopoly for SiPh + every new fab needs ASML	Low	Lithography monopoly. Every SiPh foundry expansion needs ASML DUV tools. $320B+ market cap context.
