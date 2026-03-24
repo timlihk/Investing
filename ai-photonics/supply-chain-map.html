@@ -111,22 +111,22 @@ const L = [
   { name: "Substrates", desc: "InP wafers + photonics-SOI", bg: '#d2992210',
     cos: [
       { t:"SOI.PA",n:"Soitec",m:"France",cap:2.6,opt:12,g:11,gm:32,om:null,rev:"$1B",chk:1,mono:1,sh:"70% SOI | SOLE SOURCE",th:"ONLY volume photonics-SOI supplier for Tower/GF/TSMC. No alternative." },
-      { t:"AXTI",n:"AXT",m:"US/China",cap:3,opt:80,g:null,gm:24,om:-15,rev:"$99M",chk:1,mono:0,sh:"60-70% InP",th:"60-70% InP substrates. Beijing mfg risk. JX/Sumitomo compete." },
+      { t:"AXTI",n:"AXT",m:"US/China",cap:3,opt:80,g:-11,gm:24,om:-15,rev:"$99M",chk:1,mono:0,sh:"60-70% InP",th:"60-70% InP substrates. Beijing mfg risk. JX/Sumitomo compete." },
       { t:"5016.T",n:"JX Metals",m:"Japan",cap:21,opt:8,g:15,gm:23,om:7,rev:"$5.3B",chk:0,mono:0,sh:"",th:"IPO'd 2025. Rev JPY775B. InP small but strategic in diversified metals co." },
-      { t:"8258.TW",n:"IntelliEPI",m:"Taiwan",cap:0.3,opt:90,g:54,gm:null,om:null,rev:"$30M",chk:0,mono:0,sh:"",th:"Taiwan InP epiwafer + EZconn CPO. Fastest-growing TW semi #3." },
+      { t:"8258.TW",n:"IntelliEPI",m:"Taiwan",cap:0.3,opt:90,g:54,gm:23,om:13,rev:"$30M",chk:0,mono:0,sh:"",th:"Taiwan InP epiwafer + EZconn CPO. Fastest-growing TW semi #3." },
     ]},
   { name: "Equipment", desc: "MOCVD, lithography, dicing, die bonding", bg: '#8b949e08',
     cos: [
       { t:"AIXA.DE",n:"Aixtron",m:"Germany",cap:3.5,opt:30,g:-1,gm:43,om:15,rev:"$600M",chk:1,mono:0,sh:"70-90% MOCVD (duopoly)",th:"70-90% MOCVD. Veeco is duopoly partner." },
       { t:"ASML",n:"ASML",m:"Netherlands",cap:320,opt:5,g:30,gm:51,om:35,rev:"$32B",chk:1,mono:1,sh:"100% litho | SOLE SOURCE",th:"Only lithography supplier on earth." },
       { t:"6146.T",n:"Disco",m:"Japan",cap:36,opt:12,g:28,gm:50,om:39,rev:"$2.7B",chk:1,mono:0,sh:"75% dicing",th:"75% dicing. 39% OPM. Every chip needs Disco." },
-      { t:"BESI.AS",n:"Besi",m:"Netherlands",cap:17,opt:18,g:null,gm:64,om:null,rev:"$640M",chk:1,mono:0,sh:"42% die-attach",th:"42% die-attach + hybrid bonding pioneer. Orders +105%." },
+      { t:"BESI.AS",n:"Besi",m:"Netherlands",cap:17,opt:18,g:-3,gm:64,om:29,rev:"$640M",chk:1,mono:0,sh:"42% die-attach",th:"42% die-attach + hybrid bonding pioneer. Orders +105%." },
     ]},
   { name: "SiPh Foundry", desc: "Silicon photonics chip fabrication", bg: '#8957e510',
     cos: [
       { t:"TSEM",n:"Tower Semi",m:"Israel/US",cap:17,opt:15,g:14,gm:23,om:12,rev:"$1.6B",chk:1,mono:0,sh:"85% SiPh (eroding)",th:"85% SiPh foundry. 5x expansion. Margins 23%→40%." },
       { t:"GFS",n:"GlobalFoundries",m:"US",cap:25,opt:3,g:0,gm:27,om:null,rev:"$6.5B",chk:0,mono:0,sh:"#2 SiPh",th:"#2 SiPh. AMF acquired. China-free." },
-      { t:"3105.TW",n:"WIN Semi",m:"Taiwan",cap:5,opt:30,g:7,gm:32,om:null,rev:"$600M",chk:1,mono:0,sh:"50%+ GaAs",th:"50%+ GaAs foundry for VCSELs." },
+      { t:"3105.TW",n:"WIN Semi",m:"Taiwan",cap:5,opt:30,g:7,gm:32,om:4,rev:"$600M",chk:1,mono:0,sh:"50%+ GaAs",th:"50%+ GaAs foundry for VCSELs." },
     ]},
   { name: "Lasers & ICs", desc: "EML lasers, TIAs, drivers, DSPs, retimers", bg: '#f8514908',
     cos: [
@@ -142,13 +142,13 @@ const L = [
       { t:"300308.SZ",n:"Innolight",m:"China",cap:81,opt:95,g:60,gm:43,om:28,rev:"$8B",chk:1,mono:0,sh:"50%+ NVIDIA",th:"World #1 transceiver. 50%+ NVIDIA. 43% GM." },
       { t:"COHR",n:"Coherent",m:"US",cap:48,opt:58,g:17,gm:39,om:5,rev:"$7B",chk:0,mono:0,sh:"",th:"3 architectures. NVIDIA $2B. Thermadite thermal." },
       { t:"AAOI",n:"AAOI",m:"US",cap:7,opt:85,g:83,gm:31,om:-12,rev:"$1B",chk:0,mono:0,sh:"",th:"US mfg. Zero debt. $200M+ 1.6T order." },
-      { t:"300502.SZ",n:"Eoptolink",m:"China",cap:50,opt:95,g:179,gm:null,om:null,rev:"$2.4B",chk:0,mono:0,sh:"",th:"China #2. +179% growth." },
+      { t:"300502.SZ",n:"Eoptolink",m:"China",cap:50,opt:95,g:179,gm:50,om:45,rev:"$2.4B",chk:0,mono:0,sh:"",th:"China #2. +179% growth." },
     ]},
   { name: "Assembly & Packaging", desc: "Optical assembly, OSAT, server manufacturing", bg: '#8b949e08',
     cos: [
       { t:"FN",n:"Fabrinet",m:"Thailand",cap:18,opt:75,g:19,gm:12,om:11,rev:"$4.5B",chk:1,mono:0,sh:"NVIDIA sole-src",th:"NVIDIA sole-source 1.6T. $961M cash, zero debt." },
-      { t:"CLS",n:"Celestica",m:"Canada",cap:12,opt:40,g:28,gm:null,om:null,rev:"$17B",chk:1,mono:0,sh:"55% custom sw",th:"55% custom switch mfg. $17B FY26." },
-      { t:"3711.TW",n:"ASE",m:"Taiwan",cap:28,opt:5,g:null,gm:null,om:null,rev:"$21B",chk:0,mono:0,sh:"#1 OSAT",th:"#1 OSAT. SiPh packaging. Lightmatter CPO." },
+      { t:"CLS",n:"Celestica",m:"Canada",cap:12,opt:40,g:28,gm:11,om:8,rev:"$17B",chk:1,mono:0,sh:"55% custom sw",th:"55% custom switch mfg. $17B FY26." },
+      { t:"3711.TW",n:"ASE",m:"Taiwan",cap:28,opt:5,g:12,gm:16,om:8,rev:"$21B",chk:0,mono:0,sh:"#1 OSAT",th:"#1 OSAT. SiPh packaging. Lightmatter CPO." },
     ]},
   { name: "Fiber & Connectors", desc: "Physical fiber infrastructure + connectors", bg: '#58a6ff08',
     cos: [
@@ -163,9 +163,9 @@ const L = [
     ]},
   { name: "Test / OCS / Materials", desc: "Optical test, switching, niche materials", bg: '#8b949e08',
     cos: [
-      { t:"VIAV",n:"VIAV",m:"US",cap:6,opt:60,g:36,gm:null,om:19,rev:"$1.5B",chk:0,mono:0,sh:"",th:"Cheapest AI photonics at 5x sales. 19.3% OPM." },
-      { t:"6857.T",n:"Advantest",m:"Japan",cap:45,opt:10,g:37,gm:null,om:40,rev:"$7B",chk:1,mono:0,sh:"ATE duopoly",th:"ASML of testing. V93000 SiPh. 30-40% growth." },
-      { t:"HUBN.SW",n:"Huber+Suhner",m:"Switzerland",cap:3.6,opt:15,g:0,gm:null,om:null,rev:"$1.1B",chk:1,mono:0,sh:"OCS leader",th:"Polatis OCS. Market $2.5B by 2029." },
+      { t:"VIAV",n:"VIAV",m:"US",cap:6,opt:60,g:36,gm:60,om:19,rev:"$1.5B",chk:0,mono:0,sh:"",th:"Cheapest AI photonics at 5x sales. 19.3% OPM." },
+      { t:"6857.T",n:"Advantest",m:"Japan",cap:45,opt:10,g:37,gm:60,om:40,rev:"$7B",chk:1,mono:0,sh:"ATE duopoly",th:"ASML of testing. V93000 SiPh. 30-40% growth." },
+      { t:"HUBN.SW",n:"Huber+Suhner",m:"Switzerland",cap:3.6,opt:15,g:0,gm:38,om:11,rev:"$1.1B",chk:1,mono:0,sh:"OCS leader",th:"Polatis OCS. Market $2.5B by 2029." },
       { t:"4973.T",n:"Japan Pure Chem",m:"Japan",cap:0.2,opt:40,g:null,gm:null,om:11,rev:"$99M",chk:1,mono:0,sh:"50% gold plating",th:"52-employee company. 50% gold plating share. 4.17% yield." },
     ]},
 ];
