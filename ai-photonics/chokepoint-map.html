@@ -34,7 +34,7 @@ canvas{display:block}
 <body>
 <div id="ui">
   <h1>AI Photonics Chokepoint Map</h1>
-  <p>Size = market dominance. Red glow = monopoly bottleneck. Hover to explore upstream/downstream connections.</p>
+  <p>Size = market dominance. <b style="color:#ff7b72">Red glow</b> = true monopoly (sole source, no alternative). <b style="color:#e3b341">Gold</b> = chokepoint (dominant but alternatives exist). Hover to trace connections.</p>
   <div class="legend">
     <div class="legend-item"><div class="legend-dot" style="background:#3fb950"></div>BUY</div>
     <div class="legend-item"><div class="legend-dot" style="background:#8b949e"></div>HOLD</div>
@@ -70,37 +70,37 @@ function init(){
   addNode("5N Plus","VNP.TO",0,.5,61,"HOLD",false,false,"Refines In/Ga/Ge for all compound semi","$391M rev","Canada");
 
   // Layer 1: Substrates
-  addNode("Soitec","SOI.PA",1,.2,65,"HOLD",true,true,"ONLY volume photonics-SOI supplier for Tower/GF/TSMC","70% SOI share","France");
-  addNode("AXT","AXTI",1,.4,47,"AVOID",true,true,"60-70% InP substrates. Beijing manufacturing risk","60-70% InP","US/China");
-  addNode("JX Metals","5016.T",1,.6,66,"HOLD",true,false,"Newly IPO'd Japanese InP. Non-China alternative","40yr InP exp","Japan");
+  addNode("Soitec","SOI.PA",1,.2,65,"HOLD",true,true,"ONLY volume photonics-SOI supplier for Tower/GF/TSMC. No alternative exists.","70% SOI | SOLE SOURCE","France");
+  addNode("AXT","AXTI",1,.4,47,"AVOID",true,false,"60-70% InP substrates but JX Metals and Sumitomo compete. Beijing mfg risk.","60-70% InP","US/China");
+  addNode("JX Metals","5016.T",1,.6,66,"HOLD",false,false,"Newly IPO'd Japanese InP. Non-China alternative to AXT.","40yr InP exp","Japan");
   addNode("IntelliEPI","8258.TW",1,.8,62,"HOLD",false,false,"Taiwan InP epiwafer + EZconn CPO","53.8% growth","Taiwan");
 
   // Layer 2: Equipment
-  addNode("Aixtron","AIXA.DE",2,.15,65,"HOLD",true,true,"70-90% MOCVD. Grows every laser chip","70-90% MOCVD","Germany");
-  addNode("Veeco","VECO",2,.35,63,"HOLD",true,false,"MOCVD duopoly. Lumina+ for photonics","MOCVD #2","US");
-  addNode("ASML","ASML",2,.55,68,"HOLD",true,true,"Lithography monopoly for all SiPh","100% litho","Netherlands");
-  addNode("Disco","6146.T",2,.75,72,"HOLD",true,true,"75% dicing. Every chip needs Disco","75% dicing","Japan");
-  addNode("Besi","BESI.AS",2,.92,73,"HOLD",true,false,"42% die-attach. Hybrid bonding pioneer","42% die-attach","Netherlands");
+  addNode("Aixtron","AIXA.DE",2,.15,65,"HOLD",true,false,"70-90% MOCVD but Veeco is duopoly partner. Not sole-source.","70-90% MOCVD (duopoly)","Germany");
+  addNode("Veeco","VECO",2,.35,63,"HOLD",true,false,"MOCVD duopoly #2. Lumina+ for photonics.","MOCVD #2","US");
+  addNode("ASML","ASML",2,.55,68,"HOLD",true,true,"Only lithography supplier on earth. No alternative at any price.","100% litho | SOLE SOURCE","Netherlands");
+  addNode("Disco","6146.T",2,.75,72,"HOLD",true,false,"75% dicing but competitors exist (Tokyo Seimitsu, etc).","75% dicing","Japan");
+  addNode("Besi","BESI.AS",2,.92,73,"HOLD",true,false,"42% die-attach + hybrid bonding pioneer. ASMPT/K&S compete.","42% die-attach","Netherlands");
 
   // Layer 3: Foundry
-  addNode("Tower Semi","TSEM",3,.25,75,"BUY",true,true,"85% SiPh foundry. TSMC of photonics. 5x expansion","85% SiPh","Israel/US");
-  addNode("GlobalFoundries","GFS",3,.5,62,"HOLD",false,false,"#2 SiPh. AMF acquired. China-free","#2 SiPh","US");
-  addNode("WIN Semi","3105.TW",3,.75,64,"HOLD",true,false,"50%+ GaAs foundry for VCSELs","50%+ GaAs","Taiwan");
+  addNode("Tower Semi","TSEM",3,.25,75,"BUY",true,false,"85% SiPh foundry but GF/UMC/STM entering. Dominant today, eroding slowly.","85% SiPh (eroding)","Israel/US");
+  addNode("GlobalFoundries","GFS",3,.5,62,"HOLD",false,false,"#2 SiPh. AMF acquired. China-free supply chain.","#2 SiPh","US");
+  addNode("WIN Semi","3105.TW",3,.75,64,"HOLD",true,false,"50%+ GaAs foundry for VCSELs.","50%+ GaAs","Taiwan");
 
   // Layer 4: Lasers & ICs
-  addNode("Lumentum","LITE",4,.08,70,"HOLD",true,true,"50-60% high-end EML. NVIDIA $2B. S&P 500","50-60% EML","US");
-  addNode("MACOM","MTSI",4,.2,76,"BUY",false,false,"Analog IC in every transceiver. 57% GM","57% GM, DC+48%","US");
-  addNode("Credo","CRDO",4,.34,82,"BUY",true,true,"88% AEC monopoly. 68% GM. 53% pullback","88% AEC","US");
-  addNode("Broadcom","AVGO",4,.48,85,"BUY",true,true,"Tomahawk monopoly. Taurus DSP. 68% EBITDA","90% switch ASIC","US");
-  addNode("Marvell","MRVL",4,.62,79,"BUY",false,false,"Celestial AI + Ara DSP + 50+ custom programs","$3.25B Celestial","US");
-  addNode("Semtech","SMTC",4,.76,70,"HOLD",false,false,"LPO disruptor. FiberEdge TIA. DC +50%","LPO architecture","US");
-  addNode("Mitsubishi","6503.T",4,.9,55,"HOLD",true,false,"50% total EML volume globally","50% EML","Japan");
+  addNode("Lumentum","LITE",4,.08,70,"HOLD",true,false,"50-60% high-end EML but Mitsubishi/Coherent/Broadcom compete.","50-60% EML","US");
+  addNode("MACOM","MTSI",4,.2,76,"BUY",false,false,"Analog IC in every transceiver. 57% GM. Competes with Semtech/Broadcom.","57% GM, DC+48%","US");
+  addNode("Credo","CRDO",4,.34,82,"BUY",true,true,"88% AEC. Invented the category. No competitor ships at scale yet.","88% AEC | SOLE SOURCE","US");
+  addNode("Broadcom","AVGO",4,.48,85,"BUY",true,false,"~90% switch ASIC but hyperscalers building custom alternatives (Google, Amazon).","~90% switch ASIC (eroding)","US");
+  addNode("Marvell","MRVL",4,.62,79,"BUY",false,false,"Celestial AI + Ara DSP + 50+ custom programs.","$3.25B Celestial","US");
+  addNode("Semtech","SMTC",4,.76,70,"HOLD",false,false,"LPO disruptor. FiberEdge TIA. DC +50%.","LPO architecture","US");
+  addNode("Mitsubishi","6503.T",4,.9,55,"HOLD",true,false,"50% total EML volume globally. Competes with Lumentum.","50% EML","Japan");
 
   // Layer 5: Transceivers
-  addNode("Innolight","300308.SZ",5,.2,79,"BUY",true,true,"World #1. 50%+ NVIDIA. 43% GM","50%+ NVIDIA","China");
-  addNode("Coherent","COHR",5,.4,65,"HOLD",false,false,"3 architectures. NVIDIA $2B. Thermadite","$6.3B TTM","US");
-  addNode("AAOI","AAOI",5,.6,59,"HOLD",false,false,"US mfg dark horse. Zero debt. $200M+ 1.6T order","US manufacturing","US");
-  addNode("Eoptolink","300502.SZ",5,.8,68,"HOLD",false,false,"China #2. +179% growth","$50B cap","China");
+  addNode("Innolight","300308.SZ",5,.2,79,"BUY",true,false,"World #1 transceiver. 50%+ NVIDIA. But Eoptolink/Coherent/AAOI compete.","50%+ NVIDIA","China");
+  addNode("Coherent","COHR",5,.4,65,"HOLD",false,false,"3 architectures. NVIDIA $2B. Thermadite thermal materials.","$6.3B TTM","US");
+  addNode("AAOI","AAOI",5,.6,59,"HOLD",false,false,"US mfg dark horse. Zero debt. $200M+ 1.6T order.","US manufacturing","US");
+  addNode("Eoptolink","300502.SZ",5,.8,68,"HOLD",false,false,"China #2. +179% growth. NVIDIA secondary supplier.","$50B cap","China");
 
   // Layer 6: Assembly
   addNode("Fabrinet","FN",6,.15,71,"HOLD",true,false,"NVIDIA sole-source 1.6T. $961M cash, zero debt","NVIDIA sole-src","Thailand");
@@ -126,7 +126,7 @@ function init(){
   addNode("Advantest","6857.T",9,.28,71,"HOLD",true,false,"ASML of testing. V93000 SiPh. JPY1.07T","ATE duopoly","Japan");
   addNode("Teradyne","TER",9,.44,72,"HOLD",true,false,"ATE #2. Quantifi Photonics PIC testing","AI 70% rev","US");
   addNode("Huber+Suhner","HUBN.SW",9,.6,58,"HOLD",true,false,"Polatis OCS. Market $2.5B by 2029","OCS leader","Switzerland");
-  addNode("Japan Pure Chem","4973.T",9,.76,63,"HOLD",true,true,"50% gold plating. 52 employees. 2.1x sales","50% gold plating","Japan");
+  addNode("Japan Pure Chem","4973.T",9,.76,63,"HOLD",true,false,"50% gold plating but alternative chemistries exist. 52 employees.","50% gold plating","Japan");
   addNode("Vertiv","VRT",9,.92,72,"HOLD",false,false,"$15B backlog. NVIDIA cooling. +252% orders","$15B backlog","US");
 
   // EDGES: supply relationships
