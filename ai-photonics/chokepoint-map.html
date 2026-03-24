@@ -69,16 +69,16 @@ const tooltip=document.getElementById('tooltip');
 let nodes=[],edges=[],hoveredNode=null,mx=0,my=0,viewMode='default';
 
 const LAYERS=[
-  {y:.06,label:"Raw Materials"},
-  {y:.14,label:"Substrates"},
-  {y:.22,label:"Equipment"},
-  {y:.32,label:"Foundry"},
-  {y:.42,label:"Lasers & ICs"},
-  {y:.54,label:"Transceivers"},
-  {y:.66,label:"Assembly & Packaging"},
-  {y:.76,label:"Fiber & Connectors"},
-  {y:.86,label:"Networking & Switches"},
-  {y:.95,label:"Test / OCS / Infrastructure"}
+  {y:.06,label:"Raw Materials",         bg:'rgba(139,148,158,.04)'},
+  {y:.14,label:"Substrates",            bg:'rgba(210,153,34,.06)'},
+  {y:.22,label:"Equipment",             bg:'rgba(139,148,158,.04)'},
+  {y:.32,label:"Foundry",               bg:'rgba(137,87,229,.06)'},
+  {y:.42,label:"Lasers & ICs",          bg:'rgba(248,81,73,.05)'},
+  {y:.54,label:"Transceivers",          bg:'rgba(63,185,80,.05)'},
+  {y:.66,label:"Assembly & Packaging",  bg:'rgba(139,148,158,.04)'},
+  {y:.76,label:"Fiber & Connectors",    bg:'rgba(88,166,255,.05)'},
+  {y:.86,label:"Networking & Switches", bg:'rgba(63,185,80,.05)'},
+  {y:.95,label:"Test / OCS / Infrastructure", bg:'rgba(139,148,158,.04)'}
 ];
 
 // addNode now includes: revGrowth (%), grossMargin (%), opMargin (%), revFwd (forward rev estimate)
@@ -250,13 +250,23 @@ function setMode(m,btn){
 function draw(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  // Layer labels
-  ctx.font='13px system-ui';ctx.textAlign='left';
-  LAYERS.forEach(l=>{
-    const y=20+l.y*(canvas.height-40);
-    ctx.fillStyle='#21262d33';ctx.fillRect(0,y-1,canvas.width,1);
-    ctx.fillStyle='#484f58';ctx.fillText(l.label,10,y+4);
-  });
+  // Layer background bands + labels
+  const h=canvas.height-40;
+  for(let i=0;i<LAYERS.length;i++){
+    const l=LAYERS[i];
+    const yTop=20+l.y*h;
+    const yBot=i<LAYERS.length-1 ? 20+LAYERS[i+1].y*h : canvas.height;
+    // Band fill
+    ctx.fillStyle=l.bg;
+    ctx.fillRect(0,yTop-8,canvas.width,yBot-yTop);
+    // Top border line
+    ctx.fillStyle='rgba(48,54,61,.25)';
+    ctx.fillRect(0,yTop-8,canvas.width,1);
+    // Label
+    ctx.font='12px system-ui';ctx.textAlign='left';
+    ctx.fillStyle='rgba(110,118,129,.8)';
+    ctx.fillText(l.label,10,yTop+4);
+  }
 
   // Edges
   const hovT=new Set();
