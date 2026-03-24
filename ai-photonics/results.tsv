@@ -56,3 +56,4 @@ MXL	60	HOLD	17.43	21.55	+24%	Moderate	Rushmore 1.6T DSP + Annapurna 224G retimer
 SMTC	70	HOLD	78	N/A	N/A	Moderate-Strong	LPO disruption + FiberEdge TIA + CopperEdge ACC + DC +50%	Medium	Under-discovered LPO disruptor. Removing DSP from optical modules. Hyperscaler LPO design wins.
 VECO	63	HOLD	N/A	N/A	N/A	Moderate-Strong	MOCVD duopoly + Lumina+ for photonics + Axcelis merger	Medium	MOCVD equipment leader; grows every InP/GaAs laser chip. Duopoly with Aixtron. Merging with Axcelis.
 AIXA.DE	65	HOLD	N/A	N/A	N/A	Very Strong	70-90% MOCVD share + optoelectronics growth for AI	Medium	Dominant MOCVD duopoly partner. "Most underappreciated AI beneficiary." FY26 flat on SiC headwinds.
+XFAB.PA	56	HOLD	N/A	N/A	N/A	Emerging	InP-on-Silicon heterogeneous integration + SiN photonics	Medium	European SiPh foundry with InP hetero integration (>120GHz). Early stage, production 2027. Niche.
