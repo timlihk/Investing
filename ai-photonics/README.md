@@ -9,6 +9,10 @@ The AI data center buildout is creating an insatiable demand for optical interco
 
 See [results.tsv](results.tsv) for the full scorecard.
 
+Interactive map:
+- [GitHub Pages map](https://timlihk.github.io/Investing/ai-photonics/supply-chain-map.html)
+- [Local HTML file](supply-chain-map.html)
+
 ### BUY Ratings
 | Ticker | Score | Price | Target | Upside | Chokepoint |
 |--------|-------|-------|--------|--------|------------|
@@ -50,5 +54,6 @@ Individual company reports with full analysis in [reports/](reports/).
 ## Files
 - [results.tsv](results.tsv) - Running scorecard
 - [universe.txt](universe.txt) - Stock universe (expanding via discovery)
+- [supply-chain-map.html](supply-chain-map.html) - Interactive chokepoint map for GitHub Pages
 - [criteria.md](criteria.md) - Scoring rubric
 - [program.md](program.md) - Research agent operating instructions

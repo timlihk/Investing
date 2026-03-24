@@ -20,6 +20,9 @@ Soitec (SOI.PA) --> Tower Semi (TSEM) --> SiPh transceiver ICs --> modules --> A
   70% SOI share       85% SiPh foundry     Broadcom/Coherent/Intel
 ```
 
+Interactive map:
+- https://timlihk.github.io/Investing/ai-photonics/supply-chain-map.html
+
 ### [Memory Supercycle](memory-supercycle/)
 Under-covered memory, packaging, test, and storage names benefiting from the AI memory supercycle. Focused on HBM supply, HBM packaging bottlenecks, memory test/probe intensity, and enterprise SSD expansion.
 
