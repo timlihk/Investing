@@ -61,6 +61,16 @@ canvas{display:block}
 <div id="flow-label">RAW MATERIALS &rarr; SUBSTRATES &rarr; FOUNDRY &rarr; COMPONENTS &rarr; MODULES &rarr; SYSTEMS &rarr; DATA CENTERS</div>
 <div id="tooltip"></div>
 <canvas id="c"></canvas>
+<div style="position:fixed;bottom:0;left:0;width:100%;padding:8px 20px;background:#0d1117ee;border-top:1px solid #21262d;font-size:11px;color:#484f58;z-index:80;line-height:1.6">
+  <b style="color:#6e7681">Data notes:</b>
+  Rev Growth = YoY revenue growth from latest reported quarter or fiscal year (most FY2025 or Q3/Q4 FY2026).
+  Gross Margin = GAAP unless noted; some companies report non-GAAP (Credo 68.5% is GAAP, Broadcom 76% is non-GAAP/EBITDA proxy).
+  Op Margin = GAAP operating margin unless noted.
+  All USD unless from local filings (JPY/EUR/CNY converted at approximate rates).
+  Market cap as of ~Mar 2026. Optics % = estimated portion of revenue from photonics/optical products.
+  <b style="color:#6e7681">Golden Path</b> = chokepoint (50%+ share) AND gross margin ≥ 40% AND revenue growth ≥ 20% YoY.
+  Source: Latest earnings releases, IR presentations, web search. Not audited — see research reports for full sourcing.
+</div>
 <script>
 const W=()=>window.innerWidth,H=()=>window.innerHeight;
 const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
