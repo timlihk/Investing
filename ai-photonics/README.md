@@ -14,6 +14,7 @@ Interactive map:
 - [GitHub Pages map](https://timlihk.github.io/Investing/ai-photonics/supply-chain-map.html)
 - [Local HTML file](supply-chain-map.html)
 - [CHIPS Act status notes](chips-act-status.md)
+- [Independent IC review](ic-review.md)
 
 ### BUY Ratings
 | Ticker | Score | Price | Target | Upside | Chokepoint |
@@ -58,5 +59,6 @@ Individual company reports with full analysis in [reports/](reports/).
 - [universe.txt](universe.txt) - Stock universe (expanding via discovery)
 - [supply-chain-map.html](supply-chain-map.html) - Interactive chokepoint map for GitHub Pages
 - [chips-act-status.md](chips-act-status.md) - Direct CHIPS incentives status for the mapped companies
+- [ic-review.md](ic-review.md) - Independent committee review of every covered company
 - [criteria.md](criteria.md) - Scoring rubric
 - [program.md](program.md) - Research agent operating instructions

@@ -2,6 +2,11 @@
 
 Autonomous equity research - sector deep dives, supply chain analysis, and chokepoint mapping.
 
+Independent committee review:
+- [Repo-wide IC review index](ic-review.md)
+- [AI Photonics IC review](ai-photonics/ic-review.md)
+- [Memory Supercycle IC review](memory-supercycle/ic-review.md)
+
 ## Sectors
 
 ### [AI Photonics / Optical Interconnects](ai-photonics/)
