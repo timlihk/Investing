@@ -1,0 +1,59 @@
+# Stock Universe — AI Photonics / Optical Interconnect Theme
+# Focus: under-discovered photonics stocks benefiting from AI data center buildout
+# Format: TICKER (one per line, comments start with #)
+
+# Pure-Play Optical Transceivers & Components
+COHR
+LITE
+AAOI
+FN
+
+# Optical Networking
+CIEN
+VIAV
+
+# Silicon Photonics / Emerging
+POET
+LPTH
+
+# Photonics-Adjacent (Lasers, Precision Optics)
+LASR
+MKSI
+IPGP
+
+# Under-the-Radar / Smaller Cap
+IIVI
+RELL
+
+# Discovery Mode — Supply Chain Bottleneck Plays
+AXTI    # AXT Inc — 60-70% of global InP substrate production (critical bottleneck)
+MTSI    # MACOM Technology — high-speed analog/optical components for AI data centers
+CRDO    # Credo Technology — high-speed connectivity, SerDes for optical modules
+
+# European Photonics Substrate / Laser
+SIVE.ST  # Sivers Semiconductors — InP DFB lasers for AI optics (Nasdaq Stockholm)
+SOI.PA   # Soitec — 70% SOI wafer monopoly, only photonics-SOI volume supplier (Euronext Paris)
+
+# Discovery Mode — Upstream/Downstream from CRDO analysis
+ANET     # Arista Networks — switch OEM using Credo retimers, AI networking leader
+TSEM     # Tower Semiconductor — SiPh foundry, 5x capacity expansion, buys Soitec wafers (NASDAQ)
+6146.T   # Disco Corp — precision dicing/grinding for photonic chips (Tokyo)
+6857.T   # Advantest — semiconductor test equipment for optical ICs (Tokyo)
+6723.T   # Renesas — owns Dialog Semi, optical transceiver ICs (Tokyo)
+ENLT     # Enlight Renewable? No — skip
+# Fiber/Cable Infrastructure
+INFN     # Infinera — merged with Nokia optical, skip (acquired)
+
+# China Optical (if researchable)
+300308.SZ  # Zhongji Innolight — dominant AI transceiver supplier, NVDA key partner
+# 002281.SZ  — Guangxun Technology (Chinese optical transceiver)
+
+# Japan Photonics
+6146.T   # Disco Corp — precision wafer processing (upstream to all photonic chips)
+6857.T   # Advantest — test equipment for optical/photonic ICs
+6963.T   # Rohm Semiconductor — SiC/optical components
+# Sumitomo Electric (5802.T) — InP lasers/wafers, EML supplier
+5802.T   # Sumitomo Electric — InP EML lasers, optical fiber, key LITE/COHR competitor
+
+# Korea
+058470.KQ  # LEENO Industrial — test sockets for photonic ICs (Korea)

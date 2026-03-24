@@ -1,0 +1,18 @@
+ticker	score	verdict	price	target	upside	moat	catalyst	risk_level	one_liner
+COHR	65	HOLD	256	200	-22%	Strong	1.6T ramp + NVIDIA partnership	Medium	Best photonics portfolio for AI but priced beyond consensus; wait for pullback
+LITE	70	HOLD	729	500	-31%	Very Strong	NVIDIA $2B deal + $8B revenue target	High	Laser chip king of AI optics; dominant but priced for perfection at 62x fwd P/E
+AAOI	59	HOLD	101	70	-31%	Moderate	$200M+ 1.6T order + 3.5x DC rev growth	High	Under-discovered AI optics dark horse; US mfg moat, zero debt, but still unprofitable
+FN	71	HOLD	506	450	-11%	Strong	NVIDIA sole-source 1.6T + 50% capacity expansion	Low	Best risk-adjusted AI photonics play; fortress balance sheet, agnostic winner
+POET	35	AVOID	5.93	N/A	N/A	Speculative	Prototype demos H1 2026 + CPO optionality	Very High	Interesting tech but pre-revenue with extreme execution risk; revisit at >$10M quarterly rev
+CIEN	69	HOLD	340	300	-12%	Strong	WL6e ramp + $5B backlog + margin expansion to 17%	Medium	Optical networking leader with $7.8B orders; wait for margin proof or pullback
+LASR	49	AVOID	N/A	N/A	N/A	Moderate	Defense laser strength + AI photonics narrative	High	Defense laser co riding AI hype; no data center revenue to justify 13x sales valuation
+VIAV	69	HOLD	33.73	30	-11%	Moderate-Strong	AI test demand + margin expansion + restructuring	Low	Under-discovered test & measurement play; cheapest AI photonics exposure at ~5x sales
+MKSI	57	HOLD	N/A	N/A	N/A	Moderate	Semi capex cycle + Photonics division	Medium	Indirect AI photonics via semi equipment; reasonable value but not a targeted play
+IPGP	45	AVOID	115	N/A	N/A	Moderate	Defense laser pivot + cyclical recovery	Medium	Industrial fiber laser leader but wrong market; no AI data center exposure
+AXTI	47	AVOID	N/A	N/A	N/A	Strong but Fragile	InP capacity expansion July 2026	Very High	Owns 60-70% of InP substrate bottleneck but China mfg risk + unprofitable + extreme volatility
+MTSI	76	BUY	255	300	+18%	Strong	Raised growth to 35-40% + 1.6T component ramp	Medium	Best under-discovered AI photonics name; 57% gross margins, analog IC moat, data center +48%
+SIVE.ST	46	AVOID	N/A	N/A	N/A	Emerging	POET demos + O-Net ELS + LiDAR ramp Q4	Very High	InP DFB laser micro-cap; real tech, credible partners, but pre-profit and pre-scale
+SOI.PA	65	HOLD	59	50	-15%	Very Strong	Tower 5x SiPh expansion + photonics-SOI €100M+	Medium	Hidden photonics monopoly at 2.7x sales; 70% SOI share but mobile weakness masks story
+CRDO	82	BUY	100	170	+70%	Very Strong	53% pullback + 1.6T Bluebird DSP + 200G AEC	Medium-High	88% AEC monopoly, 68% GM, 200% growth, pulled back from $214; 67% customer concentration risk
+TSEM	75	BUY	164	200	+22%	Very Strong	5x SiPh capacity + NVIDIA collab + margin expansion	Medium	85% SiPh foundry share; TSMC of photonics. $920M expansion 70%+ reserved. Soitec sole supplier.
+5802.T	58	HOLD	9214	N/A	N/A	Moderate	EML demand + fiber buildout	Low	Japan conglomerate with EML/fiber exposure; not a pure play but cheap at 13-15x P/E
