@@ -9,6 +9,10 @@ AI is turning memory from a cyclical commodity into a system bottleneck. The hig
 
 See [results.tsv](results.tsv) for the full ranking.
 
+Interactive map:
+- [GitHub Pages map](https://timlihk.github.io/Investing/memory-supercycle/supply-chain-map.html)
+- [Local HTML file](supply-chain-map.html)
+
 ### BUY Ratings
 | Ticker | Score | Price | Target | Upside | Chokepoint |
 |--------|-------|-------|--------|--------|------------|
@@ -46,5 +50,6 @@ Individual company writeups are in [reports/](reports/).
 - [results.tsv](results.tsv) - Running scorecard
 - [universe.txt](universe.txt) - Expanding stock universe
 - [value-chain.md](value-chain.md) - Memory choke-point map
+- [supply-chain-map.html](supply-chain-map.html) - Interactive chokepoint map for GitHub Pages
 - [criteria.md](criteria.md) - Scoring rubric
 - [program.md](program.md) - Research agent operating instructions

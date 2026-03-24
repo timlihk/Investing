@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Supercycle Supply Chain Map</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(245, 158, 11, 0.08), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.08), transparent 30%),
+    #0b0f14;
+  color: #e6edf3;
+}
+.header {
+  padding: 28px 32px 20px;
+  border-bottom: 1px solid #1f2937;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(17, 24, 39, 0.92));
+}
+.header h1 {
+  font-size: 30px;
+  font-weight: 760;
+  letter-spacing: -0.03em;
+}
+.header p {
+  max-width: 980px;
+  font-size: 14px;
+  color: #98a2b3;
+  line-height: 1.55;
+  margin-top: 8px;
+}
+.header-links {
+  margin-top: 10px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.header-links a {
+  color: #7dd3fc;
+  text-decoration: none;
+  font-size: 13px;
+}
+.stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+.stat {
+  min-width: 140px;
+  padding: 12px 14px;
+  border: 1px solid #243244;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(8px);
+}
+.stat .val {
+  font-size: 22px;
+  font-weight: 760;
+}
+.stat .lbl {
+  margin-top: 3px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+}
+.controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 14px 32px;
+  border-bottom: 1px solid #1f2937;
+  background: rgba(10, 15, 22, 0.95);
+}
+.filter-btn {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid #334155;
+  background: rgba(15, 23, 42, 0.7);
+  color: #cbd5e1;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.filter-btn:hover,
+.filter-btn.active {
+  background: #0f766e;
+  border-color: #14b8a6;
+  color: #ecfeff;
+}
+.legend {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 12px 32px 0;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+.legend-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+.board-wrap {
+  padding: 20px 0 28px;
+  overflow-x: auto;
+}
+.board {
+  position: relative;
+  width: 1800px;
+  height: 980px;
+  margin: 0 auto;
+  border-radius: 24px;
+  border: 1px solid #1f2937;
+  background:
+    linear-gradient(180deg, rgba(15, 23, 42, 0.58), rgba(10, 15, 22, 0.88)),
+    linear-gradient(90deg, rgba(30, 41, 59, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(30, 41, 59, 0.08) 1px, transparent 1px);
+  background-size: auto, 120px 120px, 120px 120px;
+  overflow: hidden;
+}
+.lane-band {
+  position: absolute;
+  left: 42px;
+  right: 42px;
+  border: 1px dashed rgba(148, 163, 184, 0.18);
+  border-radius: 24px;
+  pointer-events: none;
+}
+.lane-band.hbm {
+  top: 112px;
+  height: 320px;
+  background: linear-gradient(90deg, rgba(251, 146, 60, 0.06), rgba(251, 191, 36, 0.04));
+}
+.lane-band.storage {
+  top: 490px;
+  height: 332px;
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.05), rgba(45, 212, 191, 0.04));
+}
+.lane-title {
+  position: absolute;
+  left: 56px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.lane-title.hbm {
+  top: 96px;
+  color: #fdba74;
+  background: rgba(124, 45, 18, 0.52);
+  border: 1px solid rgba(251, 146, 60, 0.4);
+}
+.lane-title.storage {
+  top: 474px;
+  color: #67e8f9;
+  background: rgba(8, 51, 68, 0.45);
+  border: 1px solid rgba(34, 211, 238, 0.35);
+}
+.column {
+  position: absolute;
+  top: 20px;
+  width: 240px;
+}
+.column h3 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #f8fafc;
+}
+.column p {
+  margin-top: 4px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #94a3b8;
+}
+.node-layer {
+  position: absolute;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #64748b;
+}
+.links {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+.edge {
+  fill: none;
+  stroke-width: 2.2;
+  opacity: 0.55;
+  transition: opacity 0.18s ease, stroke-width 0.18s ease;
+}
+.edge.hbm { stroke: #fb923c; }
+.edge.storage { stroke: #22d3ee; }
+.edge.backend { stroke: #a78bfa; }
+.edge.shared { stroke: #94a3b8; stroke-dasharray: 5 6; }
+.edge.faded { opacity: 0.1; }
+.edge.active {
+  opacity: 1;
+  stroke-width: 3.3;
+  filter: drop-shadow(0 0 10px rgba(125, 211, 252, 0.22));
+}
+.node {
+  position: absolute;
+  width: 210px;
+  padding: 12px 13px 11px;
+  border-radius: 16px;
+  border: 1px solid #314255;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.78));
+  box-shadow: 0 16px 28px rgba(2, 6, 23, 0.24);
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease, border-color 0.18s ease;
+}
+.node:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(2, 6, 23, 0.34);
+}
+.node.hidden {
+  opacity: 0.08;
+  pointer-events: none;
+}
+.node.related {
+  box-shadow: 0 0 0 2px rgba(125, 211, 252, 0.28), 0 18px 34px rgba(2, 6, 23, 0.38);
+}
+.node.buy { border-color: #15803d; }
+.node.hold { border-color: #475569; }
+.node.context {
+  width: 188px;
+  border-style: dashed;
+  border-color: #475569;
+  background: rgba(15, 23, 42, 0.62);
+}
+.node.chokepoint {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.25), 0 16px 28px rgba(2, 6, 23, 0.28);
+}
+.node.chokepoint::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 0;
+  height: 0;
+  border-top: 14px solid #f59e0b;
+  border-left: 14px solid transparent;
+  border-radius: 0 16px 0 0;
+}
+.node .head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.node .ticker {
+  font-size: 15px;
+  font-weight: 800;
+  color: #f8fafc;
+}
+.node.buy .ticker { color: #bbf7d0; }
+.node.chokepoint .ticker { color: #fde68a; }
+.node .score {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+.node.buy .score {
+  background: rgba(34, 197, 94, 0.18);
+  color: #86efac;
+}
+.node.hold .score,
+.node.context .score {
+  background: rgba(71, 85, 105, 0.45);
+  color: #cbd5e1;
+}
+.node .name {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #94a3b8;
+}
+.node .role {
+  margin-top: 8px;
+  font-size: 11px;
+  line-height: 1.45;
+  color: #cbd5e1;
+}
+.node .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.meta-tag {
+  padding: 3px 7px;
+  border-radius: 999px;
+  border: 1px solid #334155;
+  font-size: 10px;
+  color: #93c5fd;
+}
+.node.context .meta-tag { color: #cbd5e1; }
+.panel {
+  position: fixed;
+  top: 0;
+  right: -440px;
+  width: 440px;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.98);
+  border-left: 1px solid #243244;
+  box-shadow: -8px 0 32px rgba(2, 6, 23, 0.55);
+  z-index: 30;
+  transition: right 0.28s ease;
+  overflow-y: auto;
+}
+.panel.open { right: 0; }
+.panel-inner { padding: 24px 24px 34px; }
+.panel-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 24px;
+  cursor: pointer;
+}
+.panel h2 {
+  font-size: 24px;
+  font-weight: 800;
+}
+.panel .subtitle {
+  margin-top: 3px;
+  font-size: 13px;
+  color: #94a3b8;
+}
+.panel .panel-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.panel .tag {
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  border: 1px solid #334155;
+}
+.tag.buy { color: #86efac; border-color: rgba(34, 197, 94, 0.35); }
+.tag.hold { color: #cbd5e1; }
+.tag.chokepoint { color: #fde68a; border-color: rgba(245, 158, 11, 0.45); }
+.metric-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 18px;
+}
+.metric {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #233044;
+  background: rgba(10, 15, 22, 0.62);
+}
+.metric .val {
+  font-size: 16px;
+  font-weight: 800;
+  color: #e2e8f0;
+}
+.metric .lbl {
+  margin-top: 3px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+}
+.section {
+  margin-top: 18px;
+}
+.section h4 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #7dd3fc;
+  margin-bottom: 7px;
+}
+.section p,
+.section li {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #cbd5e1;
+}
+.section ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.section a {
+  color: #7dd3fc;
+  text-decoration: none;
+}
+.note {
+  padding: 0 32px 24px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+@media (max-width: 980px) {
+  .header, .controls, .legend, .note { padding-left: 18px; padding-right: 18px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Memory Supercycle &mdash; Interlinked Chokepoint Map</h1>
+  <p>
+    Interactive GitHub Pages map of the memory supply chain. The lines show how front-end memory capex, HBM packaging,
+    test/probe, backend services, and AI storage nodes feed into each other. Click a company to see why it matters,
+    what it depends on, and where the real choke points sit.
+  </p>
+  <div class="header-links">
+    <a href="https://github.com/timlihk/Investing/tree/main/memory-supercycle" target="_blank" rel="noreferrer">GitHub folder</a>
+    <a href="https://github.com/timlihk/Investing/blob/main/memory-supercycle/results.tsv" target="_blank" rel="noreferrer">Scorecard</a>
+    <a href="https://github.com/timlihk/Investing/blob/main/memory-supercycle/value-chain.md" target="_blank" rel="noreferrer">Value chain notes</a>
+  </div>
+  <div class="stats" id="stats"></div>
+</div>
+
+<div class="controls">
+  <button class="filter-btn active" data-filter="all">All Nodes</button>
+  <button class="filter-btn" data-filter="hbm">HBM Core Chain</button>
+  <button class="filter-btn" data-filter="storage">AI Storage Chain</button>
+  <button class="filter-btn" data-filter="buy">BUY Rated</button>
+  <button class="filter-btn" data-filter="chokepoint">Chokepoints</button>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-swatch" style="background:#134e4a;border:1px solid #14b8a6"></div>BUY rated</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#1e293b;border:1px solid #475569"></div>HOLD rated</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#f59e0b;border:1px solid #f59e0b"></div>Chokepoint</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#fb923c"></div>HBM chain link</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#22d3ee"></div>AI storage link</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#a78bfa"></div>Backend / capacity link</div>
+</div>
+
+<div class="board-wrap">
+  <div class="board" id="board">
+    <div class="lane-band hbm"></div>
+    <div class="lane-band storage"></div>
+    <div class="lane-title hbm">HBM Compute Chain</div>
+    <div class="lane-title storage">AI Storage Chain</div>
+
+    <div class="column" style="left: 72px;">
+      <h3>Shared Upstream</h3>
+      <p>Front-end memory equipment and process positions that feed both HBM and storage expansions.</p>
+    </div>
+    <div class="column" style="left: 372px;">
+      <h3>Packaging Tools</h3>
+      <p>Bonding, molding, and packaging-step vendors where capacity can tighten after wafers are made.</p>
+    </div>
+    <div class="column" style="left: 682px;">
+      <h3>Test & Backend</h3>
+      <p>Probe, test, OSAT, and memory-backend nodes that determine what actually ships as qualified product.</p>
+    </div>
+    <div class="column" style="left: 1002px;">
+      <h3>Memory Suppliers</h3>
+      <p>The manufacturers and controller layer that turn process capacity into usable HBM, NAND, and SSDs.</p>
+    </div>
+    <div class="column" style="left: 1308px;">
+      <h3>Demand Anchors</h3>
+      <p>Where the cycle monetizes: AI accelerators, hyperscalers, and storage-heavy inference infrastructure.</p>
+    </div>
+
+    <svg class="links" id="links"></svg>
+    <div id="nodes"></div>
+  </div>
+</div>
+
+<div class="note">
+  Lines represent the main dependency flow, not an exhaustive customer list. The map is designed to surface the narrowest and most strategically important points in the chain rather than every bilateral relationship.
+</div>
+
+<div class="panel" id="panel">
+  <button class="panel-close" id="panel-close">&times;</button>
+  <div class="panel-inner" id="panel-content"></div>
+</div>
+
+<script>
+const nodes = [
+  {
+    id: "8035T", ticker: "8035.T", name: "Tokyo Electron", score: 80, verdict: "BUY", market: "Japan",
+    x: 90, y: 250, chokepoint: true, chain: ["hbm", "storage"], report: "8035T.md",
+    role: "Shared front-end equipment choke point across DRAM, HBM thinning, advanced packaging, and probers.",
+    thesis: "TEL has POR positions in DRAM HBM interconnect, DRAM capacitors, HBM thinning and advanced-packaging steps. It is one of the broadest and safest ways to own the memory supercycle.",
+    upstream: ["Precision subsystems", "Process modules", "High-end components"],
+    downstream: ["SK hynix", "Micron", "Samsung", "Kioxia"],
+    metrics: { score: "80/100", target: "JPY 46,000", upside: "+19%", catalyst: "PORs + 2026 memory WFE growth" }
+  },
+  {
+    id: "042700KS", ticker: "042700.KS", name: "Hanmi Semi", score: 83, verdict: "BUY", market: "Korea",
+    x: 380, y: 120, chokepoint: true, chain: ["hbm"], report: "042700KS.md",
+    role: "TC bonder bottleneck for HBM stacking.",
+    thesis: "One of the cleanest chokepoints in HBM packaging. Every extra HBM stack needs qualified bonding capacity.",
+    upstream: ["Precision machinery", "Process control", "Service network"],
+    downstream: ["SK hynix", "Micron", "HBM lines"],
+    metrics: { score: "83/100", target: "KRW 360,000", upside: "+24%", catalyst: "HBM4 TC bonder demand" }
+  },
+  {
+    id: "0522HK", ticker: "0522.HK", name: "ASMPT", score: 81, verdict: "BUY", market: "Hong Kong",
+    x: 380, y: 245, chokepoint: true, chain: ["hbm"], report: "0522HK.md",
+    role: "TCB and advanced-packaging leader pushing into HBM4.",
+    thesis: "Underfollowed packaging-equipment name with multi-player HBM4 orders and a large installed TCB base.",
+    upstream: ["Motion systems", "Optics", "Advanced-packaging R&D"],
+    downstream: ["HBM makers", "Foundries", "OSATs"],
+    metrics: { score: "81/100", target: "HK$130", upside: "+25%", catalyst: "HBM4 12H TCB orders" }
+  },
+  {
+    id: "6315T", ticker: "6315.T", name: "TOWA", score: 75, verdict: "BUY", market: "Japan",
+    x: 380, y: 370, chokepoint: true, chain: ["hbm", "storage"], report: "6315T.md",
+    role: "Compression and singulation equipment with HBM4 panel-level packaging optionality.",
+    thesis: "Not a core HBM winner today, but real current memory order strength plus a credible HBM4 packaging roadmap.",
+    upstream: ["Back-end equipment platform", "Packaging process know-how"],
+    downstream: ["OSATs", "Memory packaging customers"],
+    metrics: { score: "75/100", target: "JPY 3,000", upside: "+24%", catalyst: "Record compression orders" }
+  },
+  {
+    id: "FORM", ticker: "FORM", name: "FormFactor", score: 79, verdict: "BUY", market: "United States",
+    x: 690, y: 120, chokepoint: true, chain: ["hbm"], report: "FORM.md",
+    role: "Probe-card choke point already shipping in volume to all three HBM makers.",
+    thesis: "Underfollowed HBM probe-card winner. Test intensity rises with every memory generation.",
+    upstream: ["Precision components", "Probe-card manufacturing"],
+    downstream: ["SK hynix", "Micron", "Samsung"],
+    metrics: { score: "79/100", target: "$120", upside: "+23%", catalyst: "HBM probe-card growth" }
+  },
+  {
+    id: "6857T", ticker: "6857.T", name: "Advantest", score: 76, verdict: "BUY", market: "Japan",
+    x: 690, y: 245, chokepoint: true, chain: ["hbm"], report: "6857T.md",
+    role: "Memory test choke point for high-performance DRAM and AI memory.",
+    thesis: "Test complexity keeps rising. Advantest gets paid before memory becomes revenue.",
+    upstream: ["ATE R&D", "Handlers", "Installed base"],
+    downstream: ["Memory makers", "Advanced DRAM test flows"],
+    metrics: { score: "76/100", target: "JPY 26,000", upside: "+17%", catalyst: "AI memory test demand" }
+  },
+  {
+    id: "AMKR", ticker: "AMKR", name: "Amkor", score: 74, verdict: "HOLD", market: "United States",
+    x: 690, y: 540, chokepoint: false, chain: ["storage"], report: "AMKR.md",
+    role: "Advanced packaging and outsourced test capacity with U.S. strategic optionality.",
+    thesis: "Amkor matters as a strategic packaging platform, especially around Arizona and AI supply-chain localization, but the margin profile is weaker than better chokepoints.",
+    upstream: ["Substrates", "Packaging materials", "OSAT capex"],
+    downstream: ["AI / HPC customers", "Foundries", "Semiconductor firms"],
+    metrics: { score: "74/100", target: "$55", upside: "+19%", catalyst: "Arizona advanced packaging expansion" }
+  },
+  {
+    id: "8110TW", ticker: "8110.TW", name: "Walton", score: 72, verdict: "HOLD", market: "Taiwan",
+    x: 690, y: 665, chokepoint: false, chain: ["storage"], report: "8110TW.md",
+    role: "Memory IC packaging and test specialist with niche backend know-how.",
+    thesis: "Real memory specialization, but weak operating quality and high customer concentration keep it below the top tier.",
+    upstream: ["Testing equipment", "Packaging materials", "Backend process know-how"],
+    downstream: ["Memory customers", "Winbond-linked demand", "Nuvoton-linked demand"],
+    metrics: { score: "72/100", target: "TWD 65", upside: "+21%", catalyst: "Backend memory recovery" }
+  },
+  {
+    id: "000660KS", ticker: "000660.KS", name: "SK hynix", score: 88, verdict: "BUY", market: "Korea",
+    x: 1000, y: 95, chokepoint: true, chain: ["hbm", "storage"], report: "000660KS.md",
+    role: "HBM leader and highest-conviction manufacturer in the current cycle.",
+    thesis: "The best direct HBM exposure in the market. Record margins and fully committed demand make it the center of the compute-memory chain.",
+    upstream: ["TEL tools", "HBM bonding", "Probe and test"],
+    downstream: ["NVIDIA", "Hyperscalers", "Enterprise SSD"],
+    metrics: { score: "88/100", target: "KRW 1,250,000", upside: "+28%", catalyst: "HBM4 leadership" }
+  },
+  {
+    id: "MU", ticker: "MU", name: "Micron", score: 86, verdict: "BUY", market: "United States",
+    x: 1000, y: 235, chokepoint: true, chain: ["hbm", "storage"], report: "MU.md",
+    role: "U.S. memory pure-play spanning HBM4, DRAM, NAND, and AI SSD.",
+    thesis: "Micron bridges both lanes of the map: HBM for compute and SSD/NAND for storage-heavy inference.",
+    upstream: ["TEL tools", "HBM packaging", "Test / probe"],
+    downstream: ["Accelerator platforms", "AI storage", "Hyperscalers"],
+    metrics: { score: "86/100", target: "$520", upside: "+29%", catalyst: "HBM4 + tight NAND" }
+  },
+  {
+    id: "005930KS", ticker: "005930.KS", name: "Samsung", score: 71, verdict: "HOLD", market: "Korea",
+    x: 1000, y: 375, chokepoint: false, chain: ["hbm", "storage"], report: "005930KS.md",
+    role: "Scale memory supplier with HBM, DRAM, NAND, and enterprise SSD breadth.",
+    thesis: "It remains indispensable to the chain, but execution on HBM still trails the stronger names.",
+    upstream: ["TEL tools", "Packaging tools", "Test / probe"],
+    downstream: ["AI memory", "Enterprise SSD", "Cloud"],
+    metrics: { score: "71/100", target: "KRW 220,000", upside: "+17%", catalyst: "HBM4 qualification" }
+  },
+  {
+    id: "SIMO", ticker: "SIMO", name: "Silicon Motion", score: 78, verdict: "BUY", market: "Taiwan / US",
+    x: 1000, y: 600, chokepoint: true, chain: ["storage"], report: "SIMO.md",
+    role: "Merchant NAND-controller bottleneck between flash supply and deployable SSDs.",
+    thesis: "A less obvious choke point: controller and firmware qualification become a bottleneck as AI storage demand rises.",
+    upstream: ["Foundry partners", "Firmware stack", "Packaging / test"],
+    downstream: ["SSD vendors", "Enterprise storage", "AI boot drives"],
+    metrics: { score: "78/100", target: "$150", upside: "+21%", catalyst: "MonTitan + Gen5 ramp" }
+  },
+  {
+    id: "SNDK", ticker: "SNDK", name: "Sandisk", score: 77, verdict: "BUY", market: "United States",
+    x: 1310, y: 545, chokepoint: false, chain: ["storage"], report: "SNDK.md",
+    role: "Flash pure-play with AI SSD demand and HBF optionality.",
+    thesis: "Not a pure chokepoint, but a direct beneficiary as inference pushes more capacity and bandwidth into storage tiers.",
+    upstream: ["Kioxia JV supply", "Controllers", "NAND process"],
+    downstream: ["Enterprise SSD", "AI storage", "Cloud"],
+    metrics: { score: "77/100", target: "$850", upside: "+21%", catalyst: "AI SSD demand outpacing supply" }
+  },
+  {
+    id: "285AT", ticker: "285A.T", name: "Kioxia", score: 74, verdict: "HOLD", market: "Japan",
+    x: 1310, y: 680, chokepoint: false, chain: ["storage"], report: "285AT.md",
+    role: "Large NAND and SSD supplier leveraged to AI storage demand.",
+    thesis: "Kioxia matters because the memory supercycle is broadening into data-center flash and enterprise SSD demand.",
+    upstream: ["TEL tools", "JV manufacturing", "NAND fabs"],
+    downstream: ["Data-center SSD", "Cloud", "Enterprise storage"],
+    metrics: { score: "74/100", target: "JPY 25,000", upside: "+19%", catalyst: "AI inference flash demand" }
+  },
+  {
+    id: "NVDA", ticker: "AI", name: "AI Accelerators", score: null, verdict: "context", market: "Demand anchor",
+    x: 1310, y: 95, chokepoint: false, chain: ["hbm"], report: null,
+    role: "HBM compute demand anchor.",
+    thesis: "HBM suppliers and packaging bottlenecks ultimately monetize through accelerator shipments.",
+    upstream: ["HBM supply", "HBM packaging", "Test / probe"],
+    downstream: ["Hyperscalers"],
+    metrics: { score: "Demand", target: "Context", upside: "", catalyst: "Accelerator ramps" }
+  },
+  {
+    id: "CLOUD", ticker: "CLOUD", name: "Hyperscalers", score: null, verdict: "context", market: "Demand anchor",
+    x: 1610, y: 245, chokepoint: false, chain: ["hbm", "storage"], report: null,
+    role: "The spenders that convert memory choke points into revenue.",
+    thesis: "Cloud and AI infrastructure capex is the common demand sink for both the HBM lane and the storage lane.",
+    upstream: ["Accelerators", "Enterprise SSD", "Packaging capacity"],
+    downstream: ["AI workloads"],
+    metrics: { score: "Demand", target: "Context", upside: "", catalyst: "AI capex" }
+  },
+  {
+    id: "AISTORE", ticker: "SSD", name: "AI Storage", score: null, verdict: "context", market: "Demand anchor",
+    x: 1610, y: 610, chokepoint: false, chain: ["storage"], report: null,
+    role: "Inference and storage-heavy workloads that pull NAND, controllers, and backend services.",
+    thesis: "This is the widening second leg of the memory supercycle beyond HBM.",
+    upstream: ["Controllers", "NAND supply", "Backend services"],
+    downstream: ["Hyperscalers", "Enterprise AI"],
+    metrics: { score: "Demand", target: "Context", upside: "", catalyst: "Inference growth" }
+  }
+];
+
+const edges = [
+  { from: "8035T", to: "000660KS", kind: "shared" },
+  { from: "8035T", to: "MU", kind: "shared" },
+  { from: "8035T", to: "005930KS", kind: "shared" },
+  { from: "8035T", to: "285AT", kind: "storage" },
+
+  { from: "042700KS", to: "000660KS", kind: "hbm" },
+  { from: "042700KS", to: "MU", kind: "hbm" },
+  { from: "0522HK", to: "000660KS", kind: "hbm" },
+  { from: "0522HK", to: "MU", kind: "hbm" },
+  { from: "0522HK", to: "005930KS", kind: "hbm" },
+  { from: "6315T", to: "MU", kind: "backend" },
+  { from: "6315T", to: "005930KS", kind: "backend" },
+
+  { from: "FORM", to: "000660KS", kind: "hbm" },
+  { from: "FORM", to: "MU", kind: "hbm" },
+  { from: "FORM", to: "005930KS", kind: "hbm" },
+  { from: "6857T", to: "000660KS", kind: "hbm" },
+  { from: "6857T", to: "MU", kind: "hbm" },
+  { from: "6857T", to: "005930KS", kind: "hbm" },
+
+  { from: "000660KS", to: "NVDA", kind: "hbm" },
+  { from: "MU", to: "NVDA", kind: "hbm" },
+  { from: "005930KS", to: "NVDA", kind: "hbm" },
+  { from: "NVDA", to: "CLOUD", kind: "hbm" },
+
+  { from: "AMKR", to: "CLOUD", kind: "backend" },
+  { from: "AMKR", to: "NVDA", kind: "backend" },
+  { from: "8110TW", to: "AISTORE", kind: "backend" },
+
+  { from: "SIMO", to: "SNDK", kind: "storage" },
+  { from: "SIMO", to: "285AT", kind: "storage" },
+  { from: "MU", to: "AISTORE", kind: "storage" },
+  { from: "000660KS", to: "AISTORE", kind: "storage" },
+  { from: "SNDK", to: "AISTORE", kind: "storage" },
+  { from: "285AT", to: "AISTORE", kind: "storage" },
+  { from: "AISTORE", to: "CLOUD", kind: "storage" }
+];
+
+const filters = {
+  all: node => true,
+  hbm: node => node.chain.includes("hbm"),
+  storage: node => node.chain.includes("storage"),
+  buy: node => node.verdict === "BUY" || node.verdict === "context",
+  chokepoint: node => node.chokepoint || node.verdict === "context"
+};
+
+const nodesEl = document.getElementById("nodes");
+const linksEl = document.getElementById("links");
+const statsEl = document.getElementById("stats");
+const panelEl = document.getElementById("panel");
+const panelContentEl = document.getElementById("panel-content");
+let activeFilter = "all";
+let activeNodeId = null;
+
+function repoReportUrl(file) {
+  return `https://github.com/timlihk/Investing/blob/main/memory-supercycle/reports/${file}`;
+}
+
+function renderStats() {
+  const scored = nodes.filter(node => !node.report ? false : true);
+  const buys = scored.filter(node => node.verdict === "BUY").length;
+  const chokepoints = scored.filter(node => node.chokepoint).length;
+  const avgScore = Math.round(scored.reduce((sum, node) => sum + node.score, 0) / scored.length);
+  statsEl.innerHTML = `
+    <div class="stat"><div class="val">${scored.length}</div><div class="lbl">Scored Companies</div></div>
+    <div class="stat"><div class="val" style="color:#34d399">${buys}</div><div class="lbl">BUY Ratings</div></div>
+    <div class="stat"><div class="val" style="color:#fbbf24">${chokepoints}</div><div class="lbl">Chokepoints</div></div>
+    <div class="stat"><div class="val" style="color:#7dd3fc">${avgScore}</div><div class="lbl">Average Score</div></div>
+  `;
+}
+
+function renderNodes() {
+  nodesEl.innerHTML = nodes.map(node => {
+    const classes = [
+      "node",
+      node.verdict === "BUY" ? "buy" : node.verdict === "HOLD" ? "hold" : "context",
+      node.chokepoint ? "chokepoint" : "",
+      activeNodeId && node.id !== activeNodeId ? "" : ""
+    ].join(" ");
+
+    const meta = [
+      node.market,
+      node.chokepoint ? "Chokepoint" : "Linked node",
+      ...(node.chain.includes("hbm") ? ["HBM"] : []),
+      ...(node.chain.includes("storage") ? ["Storage"] : [])
+    ];
+
+    return `
+      <div
+        class="${classes}"
+        id="node-${node.id}"
+        style="left:${node.x}px; top:${node.y}px;"
+        data-id="${node.id}">
+        <div class="head">
+          <div class="ticker">${node.ticker}</div>
+          <div class="score">${node.score ?? "CTX"}</div>
+        </div>
+        <div class="name">${node.name}</div>
+        <div class="role">${node.role}</div>
+        <div class="meta">
+          ${meta.map(item => `<span class="meta-tag">${item}</span>`).join("")}
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  nodes.forEach(node => {
+    const el = document.getElementById(`node-${node.id}`);
+    el.addEventListener("click", () => openPanel(node.id));
+  });
+}
+
+function nodeCenter(node) {
+  const width = node.verdict === "context" ? 188 : 210;
+  return { x: node.x + width / 2, y: node.y + 44 };
+}
+
+function edgePath(from, to) {
+  const start = nodeCenter(from);
+  const end = nodeCenter(to);
+  const dx = Math.max((end.x - start.x) * 0.45, 120);
+  return `M ${start.x} ${start.y} C ${start.x + dx} ${start.y}, ${end.x - dx} ${end.y}, ${end.x} ${end.y}`;
+}
+
+function renderEdges() {
+  linksEl.setAttribute("viewBox", "0 0 1800 980");
+  linksEl.innerHTML = edges.map((edge, idx) => {
+    const from = nodes.find(node => node.id === edge.from);
+    const to = nodes.find(node => node.id === edge.to);
+    return `<path id="edge-${idx}" class="edge ${edge.kind}" d="${edgePath(from, to)}"></path>`;
+  }).join("");
+}
+
+function relatedNodeIds(id) {
+  const related = new Set([id]);
+  edges.forEach(edge => {
+    if (edge.from === id) related.add(edge.to);
+    if (edge.to === id) related.add(edge.from);
+  });
+  return related;
+}
+
+function updateVisibility() {
+  const predicate = filters[activeFilter];
+  const visibleNodes = new Set(nodes.filter(predicate).map(node => node.id));
+
+  nodes.forEach(node => {
+    const el = document.getElementById(`node-${node.id}`);
+    const isVisible = visibleNodes.has(node.id);
+    el.classList.toggle("hidden", !isVisible);
+    el.classList.toggle("related", activeNodeId ? relatedNodeIds(activeNodeId).has(node.id) : false);
+  });
+
+  edges.forEach((edge, idx) => {
+    const edgeEl = document.getElementById(`edge-${idx}`);
+    const visible = visibleNodes.has(edge.from) && visibleNodes.has(edge.to);
+    const isActive = activeNodeId && (edge.from === activeNodeId || edge.to === activeNodeId);
+    edgeEl.style.display = visible ? "block" : "none";
+    edgeEl.classList.toggle("active", !!isActive);
+    edgeEl.classList.toggle("faded", !!activeNodeId && !isActive);
+  });
+}
+
+function openPanel(id) {
+  activeNodeId = id;
+  const node = nodes.find(item => item.id === id);
+  const upstream = edges.filter(edge => edge.to === id).map(edge => nodes.find(item => item.id === edge.from)?.ticker || edge.from);
+  const downstream = edges.filter(edge => edge.from === id).map(edge => nodes.find(item => item.id === edge.to)?.ticker || edge.to);
+  panelContentEl.innerHTML = `
+    <h2>${node.ticker}</h2>
+    <div class="subtitle">${node.name} &middot; ${node.market}</div>
+    <div class="panel-tags">
+      <span class="tag ${node.verdict === "BUY" ? "buy" : "hold"}">${node.verdict === "context" ? "Context" : node.verdict}</span>
+      ${node.chokepoint ? '<span class="tag chokepoint">Chokepoint</span>' : ''}
+      ${node.chain.includes("hbm") ? '<span class="tag hold">HBM</span>' : ''}
+      ${node.chain.includes("storage") ? '<span class="tag hold">Storage</span>' : ''}
+    </div>
+    <div class="metric-grid">
+      <div class="metric"><div class="val">${node.metrics.score}</div><div class="lbl">Score</div></div>
+      <div class="metric"><div class="val">${node.metrics.target}</div><div class="lbl">Target</div></div>
+      <div class="metric"><div class="val">${node.metrics.upside || "-"}</div><div class="lbl">Upside</div></div>
+      <div class="metric"><div class="val">${node.metrics.catalyst}</div><div class="lbl">Primary Catalyst</div></div>
+    </div>
+    <div class="section">
+      <h4>Role In Chain</h4>
+      <p>${node.role}</p>
+    </div>
+    <div class="section">
+      <h4>Investment Read</h4>
+      <p>${node.thesis}</p>
+    </div>
+    <div class="section">
+      <h4>Depends On</h4>
+      <ul>${upstream.map(item => `<li>${item}</li>`).join("") || "<li>No mapped upstream within this view</li>"}</ul>
+    </div>
+    <div class="section">
+      <h4>Supplies / Enables</h4>
+      <ul>${downstream.map(item => `<li>${item}</li>`).join("") || "<li>No mapped downstream within this view</li>"}</ul>
+    </div>
+    <div class="section">
+      <h4>Operational Inputs</h4>
+      <ul>${node.upstream.map(item => `<li>${item}</li>`).join("")}</ul>
+    </div>
+    <div class="section">
+      <h4>Primary Outputs</h4>
+      <ul>${node.downstream.map(item => `<li>${item}</li>`).join("")}</ul>
+    </div>
+    ${node.report ? `
+      <div class="section">
+        <h4>Full Report</h4>
+        <p><a href="${repoReportUrl(node.report)}" target="_blank" rel="noreferrer">Open ${node.report}</a></p>
+      </div>
+    ` : ""}
+  `;
+  panelEl.classList.add("open");
+  updateVisibility();
+}
+
+function closePanel() {
+  activeNodeId = null;
+  panelEl.classList.remove("open");
+  updateVisibility();
+}
+
+function setFilter(filter) {
+  activeFilter = filter;
+  document.querySelectorAll(".filter-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.filter === filter);
+  });
+  updateVisibility();
+}
+
+document.getElementById("panel-close").addEventListener("click", closePanel);
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => setFilter(btn.dataset.filter));
+});
+
+renderStats();
+renderNodes();
+renderEdges();
+updateVisibility();
+</script>
+</body>
+</html>

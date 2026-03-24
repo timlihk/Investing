@@ -37,6 +37,9 @@ HBM supply --> HBM bonding --> test / probe --> SSD controller --> AI storage
  SK hynix        Hanmi/ASMPT      Advantest/FORM    SIMO            SNDK/Kioxia
 ```
 
+Interactive map:
+- https://timlihk.github.io/Investing/memory-supercycle/supply-chain-map.html
+
 ## Methodology
 - Pull IR presentations, quarterly/annual filings for every company
 - Focus on moats and chokepoints (monopoly positions, sole-source relationships)
