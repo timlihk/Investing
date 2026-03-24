@@ -20,6 +20,23 @@ Soitec (SOI.PA) --> Tower Semi (TSEM) --> SiPh transceiver ICs --> modules --> A
   70% SOI share       85% SiPh foundry     Broadcom/Coherent/Intel
 ```
 
+### [Memory Supercycle](memory-supercycle/)
+Under-covered memory, packaging, test, and storage names benefiting from the AI memory supercycle. Focused on HBM supply, HBM packaging bottlenecks, memory test/probe intensity, and enterprise SSD expansion.
+
+**Top Picks (as of 2026-03-24):**
+| Ticker | Score | Verdict | Key Thesis |
+|--------|-------|---------|------------|
+| 000660.KS | 88 | BUY | HBM leader with fully committed 2026 supply and record margins |
+| MU | 86 | BUY | U.S. pure-play memory winner with HBM4 and AI SSD leverage |
+| 042700.KS | 83 | BUY | TC bonder bottleneck inside HBM stacking |
+| 0522.HK | 81 | BUY | Underfollowed HBM4 packaging / TCB leader |
+
+**Key Supply Chain Discovery:**
+```
+HBM supply --> HBM bonding --> test / probe --> SSD controller --> AI storage
+ SK hynix        Hanmi/ASMPT      Advantest/FORM    SIMO            SNDK/Kioxia
+```
+
 ## Methodology
 - Pull IR presentations, quarterly/annual filings for every company
 - Focus on moats and chokepoints (monopoly positions, sole-source relationships)

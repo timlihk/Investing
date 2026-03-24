@@ -1,0 +1,32 @@
+# Stock Universe — Memory Supercycle
+# Focus: memory makers and bottlenecks that benefit from HBM, server DRAM, enterprise SSD,
+# and memory packaging / test intensity
+# Format: TICKER (one per line, comments start with #)
+
+# Tier 1: Direct Memory Leaders
+000660.KS   # SK hynix — HBM leader, server DRAM + eSSD leverage
+MU          # Micron — pure-play U.S. memory, HBM4 + AI SSD
+005930.KS   # Samsung Electronics — largest memory franchise, HBM4 / DDR5 / eSSD optionality
+
+# Tier 2: HBM Packaging / Test Chokepoints
+042700.KS   # Hanmi Semiconductor — TC bonder bottleneck for HBM stacking
+0522.HK     # ASMPT — TCB / advanced packaging leader breaking into HBM4
+6857.T      # Advantest — memory test systems for high-performance DRAM / AI memory
+FORM        # FormFactor — HBM / DRAM probe card leverage
+
+# Tier 3: NAND / AI Storage
+285A.T      # Kioxia Holdings — NAND and enterprise SSD
+SNDK        # SanDisk — flash and enterprise SSD recovery
+SIMO        # Silicon Motion — NAND controller exposure
+
+# Tier 4: Memory Capex / Capacity Expansion
+8035.T      # Tokyo Electron — memory WFE exposure
+LRCX        # Lam Research — deposition / etch leverage to DRAM and NAND
+AMKR        # Amkor — advanced packaging capacity, memory-adjacent
+
+# Tier 5: Discovery Mode
+ASML        # Lithography, indirect but critical to next-gen memory nodes
+AMAT        # Materials and deposition broad beneficiary
+KLAC        # Process control, yield and inspection
+6315.T      # TOWA — packaging / molding and advanced packaging adjacency
+8110.TW     # Walton Advanced Engineering — memory packaging and test exposure
