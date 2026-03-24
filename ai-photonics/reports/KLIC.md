@@ -15,6 +15,14 @@ Kulicke & Soffa has pivoted from traditional wire bonding into advanced AI packa
 | CPO CAGR | 66% through 2033 |
 | Competition | #2 behind Besi in advanced packaging |
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: HOLD
 K&S has genuine SiPh/CPO packaging exposure through TCB orders and CoWoS qualification, but Besi (BESI.AS) is the stronger franchise with 42% die-attach share, hybrid bonding leadership, and 105% order growth. K&S is the secondary play in this layer. Would consider as a portfolio complement to Besi if diversifying equipment exposure.
 

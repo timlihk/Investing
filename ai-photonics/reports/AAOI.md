@@ -56,6 +56,14 @@ AAOI's moat is narrower than COHR/LITE but has unique angles:
 ### Valuation
 At ~$7B market cap on $456M TTM revenue (15x sales), AAOI is priced for the CY26 inflection to materialize. If data center revenue does 3.5x and total revenue reaches $1-1.2B with 30%+ gross margins and breakeven operating income, the stock could justify current levels at ~6-7x forward sales. However, if the ramp disappoints or margins don't expand, the downside is severe -- the stock was at $9.71 just one year ago. The zero-debt balance sheet provides some cushion, but $206M in cash against $354M annual FCF burn means the runway is finite without profitability improvement.
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: HOLD
 AAOI is the most interesting "under-discovered" name in the AI photonics space -- it's earlier in its growth arc, has a clean balance sheet, and the U.S. manufacturing angle is genuinely differentiated. However, it's still unprofitable, burning cash aggressively on capacity expansion, and the stock has already run 10x from its 52-week low. The risk/reward improves materially on a pullback to the $60-70 range where the 1.6T ramp optionality comes at a cheaper price. Watch closely for Q1 2026 results as the key inflection proof point.
 

@@ -57,6 +57,19 @@ Coherent has assembled a rare vertical integration stack in photonics:
 ### Valuation
 At ~50x forward non-GAAP P/E and ~57x EV/EBITDA, Coherent is priced for a best-case 1.6T ramp scenario. The stock trades well above the average analyst target of $214. Even assuming non-GAAP EPS reaches $7-8 in FY27 (aggressive but plausible), that implies a forward P/E of 32-37x -- still premium but more digestible. The NVIDIA partnership and 1.6T leadership justify some premium, but at current levels, much of the AI optionality is already baked in. PEG ratio is unfavorable given GAAP profitability remains thin.
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `PROPOSED+R&D`.
+
+In the latest official ai-photonics sweep, this company screened as CHIPS-linked: Up to $79M Easton PMT + up to $33M Sherman InP PMT + $15M CLAWS Hub. This is mixed support: part proposed direct funding, part CHIPS-backed ecosystem / R&D support. That is directionally positive for the thesis in this report, but it is not the same as a clean finalized award.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
+Primary sources:
+- https://www.commerce.gov/news/press-releases/2025/01/department-commerce-announces-preliminary-terms-analog-devices-coherent
+- https://www.coherent.com/news/press-releases/coherent-secures-chips-act-funding
+- https://www.coherent.com/news/press-releases/pmt-for-expansion-of-worlds-first-150mm-inp-mfg-line
+
 ### Verdict: HOLD
 Coherent is the right horse in the right race -- the optical interconnect bottleneck is real and Coherent has the best product portfolio to address it. However, the stock has re-rated dramatically and trades above consensus targets. Better entry points likely exist on any pullback tied to AI capex concerns or quarterly volatility. Initiate positions on dips below $200.
 

@@ -22,6 +22,14 @@ Vertiv is the power and cooling infrastructure backbone of AI data centers -- NV
 - **Coherent's Thermadite competes**: Coherent's $2B SAM thermal materials business (Thermadite diamond-SiC cold plates) directly addresses the same cooling challenge.
 - **Infrastructure demand signal**: Vertiv's $15B backlog and 252% order growth confirms the scale of AI data center buildout that drives all upstream photonics demand.
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: HOLD
 Vertiv is a critical AI infrastructure company with best-in-class demand indicators ($15B backlog, +252% orders), but it's a cooling/power play rather than an optical/photonics play. For investors focused on AI data center infrastructure broadly, Vertiv is a top-tier holding. For the photonics-specific thesis, it serves as a demand confirmation signal rather than a direct investment.
 

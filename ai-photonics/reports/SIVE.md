@@ -42,6 +42,19 @@ Sivers Semiconductors is a Swedish micro-cap with a photonics division that desi
 ### Valuation
 At ~$250M market cap on ~$33M revenue (7.5x sales), Sivers is reasonably valued for a micro-cap growth company if the photonics business converts partnerships to volume production. The LiDAR ramp ($53-138M lifecycle) and CPO/ELS opportunity could transform the revenue profile. But at this stage, the valuation is based on optionality, not current fundamentals.
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `R&D`.
+
+In the latest official ai-photonics sweep, this company screened as CHIPS-linked: NEMC / Microelectronics Commons awards; $11.6M first-half signed, ~$30M potential over 3 years; Wireless division. The key caveat is that this is CHIPS-backed R&D / hub support, not a direct commercial-facility subsidy. In Sivers' case specifically, the funded programs sit in the Wireless division, so this should be treated as balance-sheet and ecosystem support rather than a clean optical-fab tailwind.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
+Primary sources:
+- https://www.sivers-semiconductors.com/wp-content/uploads/2025/04/Sivers_arsredovisning_2024.pdf
+- https://www.sivers-semiconductors.com/wp-content/uploads/2025/05/Sivers-Interim-report-Q125_FINAL.pdf
+- https://www.sivers-semiconductors.com/wp-content/uploads/2026/02/Sivers-Interim-report-Q425_Final.pdf
+
 ### Verdict: AVOID
 Sivers has genuine InP laser technology and credible partnerships in the AI photonics ecosystem, but it's too early, too small, and too risky for most portfolios. The POET partnership, O-Net ELS module, and LiDAR ramp are all 2026-2027 events that need to materialize before the investment case is proven. Monitor for: (1) first high-volume production order, (2) Photonics spin-off to NASDAQ, (3) revenue inflection above SEK 500M. For speculative micro-cap investors comfortable with Stockholm-listed equities, this is a watchlist name.
 

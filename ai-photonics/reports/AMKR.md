@@ -15,6 +15,17 @@ Amkor is the #2 global OSAT (behind ASE) with 2.5D advanced packaging nearly tri
 | Photonics Focus | Teams for SiPh, MEMS, optical sensors |
 | Exchange | NASDAQ (AMKR) |
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `FINAL`.
+
+In the latest official ai-photonics sweep, this company screened as CHIPS-linked: Up to $407M final award for Arizona advanced packaging and test. This is real awarded CHIPS support and should be treated as a strategic tailwind for capacity, process control, or packaging capability. It is a positive update, but not a standalone reason to own the stock.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
+Primary sources:
+- https://www.commerce.gov/news/press-releases/2024/12/biden-harris-administration-announces-chips-incentives-award-amkor
+
 ### Verdict: HOLD
 Amkor is the #2 packaging infrastructure company for AI chips with strong 2.5D growth and a new $7B US facility. Less directly photonics-focused than ASE but a solid broad packaging play. For SiPh-specific packaging exposure, ASE (3711.TW) is more targeted.
 

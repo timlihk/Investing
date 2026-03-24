@@ -22,6 +22,14 @@ X-FAB is a European specialty foundry (Euronext Paris-listed) building a silicon
 - Multi-material platform (SOI + InP + SiN + LiNbO3) is differentiated.
 - But SiPh is a small fraction of total foundry revenue; Tower has 85% share.
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: HOLD
 X-FAB is building an interesting heterogeneous photonics foundry platform, but it's very early (production 2027) and SiPh is a small segment of the broader specialty foundry. Tower Semi and GlobalFoundries are far ahead in volume SiPh. Monitor for InP-on-Silicon production qualification and first customer ramp. Niche European play for investors who believe heterogeneous integration will outperform pure silicon photonics.
 

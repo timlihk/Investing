@@ -29,6 +29,14 @@ FormFactor is the leading probe card maker for semiconductor wafer testing, and 
 - **Also sells to**: NVIDIA, AMD, Broadcom for logic/AI chip testing
 - **Keystone addition**: Optical probing for SiPh specifically
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: HOLD
 FormFactor is a smart under-the-radar play on photonic chip testing volumes -- every SiPh wafer needs probe testing, and the Keystone acquisition positions FormFactor as the SiPh test standard. At ~$4.5B market cap with a path to $850M revenue, the valuation assumes significant execution. Would upgrade to BUY if SiPh testing revenue reaches 20%+ of total and margins expand above target model.
 

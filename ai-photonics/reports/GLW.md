@@ -60,6 +60,17 @@ Corning is the **physical layer foundation** of all optical networking:
 4. **Capex cycles**: Hyperscaler fiber spending can be lumpy. Meta deal provides visibility but others may delay.
 5. **Margin profile**: 20% operating margin is good for materials but below pure-play semis (MACOM 35%, Credo 45%+).
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `FINAL`.
+
+In the latest official ai-photonics sweep, this company screened as CHIPS-linked: Up to $32M final Corning award for HPFS / ULE lithography materials. This is real awarded CHIPS support and should be treated as a strategic tailwind for capacity, process control, or packaging capability. It is a positive update, but not a standalone reason to own the stock.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
+Primary sources:
+- https://www.commerce.gov/news/press-releases/2025/01/us-department-commerce-announces-chips-incentives-awards-corning
+
 ### Verdict: HOLD
 Corning is one of the most under-appreciated AI infrastructure plays -- the physical fiber that every photon in an AI data center travels through. The $6.3B optical revenue, $1B profit, and $6B Meta deal demonstrate the AI demand is real and growing. However, the stock has largely re-rated (+91%) and sits near the BofA target of $144, leaving limited near-term upside. Would upgrade to BUY on a pullback to $115-120 or if the Springboard plan materially exceeds expectations.
 

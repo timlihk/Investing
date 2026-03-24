@@ -27,6 +27,14 @@ UMC is Taiwan's #2 foundry (behind TSMC) that has licensed imec's iSiPP300 silic
 - **Customers**: Working with "several new customers" for PIC chips
 - **Technology partner**: imec (Belgium research institute)
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: HOLD
 UMC's SiPh entry is strategically important -- it creates supply chain diversification for fabless photonics companies currently dependent on Tower Semi. However, risk production in 2026-2027 means meaningful SiPh revenue is years away. Tower Semi's 85% share and 5x expansion make it the entrenched leader. UMC is the long-term diversification play for the SiPh foundry market, not a near-term photonics investment.
 

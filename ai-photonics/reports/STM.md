@@ -29,6 +29,14 @@ STMicroelectronics has quietly entered high-volume production of its PIC100 sili
 - STM's European fabs provide geographic diversification
 - Competition reduces Tower Semi's monopoly pricing power
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: HOLD
 STM's PIC100 SiPh production is a significant supply chain development -- adding a 5th major foundry option and quadrupling capacity by 2027. But SiPh is still a tiny business within $13B revenue, and Tower Semi's 85% share won't be displaced quickly. For pure SiPh foundry exposure, Tower Semi (TSEM) remains the higher-conviction play. STM offers diversified European semiconductor exposure with SiPh optionality.
 

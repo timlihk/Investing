@@ -95,6 +95,14 @@ At $100/share and $20.3B market cap, CRDO trades at:
 
 The stock is 53% below its ATH and well below the analyst median target of $225. If Credo delivers on FY26 guidance ($960M+), gross margins stay above 65%, and the Bluebird DSP ramp gains traction, fair value is $150-180 (25-30x FY27E earnings). The 67% customer concentration warrants a discount, but the pullback already embeds significant risk.
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: BUY
 Credo is a franchise-quality connectivity business trading at a significant discount to its recent highs and analyst targets. The 88% AEC market share, 68% gross margins, 200%+ revenue growth, and strategic partnerships with the two largest cloud spenders on Earth create a multi-layered moat that competitors will struggle to replicate. The 67% customer concentration is a real risk that demands position sizing discipline (smaller position than MTSI), but the pullback from $214 to $100 prices in substantial downside already.
 

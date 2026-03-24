@@ -30,6 +30,14 @@ Veeco MOCVD → grows InP/GaAs epitaxial layers → on AXT/JX substrates → bec
 - **Competes with**: Aixtron (AIXA.DE, German-listed MOCVD duopoly partner)
 - **Sells to**: Every InP/GaAs chip maker, including Lumentum, Coherent, WIN Semi, IQE
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: HOLD
 Veeco is the MOCVD equipment chokepoint for compound semiconductor photonic chips -- a critical upstream tool that every laser maker needs. The Axcelis merger creates a larger combined entity but adds complexity. Aixtron (AIXA.DE) is the European duopoly partner worth monitoring. For photonics equipment exposure, Veeco/Axcelis or Aixtron provide direct upstream tool access.
 

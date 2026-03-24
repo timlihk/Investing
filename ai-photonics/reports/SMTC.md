@@ -54,6 +54,14 @@ Semtech is an under-discovered optical analog IC company with a transformative p
 4. **Stock volatility**: $24 to $96 in 52 weeks. High beta.
 5. **IoT segment cyclicality**: LoRa business can drag overall results during IoT downturns.
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: HOLD
 Semtech is the most under-discovered optical IC play in this research -- the LPO thesis (removing the DSP from optical modules) is genuinely disruptive if it gains adoption, and FiberEdge TIAs are already inside hyperscaler-validated modules. The CopperEdge ACC competes directly with Credo's AEC monopoly. At $7-8B market cap with record revenue and 50%+ DC growth projected, the valuation is reasonable if the LPO ramp materializes. Would upgrade to BUY on: (1) LPO becoming the majority architecture at a major hyperscaler, or (2) data center revenue exceeding $200M/quarter.
 

@@ -52,6 +52,14 @@ POET's moat is theoretical rather than proven:
 ### Valuation
 At ~$538M market cap with negligible revenue, POET can only be valued on technology optionality. If the optical interposer platform achieves high-volume production and captures even 5% of the $20B+ data center interconnect market by 2030, that's $1B+ in revenue -- potentially justifying a multi-billion dollar market cap. But the probability-weighted expected value must account for significant chances of failure, dilution, or acquisition at a fraction of that value. At $5.93, the stock is essentially a call option on photonic integration technology.
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: AVOID
 POET has genuinely interesting technology and credible manufacturing partnerships, but it remains a pre-revenue speculative bet with extreme execution risk. The 12-18 month timeline to meaningful production, ~$35-70M annual cash burn, competitive threats from well-resourced incumbents, and history of photonics startups failing to scale all argue for patience. Revisit after the company demonstrates >$10M quarterly revenue and at least one hyperscaler qualification. For most investors, COHR/LITE/FN offer AI photonics exposure with dramatically less risk.
 

@@ -62,6 +62,14 @@ LITE trades at ~25x TTM revenue and 62x forward non-GAAP P/E -- pricing in near-
 
 If you believe the $2B quarterly target is achievable AND sustainable, there's still some upside. But the risk/reward is asymmetric to the downside at current levels.
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: HOLD
 Lumentum may be the single best-positioned company in AI photonics -- the laser chip bottleneck is real and their dominance is undeniable. But the stock has re-rated from $46 to $729 in one year, pricing in nearly the full $8B revenue trajectory. The NVIDIA deal provides a demand floor but also brings dilution. This is a "right company, wrong price" situation. Aggressive entry would require a pullback to the $450-500 range where the risk/reward becomes more compelling.
 

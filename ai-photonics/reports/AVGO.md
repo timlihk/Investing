@@ -46,6 +46,14 @@ Broadcom sits at the CENTER of the photonics supply chain:
 - **Downstream**: Arista (ANET) integrates Tomahawk in switches; Innolight/Coherent/AAOI use Broadcom components
 - **Competes with**: Marvell (MRVL) in optical DSP + custom XPU; Credo (CRDO) in optical DSP; Intel in custom silicon
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: BUY
 Broadcom is the most important company in AI infrastructure after NVIDIA -- it makes the switching silicon that every GPU cluster requires, the optical DSPs that every transceiver uses, and the custom AI chips that Google/Meta/OpenAI run on. At $323 with analyst target $431 (+39% upside), and AI revenue doubling, the risk/reward is attractive even at $1.53T market cap. The 68% EBITDA margin and $162B backlog provide extraordinary visibility.
 

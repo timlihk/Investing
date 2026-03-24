@@ -58,6 +58,14 @@ Ciena's moat is technology-and-backlog driven:
 ### Valuation
 At $43B market cap on $4.77B TTM revenue, Ciena trades at 9x sales -- expensive for networking equipment. However, the guided margin expansion to 17% operating margin on ~$5.9B FY26 revenue implies ~$1B operating income and ~$800M net income, putting the forward P/E at ~54x. The $742M TTM FCF is impressive (P/FCF ~58x). If Ciena executes on the margin expansion and backlog, the stock could grow into its valuation by FY27. But at current levels, most of the AI optical networking re-rating has already happened. Stifel's $430 target assumes full execution; the $314 consensus average is below current price.
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: HOLD
 Ciena is a quality franchise with the best technology in optical networking, unprecedented demand visibility ($5B backlog, $7.8B orders), and a credible margin expansion story. The Nubis acquisition smartly extends into intra-DC interconnects. However, the stock has repriced from $49 to $350+ in 52 weeks, the consensus target is below current price, and the margin expansion must be delivered to justify the multiple. Wait for either a pullback to $280-300 or confirmation of 17% operating margins before buying.
 

@@ -40,6 +40,18 @@ GlobalFoundries is emerging as Tower Semiconductor's primary competitor in silic
 - **Downstream**: Broadcom, Marvell, Cisco, NVIDIA fab SiPh chips on GF Fotonix, which go into optical transceivers
 - **Competes with**: Tower Semiconductor (TSEM) -- the dominant SiPh foundry
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `FINAL+AMENDED`.
+
+In the latest official ai-photonics sweep, this company screened as CHIPS-linked: Up to $1.5B final + $75M amended Malta photonic packaging award. This is real awarded CHIPS support, not just a negotiation artifact, and it lowers execution risk around the manufacturing and packaging capacity discussed in this report. It strengthens the strategic case, but it does not remove the need for valuation discipline.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
+Primary sources:
+- https://investors.gf.com/node/9451/pdf
+- https://www.commerce.gov/news/press-releases/2025/01/us-department-commerce-announces-chips-incentives-awards-corning
+
 ### Verdict: HOLD
 GFS is the #2 SiPh foundry with a credible path to $1B+ revenue, but the legacy foundry business and weak margins make it a diluted play on the photonics theme. At 3.8x sales with SiPh revenue doubling annually, there's optionality value if photonics becomes a larger share. But Tower Semiconductor (TSEM) is the higher-conviction SiPh foundry play with 85% share and dedicated expansion. GFS is the diversified alternative for investors who want foundry exposure with SiPh upside.
 

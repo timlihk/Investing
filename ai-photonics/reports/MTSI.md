@@ -52,6 +52,17 @@ MACOM's moat is analog semiconductor IP + vertical integration:
 ### Valuation
 At 19x TTM sales and ~57% gross margins, MACOM trades in line with premium analog semiconductor peers (Analog Devices at ~12x, but with slower growth). If FY26 delivers on the 35-40% growth outlook ($1.3-1.35B revenue) with 58%+ gross margins and 25%+ operating margins, operating income could reach $325-340M. At a 25x P/E on ~$275M net income, fair value is ~$7B -- well below the current $18.6B market cap. However, the market is pricing in multi-year growth and margin expansion toward analog semi norms (35%+ operating margins on $2B+ revenue). If MACOM reaches $2B revenue with 35% operating margins by FY28, that's $700M operating income and potentially $500M+ net income, justifying a $15-20B market cap. The current price embeds 2-3 years of growth -- stretched but not unreasonable for a franchise-quality analog business.
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `PROPOSED`.
+
+In the latest official ai-photonics sweep, this company screened as CHIPS-linked: Up to $70M PMT for Lowell/Durham GaN-GaAs expansion. The important nuance is that this support was still in proposed / PMT form in the latest official sweep, so it should be modeled as option value and strategic relevance rather than fully booked cash.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
+Primary sources:
+- https://www.commerce.gov/news/press-releases/2025/01/us-department-commerce-announces-preliminary-terms-macom-help
+
 ### Verdict: BUY
 MACOM is the best risk-adjusted under-discovered name in the AI photonics value chain. The 57% gross margin profile places it in the top tier of analog semiconductor companies, the 48% data center growth provides the AI tailwind, and the defense revenue floor provides downside protection. Unlike pure-play transceiver companies that face Chinese pricing competition, MACOM's analog IC moat is protected by design complexity, qualification barriers, and vertical integration. The valuation is full but justifiable for the quality and growth trajectory.
 

@@ -34,6 +34,14 @@ IPG Photonics is the world's largest fiber laser company, but its business is ov
 - Gross margins declining on tariffs and competition
 - $5.2B market cap on $31M net income = 167x P/E
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: AVOID
 IPG Photonics is a great technology company in the wrong market for this thesis. Industrial fiber lasers are commoditizing, not growing, and the company has no meaningful AI data center business. The defense pivot is interesting but early. For AI photonics exposure, every other name in this universe is more directly relevant. Skip unless you're specifically bullish on industrial laser recovery.
 

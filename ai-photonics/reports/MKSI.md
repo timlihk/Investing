@@ -31,6 +31,14 @@ MKS Instruments is a diversified photonics/vacuum/materials company with indirec
 - Semiconductor equipment cycle can turn quickly
 - PSD segment is a small portion of overall business
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: HOLD
 MKS is a solid industrial technology company with some AI photonics adjacency through its PSD segment, but it's not a targeted way to play the optical interconnect buildout. Better as a semiconductor capex play than an AI photonics play. The 3.9x sales valuation is reasonable but the growth profile (10.5%) is unexciting relative to pure-play alternatives.
 

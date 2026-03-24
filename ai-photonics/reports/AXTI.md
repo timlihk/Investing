@@ -46,6 +46,14 @@ AXT's moat is geological and process-based:
 ### Valuation
 At 20-30x TTM sales while unprofitable, AXT is priced purely on its strategic bottleneck position. If capacity expansion succeeds and revenue reaches $200-300M with normalized 30%+ gross margins, the company could justify a $2-3B valuation. But the China risk creates a binary outcome -- either the geopolitical situation remains manageable and AXT captures the InP supercycle, or it doesn't and the stock returns to single digits. This is a lottery ticket, not an investment.
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: AVOID
 AXT owns the most strategically important position in the AI photonics supply chain -- the InP substrate bottleneck -- but the China manufacturing risk, unprofitability, extreme volatility, and inflated valuation make it uninvestable for most portfolios. The thesis is "own the bottleneck material," but the execution risk and geopolitical risk are too high at current prices. Monitor for: (1) successful capacity expansion outside China, (2) profitability inflection, (3) significant price correction. If the company establishes non-China manufacturing and reaches profitability, this could be a compelling BUY.
 

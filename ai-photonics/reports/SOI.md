@@ -52,6 +52,14 @@ Soitec's moat may be the deepest in the entire AI photonics value chain:
 ### Valuation
 At ~€2.4B market cap on €891M revenue (2.7x sales), Soitec is the cheapest name in the entire AI photonics universe. The 70% SOI market share and monopoly in photonics-SOI wafers is extraordinary moat quality at a bargain valuation. The issue is that the market is pricing in the mobile SOI headwinds, not the photonics-SOI tailwinds. If photonics-SOI reaches €200M+ (plausible within 2-3 years as Tower/GF expand), and mobile SOI stabilizes, Soitec could see €1.1-1.2B revenue with 35%+ EBITDA margins -- implying 2-3x upside from current levels. The risk is that mobile weakness persists and photonics growth is slower than hoped.
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: HOLD
 Soitec is one of the most interesting under-discovered names in this research -- a monopoly substrate supplier at the foundation of silicon photonics, trading at 2.7x sales while the rest of AI photonics trades at 5-25x. The Smart Cut moat is world-class and the Tower Semiconductor capacity expansion provides a direct demand catalyst. The headwind is that 89% of revenue is non-photonics and declining. Would upgrade to BUY on: (1) evidence of mobile SOI stabilization, (2) photonics-SOI exceeding €150M run rate, or (3) stock pullback to €45-50 range. For patient investors with a 2-3 year horizon and Euronext access, this is the best value in AI photonics.
 

@@ -54,6 +54,14 @@ Celestica sits between chip designers and end-users:
 4. **Competition from Flex/Jabil**: Larger EMS companies could pursue the same custom AI networking manufacturing market.
 5. **Commodity perception**: Market may view Celestica as a low-margin contract manufacturer rather than an AI infrastructure play, capping valuation.
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: HOLD (near BUY)
 Celestica is a compelling under-appreciated AI infrastructure play with 37% revenue growth guidance, 55% custom Ethernet switch share, and direct exposure to every dollar of AI data center capex. The FY26 guide raise to $17B from $16B signals management confidence. At ~$12B market cap on $17B FY26 revenue (~0.7x sales), the stock is extremely cheap if you believe the AI buildout continues. Would upgrade to BUY on confirmation that CCS margins are expanding, or on any pullback that brings the stock to a level where the risk/reward is more asymmetric.
 

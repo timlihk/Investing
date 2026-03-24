@@ -29,6 +29,14 @@ Huber+Suhner is a Swiss connectivity company that owns Polatis -- the industry-s
 - Other hyperscalers adopting OCS (Meta, Microsoft)
 - Record order intake (+13.7%) signals demand momentum
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: HOLD
 Huber+Suhner owns the leading OCS technology in a market heading from near-zero to $2.5B by 2029. But OCS is still early, and the company is a diversified Swiss industrial with multiple non-AI segments. For investors with Swiss market access who want early OCS exposure, this is interesting. Lumentum (LITE, guiding $100M/quarter OCS by end 2026) may be a more liquid way to play the OCS theme.
 

@@ -91,6 +91,14 @@ Tower's moat is a classic foundry platform lock-in:
 ### Valuation
 At $17.1B market cap on $1.57B revenue (10.9x sales), Tower is expensive for a foundry but cheap for a SiPh monopolist. The key variable is margin expansion: if gross margins reach 35-40% on $2.5B+ revenue by FY27-28, net income could reach $500-700M, putting the forward P/E at 24-34x -- reasonable for a high-growth specialty foundry. The net cash position ($990M, $8.80/share) provides substantial downside support. The stock breaking above its 52-week high suggests the market is beginning to recognize the SiPh story. Entry on a pullback to $130-140 would be ideal.
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: BUY
 Tower Semiconductor is the foundry chokepoint of silicon photonics -- an 85% market share position with $920M of expansion funded, 70%+ already reserved by customers, NVIDIA collaboration, and a margin expansion trajectory from 23% to 40%. The Soitec-Tower duopoly controls the foundation of the entire SiPh transceiver supply chain. While the stock has run significantly and sits above consensus targets, the multi-year growth trajectory (SiPh revenue from $228M to $1B+) and margin expansion story justify current valuation with further upside.
 

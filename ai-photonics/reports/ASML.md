@@ -15,6 +15,14 @@ ASML is the monopoly supplier of lithography equipment (EUV and DUV) used to pat
 | Foundry Expansion | Tower 5x, GF AMF, UMC, STM 4x, X-FAB |
 | Exchange | NASDAQ (ASML), Euronext Amsterdam |
 
+
+### CHIPS Act Update (2026-03-25)
+Status: `NONE`.
+
+The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
+
+Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
+
 ### Verdict: HOLD
 ASML is the ultimate picks-and-shovels monopoly for all semiconductor manufacturing including SiPh. Every new SiPh foundry capacity expansion (Tower 5x, GF, UMC, STM 4x) means more ASML lithography tools. Context note -- too large and diversified for a photonics-specific thesis.
 
