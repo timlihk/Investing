@@ -8,40 +8,54 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#080b12;color:#c9d1d9;overflow-x:hidden}
 canvas{display:block}
-#tooltip{position:fixed;display:none;background:#161b22;border:1px solid #30363d;border-radius:10px;padding:18px 22px;max-width:400px;box-shadow:0 8px 24px rgba(0,0,0,.6);z-index:1000;pointer-events:none;font-size:14px;line-height:1.6}
+#tooltip{position:fixed;display:none;background:#161b22;border:1px solid #30363d;border-radius:10px;padding:18px 22px;max-width:420px;box-shadow:0 8px 24px rgba(0,0,0,.6);z-index:1000;pointer-events:none;font-size:14px;line-height:1.6}
 #tooltip h3{font-size:18px;color:#f0f6fc;margin-bottom:4px}
-#tooltip .sub{font-size:13px;color:#8b949e;margin-bottom:10px}
-#tooltip .tag{display:inline-block;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600;margin-right:4px}
+#tooltip .sub{font-size:13px;color:#8b949e;margin-bottom:8px}
+#tooltip .tag{display:inline-block;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600;margin-right:4px;margin-bottom:4px}
 .tag-buy{background:#23863620;color:#3fb950;border:1px solid #238636}
 .tag-hold{background:#30363d50;color:#c9d1d9;border:1px solid #30363d}
 .tag-avoid{background:#f8514920;color:#f85149;border:1px solid #da3633}
 .tag-choke{background:#d2992220;color:#e3b341;border:1px solid #d29922}
 .tag-mono{background:#f8514920;color:#ff7b72;border:1px solid #f85149}
+.tag-golden{background:#a371f720;color:#bc8cff;border:1px solid #8957e5}
 #tooltip .thesis{margin-top:8px;font-size:13px;color:#8b949e;line-height:1.5}
-#tooltip .metrics{margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:4px}
-#tooltip .m{background:#0d1117;border-radius:4px;padding:4px 8px}
-#tooltip .m .v{font-weight:700;color:#58a6ff;font-size:13px}
-#tooltip .m .l{font-size:9px;color:#8b949e;text-transform:uppercase}
-#ui{position:fixed;top:16px;left:16px;z-index:100;display:flex;flex-direction:column;gap:8px}
-#ui h1{font-size:24px;font-weight:700;color:#f0f6fc;text-shadow:0 2px 8px rgba(0,0,0,.5)}
-#ui p{font-size:14px;color:#8b949e;max-width:360px;line-height:1.5}
+#tooltip .fin{margin-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+#tooltip .fin .f{background:#0d1117;border-radius:6px;padding:8px 10px;text-align:center}
+#tooltip .fin .fv{font-weight:700;font-size:16px}
+#tooltip .fin .fl{font-size:10px;color:#8b949e;text-transform:uppercase;margin-top:2px}
+.fv-green{color:#3fb950} .fv-blue{color:#58a6ff} .fv-yellow{color:#e3b341} .fv-red{color:#f85149}
+#ui{position:fixed;top:16px;left:16px;z-index:100;display:flex;flex-direction:column;gap:8px;max-width:400px}
+#ui h1{font-size:22px;font-weight:700;color:#f0f6fc;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+#ui p{font-size:13px;color:#8b949e;line-height:1.5}
 .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
-.legend-item{display:flex;align-items:center;gap:6px;font-size:13px;color:#8b949e}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#8b949e}
 .legend-dot{width:14px;height:14px;border-radius:50%}
+.legend-ring{width:18px;height:18px;border-radius:50%;border:3px solid}
 #flow-label{position:fixed;right:24px;top:50%;transform:translateY(-50%) rotate(90deg);font-size:13px;color:#30363d;letter-spacing:4px;text-transform:uppercase;z-index:50}
+#mode-toggle{position:fixed;top:16px;right:60px;z-index:100;display:flex;gap:6px}
+#mode-toggle button{padding:8px 14px;border-radius:8px;border:1px solid #30363d;background:#161b22;color:#8b949e;cursor:pointer;font-size:12px;transition:all .2s}
+#mode-toggle button:hover,#mode-toggle button.active{background:#1f6feb;color:#fff;border-color:#1f6feb}
+#mode-toggle button.gp.active{background:#8957e5;border-color:#8957e5}
 </style>
 </head>
 <body>
 <div id="ui">
   <h1>AI Photonics Chokepoint Map</h1>
-  <p>Size = market dominance. <b style="color:#ff7b72">Red glow</b> = true monopoly (sole source, no alternative). <b style="color:#e3b341">Gold</b> = chokepoint (dominant but alternatives exist). Hover to trace connections.</p>
+  <p><b style="color:#ff7b72">Red</b> = monopoly (sole source). <b style="color:#e3b341">Gold</b> = chokepoint. <b style="color:#bc8cff">Purple ring</b> = gross margin (thicker = higher). Hover to trace supply chains.</p>
   <div class="legend">
     <div class="legend-item"><div class="legend-dot" style="background:#3fb950"></div>BUY</div>
     <div class="legend-item"><div class="legend-dot" style="background:#8b949e"></div>HOLD</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#f85149;opacity:.5"></div>AVOID</div>
     <div class="legend-item"><div class="legend-dot" style="background:#ff7b72;box-shadow:0 0 8px #f85149"></div>Monopoly</div>
     <div class="legend-item"><div class="legend-dot" style="background:#e3b341;box-shadow:0 0 6px #d29922"></div>Chokepoint</div>
+    <div class="legend-item"><div class="legend-ring" style="border-color:#8957e5"></div>High Margin (&gt;50% GM)</div>
+    <div class="legend-item"><div class="legend-ring" style="border-color:#8957e540;border-width:1px"></div>Low Margin (&lt;30% GM)</div>
   </div>
+</div>
+<div id="mode-toggle">
+  <button class="active" onclick="setMode('default',this)">Default</button>
+  <button class="gp" onclick="setMode('golden',this)">Golden Path</button>
+  <button onclick="setMode('margin',this)">Margin Heat</button>
+  <button onclick="setMode('growth',this)">Growth Heat</button>
 </div>
 <div id="flow-label">RAW MATERIALS &rarr; SUBSTRATES &rarr; FOUNDRY &rarr; COMPONENTS &rarr; MODULES &rarr; SYSTEMS &rarr; DATA CENTERS</div>
 <div id="tooltip"></div>
@@ -50,7 +64,7 @@ canvas{display:block}
 const W=()=>window.innerWidth,H=()=>window.innerHeight;
 const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
 const tooltip=document.getElementById('tooltip');
-let nodes=[],edges=[],hoveredNode=null,mx=0,my=0;
+let nodes=[],edges=[],hoveredNode=null,mx=0,my=0,viewMode='default';
 
 const LAYERS=[
   {y:.06,label:"Raw Materials"},
@@ -65,112 +79,140 @@ const LAYERS=[
   {y:.95,label:"Test / OCS / Infrastructure"}
 ];
 
+// addNode now includes: revGrowth (%), grossMargin (%), opMargin (%), revFwd (forward rev estimate)
 function init(){
-  // Layer 0: Raw Materials
-  addNode("5N Plus","VNP.TO",0,.5,61,"HOLD",false,false,"Refines In/Ga/Ge for all compound semi","$391M rev","Canada");
+  // revGrowth, grossMargin, opMargin — from latest earnings/IR. null = not available or not meaningful
+  //                                                                          chk  mono  growth  gm    om    revFwd
+  addN("5N Plus","VNP.TO",0,.5,61,"HOLD",false,false,                         35,  24,  null, "$520M FY26E",
+    "Refines In/Ga/Ge for all compound semi","$391M rev (+35%)","Canada");
 
-  // Layer 1: Substrates
-  addNode("Soitec","SOI.PA",1,.2,65,"HOLD",true,true,"ONLY volume photonics-SOI supplier for Tower/GF/TSMC. No alternative exists.","70% SOI | SOLE SOURCE","France");
-  addNode("AXT","AXTI",1,.4,47,"AVOID",true,false,"60-70% InP substrates but JX Metals and Sumitomo compete. Beijing mfg risk.","60-70% InP","US/China");
-  addNode("JX Metals","5016.T",1,.6,66,"HOLD",false,false,"Newly IPO'd Japanese InP. Non-China alternative to AXT.","40yr InP exp","Japan");
-  addNode("IntelliEPI","8258.TW",1,.8,62,"HOLD",false,false,"Taiwan InP epiwafer + EZconn CPO","53.8% growth","Taiwan");
+  addN("Soitec","SOI.PA",1,.2,65,"HOLD",true,true,                            11,  32,  null, "EUR1B+ med-term",
+    "ONLY volume photonics-SOI supplier for Tower/GF/TSMC. No alternative exists.","70% SOI | SOLE SOURCE","France");
+  addN("AXT","AXTI",1,.4,47,"AVOID",true,false,                               null,24,  -15, "",
+    "60-70% InP substrates but JX/Sumitomo compete. Beijing mfg risk.","60-70% InP","US/China");
+  addN("JX Metals","5016.T",1,.6,66,"HOLD",false,false,                       null,null,null, "",
+    "Newly IPO'd Japanese InP. Non-China alternative to AXT.","40yr InP exp","Japan");
+  addN("IntelliEPI","8258.TW",1,.8,62,"HOLD",false,false,                     54,  null,null, "",
+    "Taiwan InP epiwafer + EZconn CPO. Fastest-growing TW semi #3.","53.8% growth","Taiwan");
 
-  // Layer 2: Equipment
-  addNode("Aixtron","AIXA.DE",2,.15,65,"HOLD",true,false,"70-90% MOCVD but Veeco is duopoly partner. Not sole-source.","70-90% MOCVD (duopoly)","Germany");
-  addNode("Veeco","VECO",2,.35,63,"HOLD",true,false,"MOCVD duopoly #2. Lumina+ for photonics.","MOCVD #2","US");
-  addNode("ASML","ASML",2,.55,68,"HOLD",true,true,"Only lithography supplier on earth. No alternative at any price.","100% litho | SOLE SOURCE","Netherlands");
-  addNode("Disco","6146.T",2,.75,72,"HOLD",true,false,"75% dicing but competitors exist (Tokyo Seimitsu, etc).","75% dicing","Japan");
-  addNode("Besi","BESI.AS",2,.92,73,"HOLD",true,false,"42% die-attach + hybrid bonding pioneer. ASMPT/K&S compete.","42% die-attach","Netherlands");
+  addN("Aixtron","AIXA.DE",2,.15,65,"HOLD",true,false,                        -1,  43,  15, "EUR520M FY26",
+    "70-90% MOCVD but Veeco is duopoly partner.","70-90% MOCVD (duopoly)","Germany");
+  addN("Veeco","VECO",2,.35,63,"HOLD",true,false,                             null,null,null, "",
+    "MOCVD duopoly #2. Lumina+ for photonics. Axcelis merger.","MOCVD #2","US");
+  addN("ASML","ASML",2,.55,68,"HOLD",true,true,                               30,  51,  35, "EUR30B+ FY26E",
+    "Only lithography supplier on earth. No alternative at any price.","100% litho | SOLE SOURCE","Netherlands");
+  addN("Disco","6146.T",2,.75,72,"HOLD",true,false,                           28,  50,  39, "JPY420B+ FY25",
+    "75% dicing but competitors exist.","75% dicing","Japan");
+  addN("Besi","BESI.AS",2,.92,73,"HOLD",true,false,                           null,64,  null,"EUR750-850M FY26E",
+    "42% die-attach + hybrid bonding pioneer. Orders +105% Q4.","42% die-attach","Netherlands");
 
-  // Layer 3: Foundry
-  addNode("Tower Semi","TSEM",3,.25,75,"BUY",true,false,"85% SiPh foundry but GF/UMC/STM entering. Dominant today, eroding slowly.","85% SiPh (eroding)","Israel/US");
-  addNode("GlobalFoundries","GFS",3,.5,62,"HOLD",false,false,"#2 SiPh. AMF acquired. China-free supply chain.","#2 SiPh","US");
-  addNode("WIN Semi","3105.TW",3,.75,64,"HOLD",true,false,"50%+ GaAs foundry for VCSELs.","50%+ GaAs","Taiwan");
+  addN("Tower Semi","TSEM",3,.25,75,"BUY",true,false,                         14,  23,  12, "$2.0B FY26E",
+    "85% SiPh foundry. 5x expansion. Margins expanding 23%→40%.","85% SiPh (eroding)","Israel/US");
+  addN("GlobalFoundries","GFS",3,.5,62,"HOLD",false,false,                    0,   27,  null,"$6.8B FY26E",
+    "#2 SiPh. AMF acquired. China-free.","#2 SiPh","US");
+  addN("WIN Semi","3105.TW",3,.75,64,"HOLD",true,false,                       7,   32,  null,"",
+    "50%+ GaAs foundry for VCSELs.","50%+ GaAs","Taiwan");
 
-  // Layer 4: Lasers & ICs
-  addNode("Lumentum","LITE",4,.08,70,"HOLD",true,false,"50-60% high-end EML but Mitsubishi/Coherent/Broadcom compete.","50-60% EML","US");
-  addNode("MACOM","MTSI",4,.2,76,"BUY",false,false,"Analog IC in every transceiver. 57% GM. Competes with Semtech/Broadcom.","57% GM, DC+48%","US");
-  addNode("Credo","CRDO",4,.34,82,"BUY",true,true,"88% AEC. Invented the category. No competitor ships at scale yet.","88% AEC | SOLE SOURCE","US");
-  addNode("Broadcom","AVGO",4,.48,85,"BUY",true,false,"~90% switch ASIC but hyperscalers building custom alternatives (Google, Amazon).","~90% switch ASIC (eroding)","US");
-  addNode("Marvell","MRVL",4,.62,79,"BUY",false,false,"Celestial AI + Ara DSP + 50+ custom programs.","$3.25B Celestial","US");
-  addNode("Semtech","SMTC",4,.76,70,"HOLD",false,false,"LPO disruptor. FiberEdge TIA. DC +50%.","LPO architecture","US");
-  addNode("Mitsubishi","6503.T",4,.9,55,"HOLD",true,false,"50% total EML volume globally. Competes with Lumentum.","50% EML","Japan");
+  addN("Lumentum","LITE",4,.08,70,"HOLD",true,false,                          65,  43,  31, "$3.2B+ FY26E",
+    "50-60% high-end EML. NVIDIA $2B. $2B/qtr target.","50-60% EML","US");
+  addN("MACOM","MTSI",4,.2,76,"BUY",false,false,                              33,  57,  25, "$1.35B FY26E",
+    "Analog IC in every transceiver. Raised growth to 35-40%.","57% GM, DC+48%","US");
+  addN("Credo","CRDO",4,.34,82,"BUY",true,true,                               202, 69,  45, "$960M FY26E",
+    "88% AEC. Invented category. 68.5% GM. Pulled back 53%.","88% AEC | SOLE SOURCE","US");
+  addN("Broadcom","AVGO",4,.48,85,"BUY",true,false,                           29,  76,  45, "$80B FY26E",
+    "~90% switch ASIC. Taurus DSP. 68% EBITDA. $162B backlog.","~90% switch ASIC (eroding)","US");
+  addN("Marvell","MRVL",4,.62,79,"BUY",false,false,                           76,  60,  36, "$9B FY27E",
+    "Celestial AI + Ara DSP + 50+ custom programs.","$3.25B Celestial","US");
+  addN("Semtech","SMTC",4,.76,70,"HOLD",false,false,                          16,  58,  19, "$1.3B FY27E",
+    "LPO disruptor. FiberEdge TIA. DC +50%.","LPO architecture","US");
+  addN("Mitsubishi","6503.T",4,.9,55,"HOLD",true,false,                       5,   null,null,"",
+    "50% total EML volume. Conglomerate.","50% EML","Japan");
 
-  // Layer 5: Transceivers
-  addNode("Innolight","300308.SZ",5,.2,79,"BUY",true,false,"World #1 transceiver. 50%+ NVIDIA. But Eoptolink/Coherent/AAOI compete.","50%+ NVIDIA","China");
-  addNode("Coherent","COHR",5,.4,65,"HOLD",false,false,"3 architectures. NVIDIA $2B. Thermadite thermal materials.","$6.3B TTM","US");
-  addNode("AAOI","AAOI",5,.6,59,"HOLD",false,false,"US mfg dark horse. Zero debt. $200M+ 1.6T order.","US manufacturing","US");
-  addNode("Eoptolink","300502.SZ",5,.8,68,"HOLD",false,false,"China #2. +179% growth. NVIDIA secondary supplier.","$50B cap","China");
+  addN("Innolight","300308.SZ",5,.2,79,"BUY",true,false,                      60,  43,  28, "CNY55-60B FY26E",
+    "World #1 transceiver. 50%+ NVIDIA. 43% GM.","50%+ NVIDIA","China");
+  addN("Coherent","COHR",5,.4,65,"HOLD",false,false,                          17,  39,  5,  "$7B+ FY26E",
+    "3 architectures. NVIDIA $2B. Thermadite.","$6.3B TTM","US");
+  addN("AAOI","AAOI",5,.6,59,"HOLD",false,false,                              83,  31,  -12,"$1B+ CY26E",
+    "US mfg. Zero debt. $200M+ 1.6T order. 3.5x DC rev.","US manufacturing","US");
+  addN("Eoptolink","300502.SZ",5,.8,68,"HOLD",false,false,                    179, null,null,"",
+    "China #2. +179% growth.","$50B cap","China");
 
-  // Layer 6: Assembly
-  addNode("Fabrinet","FN",6,.15,71,"HOLD",true,false,"NVIDIA sole-source 1.6T. $961M cash, zero debt","NVIDIA sole-src","Thailand");
-  addNode("Celestica","CLS",6,.35,74,"HOLD",true,false,"55% custom switch mfg. $17B FY26. 0.7x sales","55% custom sw","Canada");
-  addNode("ASE","3711.TW",6,.55,70,"HOLD",false,false,"#1 OSAT. SiPh packaging. Lightmatter CPO","#1 OSAT","Taiwan");
-  addNode("TFC Optical","300394.SZ",6,.75,64,"HOLD",false,false,"Chinese Fabrinet. OSA packaging bridge","$35B cap","China");
-  addNode("Foxconn","2317.TW",6,.92,62,"HOLD",false,false,"World's largest AI server maker. $248B","$248B rev","Taiwan");
+  addN("Fabrinet","FN",6,.15,71,"HOLD",true,false,                            19,  12,  11, "$5B+ FY27E",
+    "NVIDIA sole-source 1.6T. $961M cash, zero debt.","NVIDIA sole-src","Thailand");
+  addN("Celestica","CLS",6,.35,74,"HOLD",true,false,                          28,  null,null,"$17B FY26E",
+    "55% custom switch mfg. $17B FY26. 0.7x sales.","55% custom sw","Canada");
+  addN("ASE","3711.TW",6,.55,70,"HOLD",false,false,                           null,null,null,"$21B+ FY26E",
+    "#1 OSAT. SiPh packaging. Lightmatter CPO.","#1 OSAT","Taiwan");
+  addN("TFC Optical","300394.SZ",6,.75,64,"HOLD",false,false,                 null,null,null,"",
+    "Chinese Fabrinet. OSA packaging bridge.","$35B cap","China");
+  addN("Foxconn","2317.TW",6,.92,62,"HOLD",false,false,                       22,  null,null,"NT$9T+ FY26E",
+    "World's largest AI server maker. $248B.","$248B rev","Taiwan");
 
-  // Layer 7: Fiber & Connectors
-  addNode("Corning","GLW",7,.2,72,"HOLD",true,false,"Fiber backbone. $6.3B optical. Meta $6B deal",">50% NA fiber","US");
-  addNode("Amphenol","APH",7,.45,78,"BUY",true,false,"33% AI DC connector share. $23.1B +52%","33% AI DC conn","US");
-  addNode("Fujikura","5803.T",7,.7,68,"HOLD",false,false,"Japanese Corning. +160% in 2025. 3x US output","3x US output","Japan");
-  addNode("Prysmian","PRY.MI",7,.9,60,"HOLD",false,false,"Hollow-core fiber 50% faster. Long-term","HCF 50% faster","Italy");
+  addN("Corning","GLW",7,.2,72,"HOLD",true,false,                             35,  42,  20, "$8B optical FY26E",
+    "Fiber backbone. $6.3B optical. Meta $6B deal.",">50% NA fiber","US");
+  addN("Amphenol","APH",7,.45,78,"BUY",true,false,                            52,  33,  28, "$28-30B FY26E",
+    "33% AI DC connector share. $23.1B +52%.","33% AI DC conn","US");
+  addN("Fujikura","5803.T",7,.7,68,"HOLD",false,false,                        7,   null,16, "",
+    "Japanese Corning. +160% in 2025. 3x US output.","3x US output","Japan");
+  addN("Prysmian","PRY.MI",7,.9,60,"HOLD",false,false,                        null,null,null,"",
+    "Hollow-core fiber 50% faster. Long-term.","HCF 50% faster","Italy");
 
-  // Layer 8: Networking
-  addNode("Arista","ANET",8,.2,83,"BUY",true,false,"Demand signal. 64% GM. $10.7B cash. AI +100%","40%+ 800G","US");
-  addNode("Ciena","CIEN",8,.45,69,"HOLD",false,false,"WaveLogic 6. $5B backlog. OCS expanding","$5B backlog","US");
-  addNode("Cisco","CSCO",8,.7,68,"HOLD",false,false,"$5B AI orders. Acacia ~50% coherent","Acacia ~50%","US");
-  addNode("Nokia","NOK",8,.9,60,"HOLD",false,false,"Infinera InP + Nokia SiPh. 70% TCO reduction","~20% optical","Finland");
+  addN("Arista","ANET",8,.2,83,"BUY",true,false,                              29,  64,  43, "$11.25B FY26E",
+    "Demand signal. 64% GM. $10.7B cash. AI rev +100%.","40%+ 800G","US");
+  addN("Ciena","CIEN",8,.45,69,"HOLD",false,false,                            19,  42,  8,  "$5.9B FY26E",
+    "WaveLogic 6. $5B backlog. Margin expanding to 17%.","$5B backlog","US");
+  addN("Cisco","CSCO",8,.7,68,"HOLD",false,false,                             7,   64,  30, "",
+    "$5B AI orders. Acacia ~50% coherent. Silicon One.","Acacia ~50%","US");
+  addN("Nokia","NOK",8,.9,60,"HOLD",false,false,                              3,   null,null,"EUR20B FY26E",
+    "Infinera InP + Nokia SiPh. 70% TCO reduction.","~20% optical","Finland");
 
-  // Layer 9: Test/OCS/Infra
-  addNode("VIAV","VIAV",9,.12,69,"HOLD",false,false,"Cheapest AI photonics at 5x sales","$1.24B +36%","US");
-  addNode("Advantest","6857.T",9,.28,71,"HOLD",true,false,"ASML of testing. V93000 SiPh. JPY1.07T","ATE duopoly","Japan");
-  addNode("Teradyne","TER",9,.44,72,"HOLD",true,false,"ATE #2. Quantifi Photonics PIC testing","AI 70% rev","US");
-  addNode("Huber+Suhner","HUBN.SW",9,.6,58,"HOLD",true,false,"Polatis OCS. Market $2.5B by 2029","OCS leader","Switzerland");
-  addNode("Japan Pure Chem","4973.T",9,.76,63,"HOLD",true,false,"50% gold plating but alternative chemistries exist. 52 employees.","50% gold plating","Japan");
-  addNode("Vertiv","VRT",9,.92,72,"HOLD",false,false,"$15B backlog. NVIDIA cooling. +252% orders","$15B backlog","US");
+  addN("VIAV","VIAV",9,.12,69,"HOLD",false,false,                             36,  null,19, "$1.5B FY26E",
+    "Cheapest AI photonics at 5x sales. 19.3% OPM.","$1.24B +36%","US");
+  addN("Advantest","6857.T",9,.28,71,"HOLD",true,false,                        37,  null,40, "JPY1.4T FY26E",
+    "ASML of testing. V93000 SiPh. 30-40% growth.","ATE duopoly","Japan");
+  addN("Teradyne","TER",9,.44,72,"HOLD",true,false,                           13,  null,null,"$4.5B+ FY26E",
+    "ATE #2. Quantifi Photonics PIC testing.","AI 70% rev","US");
+  addN("Huber+Suhner","HUBN.SW",9,.6,58,"HOLD",true,false,                    0,   null,null,"",
+    "Polatis OCS. Market $2.5B by 2029.","OCS leader","Switzerland");
+  addN("Japan Pure Chem","4973.T",9,.76,63,"HOLD",true,false,                 null,null,11, "",
+    "50% gold plating. 52 employees. 2.1x sales. 4.17% yield.","50% gold plating","Japan");
+  addN("Vertiv","VRT",9,.92,72,"HOLD",false,false,                            28,  null,null,"$13.5B FY26E",
+    "$15B backlog. NVIDIA cooling. +252% orders.","$15B backlog","US");
 
-  // EDGES: supply relationships
-  // Raw → Substrates
+  // EDGES
   addEdge("VNP.TO","SOI.PA"); addEdge("VNP.TO","AXTI"); addEdge("VNP.TO","5016.T");
-  // Substrates → Foundry (critical chokepoint flow)
   addEdge("SOI.PA","TSEM",true); addEdge("SOI.PA","GFS"); addEdge("AXTI","LITE"); addEdge("AXTI","6503.T"); addEdge("5016.T","LITE");
-  // Equipment → Foundry
   addEdge("AIXA.DE","LITE"); addEdge("AIXA.DE","COHR"); addEdge("AIXA.DE","3105.TW");
   addEdge("ASML","TSEM"); addEdge("ASML","GFS"); addEdge("6146.T","TSEM"); addEdge("6146.T","GFS");
   addEdge("BESI.AS","3711.TW"); addEdge("BESI.AS","TSEM");
-  // Foundry → Components
   addEdge("TSEM","AVGO",true); addEdge("TSEM","COHR"); addEdge("TSEM","300308.SZ");
-  addEdge("GFS","AVGO"); addEdge("GFS","MRVL");
-  addEdge("3105.TW","LITE");
-  // Components → Transceivers
+  addEdge("GFS","AVGO"); addEdge("GFS","MRVL"); addEdge("3105.TW","LITE");
   addEdge("LITE","300308.SZ",true); addEdge("LITE","COHR"); addEdge("LITE","AAOI");
   addEdge("MTSI","300308.SZ"); addEdge("MTSI","COHR"); addEdge("MTSI","AAOI");
   addEdge("CRDO","ANET",true); addEdge("CRDO","300308.SZ");
   addEdge("AVGO","ANET",true); addEdge("AVGO","300308.SZ");
   addEdge("MRVL","300308.SZ"); addEdge("MRVL","COHR");
-  addEdge("SMTC","300308.SZ"); addEdge("SMTC","COHR");
-  addEdge("6503.T","300308.SZ");
-  // Transceivers → Assembly
+  addEdge("SMTC","300308.SZ"); addEdge("SMTC","COHR"); addEdge("6503.T","300308.SZ");
   addEdge("300308.SZ","FN"); addEdge("COHR","FN"); addEdge("AAOI","FN");
   addEdge("300308.SZ","300394.SZ"); addEdge("300502.SZ","300394.SZ");
-  // Assembly → Networking
   addEdge("FN","ANET"); addEdge("CLS","ANET"); addEdge("2317.TW","ANET");
   addEdge("FN","CIEN"); addEdge("CLS","CSCO");
-  // Fiber → Networking
   addEdge("GLW","ANET"); addEdge("GLW","CIEN"); addEdge("APH","ANET"); addEdge("APH","CIEN");
-  // Test/materials → everything
   addEdge("4973.T","300308.SZ"); addEdge("4973.T","FN");
 }
 
-function addNode(name,ticker,layer,xFrac,score,verdict,chokepoint,monopoly,thesis,share,market){
+function addN(name,ticker,layer,xFrac,score,verdict,chokepoint,monopoly,revGrowth,grossMargin,opMargin,revFwd,thesis,share,market){
   const ly=LAYERS[layer];
-  nodes.push({name,ticker,layer,xFrac,yFrac:ly.y,score,verdict,chokepoint,monopoly,thesis,share,market,
-    x:0,y:0,r:0,vx:0,vy:0});
+  // "golden path" = chokepoint + GM>40% + growth>20%
+  const golden=chokepoint && grossMargin!==null && grossMargin>=40 && revGrowth!==null && revGrowth>=20;
+  nodes.push({name,ticker,layer,xFrac,yFrac:ly.y,score,verdict,chokepoint,monopoly,
+    revGrowth,grossMargin,opMargin,revFwd,thesis,share,market,golden,
+    x:0,y:0,r:0});
 }
 function addEdge(from,to,critical){edges.push({from,to,critical:!!critical})}
 
 function layout(){
-  canvas.width=W(); canvas.height=H();
+  canvas.width=W();canvas.height=H();
   const pad=160,w=canvas.width-pad*2,h=canvas.height-40;
   nodes.forEach(n=>{
     n.x=pad+n.xFrac*w;
@@ -180,105 +222,138 @@ function layout(){
   });
 }
 
-function getColor(n,alpha=1){
-  if(n.verdict==='BUY') return `rgba(63,185,80,${alpha})`;
-  if(n.verdict==='AVOID') return `rgba(248,81,73,${alpha*.5})`;
-  return `rgba(139,148,158,${alpha})`;
+function gmColor(gm,alpha){
+  if(gm===null) return `rgba(48,54,61,${alpha*.3})`;
+  if(gm>=60) return `rgba(137,87,229,${alpha})`;
+  if(gm>=45) return `rgba(137,87,229,${alpha*.7})`;
+  if(gm>=30) return `rgba(137,87,229,${alpha*.4})`;
+  return `rgba(137,87,229,${alpha*.15})`;
+}
+
+function growthHeat(g,alpha){
+  if(g===null) return `rgba(48,54,61,${alpha*.2})`;
+  if(g>=100) return `rgba(63,185,80,${alpha})`;
+  if(g>=50) return `rgba(63,185,80,${alpha*.7})`;
+  if(g>=20) return `rgba(63,185,80,${alpha*.4})`;
+  if(g>=0) return `rgba(139,148,158,${alpha*.3})`;
+  return `rgba(248,81,73,${alpha*.3})`;
+}
+
+function setMode(m,btn){
+  viewMode=m;
+  document.querySelectorAll('#mode-toggle button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
 }
 
 function draw(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  // Draw layer labels
-  ctx.font='13px system-ui';ctx.fillStyle='#21262d';ctx.textAlign='left';
+  // Layer labels
+  ctx.font='13px system-ui';ctx.textAlign='left';
   LAYERS.forEach(l=>{
     const y=20+l.y*(canvas.height-40);
-    ctx.fillStyle='#21262d33';
-    ctx.fillRect(0,y-1,canvas.width,1);
-    ctx.fillStyle='#484f58';
-    ctx.fillText(l.label,10,y+4);
+    ctx.fillStyle='#21262d33';ctx.fillRect(0,y-1,canvas.width,1);
+    ctx.fillStyle='#484f58';ctx.fillText(l.label,10,y+4);
   });
 
-  // Draw edges
-  const hovTickers=new Set();
+  // Edges
+  const hovT=new Set();
   if(hoveredNode){
-    hovTickers.add(hoveredNode.ticker);
-    edges.forEach(e=>{
-      if(e.from===hoveredNode.ticker) hovTickers.add(e.to);
-      if(e.to===hoveredNode.ticker) hovTickers.add(e.from);
-    });
+    hovT.add(hoveredNode.ticker);
+    edges.forEach(e=>{if(e.from===hoveredNode.ticker)hovT.add(e.to);if(e.to===hoveredNode.ticker)hovT.add(e.from);});
   }
-
   edges.forEach(e=>{
-    const a=nodes.find(n=>n.ticker===e.from);
-    const b=nodes.find(n=>n.ticker===e.to);
-    if(!a||!b) return;
-    const highlighted=hoveredNode && (hovTickers.has(a.ticker)||hovTickers.has(b.ticker)) && (e.from===hoveredNode.ticker||e.to===hoveredNode.ticker);
+    const a=nodes.find(n=>n.ticker===e.from),b=nodes.find(n=>n.ticker===e.to);
+    if(!a||!b)return;
+    const hl=hoveredNode&&(e.from===hoveredNode.ticker||e.to===hoveredNode.ticker);
+    // In golden path mode, highlight edges between golden nodes
+    const gpEdge=viewMode==='golden'&&a.golden&&b.golden;
     ctx.beginPath();
-    const cy1=a.y+a.r+4, cy2=b.y-b.r-4;
-    const cmy=(cy1+cy2)/2;
-    ctx.moveTo(a.x,cy1);
-    ctx.bezierCurveTo(a.x,cmy,b.x,cmy,b.x,cy2);
-    ctx.strokeStyle=highlighted?(e.critical?'rgba(248,81,73,.6)':'rgba(88,166,255,.5)'):
-      (e.critical?'rgba(248,81,73,.1)':'rgba(48,54,61,.3)');
-    ctx.lineWidth=highlighted?(e.critical?2.5:1.5):(e.critical?1:.5);
+    const cy1=a.y+a.r+4,cy2=b.y-b.r-4,cmy=(cy1+cy2)/2;
+    ctx.moveTo(a.x,cy1);ctx.bezierCurveTo(a.x,cmy,b.x,cmy,b.x,cy2);
+    ctx.strokeStyle=hl?(e.critical?'rgba(248,81,73,.6)':'rgba(88,166,255,.5)'):
+      gpEdge?'rgba(137,87,229,.5)':(e.critical?'rgba(248,81,73,.1)':'rgba(48,54,61,.25)');
+    ctx.lineWidth=hl?(e.critical?3:2):gpEdge?2:(e.critical?1:.4);
     ctx.stroke();
   });
 
-  // Draw nodes
+  // Nodes
   nodes.forEach(n=>{
-    const isHov=hoveredNode && hoveredNode.ticker===n.ticker;
-    const isConn=hoveredNode && hovTickers.has(n.ticker);
-    const dim=hoveredNode && !isConn;
-    const alpha=dim?.15:1;
+    const isHov=hoveredNode&&hoveredNode.ticker===n.ticker;
+    const isConn=hoveredNode&&hovT.has(n.ticker);
+    const dim=hoveredNode&&!isConn;
+    let alpha=dim?.12:1;
 
-    // Glow for monopoly/chokepoint
-    if(n.monopoly && !dim){
+    // In view modes, dim non-qualifying nodes
+    if(viewMode==='golden'&&!n.golden&&!hoveredNode) alpha=.2;
+    if(viewMode==='margin'&&(n.grossMargin===null||n.grossMargin<30)&&!hoveredNode) alpha=.15;
+    if(viewMode==='growth'&&(n.revGrowth===null||n.revGrowth<20)&&!hoveredNode) alpha=.15;
+
+    // Margin ring (purple arc, thickness = gross margin)
+    if(n.grossMargin!==null && alpha>.15){
+      const ringW=Math.max(1,n.grossMargin/15);
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r+ringW/2+2,0,Math.PI*2);
+      ctx.strokeStyle=gmColor(n.grossMargin,alpha);
+      ctx.lineWidth=ringW;ctx.stroke();
+    }
+
+    // Golden path glow
+    if(n.golden && viewMode==='golden' && !dim){
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r+14,0,Math.PI*2);
+      const g=ctx.createRadialGradient(n.x,n.y,n.r,n.x,n.y,n.r+18);
+      g.addColorStop(0,'rgba(137,87,229,.4)');g.addColorStop(1,'transparent');
+      ctx.fillStyle=g;ctx.fill();
+    }
+
+    // Monopoly/chokepoint glow
+    if(n.monopoly&&!dim&&viewMode!=='golden'){
       ctx.beginPath();ctx.arc(n.x,n.y,n.r+12,0,Math.PI*2);
       const g=ctx.createRadialGradient(n.x,n.y,n.r,n.x,n.y,n.r+16);
       g.addColorStop(0,'rgba(248,81,73,.35)');g.addColorStop(1,'transparent');
       ctx.fillStyle=g;ctx.fill();
-    } else if(n.chokepoint && !dim){
+    }else if(n.chokepoint&&!dim&&viewMode!=='golden'){
       ctx.beginPath();ctx.arc(n.x,n.y,n.r+8,0,Math.PI*2);
       const g=ctx.createRadialGradient(n.x,n.y,n.r,n.x,n.y,n.r+12);
       g.addColorStop(0,'rgba(210,153,34,.28)');g.addColorStop(1,'transparent');
       ctx.fillStyle=g;ctx.fill();
     }
 
-    // Node circle
+    // Node fill
     ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
-    ctx.fillStyle=n.monopoly?`rgba(248,81,73,${alpha*.3})`:
-      n.chokepoint?`rgba(210,153,34,${alpha*.2})`:
-      `rgba(22,27,34,${alpha})`;
-    ctx.fill();
-    ctx.strokeStyle=n.monopoly?`rgba(248,81,73,${alpha})`:
-      n.chokepoint?`rgba(210,153,34,${alpha})`:
-      getColor(n,alpha*.7);
-    ctx.lineWidth=isHov?2.5:(n.monopoly?2:1);
-    ctx.stroke();
+    let fillC;
+    if(viewMode==='margin') fillC=n.grossMargin!==null?gmColor(n.grossMargin,alpha*.4):`rgba(22,27,34,${alpha})`;
+    else if(viewMode==='growth') fillC=growthHeat(n.revGrowth,alpha*.4);
+    else fillC=n.monopoly?`rgba(248,81,73,${alpha*.3})`:n.chokepoint?`rgba(210,153,34,${alpha*.2})`:(n.golden&&viewMode==='golden')?`rgba(137,87,229,${alpha*.3})`:`rgba(22,27,34,${alpha})`;
+    ctx.fillStyle=fillC;ctx.fill();
+
+    // Node stroke
+    const getStroke=()=>{
+      if(viewMode==='golden'&&n.golden) return `rgba(137,87,229,${alpha})`;
+      if(n.monopoly) return `rgba(248,81,73,${alpha})`;
+      if(n.chokepoint) return `rgba(210,153,34,${alpha})`;
+      if(n.verdict==='BUY') return `rgba(63,185,80,${alpha*.7})`;
+      return `rgba(139,148,158,${alpha*.5})`;
+    };
+    ctx.strokeStyle=getStroke();ctx.lineWidth=isHov?3:(n.monopoly||n.golden&&viewMode==='golden')?2:1;ctx.stroke();
 
     // Ticker label
-    const fontSize=n.monopoly?13:n.chokepoint?12:n.verdict==='BUY'?12:11;
-    ctx.font=`${isHov?'bold ':''}${fontSize}px system-ui`;
-    ctx.fillStyle=n.monopoly?`rgba(255,123,114,${alpha})`:
-      n.chokepoint?`rgba(227,179,65,${alpha})`:
-      n.verdict==='BUY'?`rgba(63,185,80,${alpha})`:
-      `rgba(201,209,217,${alpha})`;
-    ctx.textAlign='center';
+    const fs=n.monopoly||n.golden?13:n.chokepoint?12:n.verdict==='BUY'?12:11;
+    ctx.font=`${isHov?'bold ':''}${fs}px system-ui`;
+    ctx.fillStyle=getStroke();ctx.textAlign='center';
     ctx.fillText(n.ticker,n.x,n.y+n.r+16);
 
-    // Company name below ticker (for larger nodes)
-    if(n.r>=16 && !dim){
-      ctx.font=`10px system-ui`;
-      ctx.fillStyle=`rgba(139,148,158,${alpha*.7})`;
-      ctx.fillText(n.name,n.x,n.y+n.r+28);
-    }
+    // Name below
+    if(n.r>=16&&alpha>.2){ctx.font='10px system-ui';ctx.fillStyle=`rgba(139,148,158,${alpha*.7})`;ctx.fillText(n.name,n.x,n.y+n.r+28);}
 
-    // Score badge inside node
-    if(n.r>=14 && !dim){
-      ctx.font='bold 11px system-ui';
-      ctx.fillStyle=`rgba(240,246,252,${alpha})`;
-      ctx.fillText(n.score,n.x,n.y+4);
+    // Score inside
+    if(n.r>=14&&alpha>.2){ctx.font='bold 11px system-ui';ctx.fillStyle=`rgba(240,246,252,${alpha})`;ctx.fillText(n.score,n.x,n.y+4);}
+
+    // Growth badge (top-right of node)
+    if(n.revGrowth!==null&&n.r>=12&&alpha>.2){
+      const gTxt=`${n.revGrowth>0?'+':''}${n.revGrowth}%`;
+      ctx.font='bold 9px system-ui';
+      ctx.fillStyle=n.revGrowth>=50?`rgba(63,185,80,${alpha})`:n.revGrowth>=20?`rgba(63,185,80,${alpha*.7})`:`rgba(139,148,158,${alpha*.5})`;
+      ctx.fillText(gTxt,n.x+n.r+2,n.y-n.r+4);
     }
   });
 
@@ -288,42 +363,44 @@ function draw(){
 function handleMove(e){
   mx=e.clientX;my=e.clientY;
   let found=null;
-  for(const n of nodes){
-    const dx=mx-n.x,dy=my-n.y;
-    if(dx*dx+dy*dy<(n.r+4)*(n.r+4)){found=n;break;}
-  }
+  for(const n of nodes){const dx=mx-n.x,dy=my-n.y;if(dx*dx+dy*dy<(n.r+6)*(n.r+6)){found=n;break;}}
   hoveredNode=found;
   canvas.style.cursor=found?'pointer':'default';
   if(found){
-    let tags='';
     const vt=found.verdict==='BUY'?'tag-buy':found.verdict==='AVOID'?'tag-avoid':'tag-hold';
-    tags+=`<span class="tag ${vt}">${found.verdict} ${found.score}/100</span>`;
+    let tags=`<span class="tag ${vt}">${found.verdict} ${found.score}/100</span>`;
     if(found.monopoly) tags+='<span class="tag tag-mono">MONOPOLY</span>';
     else if(found.chokepoint) tags+='<span class="tag tag-choke">CHOKEPOINT</span>';
+    if(found.golden) tags+='<span class="tag tag-golden">GOLDEN PATH</span>';
 
-    // Find connections
+    // Financial metrics
+    let finHtml='<div class="fin">';
+    if(found.revGrowth!==null){
+      const gc=found.revGrowth>=50?'fv-green':found.revGrowth>=20?'fv-green':'fv-blue';
+      finHtml+=`<div class="f"><div class="fv ${gc}">${found.revGrowth>0?'+':''}${found.revGrowth}%</div><div class="fl">Rev Growth</div></div>`;
+    }else{finHtml+=`<div class="f"><div class="fv" style="color:#484f58">N/A</div><div class="fl">Rev Growth</div></div>`;}
+    if(found.grossMargin!==null){
+      const mc=found.grossMargin>=60?'fv-yellow':found.grossMargin>=40?'fv-blue':'fv-blue';
+      finHtml+=`<div class="f"><div class="fv ${mc}">${found.grossMargin}%</div><div class="fl">Gross Margin</div></div>`;
+    }else{finHtml+=`<div class="f"><div class="fv" style="color:#484f58">N/A</div><div class="fl">Gross Margin</div></div>`;}
+    if(found.opMargin!==null){
+      const oc=found.opMargin>=30?'fv-yellow':found.opMargin>=15?'fv-blue':found.opMargin<0?'fv-red':'fv-blue';
+      finHtml+=`<div class="f"><div class="fv ${oc}">${found.opMargin}%</div><div class="fl">Op Margin</div></div>`;
+    }else{finHtml+=`<div class="f"><div class="fv" style="color:#484f58">N/A</div><div class="fl">Op Margin</div></div>`;}
+    finHtml+='</div>';
+    if(found.revFwd) finHtml+=`<div style="text-align:center;font-size:11px;color:#8b949e;margin-top:4px">FY26E Rev: <b style="color:#58a6ff">${found.revFwd}</b></div>`;
+
     const up=[],down=[];
-    edges.forEach(e=>{
-      if(e.to===found.ticker){const n=nodes.find(x=>x.ticker===e.from);if(n)up.push(n.ticker);}
-      if(e.from===found.ticker){const n=nodes.find(x=>x.ticker===e.to);if(n)down.push(n.ticker);}
-    });
+    edges.forEach(e=>{if(e.to===found.ticker){const n=nodes.find(x=>x.ticker===e.from);if(n)up.push(n.ticker);}if(e.from===found.ticker){const n=nodes.find(x=>x.ticker===e.to);if(n)down.push(n.ticker);}});
     let connHtml='';
-    if(up.length) connHtml+=`<div style="margin-top:8px;font-size:13px;color:#8b949e">Suppliers: <span style="color:#58a6ff">${up.join(', ')}</span></div>`;
-    if(down.length) connHtml+=`<div style="font-size:13px;color:#8b949e">Customers: <span style="color:#58a6ff">${down.join(', ')}</span></div>`;
+    if(up.length) connHtml+=`<div style="margin-top:8px;font-size:12px;color:#8b949e">Suppliers: <span style="color:#58a6ff">${up.join(', ')}</span></div>`;
+    if(down.length) connHtml+=`<div style="font-size:12px;color:#8b949e">Customers: <span style="color:#58a6ff">${down.join(', ')}</span></div>`;
 
-    tooltip.innerHTML=`<h3>${found.ticker} &mdash; ${found.name}</h3>
-      <div class="sub">${found.market} | ${found.share}</div>
-      ${tags}
-      <div class="thesis">${found.thesis}</div>
-      ${connHtml}`;
+    tooltip.innerHTML=`<h3>${found.ticker} &mdash; ${found.name}</h3><div class="sub">${found.market} | ${found.share}</div>${tags}${finHtml}<div class="thesis">${found.thesis}</div>${connHtml}`;
     tooltip.style.display='block';
-    let tx=mx+16,ty=my-10;
-    if(tx+350>W()) tx=mx-360;
-    if(ty+200>H()) ty=H()-220;
+    let tx=mx+16,ty=my-10;if(tx+430>W())tx=mx-440;if(ty+300>H())ty=H()-320;
     tooltip.style.left=tx+'px';tooltip.style.top=ty+'px';
-  } else {
-    tooltip.style.display='none';
-  }
+  }else{tooltip.style.display='none';}
 }
 
 canvas.addEventListener('mousemove',handleMove);
