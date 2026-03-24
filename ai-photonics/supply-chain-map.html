@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Photonics Supply Chain - Chokepoint Map</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #0a0a0f; color: #e0e0e0; overflow-x: hidden; }
+.header { padding: 24px 32px; background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); border-bottom: 1px solid #21262d; }
+.header h1 { font-size: 24px; font-weight: 700; color: #f0f6fc; }
+.header p { font-size: 13px; color: #8b949e; margin-top: 4px; }
+.stats { display: flex; gap: 24px; margin-top: 12px; }
+.stat { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 8px 16px; }
+.stat-val { font-size: 20px; font-weight: 700; color: #58a6ff; }
+.stat-label { font-size: 11px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+.controls { padding: 12px 32px; background: #0d1117; border-bottom: 1px solid #21262d; display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid #30363d; background: transparent; color: #8b949e; cursor: pointer; font-size: 12px; transition: all 0.2s; }
+.filter-btn:hover, .filter-btn.active { background: #1f6feb; color: #fff; border-color: #1f6feb; }
+.filter-btn.chokepoint { border-color: #f85149; }
+.filter-btn.chokepoint.active { background: #da3633; border-color: #da3633; }
+.chain { padding: 24px 32px; display: flex; flex-direction: column; gap: 2px; }
+.layer { display: flex; align-items: stretch; gap: 0; }
+.layer-label { width: 200px; min-width: 200px; padding: 12px 16px; background: #161b22; border: 1px solid #21262d; display: flex; flex-direction: column; justify-content: center; }
+.layer-label h3 { font-size: 13px; font-weight: 600; color: #c9d1d9; }
+.layer-label span { font-size: 11px; color: #8b949e; }
+.layer-companies { flex: 1; display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 12px; background: #0d1117; border: 1px solid #21262d; border-left: none; align-items: center; min-height: 60px; }
+.company { padding: 6px 12px; border-radius: 6px; border: 1px solid #30363d; background: #161b22; cursor: pointer; transition: all 0.2s; position: relative; font-size: 12px; }
+.company:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+.company .ticker { font-weight: 700; color: #f0f6fc; }
+.company .score { font-size: 10px; margin-left: 4px; padding: 1px 5px; border-radius: 10px; }
+.company .share { display: block; font-size: 10px; color: #8b949e; margin-top: 2px; }
+.buy { border-color: #238636; background: rgba(35, 134, 54, 0.15); }
+.buy .ticker { color: #3fb950; }
+.buy .score { background: #238636; color: #fff; }
+.hold { border-color: #30363d; }
+.hold .score { background: #30363d; color: #c9d1d9; }
+.avoid { border-color: #f85149; background: rgba(248, 81, 73, 0.08); opacity: 0.6; }
+.avoid .ticker { color: #f85149; }
+.avoid .score { background: #da3633; color: #fff; }
+.chokepoint { border-color: #d29922 !important; background: rgba(210, 153, 34, 0.15) !important; box-shadow: 0 0 0 1px rgba(210, 153, 34, 0.3); }
+.chokepoint .ticker { color: #e3b341 !important; }
+.chokepoint::before { content: ""; position: absolute; top: -1px; right: -1px; width: 0; height: 0; border-top: 10px solid #d29922; border-left: 10px solid transparent; border-radius: 0 5px 0 0; }
+.monopoly { border-color: #f85149 !important; background: rgba(248, 81, 73, 0.12) !important; box-shadow: 0 0 0 2px rgba(248, 81, 73, 0.3); animation: pulse 2s infinite; }
+.monopoly .ticker { color: #ff7b72 !important; }
+.monopoly::before { content: ""; position: absolute; top: -1px; right: -1px; width: 0; height: 0; border-top: 12px solid #f85149; border-left: 12px solid transparent; border-radius: 0 5px 0 0; }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 2px rgba(248, 81, 73, 0.3); } 50% { box-shadow: 0 0 0 4px rgba(248, 81, 73, 0.15); } }
+.detail-panel { position: fixed; top: 0; right: -450px; width: 450px; height: 100vh; background: #161b22; border-left: 1px solid #30363d; padding: 24px; overflow-y: auto; transition: right 0.3s ease; z-index: 100; box-shadow: -4px 0 20px rgba(0,0,0,0.5); }
+.detail-panel.open { right: 0; }
+.detail-panel .close { position: absolute; top: 16px; right: 16px; background: none; border: none; color: #8b949e; font-size: 20px; cursor: pointer; }
+.detail-panel h2 { font-size: 20px; color: #f0f6fc; margin-bottom: 4px; }
+.detail-panel .subtitle { font-size: 13px; color: #8b949e; margin-bottom: 16px; }
+.detail-panel .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+.detail-panel .metric { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 10px; }
+.detail-panel .metric .val { font-size: 16px; font-weight: 700; color: #58a6ff; }
+.detail-panel .metric .lbl { font-size: 10px; color: #8b949e; text-transform: uppercase; }
+.detail-panel .section { margin-bottom: 16px; }
+.detail-panel .section h4 { font-size: 12px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.detail-panel .section p { font-size: 13px; line-height: 1.5; color: #c9d1d9; }
+.detail-panel .tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; margin: 2px; }
+.tag-buy { background: rgba(35,134,54,0.2); color: #3fb950; border: 1px solid #238636; }
+.tag-hold { background: rgba(48,54,61,0.5); color: #c9d1d9; border: 1px solid #30363d; }
+.tag-avoid { background: rgba(248,81,73,0.15); color: #f85149; border: 1px solid #da3633; }
+.tag-monopoly { background: rgba(248,81,73,0.2); color: #ff7b72; border: 1px solid #f85149; }
+.tag-chokepoint { background: rgba(210,153,34,0.2); color: #e3b341; border: 1px solid #d29922; }
+.legend { padding: 12px 32px; background: #0d1117; border-top: 1px solid #21262d; display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #8b949e; }
+.legend-swatch { width: 12px; height: 12px; border-radius: 3px; }
+.overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 99; display: none; }
+.overlay.open { display: block; }
+.flow-arrow { color: #30363d; font-size: 18px; display: flex; justify-content: center; padding: 0 0 0 200px; }
+.connection-line { height: 2px; background: linear-gradient(90deg, transparent, #30363d, transparent); margin: 0 232px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>AI Photonics Supply Chain &mdash; Chokepoint Map</h1>
+  <p>Interactive visualization of 80 companies across 14 markets. Click any company for details.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-val">80</div><div class="stat-label">Companies</div></div>
+    <div class="stat"><div class="stat-val">9</div><div class="stat-label">BUY Ratings</div></div>
+    <div class="stat"><div class="stat-val">14</div><div class="stat-label">Markets</div></div>
+    <div class="stat"><div class="stat-val" style="color:#f85149">7</div><div class="stat-label">Monopoly Chokepoints</div></div>
+  </div>
+</div>
+
+<div class="controls">
+  <button class="filter-btn active" onclick="filterAll()">All Companies</button>
+  <button class="filter-btn" onclick="filterBuy()">BUY Only</button>
+  <button class="filter-btn chokepoint" onclick="filterChokepoint()">Chokepoints Only</button>
+  <button class="filter-btn" onclick="filterUnderDiscovered()">Under-Discovered</button>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-swatch" style="background:#238636;border:1px solid #3fb950"></div>BUY</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#161b22;border:1px solid #30363d"></div>HOLD</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:rgba(248,81,73,0.15);border:1px solid #f85149"></div>AVOID</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:rgba(210,153,34,0.15);border:2px solid #d29922"></div>Chokepoint (50%+ share)</div>
+  <div class="legend-item"><div class="legend-swatch monopoly" style="width:12px;height:12px"></div>Monopoly (70%+ share)</div>
+</div>
+
+<div class="chain" id="chain"></div>
+
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+<div class="detail-panel" id="panel">
+  <button class="close" onclick="closePanel()">&times;</button>
+  <div id="panel-content"></div>
+</div>
+
+<script>
+const layers = [
+  {
+    name: "Layer 0: Raw Materials",
+    desc: "Ultra-high-purity metals for compound semiconductors",
+    companies: [
+      { ticker: "VNP.TO", name: "5N Plus", score: 61, verdict: "HOLD", market: "Canada", share: "", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "Deepest upstream: refines In/Ga/Ge/Te for all compound semiconductor wafers", upside: "", metrics: { "Revenue": "$391M (+35%)", "Products": "In, Ga, Ge, Te", "Stock +1yr": "+322%" } }
+    ]
+  },
+  {
+    name: "Layer 1: Substrates",
+    desc: "InP wafers and photonics-grade SOI wafers",
+    companies: [
+      { ticker: "SOI.PA", name: "Soitec", score: 65, verdict: "HOLD", market: "France", share: "70% SOI wafer share", chokepoint: true, monopoly: true, undiscovered: true,
+        thesis: "ONLY volume-approved photonics-SOI supplier for Tower/GF/TSMC. Hidden monopoly at 2.7x sales.", upside: "Buy at EUR45-50", metrics: { "Market Cap": "EUR2.4B", "Revenue": "EUR891M", "Photonics SOI": "EUR100M+", "SOI Share": "70%" } },
+      { ticker: "AXTI", name: "AXT Inc", score: 47, verdict: "AVOID", market: "US/China", share: "60-70% InP substrate", chokepoint: true, monopoly: true, undiscovered: false,
+        thesis: "Owns InP substrate bottleneck but Beijing manufacturing = existential geopolitical risk", upside: "", metrics: { "Revenue": "$99M", "InP Share": "60-70%", "China Risk": "Critical" } },
+      { ticker: "5016.T", name: "JX Advanced Metals", score: 66, verdict: "HOLD", market: "Japan", share: "Major InP supplier", chokepoint: true, monopoly: false, undiscovered: true,
+        thesis: "Newly IPO'd Japanese InP substrate maker. Non-China alternative to AXT. Japan's largest IPO since SoftBank.", upside: "", metrics: { "IPO Size": "$2.97B", "InP Exp": "40+ years", "Capacity": "+50%" } },
+      { ticker: "IQE.L", name: "IQE plc", score: 52, verdict: "HOLD", market: "UK", share: "", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "UK compound semi epiwafer maker under strategic review. Potential acquisition target.", upside: "", metrics: { "Revenue": "GBP97M", "Status": "Strategic review" } },
+      { ticker: "8258.TW", name: "IntelliEPI", score: 62, verdict: "HOLD", market: "Taiwan", share: "", chokepoint: false, monopoly: false, undiscovered: true,
+        thesis: "Taiwan InP epiwafer specialist with EZconn CPO partnership. 53.8% growth, fastest-growing Taiwan semi #3.", upside: "", metrics: { "Revenue": "$30M", "Growth": "+53.8%", "Product": "InP 200G PIN" } }
+    ]
+  },
+  {
+    name: "Layer 2: Epitaxy Equipment",
+    desc: "MOCVD reactors that grow compound semiconductor layers",
+    companies: [
+      { ticker: "AIXA.DE", name: "Aixtron", score: 65, verdict: "HOLD", market: "Germany", share: "70-90% MOCVD", chokepoint: true, monopoly: true, undiscovered: false,
+        thesis: "'Most underappreciated AI beneficiary.' 70-90% MOCVD market share. Every InP/GaAs laser chip needs Aixtron tools.", upside: "", metrics: { "Revenue": "EUR557M", "MOCVD Share": "70-90%", "Growth Driver": "Optoelectronics" } },
+      { ticker: "VECO", name: "Veeco", score: 63, verdict: "HOLD", market: "US", share: "MOCVD duopoly", chokepoint: true, monopoly: false, undiscovered: false,
+        thesis: "MOCVD duopoly partner with Aixtron. Lumina+ system for high-volume photonics. Merging with Axcelis.", upside: "", metrics: { "Products": "MOCVD, MBE, ALD", "Merger": "Axcelis $4.4B" } }
+    ]
+  },
+  {
+    name: "Layer 3: Lithography / Etch / Deposition",
+    desc: "Tools that pattern and build SiPh waveguides",
+    companies: [
+      { ticker: "ASML", name: "ASML", score: 68, verdict: "HOLD", market: "Netherlands", share: "100% EUV/DUV litho", chokepoint: true, monopoly: true, undiscovered: false,
+        thesis: "Lithography monopoly. Every SiPh foundry expansion needs ASML DUV tools.", upside: "", metrics: { "Market Cap": "$320B+", "Revenue": "EUR28B", "Monopoly": "Only litho supplier" } },
+      { ticker: "AMAT", name: "Applied Materials", score: 65, verdict: "HOLD", market: "US", share: "#1 deposition", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "#1 semi equipment. Deposition essential for all SiPh. GF Singapore photonics fab collaboration.", upside: "", metrics: { "Market Cap": "$170B+", "Revenue": "$28B" } },
+      { ticker: "LRCX", name: "Lam Research", score: 63, verdict: "HOLD", market: "US", share: "#1/2 etch", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "Etch tools define optical structures in every SiPh chip. Essential upstream.", upside: "", metrics: { "Market Cap": "$100B+", "Revenue": "$17B" } }
+    ]
+  },
+  {
+    name: "Layer 4: SiPh Foundry",
+    desc: "Silicon photonics chip fabrication",
+    companies: [
+      { ticker: "TSEM", name: "Tower Semi", score: 75, verdict: "BUY", market: "US/Israel", share: "85% SiPh foundry", chokepoint: true, monopoly: true, undiscovered: true,
+        thesis: "TSMC of photonics. 85% SiPh foundry share. $920M 5x expansion, 70%+ reserved. NVIDIA collab. Soitec sole SOI supplier.", upside: "$200 (+22%)", metrics: { "Revenue": "$1.57B", "SiPh Rev": "$228M (+115%)", "Share": "85%", "Expansion": "5x by Q4 2026" } },
+      { ticker: "GFS", name: "GlobalFoundries", score: 62, verdict: "HOLD", market: "US", share: "#2 SiPh", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "#2 SiPh foundry. AMF acquisition + GF Fotonix. China-free supply chain angle.", upside: "", metrics: { "SiPh Rev": "$200M (2x)", "Target": "$1B by decade-end" } },
+      { ticker: "UMC", name: "UMC", score: 59, verdict: "HOLD", market: "Taiwan", share: "New entrant", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "Taiwan #2 foundry entering SiPh via imec iSiPP300 license. Risk production 2026-27.", upside: "", metrics: { "Revenue": "$7B+", "SiPh Status": "Risk production 2026-27" } },
+      { ticker: "XFAB.PA", name: "X-FAB", score: 56, verdict: "HOLD", market: "France", share: "Niche", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "European SiPh foundry with InP heterogeneous integration (>120GHz). Early stage.", upside: "", metrics: { "Status": "Production 2027" } },
+      { ticker: "STM", name: "STMicro", score: 62, verdict: "HOLD", market: "EU", share: "New entrant", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "PIC100 SiPh in high-volume production. Quadrupling capacity by 2027.", upside: "", metrics: { "Platform": "PIC100", "Expansion": "4x by 2027" } }
+    ]
+  },
+  {
+    name: "Layer 4b: GaAs Foundry",
+    desc: "Gallium arsenide VCSEL fabrication",
+    companies: [
+      { ticker: "3105.TW", name: "WIN Semi", score: 64, verdict: "HOLD", market: "Taiwan", share: "50%+ GaAs foundry", chokepoint: true, monopoly: false, undiscovered: false,
+        thesis: "World's largest GaAs foundry. VCSELs for DC optical. Pivoting to AI.", upside: "", metrics: { "GaAs Share": "50%+", "Pivot": "AI/satellite" } }
+    ]
+  },
+  {
+    name: "Layer 5: Laser Chips",
+    desc: "EML lasers, DFB lasers, VCSELs",
+    companies: [
+      { ticker: "LITE", name: "Lumentum", score: 70, verdict: "HOLD", market: "US", share: "50-60% high-end EML", chokepoint: true, monopoly: true, undiscovered: false,
+        thesis: "Laser chip king. Only supplier shipping 200G/lane EMLs at scale. NVIDIA $2B deal. S&P 500 added.", upside: "Buy at $450-500", metrics: { "Market Cap": "$52B", "Revenue": "$2.1B TTM", "EML Share": "50-60%", "OCS Rev": "$400M+ backlog" } },
+      { ticker: "6503.T", name: "Mitsubishi Electric", score: 55, verdict: "HOLD", market: "Japan", share: "50% total EML", chokepoint: true, monopoly: false, undiscovered: false,
+        thesis: "50% global EML chip share but buried in JPY5.5T conglomerate. 3x capacity by FY28.", upside: "", metrics: { "Total Rev": "$37B", "EML Share": "~50%", "Expansion": "3x" } },
+      { ticker: "5802.T", name: "Sumitomo Electric", score: 58, verdict: "HOLD", market: "Japan", share: "Major EML", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "Japan conglomerate with EML/CW-LD lasers. Not pure play.", upside: "", metrics: { "Total Rev": "$32B" } },
+      { ticker: "SIVE.ST", name: "Sivers Semi", score: 46, verdict: "AVOID", market: "Sweden", share: "", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "InP DFB laser micro-cap with POET/O-Net partnerships. Pre-profit.", upside: "", metrics: { "Revenue": "$33M", "Status": "Pre-profit" } }
+    ]
+  },
+  {
+    name: "Layer 6: Analog / DSP ICs",
+    desc: "TIAs, drivers, CDRs, retimers, optical DSPs",
+    companies: [
+      { ticker: "MTSI", name: "MACOM", score: 76, verdict: "BUY", market: "US", share: "", chokepoint: false, monopoly: false, undiscovered: true,
+        thesis: "Best under-discovered AI photonics name. 57% GM, analog IC inside every transceiver. DC +48%, raised growth to 35-40%.", upside: "$300 (+18%)", metrics: { "Revenue": "$967M", "DC Rev": "$293M (+48%)", "Gross Margin": "57.4%", "Growth Guide": "35-40%" } },
+      { ticker: "CRDO", name: "Credo Tech", score: 82, verdict: "BUY", market: "US", share: "88% AEC", chokepoint: true, monopoly: true, undiscovered: true,
+        thesis: "88% AEC monopoly, 68% GM, 200%+ growth. Pulled back 53% from $214. 3nm Bluebird DSP for 1.6T.", upside: "$170 (+70%)", metrics: { "Revenue": "$437M (+126%)", "Q3 FY26": "$407M (+202%)", "AEC Share": "88%", "Gross Margin": "68.5%" } },
+      { ticker: "MRVL", name: "Marvell", score: 79, verdict: "BUY", market: "US", share: "", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "Boldest photonic bet. $3.25B Celestial AI acquisition + Ara 1.6T DSP + 50+ custom AI programs.", upside: "$120 (+36%)", metrics: { "Revenue": "$7B+ FY26E", "DC Revenue": "74%", "Celestial AI": "$3.25-5.5B", "Custom Programs": "50+" } },
+      { ticker: "AVGO", name: "Broadcom", score: 85, verdict: "BUY", market: "US", share: "90% switch ASIC", chokepoint: true, monopoly: true, undiscovered: false,
+        thesis: "AI networking gorilla. Tomahawk monopoly + Taurus DSP + XPU + SiPh. 68% EBITDA. $162B backlog.", upside: "$430 (+33%)", metrics: { "Market Cap": "$1.53T", "AI Rev": "$40.4B FY26", "Backlog": "$162B", "Switch Share": "~90%" } },
+      { ticker: "SMTC", name: "Semtech", score: 70, verdict: "HOLD", market: "US", share: "", chokepoint: false, monopoly: false, undiscovered: true,
+        thesis: "Under-discovered LPO disruptor. FiberEdge TIA removes DSP from optical modules. Hyperscaler design wins.", upside: "", metrics: { "Revenue": "$1.05B", "DC Growth": "50%+", "Key Tech": "LPO architecture" } },
+      { ticker: "MXL", name: "MaxLinear", score: 60, verdict: "HOLD", market: "US", share: "", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "Small-cap 1.6T DSP turnaround. Rushmore DSP sampling.", upside: "$21.55 (+24%)", metrics: { "Market Cap": "$1.6B", "Revenue": "$468M" } }
+    ]
+  },
+  {
+    name: "Layer 7: Transceivers",
+    desc: "800G / 1.6T optical transceiver modules",
+    companies: [
+      { ticker: "300308.SZ", name: "Innolight", score: 79, verdict: "BUY", market: "China", share: "50%+ NVIDIA", chokepoint: true, monopoly: true, undiscovered: false,
+        thesis: "World's #1 transceiver. 50%+ NVIDIA share, ~80% Google 800G+. 43% GM, 28% net margin. Geopolitical risk.", upside: "CNY700 (+21%)", metrics: { "Revenue": "$5.2B (+60%)", "NVIDIA Share": "50%+", "Google Share": "~80%", "Gross Margin": "42.8%" } },
+      { ticker: "COHR", name: "Coherent", score: 65, verdict: "HOLD", market: "US", share: "", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "Broadest portfolio (3 architectures). NVIDIA $2B partnership. Thermadite thermal materials.", upside: "Buy at $200", metrics: { "Revenue": "$6.3B TTM", "Q2": "$1.69B (+17%)" } },
+      { ticker: "AAOI", name: "Applied Opto", score: 59, verdict: "HOLD", market: "US", share: "", chokepoint: false, monopoly: false, undiscovered: true,
+        thesis: "US manufacturing dark horse. Zero debt. $200M+ 1.6T order. 3.5x DC rev growth.", upside: "Buy at $60-70", metrics: { "Revenue": "$456M (+83%)", "Debt": "$0", "Mfg": "US-based" } },
+      { ticker: "300502.SZ", name: "Eoptolink", score: 68, verdict: "HOLD", market: "China", share: "NVIDIA #2", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "#2 Chinese transceiver. +179% growth. $50B at 22x sales.", upside: "", metrics: { "Revenue": "$1.19B (+179%)", "Position": "China #2" } }
+    ]
+  },
+  {
+    name: "Layer 8: Assembly / Packaging",
+    desc: "Precision optical assembly and OSAT packaging",
+    companies: [
+      { ticker: "FN", name: "Fabrinet", score: 71, verdict: "HOLD", market: "US/Thailand", share: "NVIDIA sole-source", chokepoint: true, monopoly: false, undiscovered: false,
+        thesis: "Best risk-adjusted AI photonics. NVIDIA sole-source 1.6T. Fortress balance sheet ($961M cash, zero debt).", upside: "Buy at $420-450", metrics: { "Revenue": "$3.89B TTM", "Cash": "$961M", "Debt": "$0", "Expansion": "+50% capacity" } },
+      { ticker: "CLS", name: "Celestica", score: 74, verdict: "HOLD", market: "Canada", share: "55% custom switch", chokepoint: true, monopoly: false, undiscovered: true,
+        thesis: "Bigger Fabrinet. 55% custom Ethernet switch mfg share. $17B FY26 guide at 0.7x sales.", upside: "", metrics: { "Revenue": "$12.4B (+28%)", "FY26 Guide": "$17B", "Switch Share": "55%" } },
+      { ticker: "3711.TW", name: "ASE Group", score: 70, verdict: "HOLD", market: "Taiwan", share: "#1 OSAT", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "#1 OSAT with dedicated SiPh packaging. CPO <5pJ/bit demo. Lightmatter partnership.", upside: "", metrics: { "Revenue": "$20B+", "SiPh Pack": "$300-400M 2026E" } },
+      { ticker: "300394.SZ", name: "TFC Optical", score: 64, verdict: "HOLD", market: "China", share: "", chokepoint: false, monopoly: false, undiscovered: true,
+        thesis: "Chinese Fabrinet: $35B cap optical sub-assembly bridge between components and modules.", upside: "", metrics: { "Market Cap": "$35B", "Revenue": "$662M" } }
+    ]
+  },
+  {
+    name: "Layer 9: Die Bonding / Test Equipment",
+    desc: "Assembly equipment and semiconductor test",
+    companies: [
+      { ticker: "6146.T", name: "Disco Corp", score: 72, verdict: "HOLD", market: "Japan", share: "75% dicing", chokepoint: true, monopoly: true, undiscovered: true,
+        thesis: "75% global dicing monopoly. 39% OPM. Every chip needs Disco. Japanese hidden gem.", upside: "", metrics: { "Revenue": "$2.74B (+28%)", "Dicing Share": "75%", "Op Margin": "39%" } },
+      { ticker: "BESI.AS", name: "Besi", score: 73, verdict: "HOLD", market: "Netherlands", share: "42% die-attach", chokepoint: true, monopoly: false, undiscovered: false,
+        thesis: "Die-attach + hybrid bonding pioneer. Q4 orders +105% on AI + photonics. CPO equipment chokepoint.", upside: "", metrics: { "Orders": "+105% Q4", "Die-Attach": "42%", "Hybrid Bond": "EUR476M by 2026" } },
+      { ticker: "6857.T", name: "Advantest", score: 71, verdict: "HOLD", market: "Japan", share: "ATE duopoly", chokepoint: true, monopoly: false, undiscovered: false,
+        thesis: "ASML of testing. V93000 extended to SiPh/CPO. Revenue JPY1.07T with 30-40% growth.", upside: "", metrics: { "Revenue": "JPY1.07T", "Growth": "30-40%", "SiPh Test": "V93000" } },
+      { ticker: "TER", name: "Teradyne", score: 72, verdict: "HOLD", market: "US", share: "ATE duopoly", chokepoint: true, monopoly: false, undiscovered: false,
+        thesis: "ATE #2. Acquired Quantifi Photonics for PIC testing. AI 70% of revenue.", upside: "", metrics: { "Revenue": "$3.19B", "AI %": "70%", "PIC Test": "Quantifi acquired" } },
+      { ticker: "0522.HK", name: "ASMPT", score: 66, verdict: "HOLD", market: "Hong Kong", share: "", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "Owns AMICRA photonic die bonding (sub-micron). Profit +164%.", upside: "", metrics: { "Revenue": "$1.86B", "Profit": "+164%" } }
+    ]
+  },
+  {
+    name: "Layer 10: Fiber Cable & Connectors",
+    desc: "Physical fiber infrastructure",
+    companies: [
+      { ticker: "GLW", name: "Corning", score: 72, verdict: "HOLD", market: "US", share: ">50% NA fiber", chokepoint: true, monopoly: false, undiscovered: false,
+        thesis: "Fiber backbone of AI. $6.3B optical rev (+35%), $1B profit. $6B Meta deal.", upside: "Buy at $115-120", metrics: { "Optical Rev": "$6.3B (+35%)", "Optical Profit": "$1B (+71%)", "Meta Deal": "$6B" } },
+      { ticker: "APH", name: "Amphenol", score: 78, verdict: "BUY", market: "US", share: "33% AI DC connectors", chokepoint: true, monopoly: false, undiscovered: false,
+        thesis: "Dominant AI DC connector co. $23.1B rev +52%, 27.5% OPM record. CommScope CCS adds $4.1B fiber.", upside: "~30%", metrics: { "Revenue": "$23.1B (+52%)", "Comms Sol": "$3.4B (+78%)", "Share": "33%" } },
+      { ticker: "5803.T", name: "Fujikura", score: 68, verdict: "HOLD", market: "Japan", share: "", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "Japanese Corning. +160% in 2025. Tripling US fiber output.", upside: "", metrics: { "Market Cap": "$45B", "Performance": "+160% 2025" } },
+      { ticker: "PRY.MI", name: "Prysmian", score: 60, verdict: "HOLD", market: "Italy", share: "", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "World's largest cable co with hollow-core fiber (50% faster). Long-term option.", upside: "", metrics: { "Revenue": "EUR15B", "HCF": "50% faster" } }
+    ]
+  },
+  {
+    name: "Layer 11: Networking / Switches",
+    desc: "AI data center switching and optical networking",
+    companies: [
+      { ticker: "ANET", name: "Arista Networks", score: 83, verdict: "BUY", market: "US", share: "40%+ 800G switch", chokepoint: true, monopoly: false, undiscovered: false,
+        thesis: "Demand signal for all photonics. 64% GM, $10.7B net cash. AI rev doubling to $3.25B.", upside: "$175 (+33%)", metrics: { "Revenue": "$9.01B (+29%)", "AI Rev FY26": "$3.25B (+100%)", "Gross Margin": "64%", "Net Cash": "$10.7B" } },
+      { ticker: "CIEN", name: "Ciena", score: 69, verdict: "HOLD", market: "US", share: "~20% optical networking", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "Optical networking leader. WaveLogic 6, $5B backlog. OCS via Nubis acquisition.", upside: "Buy at $280-300", metrics: { "Revenue": "$4.77B", "Backlog": "$5B", "Orders": "$7.8B record" } },
+      { ticker: "CSCO", name: "Cisco", score: 68, verdict: "HOLD", market: "US", share: "", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "Sleeping AI optics giant. $5B AI orders, Acacia ~50% coherent. Silicon One G300.", upside: "", metrics: { "AI Orders": "$5B+", "Acacia Share": "~50% coherent" } },
+      { ticker: "NOK", name: "Nokia", score: 60, verdict: "HOLD", market: "Finland/US", share: "~20% optical networking", chokepoint: false, monopoly: false, undiscovered: false,
+        thesis: "Ciena competitor. Infinera InP + Nokia SiPh. 70% TCO reduction.", upside: "", metrics: { "Optical Rev": "EUR3.4B" } }
+    ]
+  },
+  {
+    name: "Layer 12: Optical Circuit Switching",
+    desc: "Dynamic GPU cluster reconfiguration",
+    companies: [
+      { ticker: "HUBN.SW", name: "Huber+Suhner", score: 58, verdict: "HOLD", market: "Switzerland", share: "Polatis OCS leader", chokepoint: true, monopoly: false, undiscovered: true,
+        thesis: "Owns Polatis, the OCS industry standard. Market heading to $2.5B by 2029.", upside: "", metrics: { "OCS Market": "$2.5B by 2029", "Revenue": "$1.1B" } }
+    ]
+  },
+  {
+    name: "Layer 13: Test & Measurement / Materials",
+    desc: "Optical testing and niche materials",
+    companies: [
+      { ticker: "VIAV", name: "VIAV Solutions", score: 69, verdict: "HOLD", market: "US", share: "", chokepoint: false, monopoly: false, undiscovered: true,
+        thesis: "Under-discovered test & measurement. Cheapest AI photonics at 5x sales. 19.3% OPM.", upside: "Buy at $28-30", metrics: { "Revenue": "$1.24B (+36%)", "P/S": "~5x", "Op Margin": "19.3%" } },
+      { ticker: "4973.T", name: "Japan Pure Chemical", score: 63, verdict: "HOLD", market: "Japan", share: "50% gold plating", chokepoint: true, monopoly: true, undiscovered: true,
+        thesis: "Ultimate hidden play. 52-employee company with 50% global gold plating share. 2.1x sales, 4.17% yield.", upside: "", metrics: { "Revenue": "$99M", "Employees": "52", "Gold Plating Share": "~50%", "Dividend": "4.17%" } }
+    ]
+  }
+];
+
+function renderChain(filter) {
+  const chain = document.getElementById('chain');
+  chain.innerHTML = '';
+  layers.forEach((layer, li) => {
+    let companies = layer.companies;
+    if (filter === 'buy') companies = companies.filter(c => c.verdict === 'BUY');
+    else if (filter === 'chokepoint') companies = companies.filter(c => c.chokepoint || c.monopoly);
+    else if (filter === 'undiscovered') companies = companies.filter(c => c.undiscovered);
+    if (companies.length === 0 && filter !== 'all') return;
+
+    if (li > 0) {
+      const arrow = document.createElement('div');
+      arrow.className = 'flow-arrow';
+      arrow.innerHTML = '&#8595;';
+      chain.appendChild(arrow);
+    }
+
+    const row = document.createElement('div');
+    row.className = 'layer';
+    row.innerHTML = `
+      <div class="layer-label">
+        <h3>${layer.name}</h3>
+        <span>${layer.desc}</span>
+      </div>
+      <div class="layer-companies">
+        ${companies.map(c => {
+          let cls = c.verdict === 'BUY' ? 'buy' : c.verdict === 'AVOID' ? 'avoid' : 'hold';
+          if (c.monopoly) cls += ' monopoly';
+          else if (c.chokepoint) cls += ' chokepoint';
+          return `<div class="company ${cls}" onclick='showDetail(${JSON.stringify(c).replace(/'/g, "\\'")})'>
+            <span class="ticker">${c.ticker}</span>
+            <span class="score">${c.score}</span>
+            ${c.share ? `<span class="share">${c.share}</span>` : ''}
+          </div>`;
+        }).join('')}
+      </div>
+    `;
+    chain.appendChild(row);
+  });
+}
+
+function showDetail(c) {
+  const panel = document.getElementById('panel');
+  const overlay = document.getElementById('overlay');
+  const verdictTag = c.verdict === 'BUY' ? 'tag-buy' : c.verdict === 'AVOID' ? 'tag-avoid' : 'tag-hold';
+  let tags = `<span class="tag ${verdictTag}">${c.verdict} (${c.score}/100)</span>`;
+  if (c.monopoly) tags += '<span class="tag tag-monopoly">MONOPOLY</span>';
+  else if (c.chokepoint) tags += '<span class="tag tag-chokepoint">CHOKEPOINT</span>';
+  if (c.undiscovered) tags += '<span class="tag" style="background:rgba(88,166,255,0.15);color:#58a6ff;border:1px solid #58a6ff">UNDER-DISCOVERED</span>';
+
+  let metricsHtml = '';
+  if (c.metrics) {
+    metricsHtml = '<div class="metric-grid">' + Object.entries(c.metrics).map(([k,v]) =>
+      `<div class="metric"><div class="val">${v}</div><div class="lbl">${k}</div></div>`
+    ).join('') + '</div>';
+  }
+
+  document.getElementById('panel-content').innerHTML = `
+    <h2>${c.ticker} &mdash; ${c.name}</h2>
+    <div class="subtitle">${c.market}</div>
+    <div style="margin-bottom:16px">${tags}</div>
+    ${metricsHtml}
+    <div class="section">
+      <h4>Thesis</h4>
+      <p>${c.thesis}</p>
+    </div>
+    ${c.upside ? `<div class="section"><h4>Target / Entry</h4><p>${c.upside}</p></div>` : ''}
+  `;
+  panel.classList.add('open');
+  overlay.classList.add('open');
+}
+
+function closePanel() {
+  document.getElementById('panel').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setActive(btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function filterAll() { setActive(event.target); renderChain('all'); }
+function filterBuy() { setActive(event.target); renderChain('buy'); }
+function filterChokepoint() { setActive(event.target); renderChain('chokepoint'); }
+function filterUnderDiscovered() { setActive(event.target); renderChain('undiscovered'); }
+
+renderChain('all');
+</script>
+</body>
+</html>
