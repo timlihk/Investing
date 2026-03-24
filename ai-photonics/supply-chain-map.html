@@ -931,32 +931,6 @@ const panelContentEl = document.getElementById("panel-content");
 let activeFilter = "all";
 let activeNodeId = null;
 
-function tradingViewSymbol(node) {
-  const symbolMap = {
-    "SOI": "EPA:SOI",
-    "AXTI": "NASDAQ:AXTI",
-    "JX": "TSE:5016",
-    "VNP": "TSX:VNP",
-    "ASML": "NASDAQ:ASML",
-    "TSEM": "NASDAQ:TSEM",
-    "GFS": "NASDAQ:GFS",
-    "AIXTRON": "ETR:AIXA",
-    "FORM": "NASDAQ:FORM",
-    "LITE": "NASDAQ:LITE",
-    "SIVE": "OMXSTO:SIVE",
-    "MTSI": "NASDAQ:MTSI",
-    "CRDO": "NASDAQ:CRDO",
-    "AVGO": "NASDAQ:AVGO",
-    "INNOLIGHT": "SZSE:300308",
-    "COHR": "NYSE:COHR",
-    "AAOI": "NASDAQ:AAOI",
-    "FN": "NYSE:FN",
-    "ANET": "NYSE:ANET",
-    "CIEN": "NYSE:CIEN"
-  };
-  return symbolMap[node.id] || node.ticker;
-}
-
 function repoReportUrl(file) {
   return `https://github.com/timlihk/Investing/blob/main/ai-photonics/reports/${file}`;
 }
@@ -1027,12 +1001,7 @@ function renderNodes() {
 
   nodes.forEach(node => {
     const el = document.getElementById(`node-${node.id}`);
-    el.addEventListener("click", event => {
-      if (node.report) {
-        window.open(`https://www.tradingview.com/symbols/${tradingViewSymbol(node).replace(":", "-")}/?interval=D`, "_blank", "noopener,noreferrer");
-      }
-      openPanel(node.id);
-    });
+    el.addEventListener("click", () => openPanel(node.id));
   });
 }
 
