@@ -22,6 +22,7 @@ Soitec (SOI.PA) --> Tower Semi (TSEM) --> SiPh transceiver ICs --> modules --> A
 
 Interactive map:
 - https://timlihk.github.io/Investing/ai-photonics/supply-chain-map.html
+- CHIPS status notes: https://github.com/timlihk/Investing/blob/main/ai-photonics/chips-act-status.md
 
 ### [Memory Supercycle](memory-supercycle/)
 Under-covered memory, packaging, test, and storage names benefiting from the AI memory supercycle. Focused on HBM supply, HBM packaging bottlenecks, memory test/probe intensity, and enterprise SSD expansion.
