@@ -41,7 +41,7 @@ canvas{display:block}
 <body>
 <div id="ui">
   <h1>AI Photonics Chokepoint Map</h1>
-  <p><b style="color:#ff7b72">Red</b> = monopoly (sole source). <b style="color:#e3b341">Gold</b> = chokepoint. <b style="color:#bc8cff">Purple ring</b> = gross margin (thicker = higher). Hover to trace supply chains.</p>
+  <p><b>Bubble size</b> = market cap. <b style="color:#ff7b72">Red</b> = monopoly. <b style="color:#e3b341">Gold</b> = chokepoint. <b style="color:#bc8cff">Purple ring</b> = gross margin. <b style="color:#58a6ff">Blue</b> = pure-play optics. Hover to trace supply chains.</p>
   <div class="legend">
     <div class="legend-item"><div class="legend-dot" style="background:#58a6ff"></div>Pure-play (&gt;80% optics)</div>
     <div class="legend-item"><div class="legend-dot" style="background:#8b949e"></div>Mixed (&lt;40% optics)</div>
@@ -82,104 +82,105 @@ const LAYERS=[
 
 // addN params: name, ticker, layer, xFrac, chokepoint, monopoly,
 //   revGrowth(%), grossMargin(%), opMargin(%), revFwd,
-//   opticsPct (optics as % of total revenue — 100 = pure play),
+//   opticsPct (optics as % of total revenue),
+//   mktCapB (market cap in $B USD),
 //   thesis, share, market
 function init(){
-  //                                                              chk  mono  grw   gm   om   revFwd              opt%
-  addN("5N Plus","VNP.TO",0,.5,false,false,                       35,  24,  null,"$520M FY26E",                  30,
+  //                                                              chk  mono  grw   gm   om   revFwd              opt%  mcap$B
+  addN("5N Plus","VNP.TO",0,.5,false,false,                       35,  24,  null,"$520M FY26E",                  30,  2,
     "Refines In/Ga/Ge for all compound semi. Rest is solar/other.","$391M rev (+35%)","Canada");
 
-  addN("Soitec","SOI.PA",1,.2,true,true,                          11,  32,  null,"EUR1B+ med-term",              12,
+  addN("Soitec","SOI.PA",1,.2,true,true,                          11,  32,  null,"EUR1B+ med-term",              12,  2.6,
     "ONLY volume photonics-SOI supplier for Tower/GF/TSMC. Photonics-SOI ~EUR100M of EUR891M. Growing fast.","70% SOI | SOLE SOURCE","France");
-  addN("AXT","AXTI",1,.4,true,false,                              null,24,  -15, "",                             80,
+  addN("AXT","AXTI",1,.4,true,false,                              null,24,  -15, "",                             80,  3,
     "60-70% InP substrates. Mostly optical end-markets. Beijing mfg risk.","60-70% InP","US/China");
-  addN("JX Metals","5016.T",1,.6,false,false,                     15,  23,  7,  "JPY820B FY25E",                8,
+  addN("JX Metals","5016.T",1,.6,false,false,                     15,  23,  7,  "JPY820B FY25E",                8,  21,
     "IPO'd Mar 2025. Rev JPY775B TTM, 23% GM. Raised FY25 guidance on AI demand. InP small but strategic.","40yr InP exp","Japan");
-  addN("IntelliEPI","8258.TW",1,.8,false,false,                   54,  null,null,"",                             90,
+  addN("IntelliEPI","8258.TW",1,.8,false,false,                   54,  null,null,"",                             90,  0.3,
     "Taiwan InP epiwafer. Primarily optical comms end-markets.","53.8% growth","Taiwan");
 
-  addN("Aixtron","AIXA.DE",2,.15,true,false,                      -1,  43,  15, "EUR520M FY26",                 30,
+  addN("Aixtron","AIXA.DE",2,.15,true,false,                      -1,  43,  15, "EUR520M FY26",                 30,  3.5,
     "70-90% MOCVD. Optoelectronics ~30% of revenue, rest is power/SiC.","70-90% MOCVD (duopoly)","Germany");
-  addN("Veeco","VECO",2,.35,true,false,                            null,null,null,"",                            20,
+  addN("Veeco","VECO",2,.35,true,false,                            null,null,null,"",                            20,  4,
     "MOCVD duopoly #2. Photonics MOCVD is one of several segments.","MOCVD #2","US");
-  addN("ASML","ASML",2,.55,true,true,                              30,  51,  35, "EUR30B+ FY26E",               5,
+  addN("ASML","ASML",2,.55,true,true,                              30,  51,  35, "EUR30B+ FY26E",               5,  320,
     "Only lithography supplier. SiPh uses DUV but is tiny fraction of total.","100% litho | SOLE SOURCE","Netherlands");
-  addN("Disco","6146.T",2,.75,true,false,                          28,  50,  39, "JPY420B+ FY25",               12,
+  addN("Disco","6146.T",2,.75,true,false,                          28,  50,  39, "JPY420B+ FY25",               12,  36,
     "75% dicing. SiPh is small fraction of all chip dicing volumes.","75% dicing","Japan");
-  addN("Besi","BESI.AS",2,.92,true,false,                          null,64,  null,"EUR750-850M FY26E",          18,
+  addN("Besi","BESI.AS",2,.92,true,false,                          null,64,  null,"EUR750-850M FY26E",          18,  17,
     "42% die-attach. Photonics bonding growing but still minority.","42% die-attach","Netherlands");
 
-  addN("Tower Semi","TSEM",3,.25,true,false,                       14,  23,  12, "$2.0B FY26E",                 15,
+  addN("Tower Semi","TSEM",3,.25,true,false,                       14,  23,  12, "$2.0B FY26E",                 15,  17,
     "85% SiPh foundry. SiPh $228M of $1.57B (15%). 5x expansion → 35%+ by 2028.","85% SiPh (eroding)","Israel/US");
-  addN("GlobalFoundries","GFS",3,.5,false,false,                   0,   27,  null,"$6.8B FY26E",                3,
+  addN("GlobalFoundries","GFS",3,.5,false,false,                   0,   27,  null,"$6.8B FY26E",                3,  25,
     "#2 SiPh. $200M SiPh of ~$6.5B total. Growing to $1B by decade-end.","#2 SiPh","US");
-  addN("WIN Semi","3105.TW",3,.75,true,false,                      7,   32,  null,"",                           30,
+  addN("WIN Semi","3105.TW",3,.75,true,false,                      7,   32,  null,"",                           30,  5,
     "50%+ GaAs foundry. ~30% is optical/VCSEL, rest is RF/mobile.","50%+ GaAs","Taiwan");
 
-  addN("Lumentum","LITE",4,.08,true,false,                         65,  43,  31, "$3.2B+ FY26E",                95,
+  addN("Lumentum","LITE",4,.08,true,false,                         65,  43,  31, "$3.2B+ FY26E",                95,  52,
     "50-60% high-end EML. NVIDIA $2B. Nearly pure-play optical.","50-60% EML","US");
-  addN("MACOM","MTSI",4,.2,false,false,                            33,  57,  25, "$1.35B FY26E",                30,
+  addN("MACOM","MTSI",4,.2,false,false,                            33,  57,  25, "$1.35B FY26E",                30,  19,
     "Data center ~30% of rev. Rest is defense + telecom.","57% GM, DC+48%","US");
-  addN("Credo","CRDO",4,.34,true,true,                             202, 69,  45, "$960M FY26E",                 95,
+  addN("Credo","CRDO",4,.34,true,true,                             202, 69,  45, "$960M FY26E",                 95,  20,
     "88% AEC. Nearly all revenue from DC connectivity.","88% AEC | SOLE SOURCE","US");
-  addN("Broadcom","AVGO",4,.48,true,false,                         29,  76,  45, "$80B FY26E",                  15,
+  addN("Broadcom","AVGO",4,.48,true,false,                         29,  76,  45, "$80B FY26E",                  15,  1530,
     "Optical DSP + SiPh is ~15% of semi rev. Rest is XPU, software, etc.","~90% switch ASIC (eroding)","US");
-  addN("Marvell","MRVL",4,.62,false,false,                         76,  60,  36, "$9B FY27E",                   25,
+  addN("Marvell","MRVL",4,.62,false,false,                         76,  60,  36, "$9B FY27E",                   25,  76,
     "Optical DSP ~25% of DC rev. Rest is custom silicon, storage, networking.","$3.25B Celestial","US");
-  addN("Semtech","SMTC",4,.76,false,false,                         16,  58,  19, "$1.3B FY27E",                 20,
+  addN("Semtech","SMTC",4,.76,false,false,                         16,  58,  19, "$1.3B FY27E",                 20,  7.5,
     "Signal integrity (optical TIA/CDR) ~20%. Rest is LoRa IoT.","LPO architecture","US");
-  addN("Mitsubishi","6503.T",4,.9,true,false,                      5,   null,null,"",                           3,
+  addN("Mitsubishi","6503.T",4,.9,true,false,                      5,   null,null,"",                           3,  33,
     "50% total EML volume but EML is tiny part of JPY5.5T conglomerate.","50% EML","Japan");
 
-  addN("Innolight","300308.SZ",5,.2,true,false,                    60,  43,  28, "CNY55-60B FY26E",             95,
+  addN("Innolight","300308.SZ",5,.2,true,false,                    60,  43,  28, "CNY55-60B FY26E",             95,  81,
     "Pure-play optical transceivers. Nearly all revenue from DC optics.","50%+ NVIDIA","China");
-  addN("Coherent","COHR",5,.4,false,false,                         17,  39,  5,  "$7B+ FY26E",                  58,
+  addN("Coherent","COHR",5,.4,false,false,                         17,  39,  5,  "$7B+ FY26E",                  58,  48,
     "Networking ~58% of rev. Rest is lasers + materials.","$6.3B TTM","US");
-  addN("AAOI","AAOI",5,.6,false,false,                             83,  31,  -12,"$1B+ CY26E",                 85,
+  addN("AAOI","AAOI",5,.6,false,false,                             83,  31,  -12,"$1B+ CY26E",                 85,  7,
     "Primarily optical transceivers + CATV optical products.","US manufacturing","US");
-  addN("Eoptolink","300502.SZ",5,.8,false,false,                   179, null,null,"",                           95,
+  addN("Eoptolink","300502.SZ",5,.8,false,false,                   179, null,null,"",                           95,  50,
     "Pure-play optical transceiver maker.","$50B cap","China");
 
-  addN("Fabrinet","FN",6,.15,true,false,                           19,  12,  11, "$5B+ FY27E",                  75,
+  addN("Fabrinet","FN",6,.15,true,false,                           19,  12,  11, "$5B+ FY27E",                  75,  18,
     "~75% of revenue from optical assembly. Rest is automotive/industrial.","NVIDIA sole-src","Thailand");
-  addN("Celestica","CLS",6,.35,true,false,                         28,  null,null,"$17B FY26E",                 40,
+  addN("Celestica","CLS",6,.35,true,false,                         28,  null,null,"$17B FY26E",                 40,  12,
     "CCS ~75% of rev but includes compute + networking, not just optical.","55% custom sw","Canada");
-  addN("ASE","3711.TW",6,.55,false,false,                          null,null,null,"$21B+ FY26E",                5,
+  addN("ASE","3711.TW",6,.55,false,false,                          null,null,null,"$21B+ FY26E",                5,  28,
     "SiPh packaging is new. $300-400M of $20B+ total.","#1 OSAT","Taiwan");
-  addN("TFC Optical","300394.SZ",6,.75,false,false,                 null,null,null,"",                           90,
+  addN("TFC Optical","300394.SZ",6,.75,false,false,                 null,null,null,"",                           90,  35,
     "Primarily optical sub-assembly and packaging.","$35B cap","China");
-  addN("Foxconn","2317.TW",6,.92,false,false,                      22,  null,null,"NT$9T+ FY26E",              5,
+  addN("Foxconn","2317.TW",6,.92,false,false,                      22,  null,null,"NT$9T+ FY26E",              5,  60,
     "Optical is tiny part of $248B server/electronics empire.","$248B rev","Taiwan");
 
-  addN("Corning","GLW",7,.2,true,false,                            35,  42,  20, "$8B optical FY26E",           45,
+  addN("Corning","GLW",7,.2,true,false,                            35,  42,  20, "$8B optical FY26E",           45,  40,
     "Optical Comms $6.3B of ~$14B total. Rest is display, specialty glass.",">50% NA fiber","US");
-  addN("Amphenol","APH",7,.45,true,false,                          52,  33,  28, "$28-30B FY26E",               15,
+  addN("Amphenol","APH",7,.45,true,false,                          52,  33,  28, "$28-30B FY26E",               15,  100,
     "Comms Solutions $3.4B of $23B. Rest is auto, defense, industrial.","33% AI DC conn","US");
-  addN("Fujikura","5803.T",7,.7,false,false,                       7,   null,16, "",                            40,
+  addN("Fujikura","5803.T",7,.7,false,false,                       7,   null,16, "",                            40,  45,
     "Telecom systems ~40% of revenue. Rest is auto, electronics, power.","3x US output","Japan");
-  addN("Prysmian","PRY.MI",7,.9,false,false,                       null,null,null,"",                           10,
+  addN("Prysmian","PRY.MI",7,.9,false,false,                       null,null,null,"",                           10,  20,
     "Fiber is ~10%. Primarily a power cable company (EUR15B).","HCF 50% faster","Italy");
 
-  addN("Arista","ANET",8,.2,true,false,                            29,  64,  43, "$11.25B FY26E",               15,
+  addN("Arista","ANET",8,.2,true,false,                            29,  64,  43, "$11.25B FY26E",               15,  178,
     "Consumes transceivers but is a switch company. Optical is cost input not revenue.","40%+ 800G","US");
-  addN("Ciena","CIEN",8,.45,false,false,                           19,  42,  8,  "$5.9B FY26E",                 90,
+  addN("Ciena","CIEN",8,.45,false,false,                           19,  42,  8,  "$5.9B FY26E",                 90,  43,
     "Nearly pure-play optical networking. ~90% from optical systems.","$5B backlog","US");
-  addN("Cisco","CSCO",8,.7,false,false,                            7,   64,  30, "",                            5,
+  addN("Cisco","CSCO",8,.7,false,false,                            7,   64,  30, "",                            5,  250,
     "Acacia optical is ~5% of $60B+ total. Enterprise/security dominant.","Acacia ~50%","US");
-  addN("Nokia","NOK",8,.9,false,false,                              3,   null,null,"EUR20B FY26E",              17,
+  addN("Nokia","NOK",8,.9,false,false,                              3,   null,null,"EUR20B FY26E",              17,  30,
     "Optical ~EUR3.4B of EUR20B. Rest is mobile networks, IP routing.","~20% optical","Finland");
 
-  addN("VIAV","VIAV",9,.12,false,false,                            36,  null,19, "$1.5B FY26E",                 60,
+  addN("VIAV","VIAV",9,.12,false,false,                            36,  null,19, "$1.5B FY26E",                 60,  6,
     "NSE (network test) ~60% of revenue. OSP (anti-counterfeiting) is non-optical.","$1.24B +36%","US");
-  addN("Advantest","6857.T",9,.28,true,false,                       37,  null,40, "JPY1.4T FY26E",              10,
+  addN("Advantest","6857.T",9,.28,true,false,                       37,  null,40, "JPY1.4T FY26E",              10,  45,
     "SiPh test is new via V93000. ~10% of ATE business today.","ATE duopoly","Japan");
-  addN("Teradyne","TER",9,.44,true,false,                          13,  null,null,"$4.5B+ FY26E",               5,
+  addN("Teradyne","TER",9,.44,true,false,                          13,  null,null,"$4.5B+ FY26E",               5,  28,
     "Quantifi PIC testing just acquired. Tiny fraction of $3.2B today.","AI 70% rev","US");
-  addN("Huber+Suhner","HUBN.SW",9,.6,true,false,                   0,   null,null,"",                           15,
+  addN("Huber+Suhner","HUBN.SW",9,.6,true,false,                   0,   null,null,"",                           15,  3.6,
     "Polatis OCS is ~15% of revenue. Rest is RF, fiber, industrial.","OCS leader","Switzerland");
-  addN("Japan Pure Chem","4973.T",9,.76,true,false,                 null,null,11, "",                            40,
+  addN("Japan Pure Chem","4973.T",9,.76,true,false,                 null,null,11, "",                            40,  0.2,
     "Gold plating for optical connectors/PCBs ~40%. Rest is connector/industrial.","50% gold plating","Japan");
-  addN("Vertiv","VRT",9,.92,false,false,                            28,  null,null,"$13.5B FY26E",              0,
+  addN("Vertiv","VRT",9,.92,false,false,                            28,  null,null,"$13.5B FY26E",              0,  55,
     "Cooling/power infrastructure. 0% optical revenue. AI demand signal only.","$15B backlog","US");
 
   // EDGES
@@ -204,11 +205,11 @@ function init(){
   addEdge("4973.T","300308.SZ"); addEdge("4973.T","FN");
 }
 
-function addN(name,ticker,layer,xFrac,chokepoint,monopoly,revGrowth,grossMargin,opMargin,revFwd,opticsPct,thesis,share,market){
+function addN(name,ticker,layer,xFrac,chokepoint,monopoly,revGrowth,grossMargin,opMargin,revFwd,opticsPct,mktCapB,thesis,share,market){
   const ly=LAYERS[layer];
   const golden=chokepoint && grossMargin!==null && grossMargin>=40 && revGrowth!==null && revGrowth>=20;
   nodes.push({name,ticker,layer,xFrac,yFrac:ly.y,chokepoint,monopoly,
-    revGrowth,grossMargin,opMargin,revFwd,opticsPct,thesis,share,market,golden,
+    revGrowth,grossMargin,opMargin,revFwd,opticsPct,mktCapB:mktCapB||1,thesis,share,market,golden,
     x:0,y:0,r:0});
 }
 function addEdge(from,to,critical){edges.push({from,to,critical:!!critical})}
@@ -216,11 +217,18 @@ function addEdge(from,to,critical){edges.push({from,to,critical:!!critical})}
 function layout(){
   canvas.width=W();canvas.height=H();
   const pad=160,w=canvas.width-pad*2,h=canvas.height-40;
+  // Position nodes INSIDE their segment band (centered vertically)
   nodes.forEach(n=>{
+    const li=n.layer;
+    const lyTop=LAYERS[li].y;
+    const lyBot=li<LAYERS.length-1?LAYERS[li+1].y:1.04;
+    const midY=(lyTop+lyBot)/2;
     n.x=pad+n.xFrac*w;
-    n.y=20+n.yFrac*h;
-    const base=n.monopoly?24:n.chokepoint?19:(n.opticsPct>=80?16:n.opticsPct>=40?13:10);
-    n.r=base*Math.min(canvas.width/1600,1.2);
+    n.y=20+midY*h;
+    // Bubble size = log(market cap) — ranges from ~8 ($0.2B) to ~30 ($1500B)
+    const logCap=Math.log10(Math.max(n.mktCapB,.1));  // 0.1B→-1, 1B→0, 10B→1, 100B→2, 1000B→3
+    const base=6+logCap*7; // -1→-1(clamped to 6), 0→6, 1→13, 2→20, 3→27
+    n.r=Math.max(6,Math.min(32,base))*Math.min(canvas.width/1600,1.1);
   });
 }
 
@@ -428,9 +436,11 @@ function handleMove(e){
   hoveredNode=found;
   canvas.style.cursor=found?'pointer':'default';
   if(found){
-    // Purity tag
+    // Tags
+    const mcapStr=found.mktCapB>=1000?`$${(found.mktCapB/1000).toFixed(1)}T`:found.mktCapB>=1?`$${Math.round(found.mktCapB)}B`:`$${Math.round(found.mktCapB*1000)}M`;
     const purityColor=found.opticsPct>=80?'#58a6ff':found.opticsPct>=40?'#8b949e':'#484f58';
-    let tags=`<span class="tag" style="background:${purityColor}20;color:${purityColor};border:1px solid ${purityColor}">${found.opticsPct}% optics</span>`;
+    let tags=`<span class="tag" style="background:#16161820;color:#c9d1d9;border:1px solid #30363d">${mcapStr}</span>`;
+    tags+=`<span class="tag" style="background:${purityColor}20;color:${purityColor};border:1px solid ${purityColor}">${found.opticsPct}% optics</span>`;
     if(found.monopoly) tags+='<span class="tag tag-mono">MONOPOLY</span>';
     else if(found.chokepoint) tags+='<span class="tag tag-choke">CHOKEPOINT</span>';
     if(found.golden) tags+='<span class="tag tag-golden">GOLDEN PATH</span>';
