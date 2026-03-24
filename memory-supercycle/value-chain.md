@@ -82,6 +82,7 @@ Inference pushes more data into fast storage and higher-capacity memory tiers. T
 - **Silicon Motion (SIMO)**: Merchant SSD controller leader with AI boot-drive and enterprise ramp
 - **Walton Advanced Engineering (8110.TW)**: memory packaging and test specialist with concentrated backend know-how
 - **Tokyo Electron (8035.T)** / **Lam Research (LRCX)**: Memory capex and cleanroom expansion leverage
+- **Amkor (AMKR)**: outsourced advanced packaging and test capacity with U.S. AI supply-chain optionality
 
 ## Key Risks To The Theme
 
