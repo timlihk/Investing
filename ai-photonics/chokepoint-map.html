@@ -49,6 +49,8 @@ canvas{display:block}
     <div class="legend-item"><div class="legend-dot" style="background:#e3b341;box-shadow:0 0 6px #d29922"></div>Chokepoint</div>
     <div class="legend-item"><div class="legend-ring" style="border-color:#8957e5"></div>High Margin (&gt;50% GM)</div>
     <div class="legend-item"><div class="legend-ring" style="border-color:#8957e540;border-width:1px"></div>Low Margin (&lt;30% GM)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ffa657"></div><span style="color:#ffa657">&#9650;</span> Supplier (orange)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#50c8ff"></div><span style="color:#50c8ff">&#9660;</span> Customer (cyan)</div>
   </div>
 </div>
 <div id="mode-toggle">
@@ -265,16 +267,49 @@ function draw(){
   edges.forEach(e=>{
     const a=nodes.find(n=>n.ticker===e.from),b=nodes.find(n=>n.ticker===e.to);
     if(!a||!b)return;
-    const hl=hoveredNode&&(e.from===hoveredNode.ticker||e.to===hoveredNode.ticker);
-    // In golden path mode, highlight edges between golden nodes
+    const isSupplierEdge=hoveredNode&&e.to===hoveredNode.ticker;   // a supplies TO hovered
+    const isCustomerEdge=hoveredNode&&e.from===hoveredNode.ticker; // hovered sells TO b
+    const hl=isSupplierEdge||isCustomerEdge;
     const gpEdge=viewMode==='golden'&&a.golden&&b.golden;
-    ctx.beginPath();
+
+    // Bezier control points
     const cy1=a.y+a.r+4,cy2=b.y-b.r-4,cmy=(cy1+cy2)/2;
+
+    // Edge color: orange = supplier feeding into hovered, cyan = hovered selling to customer
+    let strokeColor,lw;
+    if(hl){
+      if(isSupplierEdge){
+        strokeColor=e.critical?'rgba(255,140,50,.8)':'rgba(255,166,87,.6)'; // orange = supplier
+      }else{
+        strokeColor=e.critical?'rgba(50,180,255,.8)':'rgba(80,200,255,.6)'; // cyan = customer
+      }
+      lw=e.critical?3:2;
+    }else if(gpEdge){
+      strokeColor='rgba(137,87,229,.5)';lw=2;
+    }else{
+      strokeColor=e.critical?'rgba(248,81,73,.1)':'rgba(48,54,61,.25)';lw=e.critical?1:.4;
+    }
+
+    ctx.beginPath();
     ctx.moveTo(a.x,cy1);ctx.bezierCurveTo(a.x,cmy,b.x,cmy,b.x,cy2);
-    ctx.strokeStyle=hl?(e.critical?'rgba(248,81,73,.6)':'rgba(88,166,255,.5)'):
-      gpEdge?'rgba(137,87,229,.5)':(e.critical?'rgba(248,81,73,.1)':'rgba(48,54,61,.25)');
-    ctx.lineWidth=hl?(e.critical?3:2):gpEdge?2:(e.critical?1:.4);
-    ctx.stroke();
+    ctx.strokeStyle=strokeColor;ctx.lineWidth=lw;ctx.stroke();
+
+    // Arrowhead at destination (b) — only when highlighted or golden path
+    if(hl||gpEdge){
+      const arrSize=hl?7:5;
+      // Approximate tangent at endpoint using last segment of bezier
+      const t=.97;
+      const t1=1-t;
+      const px=t1*t1*t1*a.x+3*t1*t1*t*(a.x)+3*t1*t*t*(b.x)+t*t*t*b.x;
+      const py=t1*t1*t1*cy1+3*t1*t1*t*(cmy)+3*t1*t*t*(cmy)+t*t*t*cy2;
+      const ang=Math.atan2(cy2-py,b.x-px);
+      ctx.beginPath();
+      ctx.moveTo(b.x,cy2);
+      ctx.lineTo(b.x-arrSize*Math.cos(ang-Math.PI/6),cy2-arrSize*Math.sin(ang-Math.PI/6));
+      ctx.moveTo(b.x,cy2);
+      ctx.lineTo(b.x-arrSize*Math.cos(ang+Math.PI/6),cy2-arrSize*Math.sin(ang+Math.PI/6));
+      ctx.strokeStyle=strokeColor;ctx.lineWidth=hl?2:1.5;ctx.stroke();
+    }
   });
 
   // Nodes
@@ -393,8 +428,8 @@ function handleMove(e){
     const up=[],down=[];
     edges.forEach(e=>{if(e.to===found.ticker){const n=nodes.find(x=>x.ticker===e.from);if(n)up.push(n.ticker);}if(e.from===found.ticker){const n=nodes.find(x=>x.ticker===e.to);if(n)down.push(n.ticker);}});
     let connHtml='';
-    if(up.length) connHtml+=`<div style="margin-top:8px;font-size:12px;color:#8b949e">Suppliers: <span style="color:#58a6ff">${up.join(', ')}</span></div>`;
-    if(down.length) connHtml+=`<div style="font-size:12px;color:#8b949e">Customers: <span style="color:#58a6ff">${down.join(', ')}</span></div>`;
+    if(up.length) connHtml+=`<div style="margin-top:8px;font-size:12px;color:#8b949e"><span style="color:#ffa657">&#9650; Buys from:</span> <span style="color:#ffa657">${up.join(', ')}</span></div>`;
+    if(down.length) connHtml+=`<div style="font-size:12px;color:#8b949e"><span style="color:#50c8ff">&#9660; Sells to:</span> <span style="color:#50c8ff">${down.join(', ')}</span></div>`;
 
     tooltip.innerHTML=`<h3>${found.ticker} &mdash; ${found.name}</h3><div class="sub">${found.market} | ${found.share}</div>${tags}${finHtml}<div class="thesis">${found.thesis}</div>${connHtml}`;
     tooltip.style.display='block';
