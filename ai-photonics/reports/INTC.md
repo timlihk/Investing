@@ -1,0 +1,20 @@
+# INTC - Intel Corporation
+## Date: 2026-03-24
+## Score: 52/100
+
+### Thesis (2-3 sentences)
+Intel is a silicon photonics pioneer with 25+ years of research, 8M+ PICs shipped, and the industry's first fully integrated optical compute interconnect (OCI) chiplet achieving 4Tbps at just 5pJ/bit (3x more efficient than pluggable transceivers). However, Intel's overall business crisis (foundry losses, market share erosion, restructuring) overwhelms the SiPh bright spot. The OCI chiplet technology is world-class but buried inside a company fighting for survival in its core business.
+
+### Key Metrics
+| Metric | Value |
+|--------|-------|
+| SiPh PICs Shipped | 8M+ (32M+ on-chip lasers) |
+| OCI Chiplet | First fully integrated, 4Tbps |
+| Energy Efficiency | 5pJ/bit (vs 15pJ for pluggables) |
+| Next-Gen | 200G/lane PICs for 800G/1.6T |
+| Overall Business | Struggling; restructuring |
+
+### Verdict: HOLD
+Intel's SiPh technology is genuinely best-in-class (OCI chiplet, 5pJ/bit efficiency, massive production experience), but the company's overall challenges make it a poor vehicle for photonics investment. If Intel spins off or licenses the SiPh business, it could unlock significant value. For now, Tower Semiconductor (TSEM) or Broadcom (AVGO) offer cleaner SiPh exposure.
+
+**Final Score: 52/100**
