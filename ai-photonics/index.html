@@ -24,15 +24,21 @@ iframe{flex:1;border:none;width:100%}
   <div class="tabs">
     <div class="tab active" onclick="switchTab('network',this)"><span class="icon">&#9678;</span>Network Map</div>
     <div class="tab" onclick="switchTab('layers',this)"><span class="icon">&#9776;</span>Layer View</div>
+    <div class="tab" onclick="switchTab('economics',this)"><span class="icon">&#9701;</span>Economics Scatter</div>
   </div>
-  <div class="info">80 companies &middot; 14 markets &middot; 3 monopolies &middot; 12 chokepoints</div>
+  <div class="info">78 companies &middot; 8 BUY &middot; 11 monopoly chokepoints &middot; 44 chokepoints 16+/25</div>
 </div>
 <iframe id="view" src="chokepoint-map.html"></iframe>
 <script>
 function switchTab(view, el){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('view').src = view==='network' ? 'chokepoint-map.html' : 'supply-chain-map.html';
+  const pages = {
+    network: 'chokepoint-map.html',
+    layers: 'supply-chain-map.html',
+    economics: 'chokepoint-economics-map.html'
+  };
+  document.getElementById('view').src = pages[view] || pages.network;
 }
 </script>
 </body>

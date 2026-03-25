@@ -14,6 +14,7 @@ The scorecard also now carries `chokepoint_score` and `chokepoint_tier`, with ra
 Interactive map:
 - [GitHub Pages map](https://timlihk.github.io/Investing/ai-photonics/supply-chain-map.html) - curated subset, synced to the main scorecard
 - [Local HTML file](supply-chain-map.html)
+- [Chokepoint vs economics scatter](chokepoint-economics-map.html)
 - [CHIPS Act status notes](chips-act-status.md)
 - [Independent IC review](ic-review.md)
 
@@ -59,8 +60,10 @@ Individual company reports with full analysis in [reports/](reports/).
 - [results.tsv](results.tsv) - Running scorecard
 - [chokepoint_scores.tsv](chokepoint_scores.tsv) - Canonical 5-question chokepoint dataset
 - [chokepoint-method.md](chokepoint-method.md) - Fixed chokepoint scoring method
+- [company-metrics.js](company-metrics.js) - Full-universe metrics dataset for the scatter chart
 - [universe.txt](universe.txt) - Stock universe (expanding via discovery)
 - [supply-chain-map.html](supply-chain-map.html) - Interactive chokepoint map for GitHub Pages
+- [chokepoint-economics-map.html](chokepoint-economics-map.html) - Scatter view of chokepoint vs margins / growth
 - [chips-act-status.md](chips-act-status.md) - Direct CHIPS incentives status for the mapped companies
 - [ic-review.md](ic-review.md) - Independent committee review of every covered company
 - [criteria.md](criteria.md) - Scoring rubric

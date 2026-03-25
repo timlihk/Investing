@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Photonics Chokepoint vs Economics Map</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:#081018;color:#dbe5f0}
+a{color:#8cc8ff}
+.page{min-height:100vh;display:flex;flex-direction:column}
+.header{padding:24px 28px 14px;border-bottom:1px solid rgba(148,163,184,.16);background:linear-gradient(180deg,rgba(8,16,24,.98),rgba(8,16,24,.88))}
+.header h1{margin:0 0 8px;font-size:26px;line-height:1.1}
+.header p{margin:0;max-width:980px;color:#9fb0c2;font-size:14px;line-height:1.55}
+.links,.controls,.legend,.stats{display:flex;flex-wrap:wrap;gap:10px}
+.links{margin-top:12px}
+.links a,.btn{border:1px solid rgba(148,163,184,.2);background:rgba(15,23,42,.7);color:#dbe5f0;text-decoration:none;padding:8px 12px;border-radius:999px;font-size:12px;cursor:pointer}
+.btn.active{background:#12324a;border-color:#59b6ff;color:#fff}
+.controls-wrap{padding:16px 28px 0;display:flex;flex-direction:column;gap:12px}
+.controls-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7f92a8}
+.stats{padding:8px 28px 0}
+.stat{min-width:128px;padding:10px 12px;border-radius:14px;background:rgba(15,23,42,.68);border:1px solid rgba(148,163,184,.14)}
+.stat .val{font-size:24px;font-weight:760;color:#f8fafc}
+.stat .lbl{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#7f92a8;margin-top:2px}
+.legend{padding:14px 28px 0}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:12px;color:#9fb0c2}
+.swatch{width:12px;height:12px;border-radius:50%}
+.chart-wrap{padding:18px 20px 24px;flex:1}
+.chart-card{position:relative;height:min(74vh,860px);min-height:580px;border:1px solid rgba(148,163,184,.15);border-radius:24px;background:
+radial-gradient(circle at top left, rgba(34,197,94,.08), transparent 26%),
+radial-gradient(circle at bottom right, rgba(56,189,248,.08), transparent 24%),
+linear-gradient(180deg, rgba(15,23,42,.94), rgba(8,16,24,.96));
+overflow:hidden}
+svg{width:100%;height:100%;display:block}
+.axis-label{font-size:12px;fill:#8fa2b7}
+.tick text{font-size:11px;fill:#7f92a8}
+.tick line,.axis-line{stroke:rgba(148,163,184,.18)}
+.grid line{stroke:rgba(148,163,184,.11);stroke-dasharray:4 7}
+.threshold{stroke:#fbbf24;stroke-width:1.5;stroke-dasharray:7 8}
+.threshold-label{font-size:11px;fill:#fbbf24}
+.dot{cursor:pointer;stroke:rgba(8,16,24,.85);stroke-width:1.5;transition:opacity .15s ease}
+.dot.hidden{opacity:.08}
+.dot.active{stroke:#fff;stroke-width:2.2}
+.label-text{font-size:11px;fill:#dbe5f0;paint-order:stroke;stroke:#081018;stroke-width:3px;stroke-linejoin:round}
+.empty-note{font-size:12px;fill:#7f92a8}
+#tooltip{position:fixed;display:none;max-width:360px;background:rgba(8,16,24,.96);border:1px solid rgba(148,163,184,.24);border-radius:16px;padding:14px 16px;box-shadow:0 20px 60px rgba(0,0,0,.45);pointer-events:none;z-index:20}
+#tooltip h3{margin:0 0 4px;font-size:16px;color:#f8fafc}
+#tooltip .sub{font-size:12px;color:#9fb0c2;margin-bottom:8px}
+#tooltip .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+#tooltip .tag{padding:4px 8px;border-radius:999px;font-size:11px;border:1px solid rgba(148,163,184,.2);background:rgba(15,23,42,.8);color:#dbe5f0}
+#tooltip .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:10px}
+#tooltip .metric{background:rgba(15,23,42,.82);border-radius:10px;padding:8px;text-align:center}
+#tooltip .metric .v{font-size:16px;font-weight:760;color:#f8fafc}
+#tooltip .metric .l{margin-top:2px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#7f92a8}
+#tooltip .text{font-size:12px;line-height:1.5;color:#b8c6d5}
+@media (max-width: 900px){
+  .header,.controls-wrap,.stats,.legend{padding-left:16px;padding-right:16px}
+  .chart-wrap{padding:14px 12px 18px}
+  .chart-card{min-height:520px;height:72vh}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <h1>Chokepoint Score vs Economics</h1>
+    <p>
+      Full-universe scatter across the AI photonics project. The x-axis is the systematic <code>chokepoint_score</code> out of 25.
+      The y-axis can be switched between gross margin, operating margin, and revenue growth. Colors represent supply-chain segments.
+    </p>
+    <div class="links">
+      <a href="https://github.com/timlihk/Investing/blob/main/ai-photonics/results.tsv" target="_blank" rel="noreferrer">Scorecard</a>
+      <a href="https://github.com/timlihk/Investing/blob/main/ai-photonics/chokepoint-method.md" target="_blank" rel="noreferrer">Method</a>
+      <a href="https://github.com/timlihk/Investing/blob/main/ai-photonics/company-metrics.js" target="_blank" rel="noreferrer">Metrics Dataset</a>
+    </div>
+  </div>
+
+  <div class="controls-wrap">
+    <div class="controls-row">
+      <div class="label">Y-Axis</div>
+      <button class="btn active" data-metric="grossMargin">Gross Margin</button>
+      <button class="btn" data-metric="operatingMargin">Operating Margin</button>
+      <button class="btn" data-metric="revenueGrowth">Revenue Growth</button>
+    </div>
+    <div class="controls-row">
+      <div class="label">Filter</div>
+      <button class="btn active" data-filter="all">All Names</button>
+      <button class="btn" data-filter="BUY">BUY</button>
+      <button class="btn" data-filter="HOLD">HOLD</button>
+      <button class="btn" data-filter="AVOID">AVOID</button>
+      <button class="btn" data-filter="chokepoint">Chokepoints 16+</button>
+    </div>
+  </div>
+
+  <div class="stats" id="stats"></div>
+  <div class="legend" id="legend"></div>
+
+  <div class="chart-wrap">
+    <div class="chart-card">
+      <svg id="chart" viewBox="0 0 1280 820" preserveAspectRatio="none"></svg>
+    </div>
+  </div>
+</div>
+
+<div id="tooltip"></div>
+
+<script src="company-metrics.js"></script>
+<script>
+const SEGMENT_COLORS = {
+  "Raw Materials": "#f97316",
+  "Materials & Substrates": "#ef4444",
+  "Equipment": "#f59e0b",
+  "Foundry & Platforms": "#8b5cf6",
+  "Components & Connectivity": "#38bdf8",
+  "Modules & Transceivers": "#22c55e",
+  "Assembly & Packaging": "#10b981",
+  "Fiber & Connectors": "#14b8a6",
+  "Networking & Systems": "#60a5fa",
+  "Test & Infrastructure": "#94a3b8"
+};
+
+const METRICS = {
+  grossMargin: { label: "Gross Margin", short: "GM", min: 0, max: 80, ticks: [0, 20, 40, 60, 80], threshold: 40, format: v => `${fmt(v)}%` },
+  operatingMargin: { label: "Operating Margin", short: "OPM", min: -25, max: 50, ticks: [-20, 0, 20, 40], threshold: 15, format: v => `${fmt(v)}%` },
+  revenueGrowth: { label: "Revenue Growth", short: "Growth", min: -40, max: 240, ticks: [-20, 0, 50, 100, 150, 200], threshold: 20, format: v => `${v > 0 ? "+" : ""}${fmt(v)}%` }
+};
+
+const MARGIN = { top: 46, right: 28, bottom: 68, left: 76 };
+const WIDTH = 1280;
+const HEIGHT = 820;
+const INNER_W = WIDTH - MARGIN.left - MARGIN.right;
+const INNER_H = HEIGHT - MARGIN.top - MARGIN.bottom;
+const X_MIN = 0;
+const X_MAX = 25;
+const X_THRESHOLD = 16;
+
+let activeMetric = "grossMargin";
+let activeFilter = "all";
+let activeTicker = null;
+
+const data = window.COMPANY_METRICS || [];
+const svg = document.getElementById("chart");
+const statsEl = document.getElementById("stats");
+const legendEl = document.getElementById("legend");
+const tooltip = document.getElementById("tooltip");
+
+function fmt(v) {
+  const rounded = Math.round(v * 10) / 10;
+  return Number.isInteger(rounded) ? rounded.toString() : rounded.toFixed(1);
+}
+
+function hashCode(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = ((h << 5) - h) + str.charCodeAt(i);
+  return Math.abs(h);
+}
+
+function jitter(ticker, amp = 12) {
+  const h = hashCode(ticker);
+  return ((h % 1000) / 999 - 0.5) * amp;
+}
+
+function xScale(value) {
+  return MARGIN.left + ((value - X_MIN) / (X_MAX - X_MIN)) * INNER_W;
+}
+
+function yScale(value) {
+  const meta = METRICS[activeMetric];
+  return MARGIN.top + (1 - ((value - meta.min) / (meta.max - meta.min))) * INNER_H;
+}
+
+function passesFilter(row) {
+  if (activeFilter === "all") return true;
+  if (activeFilter === "chokepoint") return row.chokepointScore >= X_THRESHOLD;
+  return row.verdict === activeFilter;
+}
+
+function visibleRows() {
+  return data.filter(row => passesFilter(row));
+}
+
+function rowsWithMetric() {
+  return visibleRows().filter(row => row[activeMetric] !== null);
+}
+
+function renderLegend() {
+  const segments = [...new Set(data.map(row => row.segment))];
+  legendEl.innerHTML = segments.map(segment => `
+    <div class="legend-item">
+      <div class="swatch" style="background:${SEGMENT_COLORS[segment] || "#cbd5e1"}"></div>
+      ${segment}
+    </div>
+  `).join("");
+}
+
+function renderStats() {
+  const visible = visibleRows();
+  const plotted = rowsWithMetric();
+  const missing = visible.length - plotted.length;
+  const avgScore = plotted.length ? (plotted.reduce((sum, row) => sum + row.chokepointScore, 0) / plotted.length) : 0;
+  const avgMetric = plotted.length ? (plotted.reduce((sum, row) => sum + row[activeMetric], 0) / plotted.length) : 0;
+  statsEl.innerHTML = `
+    <div class="stat"><div class="val">${visible.length}</div><div class="lbl">Visible</div></div>
+    <div class="stat"><div class="val">${plotted.length}</div><div class="lbl">Plotted</div></div>
+    <div class="stat"><div class="val">${missing}</div><div class="lbl">Missing ${METRICS[activeMetric].short}</div></div>
+    <div class="stat"><div class="val">${fmt(avgScore)}</div><div class="lbl">Avg Chokepoint</div></div>
+    <div class="stat"><div class="val">${METRICS[activeMetric].format(avgMetric)}</div><div class="lbl">Avg ${METRICS[activeMetric].short}</div></div>
+  `;
+}
+
+function topLabels(rows) {
+  const preferred = rows
+    .filter(row => row.verdict === "BUY" || row.chokepointScore >= 22)
+    .sort((a, b) => (b.chokepointScore - a.chokepointScore) || ((b[activeMetric] ?? -999) - (a[activeMetric] ?? -999)))
+    .slice(0, 18);
+  return new Set(preferred.map(row => row.ticker));
+}
+
+function circleOpacity(row) {
+  if (!passesFilter(row)) return 0.08;
+  if (row[activeMetric] === null) return 0.14;
+  if (activeTicker && row.ticker !== activeTicker) return 0.28;
+  return row.verdict === "BUY" ? 0.98 : 0.9;
+}
+
+function pointRadius(row) {
+  return row.verdict === "BUY" ? 8.2 : row.chokepointScore >= 21 ? 7.4 : 6.6;
+}
+
+function renderChart() {
+  renderStats();
+  const metric = METRICS[activeMetric];
+  const plotted = rowsWithMetric();
+  const labels = topLabels(plotted);
+
+  const gridY = metric.ticks.map(v => {
+    const y = yScale(v);
+    return `<g class="grid"><line x1="${MARGIN.left}" y1="${y}" x2="${WIDTH - MARGIN.right}" y2="${y}"></line></g>`;
+  }).join("");
+
+  const ticksY = metric.ticks.map(v => {
+    const y = yScale(v);
+    return `<g class="tick"><line x1="${MARGIN.left - 6}" y1="${y}" x2="${MARGIN.left}" y2="${y}"></line><text x="${MARGIN.left - 12}" y="${y + 4}" text-anchor="end">${fmt(v)}%</text></g>`;
+  }).join("");
+
+  const ticksX = [0, 5, 10, 15, 20, 25].map(v => {
+    const x = xScale(v);
+    return `<g class="tick"><line x1="${x}" y1="${HEIGHT - MARGIN.bottom}" x2="${x}" y2="${HEIGHT - MARGIN.bottom + 6}"></line><text x="${x}" y="${HEIGHT - MARGIN.bottom + 22}" text-anchor="middle">${v}</text></g>`;
+  }).join("");
+
+  const thresholdX = xScale(X_THRESHOLD);
+  const thresholdY = yScale(metric.threshold);
+
+  const points = data.map(row => {
+    if (row[activeMetric] === null) return "";
+    const x = xScale(row.chokepointScore) + jitter(row.ticker, 10);
+    const y = yScale(row[activeMetric]) + jitter(row.ticker + activeMetric, 16);
+    const color = SEGMENT_COLORS[row.segment] || "#cbd5e1";
+    const klass = ["dot", activeTicker === row.ticker ? "active" : "", !passesFilter(row) ? "hidden" : ""].filter(Boolean).join(" ");
+    const label = labels.has(row.ticker)
+      ? `<text class="label-text" x="${x + 10}" y="${y - 10}">${row.ticker}</text>`
+      : "";
+    return `<g data-ticker="${row.ticker}">
+      <circle class="${klass}" cx="${x}" cy="${y}" r="${pointRadius(row)}" fill="${color}" fill-opacity="${circleOpacity(row)}"></circle>
+      ${label}
+    </g>`;
+  }).join("");
+
+  const missingText = data.filter(row => passesFilter(row) && row[activeMetric] === null).length
+    ? `<text class="empty-note" x="${WIDTH - MARGIN.right}" y="${MARGIN.top - 16}" text-anchor="end">Unplotted for ${metric.short}: ${data.filter(row => passesFilter(row) && row[activeMetric] === null).length}</text>`
+    : "";
+
+  svg.innerHTML = `
+    <rect x="0" y="0" width="${WIDTH}" height="${HEIGHT}" fill="transparent"></rect>
+    ${gridY}
+    <line class="axis-line" x1="${MARGIN.left}" y1="${HEIGHT - MARGIN.bottom}" x2="${WIDTH - MARGIN.right}" y2="${HEIGHT - MARGIN.bottom}"></line>
+    <line class="axis-line" x1="${MARGIN.left}" y1="${MARGIN.top}" x2="${MARGIN.left}" y2="${HEIGHT - MARGIN.bottom}"></line>
+    ${ticksY}
+    ${ticksX}
+    <line class="threshold" x1="${thresholdX}" y1="${MARGIN.top}" x2="${thresholdX}" y2="${HEIGHT - MARGIN.bottom}"></line>
+    <line class="threshold" x1="${MARGIN.left}" y1="${thresholdY}" x2="${WIDTH - MARGIN.right}" y2="${thresholdY}"></line>
+    <text class="threshold-label" x="${thresholdX + 8}" y="${MARGIN.top + 14}">16+ chokepoint</text>
+    <text class="threshold-label" x="${WIDTH - MARGIN.right}" y="${thresholdY - 8}" text-anchor="end">${metric.label} quality line</text>
+    <text class="axis-label" x="${WIDTH / 2}" y="${HEIGHT - 18}" text-anchor="middle">Chokepoint Score</text>
+    <text class="axis-label" x="18" y="${HEIGHT / 2}" text-anchor="middle" transform="rotate(-90 18 ${HEIGHT / 2})">${metric.label}</text>
+    ${missingText}
+    ${points}
+  `;
+
+  svg.querySelectorAll("[data-ticker]").forEach(el => {
+    const ticker = el.getAttribute("data-ticker");
+    el.addEventListener("mouseenter", evt => showTooltip(evt, ticker));
+    el.addEventListener("mousemove", evt => showTooltip(evt, ticker));
+    el.addEventListener("mouseleave", hideTooltip);
+    el.addEventListener("click", () => {
+      activeTicker = activeTicker === ticker ? null : ticker;
+      renderChart();
+    });
+  });
+}
+
+function showTooltip(evt, ticker) {
+  const row = data.find(item => item.ticker === ticker);
+  if (!row) return;
+  const tags = [
+    row.verdict,
+    row.segment,
+    row.chokepointTier
+  ].map(tag => `<span class="tag">${tag}</span>`).join("");
+  const metricCell = (label, value, formatter) => `
+    <div class="metric">
+      <div class="v">${value === null ? "N/A" : formatter(value)}</div>
+      <div class="l">${label}</div>
+    </div>`;
+  tooltip.innerHTML = `
+    <h3>${row.ticker} - ${row.name}</h3>
+    <div class="sub">${row.market}${row.share ? ` · ${row.share}` : ""}</div>
+    <div class="tags">${tags}</div>
+    <div class="metrics">
+      ${metricCell("Chokepoint", row.chokepointScore, v => `${v}/25`)}
+      ${metricCell("Growth", row.revenueGrowth, v => `${v > 0 ? "+" : ""}${fmt(v)}%`)}
+      ${metricCell("Gross Margin", row.grossMargin, v => `${fmt(v)}%`)}
+    </div>
+    <div class="text">${row.oneLiner}</div>
+  `;
+  tooltip.style.display = "block";
+  const pad = 18;
+  let left = evt.clientX + 18;
+  let top = evt.clientY - 12;
+  if (left + tooltip.offsetWidth + pad > window.innerWidth) left = evt.clientX - tooltip.offsetWidth - 18;
+  if (top + tooltip.offsetHeight + pad > window.innerHeight) top = window.innerHeight - tooltip.offsetHeight - pad;
+  tooltip.style.left = `${Math.max(pad, left)}px`;
+  tooltip.style.top = `${Math.max(pad, top)}px`;
+}
+
+function hideTooltip() {
+  tooltip.style.display = "none";
+}
+
+document.querySelectorAll("[data-metric]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    activeMetric = btn.dataset.metric;
+    document.querySelectorAll("[data-metric]").forEach(node => node.classList.toggle("active", node === btn));
+    activeTicker = null;
+    renderChart();
+  });
+});
+
+document.querySelectorAll("[data-filter]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    activeFilter = btn.dataset.filter;
+    document.querySelectorAll("[data-filter]").forEach(node => node.classList.toggle("active", node === btn));
+    activeTicker = null;
+    renderChart();
+  });
+});
+
+renderLegend();
+renderChart();
+</script>
+</body>
+</html>
