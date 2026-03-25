@@ -9,9 +9,10 @@ The AI data center buildout is creating an insatiable demand for optical interco
 
 See [results.tsv](results.tsv) for the full scorecard.
 The scorecard now includes `chips_status` and `chips_detail` columns from the latest official CHIPS sweep.
+The scorecard also now carries `chokepoint_score` and `chokepoint_tier`, with raw 5-question inputs stored in `chokepoint_scores.tsv` and the fixed rubric documented in [chokepoint-method.md](chokepoint-method.md).
 
 Interactive map:
-- [GitHub Pages map](https://timlihk.github.io/Investing/ai-photonics/supply-chain-map.html)
+- [GitHub Pages map](https://timlihk.github.io/Investing/ai-photonics/supply-chain-map.html) - curated subset, synced to the main scorecard
 - [Local HTML file](supply-chain-map.html)
 - [CHIPS Act status notes](chips-act-status.md)
 - [Independent IC review](ic-review.md)
@@ -56,6 +57,8 @@ Individual company reports with full analysis in [reports/](reports/).
 
 ## Files
 - [results.tsv](results.tsv) - Running scorecard
+- [chokepoint_scores.tsv](chokepoint_scores.tsv) - Canonical 5-question chokepoint dataset
+- [chokepoint-method.md](chokepoint-method.md) - Fixed chokepoint scoring method
 - [universe.txt](universe.txt) - Stock universe (expanding via discovery)
 - [supply-chain-map.html](supply-chain-map.html) - Interactive chokepoint map for GitHub Pages
 - [chips-act-status.md](chips-act-status.md) - Direct CHIPS incentives status for the mapped companies

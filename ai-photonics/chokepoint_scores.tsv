@@ -1,0 +1,79 @@
+ticker	breakage	alternatives	qualification	cogs	capacity	chokepoint_score	chokepoint_tier
+COHR	3	3	3	4	2	15	Oligopoly with Moat
+LITE	5	4	4	4	4	21	Monopoly Chokepoint
+AAOI	2	2	2	4	2	12	Oligopoly with Moat
+FN	4	4	4	4	4	20	Duopoly Chokepoint
+POET	1	2	1	4	1	9	Competitive / Linked
+CIEN	2	3	3	3	2	13	Oligopoly with Moat
+LASR	1	2	2	2	2	9	Competitive / Linked
+VIAV	2	2	2	3	1	10	Competitive / Linked
+MKSI	1	2	2	3	2	10	Competitive / Linked
+IPGP	1	2	2	2	2	9	Competitive / Linked
+AXTI	4	4	4	5	3	20	Duopoly Chokepoint
+MTSI	3	4	4	5	3	19	Duopoly Chokepoint
+SIVE.ST	2	2	2	4	2	12	Oligopoly with Moat
+SOI.PA	5	5	4	5	4	23	Monopoly Chokepoint
+CRDO	5	5	4	5	4	23	Monopoly Chokepoint
+TSEM	5	4	4	5	5	23	Monopoly Chokepoint
+5802.T	3	3	4	5	3	18	Duopoly Chokepoint
+300308.SZ	4	3	3	4	3	17	Duopoly Chokepoint
+ANET	3	3	4	2	2	14	Oligopoly with Moat
+300502.SZ	3	3	3	4	3	16	Duopoly Chokepoint
+6503.T	4	3	4	5	3	19	Duopoly Chokepoint
+MRVL	3	3	4	4	3	17	Duopoly Chokepoint
+GFS	3	3	4	5	4	19	Duopoly Chokepoint
+AVGO	5	4	4	5	4	22	Monopoly Chokepoint
+IQE.L	3	3	4	5	3	18	Duopoly Chokepoint
+GLW	3	3	3	3	3	15	Oligopoly with Moat
+5803.T	3	3	3	3	3	15	Oligopoly with Moat
+600487.SS	2	3	2	3	2	12	Oligopoly with Moat
+4973.T	4	4	4	5	3	20	Duopoly Chokepoint
+AEHR	3	4	4	4	3	18	Duopoly Chokepoint
+0522.HK	4	4	4	5	4	21	Monopoly Chokepoint
+002475.SZ	1	2	1	3	2	9	Competitive / Linked
+HUBN.SW	3	4	3	4	2	16	Duopoly Chokepoint
+002281.SZ	2	3	2	4	2	13	Oligopoly with Moat
+CLS	3	3	3	3	3	15	Oligopoly with Moat
+APH	4	3	3	4	3	17	Duopoly Chokepoint
+FORM	3	3	4	5	3	18	Duopoly Chokepoint
+6146.T	5	5	4	5	4	23	Monopoly Chokepoint
+AEIS	3	3	3	3	3	15	Oligopoly with Moat
+BESI.AS	5	4	4	5	4	22	Monopoly Chokepoint
+KLIC	3	3	3	4	3	16	Duopoly Chokepoint
+042700.KS	4	3	4	5	4	20	Duopoly Chokepoint
+3105.TW	4	4	4	5	3	20	Duopoly Chokepoint
+VNP.TO	3	3	3	4	3	16	Duopoly Chokepoint
+PRY.MI	2	3	2	3	2	12	Oligopoly with Moat
+VRT	2	3	2	3	2	12	Oligopoly with Moat
+6777.T	4	4	4	5	2	19	Duopoly Chokepoint
+6869.HK	3	3	3	3	3	15	Oligopoly with Moat
+CSCO	2	3	3	3	2	13	Oligopoly with Moat
+INTC	3	3	4	4	3	17	Duopoly Chokepoint
+2317.TW	2	3	2	2	2	11	Oligopoly with Moat
+2382.TW	2	3	2	2	2	11	Oligopoly with Moat
+5016.T	4	3	4	5	2	18	Duopoly Chokepoint
+MXL	2	3	3	4	2	14	Oligopoly with Moat
+SMTC	4	3	3	5	2	17	Duopoly Chokepoint
+VECO	4	4	4	5	4	21	Monopoly Chokepoint
+AIXA.DE	4	4	4	5	4	21	Monopoly Chokepoint
+XFAB.PA	2	3	3	4	2	14	Oligopoly with Moat
+6857.T	4	4	4	5	3	20	Duopoly Chokepoint
+TER	4	3	4	5	3	19	Duopoly Chokepoint
+3711.TW	3	3	3	4	3	16	Duopoly Chokepoint
+AMKR	3	3	3	4	3	16	Duopoly Chokepoint
+000936.SZ	2	3	2	4	2	13	Oligopoly with Moat
+3231.TW	2	3	2	2	2	11	Oligopoly with Moat
+NOK	2	3	3	3	2	13	Oligopoly with Moat
+300548.SZ	2	3	2	4	2	13	Oligopoly with Moat
+0877.HK	3	3	3	5	2	16	Duopoly Chokepoint
+STLTECH.NS	2	3	2	3	2	12	Oligopoly with Moat
+4991.TW	3	3	3	4	2	15	Oligopoly with Moat
+8258.TW	4	4	4	5	3	20	Duopoly Chokepoint
+UMC	2	3	4	4	3	16	Duopoly Chokepoint
+300394.SZ	3	3	3	4	3	16	Duopoly Chokepoint
+000988.SZ	2	3	2	3	2	12	Oligopoly with Moat
+JEN.DE	2	3	2	3	2	12	Oligopoly with Moat
+STM	2	3	3	4	3	15	Oligopoly with Moat
+AMAT	3	3	4	5	3	18	Duopoly Chokepoint
+LRCX	3	3	4	5	3	18	Duopoly Chokepoint
+ASML	5	5	5	5	5	25	Monopoly Chokepoint

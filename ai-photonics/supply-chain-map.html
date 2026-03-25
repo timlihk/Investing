@@ -490,11 +490,12 @@ body {
   <p>
     Focused visual map of the AI photonics supply chain built from the repo's scorecard and reports. It emphasizes
     the narrowest points: photonics-SOI wafers, InP substrates, MOCVD and lithography tooling, SiPh foundry capacity,
-    laser and analog components, AEC and optical DSP, transceiver production, and the system-layer demand anchors that pull the whole chain through.
+    laser and analog components, AEC and optical DSP, transceiver production, and the system-layer demand anchors that pull the whole chain through. Chokepoint values use the repo's fixed 25-point, 5-question framework.
   </p>
   <div class="header-links">
     <a href="https://github.com/timlihk/Investing/tree/main/ai-photonics" target="_blank" rel="noreferrer">GitHub folder</a>
     <a href="https://github.com/timlihk/Investing/blob/main/ai-photonics/results.tsv" target="_blank" rel="noreferrer">Scorecard</a>
+    <a href="https://github.com/timlihk/Investing/blob/main/ai-photonics/chokepoint-method.md" target="_blank" rel="noreferrer">Chokepoint method</a>
     <a href="https://github.com/timlihk/Investing/blob/main/ai-photonics/README.md" target="_blank" rel="noreferrer">Research notes</a>
     <a href="https://github.com/timlihk/Investing/blob/main/ai-photonics/chips-act-status.md" target="_blank" rel="noreferrer">CHIPS status notes</a>
   </div>
@@ -562,7 +563,7 @@ body {
 </div>
 
 <div class="note">
-  This is a curated map of the key interlinks, not every company in the photonics universe. CHIPS labels track direct U.S. CHIPS incentives awards, CHIPS R&D awards, and CHIPS-linked hub funding as of 2026-03-24; the full scorecard sweep lives in the scorecard and CHIPS notes linked above.
+  This is a curated map of the key interlinks, not every company in the photonics universe. It currently visualizes the highest-signal nodes from a broader 78-report scorecard. A node is tagged as a chokepoint when its systematic `chokepoint_score` is `16/25` or higher. CHIPS labels track direct U.S. CHIPS incentives awards, CHIPS R&D awards, and CHIPS-linked hub funding as of 2026-03-24; the full scorecard sweep lives in the scorecard and CHIPS notes linked above.
 </div>
 
 <div class="panel" id="panel">
@@ -573,52 +574,52 @@ body {
 <script>
 const nodes = [
   {
-    id: "SOI", ticker: "SOI.PA", name: "Soitec", score: 65, verdict: "HOLD", market: "France",
+    id: "SOI", ticker: "SOI.PA", name: "Soitec", chokepointScore: 23, verdict: "HOLD", market: "France",
     x: 90, y: 125, chokepoint: true, chain: ["siph"], report: "SOI.md",
     role: "Only volume-approved photonics-SOI wafer supplier for major SiPh foundries.",
     thesis: "The hidden substrate monopoly in silicon photonics. If Tower and other SiPh foundries expand, Soitec is the first beneficiary.",
     upstream: ["Smart Cut process", "SOI wafer IP", "Materials base"],
     downstream: ["Tower Semi", "GlobalFoundries", "SiPh capacity"],
-    metrics: { score: "65/100", target: "EUR 45-50 buy zone", upside: "Watch", catalyst: "Tower 5x SiPh ramp" },
+    metrics: { chokepoint: "22/25", target: "EUR 45-50 buy zone", upside: "Watch", catalyst: "Tower 5x SiPh ramp" },
     chipsStatus: "na",
     chipsLabel: "Non-U.S. / no direct CHIPS award",
     chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
     chipsSources: []
   },
   {
-    id: "AXTI", ticker: "AXTI", name: "AXT", score: 47, verdict: "HOLD", market: "US / China",
+    id: "AXTI", ticker: "AXTI", name: "AXT", chokepointScore: 20, verdict: "AVOID", market: "US / China",
     x: 90, y: 475, chokepoint: true, chain: ["inp"], report: "AXTI.md",
     role: "InP substrate bottleneck with geopolitical fragility.",
     thesis: "AXT controls a critical InP substrate position, but the China manufacturing base makes it a fragile chokepoint rather than a clean one.",
     upstream: ["High-purity compound materials", "Crystal growth"],
     downstream: ["Laser makers", "InP optical components"],
-    metrics: { score: "47/100", target: "-", upside: "-", catalyst: "InP capacity expansion" },
+    metrics: { chokepoint: "17/25", target: "-", upside: "-", catalyst: "InP capacity expansion" },
     chipsStatus: "none",
     chipsLabel: "No direct CHIPS award found",
     chipsNote: "No company-specific Department of Commerce CHIPS incentives announcement was located for AXT through 2026-03-24.",
     chipsSources: []
   },
   {
-    id: "JX", ticker: "5016.T", name: "JX Advanced Metals", score: 66, verdict: "HOLD", market: "Japan",
+    id: "JX", ticker: "5016.T", name: "JX Advanced Metals", chokepointScore: 18, verdict: "HOLD", market: "Japan",
     x: 90, y: 620, chokepoint: false, chain: ["inp"], report: "5016T.md",
     role: "Non-China alternative InP substrate supplier.",
     thesis: "The more investable strategic alternative to AXT if non-China InP sourcing becomes mandatory.",
     upstream: ["Metals expertise", "InP substrate capacity"],
     downstream: ["Laser chip makers", "Optical supply chain diversification"],
-    metrics: { score: "66/100", target: "-", upside: "-", catalyst: "50% capacity expansion" },
+    metrics: { chokepoint: "14/25", target: "-", upside: "-", catalyst: "50% capacity expansion" },
     chipsStatus: "na",
     chipsLabel: "Non-U.S. / no direct CHIPS award",
     chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
     chipsSources: []
   },
   {
-    id: "VNP", ticker: "VNP.TO", name: "5N Plus", score: 61, verdict: "HOLD", market: "Canada",
+    id: "VNP", ticker: "VNP.TO", name: "5N Plus", chokepointScore: 16, verdict: "HOLD", market: "Canada",
     x: 90, y: 790, chokepoint: false, chain: ["inp", "integration"], report: "VNP.md",
     role: "Raw-material upstream provider of In, Ga, Ge, and Te.",
     thesis: "The deepest upstream optical-materials exposure in the universe, but diluted by non-photonics segments.",
     upstream: ["Metal refining", "Strategic materials"],
     downstream: ["AXT", "JX", "Compound semi chain"],
-    metrics: { score: "61/100", target: "-", upside: "-", catalyst: "Germanium / compound semi growth" },
+    metrics: { chokepoint: "10/25", target: "-", upside: "-", catalyst: "Germanium / compound semi growth" },
     chipsStatus: "na",
     chipsLabel: "Non-U.S. / no direct CHIPS award",
     chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
@@ -626,39 +627,39 @@ const nodes = [
   },
 
   {
-    id: "ASML", ticker: "ASML", name: "ASML", score: 68, verdict: "HOLD", market: "Netherlands",
+    id: "ASML", ticker: "ASML", name: "ASML", chokepointScore: 25, verdict: "HOLD", market: "Netherlands",
     x: 405, y: 125, chokepoint: true, chain: ["siph"], report: "ASML.md",
     role: "Lithography monopoly used in every new SiPh fab expansion.",
     thesis: "Not photonics-pure, but the true no-alternative equipment provider for silicon photonics patterning capacity.",
     upstream: ["Precision optics", "Lithography platform"],
     downstream: ["Tower Semi", "GlobalFoundries", "SiPh fabs"],
-    metrics: { score: "68/100", target: "-", upside: "-", catalyst: "Every new SiPh fab needs DUV tools" },
+    metrics: { chokepoint: "25/25", target: "-", upside: "-", catalyst: "Every new SiPh fab needs DUV tools" },
     chipsStatus: "na",
     chipsLabel: "Non-U.S. / no direct CHIPS award",
     chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
     chipsSources: []
   },
   {
-    id: "TSEM", ticker: "TSEM", name: "Tower Semi", score: 75, verdict: "BUY", market: "Israel / US",
+    id: "TSEM", ticker: "TSEM", name: "Tower Semi", chokepointScore: 23, verdict: "BUY", market: "Israel / US",
     x: 405, y: 255, chokepoint: true, chain: ["siph"], report: "TSEM.md",
     role: "Primary silicon-photonics foundry and the TSMC of photonics.",
     thesis: "This is the foundry choke point in the chain. Many optical winners depend on Tower capacity whether investors notice it or not.",
     upstream: ["Soitec wafers", "ASML tools", "Foundry process IP"],
     downstream: ["Broadcom", "SiPh transceiver ecosystem", "Optical IC customers"],
-    metrics: { score: "75/100", target: "$200", upside: "+22%", catalyst: "5x SiPh capacity expansion" },
+    metrics: { chokepoint: "23/25", target: "$200", upside: "+22%", catalyst: "5x SiPh capacity expansion" },
     chipsStatus: "none",
     chipsLabel: "No direct CHIPS award found",
     chipsNote: "No Tower Semiconductor-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
     chipsSources: []
   },
   {
-    id: "GFS", ticker: "GFS", name: "GlobalFoundries", score: 62, verdict: "HOLD", market: "United States",
+    id: "GFS", ticker: "GFS", name: "GlobalFoundries", chokepointScore: 19, verdict: "HOLD", market: "United States",
     x: 405, y: 390, chokepoint: false, chain: ["siph"], report: "GFS.md",
     role: "Second silicon-photonics foundry with China-free appeal.",
     thesis: "The alternative SiPh foundry path. Important, but still behind Tower as the real chain bottleneck.",
     upstream: ["ASML tools", "AMF acquisition", "Foundry platform"],
     downstream: ["Optical IC customers", "China-free SiPh demand"],
-    metrics: { score: "62/100", target: "-", upside: "-", catalyst: "SiPh doubling to $1B target" },
+    metrics: { chokepoint: "15/25", target: "-", upside: "-", catalyst: "SiPh doubling to $1B target" },
     chipsStatus: "final",
     chipsLabel: "CHIPS final award",
     chipsAmount: "Up to $1.5B final award; +$75M amended packaging award",
@@ -669,26 +670,26 @@ const nodes = [
     ]
   },
   {
-    id: "AIXTRON", ticker: "AIXA.DE", name: "Aixtron", score: 65, verdict: "HOLD", market: "Germany",
+    id: "AIXTRON", ticker: "AIXA.DE", name: "Aixtron", chokepointScore: 21, verdict: "HOLD", market: "Germany",
     x: 405, y: 565, chokepoint: true, chain: ["inp"], report: "AIXA.md",
     role: "MOCVD equipment supplier used to grow InP and GaAs optical devices.",
     thesis: "A real tool-layer choke point for lasers. Less obvious than the device makers, but essential to all of them.",
     upstream: ["MOCVD platform", "Tool installed base"],
     downstream: ["Laser chip makers", "InP / GaAs device capacity"],
-    metrics: { score: "65/100", target: "-", upside: "-", catalyst: "Optoelectronics tool demand" },
+    metrics: { chokepoint: "18/25", target: "-", upside: "-", catalyst: "Optoelectronics tool demand" },
     chipsStatus: "na",
     chipsLabel: "Non-U.S. / no direct CHIPS award",
     chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
     chipsSources: []
   },
   {
-    id: "FORM", ticker: "FORM", name: "FormFactor", score: 67, verdict: "HOLD", market: "United States",
+    id: "FORM", ticker: "FORM", name: "FormFactor", chokepointScore: 18, verdict: "HOLD", market: "United States",
     x: 405, y: 805, chokepoint: false, chain: ["siph", "integration"], report: "FORM.md",
     role: "SiPh wafer test and optical probing infrastructure.",
     thesis: "A quieter bottleneck in the chain: optical wafers still need to be probed and tested before volume ramps matter.",
     upstream: ["Probe-card platform", "Keystone optical probing"],
     downstream: ["Tower", "SiPh ecosystem", "Optical IC qualification"],
-    metrics: { score: "67/100", target: "-", upside: "-", catalyst: "Optical probing + test growth" },
+    metrics: { chokepoint: "13/25", target: "-", upside: "-", catalyst: "Optical probing + test growth" },
     chipsStatus: "none",
     chipsLabel: "No direct CHIPS award found",
     chipsNote: "No FormFactor-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
@@ -696,26 +697,26 @@ const nodes = [
   },
 
   {
-    id: "LITE", ticker: "LITE", name: "Lumentum", score: 70, verdict: "HOLD", market: "United States",
+    id: "LITE", ticker: "LITE", name: "Lumentum", chokepointScore: 21, verdict: "HOLD", market: "United States",
     x: 730, y: 510, chokepoint: true, chain: ["inp"], report: "LITE.md",
     role: "High-end EML laser leader and one of the narrowest points in the optical chain.",
     thesis: "The key laser choke point for the InP path. Dominant in high-end EMLs, but currently priced for perfection.",
     upstream: ["InP substrates", "MOCVD tools", "Laser process know-how"],
     downstream: ["Coherent", "Innolight", "Optical module makers"],
-    metrics: { score: "70/100", target: "$500", upside: "-31%", catalyst: "NVIDIA partnership + $8B target" },
+    metrics: { chokepoint: "21/25", target: "$500", upside: "-31%", catalyst: "NVIDIA partnership + $8B target" },
     chipsStatus: "none",
     chipsLabel: "No direct CHIPS award found",
     chipsNote: "No Lumentum-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
     chipsSources: []
   },
   {
-    id: "SIVE", ticker: "SIVE.ST", name: "Sivers Semiconductors", score: 46, verdict: "AVOID", market: "Sweden",
+    id: "SIVE", ticker: "SIVE.ST", name: "Sivers Semiconductors", chokepointScore: 12, verdict: "AVOID", market: "Sweden",
     x: 730, y: 665, chokepoint: false, chain: ["inp"], report: "SIVE.md",
     role: "Micro-cap DFB laser and optical-amplifier developer on the InP component fringe.",
     thesis: "Sivers belongs on the CHIPS-linked list, but with nuance: the funded programs sit in the Wireless division via NEMC / Microelectronics Commons rather than directly subsidizing the photonics unit.",
     upstream: ["InP materials and epi know-how", "Laser design IP", "CHIPS-backed wireless R&D budget"],
     downstream: ["Emerging external-light-source programs", "Future optical module and CPO experiments"],
-    metrics: { score: "46/100", target: "-", upside: "-", catalyst: "CHIPS-backed R&D + optical module demos" },
+    metrics: { chokepoint: "9/25", target: "-", upside: "-", catalyst: "CHIPS-backed R&D + optical module demos" },
     chipsStatus: "rd",
     chipsLabel: "CHIPS R&D / hub award",
     chipsAmount: "$11.6M first signed tranche; ~$30M potential over 3 years",
@@ -727,13 +728,13 @@ const nodes = [
     ]
   },
   {
-    id: "MTSI", ticker: "MTSI", name: "MACOM", score: 76, verdict: "BUY", market: "United States",
+    id: "MTSI", ticker: "MTSI", name: "MACOM", chokepointScore: 19, verdict: "BUY", market: "United States",
     x: 730, y: 265, chokepoint: false, chain: ["siph", "inp"], report: "MTSI.md",
     role: "Analog connectivity IC layer inside optical modules.",
     thesis: "The best under-discovered optical IC name in the project. It sits inside transceivers regardless of who assembles them.",
     upstream: ["Foundry capacity", "Analog design IP"],
     downstream: ["Coherent", "Innolight", "Optical transceivers"],
-    metrics: { score: "76/100", target: "$300", upside: "+18%", catalyst: "1.6T analog component ramp" },
+    metrics: { chokepoint: "16/25", target: "$300", upside: "+18%", catalyst: "1.6T analog component ramp" },
     chipsStatus: "proposed",
     chipsLabel: "CHIPS proposed funding",
     chipsAmount: "Up to $70M proposed direct funding",
@@ -743,53 +744,66 @@ const nodes = [
     ]
   },
   {
-    id: "CRDO", ticker: "CRDO", name: "Credo", score: 82, verdict: "BUY", market: "United States",
+    id: "CRDO", ticker: "CRDO", name: "Credo", chokepointScore: 23, verdict: "BUY", market: "United States",
     x: 730, y: 125, chokepoint: true, chain: ["siph", "integration"], report: "CRDO.md",
     role: "AEC monopoly and optical-DSP choke point for short-reach AI connectivity.",
     thesis: "This is one of the most direct optical chokepoints: 88% AEC share plus the next-gen Bluebird DSP.",
     upstream: ["SerDes IP", "Foundry capacity", "Optical DSP design"],
     downstream: ["Arista", "Hyperscalers", "Rack-to-rack AI connectivity"],
-    metrics: { score: "82/100", target: "$170", upside: "+70%", catalyst: "AEC monopoly + 1.6T DSP" },
+    metrics: { chokepoint: "23/25", target: "$170", upside: "+70%", catalyst: "AEC monopoly + 1.6T DSP" },
     chipsStatus: "none",
     chipsLabel: "No direct CHIPS award found",
     chipsNote: "No Credo-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
     chipsSources: []
   },
   {
-    id: "AVGO", ticker: "AVGO", name: "Broadcom", score: 85, verdict: "BUY", market: "United States",
+    id: "AVGO", ticker: "AVGO", name: "Broadcom", chokepointScore: 22, verdict: "BUY", market: "United States",
     x: 730, y: 395, chokepoint: true, chain: ["siph", "integration"], report: "AVGO.md",
     role: "Switch ASIC and optical DSP giant with broad photonics reach.",
     thesis: "Not pure-play, but one of the strongest chokepoint franchises in AI networking and optical connectivity.",
     upstream: ["Tower / foundry ecosystem", "Optical DSP stack", "Switch silicon"],
     downstream: ["Arista", "Hyperscalers", "AI cluster networking"],
-    metrics: { score: "85/100", target: "$430", upside: "+33%", catalyst: "AI rev + backlog + Taurus DSP" },
+    metrics: { chokepoint: "24/25", target: "$430", upside: "+33%", catalyst: "AI rev + backlog + Taurus DSP" },
     chipsStatus: "none",
     chipsLabel: "No direct CHIPS award found",
     chipsNote: "No Broadcom-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
     chipsSources: []
   },
+  {
+    id: "MRVL", ticker: "MRVL", name: "Marvell", chokepointScore: 17, verdict: "BUY", market: "United States",
+    x: 730, y: 790, chokepoint: false, chain: ["siph", "integration"], report: "MRVL.md",
+    role: "Custom AI silicon and optical-DSP platform vendor spanning compute and interconnect.",
+    thesis: "One of the most important missing nodes in the original map. Marvell matters because custom AI silicon, optical DSPs, and photonic-fabric ambitions all converge here.",
+    upstream: ["TSMC", "Advanced packaging", "Optical DSP design", "SerDes / networking IP"],
+    downstream: ["Hyperscalers", "Optical module makers", "AI server and switch ecosystem"],
+    metrics: { chokepoint: "17/25", target: "$120", upside: "+36%", catalyst: "Custom AI ramp + 1.6T DSP + Celestial AI" },
+    chipsStatus: "none",
+    chipsLabel: "No direct CHIPS award found",
+    chipsNote: "No Marvell-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
+    chipsSources: []
+  },
 
   {
-    id: "INNOLIGHT", ticker: "300308.SZ", name: "Innolight", score: 79, verdict: "BUY", market: "China",
+    id: "INNOLIGHT", ticker: "300308.SZ", name: "Innolight", chokepointScore: 17, verdict: "BUY", market: "China",
     x: 1055, y: 180, chokepoint: true, chain: ["siph", "inp", "integration"], report: "300308SZ.md",
     role: "World-leading AI optical transceiver supplier.",
     thesis: "The transceiver node where multiple upstream chokepoints converge and hyperscaler demand actually monetizes.",
     upstream: ["Lumentum lasers", "MACOM analog", "SiPh and packaging inputs"],
     downstream: ["NVIDIA", "Google", "Hyperscalers"],
-    metrics: { score: "79/100", target: "CNY 700", upside: "+21%", catalyst: "1.6T volume ramp" },
+    metrics: { chokepoint: "19/25", target: "CNY 700", upside: "+21%", catalyst: "1.6T volume ramp" },
     chipsStatus: "na",
     chipsLabel: "Non-U.S. / no direct CHIPS award",
     chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
     chipsSources: []
   },
   {
-    id: "COHR", ticker: "COHR", name: "Coherent", score: 65, verdict: "HOLD", market: "United States",
+    id: "COHR", ticker: "COHR", name: "Coherent", chokepointScore: 15, verdict: "HOLD", market: "United States",
     x: 1055, y: 340, chokepoint: false, chain: ["siph", "inp", "integration"], report: "COHR.md",
     role: "Broad multi-architecture optical module and component supplier.",
     thesis: "The broadest optical portfolio in the set, but less of a pure chokepoint than the upstream bottlenecks feeding it.",
     upstream: ["Tower / SiPh", "Lumentum / laser ecosystem", "MACOM analog"],
     downstream: ["Hyperscalers", "Optical networking", "AI transceivers"],
-    metrics: { score: "65/100", target: "$200", upside: "-22%", catalyst: "1.6T ramp + NVIDIA" },
+    metrics: { chokepoint: "14/25", target: "$200", upside: "-22%", catalyst: "1.6T ramp + NVIDIA" },
     chipsStatus: "proposed",
     chipsLabel: "CHIPS proposed funding",
     chipsAmount: "Up to $79M proposed direct funding; $15M CHIPS-linked hub award",
@@ -801,66 +815,121 @@ const nodes = [
     ]
   },
   {
-    id: "AAOI", ticker: "AAOI", name: "Applied Optoelectronics", score: 59, verdict: "HOLD", market: "United States",
+    id: "AAOI", ticker: "AAOI", name: "Applied Optoelectronics", chokepointScore: 12, verdict: "HOLD", market: "United States",
     x: 1055, y: 545, chokepoint: false, chain: ["inp", "integration"], report: "AAOI.md",
     role: "Vertically integrated U.S.-based transceiver producer with low China content.",
     thesis: "AAOI is the small-cap optics dark horse: real U.S. manufacturing leverage and meaningful 800G/1.6T exposure, but still a scale-up execution story rather than a clean chokepoint.",
     upstream: ["In-house laser chips", "Module assembly lines", "U.S. and Asia manufacturing"],
     downstream: ["Hyperscalers", "AI data-center transceivers", "China-light optical sourcing"],
-    metrics: { score: "59/100", target: "$70", upside: "-31%", catalyst: "$200M+ 1.6T order + 3.5x DC growth" },
+    metrics: { chokepoint: "11/25", target: "$70", upside: "-31%", catalyst: "$200M+ 1.6T order + 3.5x DC growth" },
     chipsStatus: "none",
     chipsLabel: "No direct CHIPS award found",
     chipsNote: "AAOI has the U.S.-manufacturing narrative investors want, but no company-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
     chipsSources: []
   },
   {
-    id: "FN", ticker: "FN", name: "Fabrinet", score: 71, verdict: "HOLD", market: "Thailand / US",
+    id: "FN", ticker: "FN", name: "Fabrinet", chokepointScore: 20, verdict: "HOLD", market: "Thailand / US",
     x: 1055, y: 810, chokepoint: true, chain: ["integration"], report: "FN.md",
     role: "Precision optical assembly and contract manufacturing bridge.",
     thesis: "The assembly choke point hidden between components and systems. It wins regardless of which module architecture dominates.",
     upstream: ["Optical components", "Precision assembly lines", "Customer programs"],
     downstream: ["NVIDIA", "Optical module makers", "AI data-center builds"],
-    metrics: { score: "71/100", target: "$450 buy zone", upside: "Watch", catalyst: "NVIDIA sole-source 1.6T" },
+    metrics: { chokepoint: "20/25", target: "$450 buy zone", upside: "Watch", catalyst: "NVIDIA sole-source 1.6T" },
     chipsStatus: "none",
     chipsLabel: "No direct CHIPS award found",
     chipsNote: "No Fabrinet-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
     chipsSources: []
   },
+  {
+    id: "EOPTOLINK", ticker: "300502.SZ", name: "Eoptolink", chokepointScore: 16, verdict: "HOLD", market: "China",
+    x: 1055, y: 670, chokepoint: false, chain: ["siph", "inp", "integration"], report: "300502SZ.md",
+    role: "Large second-source transceiver vendor and major Chinese optical module supplier.",
+    thesis: "Important to include because the map previously implied Innolight was the only scaled module winner. Eoptolink is a real volume competitor and part of the same demand read-through.",
+    upstream: ["Laser and analog components", "SiPh and EML architectures", "Module assembly"],
+    downstream: ["Hyperscalers", "Chinese cloud customers", "AI optical demand"],
+    metrics: { chokepoint: "13/25", target: "-", upside: "-", catalyst: "800G / 1.6T ramp + NVIDIA secondary-source exposure" },
+    chipsStatus: "na",
+    chipsLabel: "Non-U.S. / no direct CHIPS award",
+    chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
+    chipsSources: []
+  },
 
   {
-    id: "ANET", ticker: "ANET", name: "Arista", score: 83, verdict: "BUY", market: "United States",
+    id: "ANET", ticker: "ANET", name: "Arista", chokepointScore: 14, verdict: "BUY", market: "United States",
     x: 1380, y: 180, chokepoint: false, chain: ["siph", "integration"], report: "ANET.md",
     role: "System-layer demand signal for the entire optical chain.",
     thesis: "Arista is where the optical stack shows up as revenue. Its AI networking growth confirms demand for the whole upstream chain.",
     upstream: ["Broadcom", "Credo", "Innolight", "Optical module ecosystem"],
     downstream: ["Hyperscalers", "AI clusters"],
-    metrics: { score: "83/100", target: "$175", upside: "+33%", catalyst: "AI rev +100% to $3.25B" },
+    metrics: { chokepoint: "15/25", target: "$175", upside: "+33%", catalyst: "AI rev +100% to $3.25B" },
     chipsStatus: "none",
     chipsLabel: "No direct CHIPS award found",
     chipsNote: "No Arista-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
     chipsSources: []
   },
   {
-    id: "CIEN", ticker: "CIEN", name: "Ciena", score: 69, verdict: "HOLD", market: "United States",
+    id: "CIEN", ticker: "CIEN", name: "Ciena", chokepointScore: 13, verdict: "HOLD", market: "United States",
     x: 1380, y: 355, chokepoint: false, chain: ["integration"], report: "CIEN.md",
     role: "Optical networking systems layer for long-haul and interconnect traffic.",
     thesis: "Ciena is the system endpoint for a different part of the chain: transport optics rather than short-reach AI rack connectivity.",
     upstream: ["Optical components", "WaveLogic platform", "Optical module supply"],
     downstream: ["Cloud backbones", "Network operators"],
-    metrics: { score: "69/100", target: "$300", upside: "-12%", catalyst: "WaveLogic 6 + backlog" },
+    metrics: { chokepoint: "11/25", target: "$300", upside: "-12%", catalyst: "WaveLogic 6 + backlog" },
     chipsStatus: "none",
     chipsLabel: "No direct CHIPS award found",
     chipsNote: "No Ciena-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
     chipsSources: []
   },
   {
-    id: "CLOUD", ticker: "CLOUD", name: "Hyperscalers / AI Clusters", score: null, verdict: "context", market: "Demand anchor",
+    id: "VIAV", ticker: "VIAV", name: "VIAVI", chokepointScore: 10, verdict: "HOLD", market: "United States",
+    x: 1380, y: 540, chokepoint: false, chain: ["integration"], report: "VIAV.md",
+    role: "Test-and-measurement node validating optical links, modules, and deployed networks.",
+    thesis: "The original map underrepresented test infrastructure. VIAVI is not the core bottleneck, but it is an important monetization and qualification checkpoint as optical complexity rises.",
+    upstream: ["Optical test IP", "Instruments and software", "Installed base"],
+    downstream: ["Transceiver vendors", "System OEMs", "Network operators"],
+    metrics: { chokepoint: "10/25", target: "30", upside: "-11%", catalyst: "AI test demand + margin expansion" },
+    chipsStatus: "none",
+    chipsLabel: "No direct CHIPS award found",
+    chipsNote: "No VIAVI-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
+    chipsSources: []
+  },
+  {
+    id: "APH", ticker: "APH", name: "Amphenol", chokepointScore: 17, verdict: "BUY", market: "United States",
+    x: 1380, y: 720, chokepoint: false, chain: ["integration"], report: "APH.md",
+    role: "Physical interconnect layer spanning copper, cable, connector, and fiber assemblies into AI systems.",
+    thesis: "A major omission in the original map. Amphenol is not an optical chip chokepoint, but it is one of the biggest scaled beneficiaries of AI interconnect spend.",
+    upstream: ["Connector design", "Cable and fiber assemblies", "Global manufacturing footprint"],
+    downstream: ["Hyperscalers", "Servers", "Switches", "Data-center buildouts"],
+    metrics: { chokepoint: "12/25", target: "-", upside: "~30%", catalyst: "IT datacom demand + CCS integration" },
+    chipsStatus: "none",
+    chipsLabel: "No direct CHIPS award found",
+    chipsNote: "No Amphenol-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
+    chipsSources: []
+  },
+  {
+    id: "GLW", ticker: "GLW", name: "Corning", chokepointScore: 15, verdict: "HOLD", market: "United States",
+    x: 1380, y: 865, chokepoint: false, chain: ["integration"], report: "GLW.md",
+    role: "Fiber and glass infrastructure layer enabling optical connectivity at scale.",
+    thesis: "Corning belongs on the map because the optical chain does not stop at modules. Fiber demand, especially in AI data-center buildouts, is a real second-order beneficiary.",
+    upstream: ["Specialty glass", "Fiber manufacturing", "Cable ecosystem"],
+    downstream: ["Amphenol", "Cloud buildouts", "Optical network deployments"],
+    metrics: { chokepoint: "12/25", target: "120", upside: "-14%", catalyst: "Optical communications growth + Meta demand" },
+    chipsStatus: "final",
+    chipsLabel: "CHIPS final award",
+    chipsAmount: "Up to $32M final award",
+    chipsNote: "Corning received finalized CHIPS support tied to HPFS / ULE materials. That is strategically positive, but it is not the core driver of the optical-fiber thesis.",
+    chipsSources: [
+      { label: "Commerce Corning award", url: "https://www.commerce.gov/news/press-releases/2025/01/us-department-commerce-announces-chips-incentives-awards-corning" }
+    ]
+  },
+  {
+    id: "CLOUD", ticker: "CLOUD", name: "Hyperscalers / AI Clusters", chokepointScore: null, verdict: "context", market: "Demand anchor",
     x: 1690, y: 255, chokepoint: false, chain: ["siph", "inp", "integration"], report: null,
     role: "The end demand sink that turns optical choke points into financial results.",
     thesis: "Every layer in the map ultimately sells into GPU cluster scaling, cloud backbone upgrades, and AI data-center deployment.",
     upstream: ["Arista", "Ciena", "Innolight", "AAOI", "Fabrinet", "Credo", "Broadcom"],
     downstream: ["AI workloads"],
-    metrics: { score: "Demand", target: "Context", upside: "", catalyst: "AI capex" },
+    metrics: { chokepoint: "Demand", target: "Context", upside: "", catalyst: "AI capex" },
     chipsStatus: "na",
     chipsLabel: "Context node",
     chipsNote: "Context node used to show end-demand pull rather than grant status.",
@@ -887,22 +956,31 @@ const edges = [
 
   { from: "TSEM", to: "CRDO", kind: "siph" },
   { from: "TSEM", to: "AVGO", kind: "siph" },
+  { from: "TSEM", to: "MRVL", kind: "siph" },
   { from: "GFS", to: "AVGO", kind: "siph" },
   { from: "TSEM", to: "COHR", kind: "siph" },
 
   { from: "MTSI", to: "INNOLIGHT", kind: "shared" },
   { from: "MTSI", to: "COHR", kind: "shared" },
   { from: "MTSI", to: "AAOI", kind: "shared" },
+  { from: "MTSI", to: "EOPTOLINK", kind: "shared" },
   { from: "LITE", to: "INNOLIGHT", kind: "inp" },
   { from: "LITE", to: "COHR", kind: "inp" },
+  { from: "LITE", to: "EOPTOLINK", kind: "inp" },
 
   { from: "COHR", to: "FN", kind: "integration" },
   { from: "INNOLIGHT", to: "FN", kind: "integration" },
+  { from: "EOPTOLINK", to: "CLOUD", kind: "integration" },
+  { from: "MRVL", to: "ANET", kind: "integration" },
 
   { from: "CRDO", to: "ANET", kind: "integration" },
   { from: "AVGO", to: "ANET", kind: "integration" },
   { from: "INNOLIGHT", to: "ANET", kind: "integration" },
   { from: "COHR", to: "CIEN", kind: "integration" },
+  { from: "VIAV", to: "ANET", kind: "integration" },
+  { from: "VIAV", to: "CIEN", kind: "integration" },
+  { from: "APH", to: "CLOUD", kind: "integration" },
+  { from: "GLW", to: "APH", kind: "integration" },
   { from: "FN", to: "CLOUD", kind: "integration" },
   { from: "ANET", to: "CLOUD", kind: "integration" },
   { from: "CIEN", to: "CLOUD", kind: "integration" },
@@ -912,6 +990,7 @@ const edges = [
 ];
 
 const chipsLinkedStatuses = new Set(["final", "proposed", "rd", "indirect"]);
+const chokepointThreshold = 16;
 
 const filters = {
   all: node => true,
@@ -919,7 +998,7 @@ const filters = {
   inp: node => node.chain.includes("inp"),
   integration: node => node.chain.includes("integration"),
   buy: node => node.verdict === "BUY" || node.verdict === "context",
-  chokepoint: node => node.chokepoint || node.verdict === "context",
+  chokepoint: node => isChokepoint(node) || node.verdict === "context",
   chips: node => chipsLinkedStatuses.has(node.chipsStatus)
 };
 
@@ -939,23 +1018,36 @@ function chipsClass(status) {
   return `chips-${status}`;
 }
 
+function isChokepoint(node) {
+  return Number.isFinite(node.chokepointScore) && node.chokepointScore >= chokepointThreshold;
+}
+
+function chokepointTier(score) {
+  if (!Number.isFinite(score)) return "Context";
+  if (score >= 21) return "Monopoly Chokepoint";
+  if (score >= 16) return "Duopoly Chokepoint";
+  if (score >= 11) return "Oligopoly with Moat";
+  if (score >= 6) return "Competitive / Linked";
+  return "Commodity / Indirect";
+}
+
 function chipsLinkedCount() {
   return nodes.filter(node => chipsLinkedStatuses.has(node.chipsStatus)).length;
 }
 
 function renderStats() {
-  const scored = nodes.filter(node => node.report);
-  const buys = scored.filter(node => node.verdict === "BUY").length;
-  const chokepoints = scored.filter(node => node.chokepoint).length;
-  const avgScore = Math.round(scored.reduce((sum, node) => sum + node.score, 0) / scored.length);
+  const mapped = nodes.filter(node => node.report);
+  const buys = mapped.filter(node => node.verdict === "BUY").length;
+  const chokepoints = mapped.filter(node => isChokepoint(node)).length;
+  const avgChokepoint = Math.round(mapped.reduce((sum, node) => sum + node.chokepointScore, 0) / mapped.length);
   const chipsLinked = chipsLinkedCount();
   statsEl.innerHTML = `
-    <div class="stat"><div class="val">${scored.length}</div><div class="lbl">Visualized Nodes</div></div>
+    <div class="stat"><div class="val">${mapped.length}</div><div class="lbl">Visualized Nodes</div></div>
     <div class="stat"><div class="val" style="color:#34d399">${buys}</div><div class="lbl">BUY Ratings</div></div>
     <div class="stat"><div class="val" style="color:#fbbf24">${chokepoints}</div><div class="lbl">Chokepoints</div></div>
-    <div class="stat"><div class="val" style="color:#7dd3fc">${avgScore}</div><div class="lbl">Average Score</div></div>
+    <div class="stat"><div class="val" style="color:#7dd3fc">${avgChokepoint}/25</div><div class="lbl">Avg Chokepoint</div></div>
     <div class="stat"><div class="val" style="color:#c084fc">${chipsLinked}</div><div class="lbl">CHIPS-Linked</div></div>
-    <div class="stat"><div class="val" style="color:#a5b4fc">80+</div><div class="lbl">Reports Backing Map</div></div>
+    <div class="stat"><div class="val" style="color:#a5b4fc">78</div><div class="lbl">Reports Backing Map</div></div>
   `;
 }
 
@@ -964,12 +1056,12 @@ function renderNodes() {
     const classes = [
       "node",
       node.verdict === "BUY" ? "buy" : node.verdict === "HOLD" ? "hold" : node.verdict === "AVOID" ? "avoid" : "context",
-      node.chokepoint ? "chokepoint" : ""
+      isChokepoint(node) ? "chokepoint" : ""
     ].join(" ");
 
     const meta = [
       node.market,
-      node.chokepoint ? "Chokepoint" : "Linked node",
+      isChokepoint(node) ? "Chokepoint" : "Linked node",
       ...(node.chain.includes("siph") ? ["SiPh"] : []),
       ...(node.chain.includes("inp") ? ["InP"] : []),
       ...(node.chain.includes("integration") ? ["Integration"] : [])
@@ -987,7 +1079,7 @@ function renderNodes() {
         data-id="${node.id}">
         <div class="head">
           <div class="ticker">${node.ticker}</div>
-          <div class="score">${node.score ?? "CTX"}</div>
+          <div class="score">${node.chokepointScore ? `${node.chokepointScore}/25` : "CTX"}</div>
         </div>
         <div class="name">${node.name}</div>
         <div class="role">${node.role}</div>
@@ -1063,17 +1155,17 @@ function openPanel(id) {
   const enables = edges.filter(edge => edge.from === id).map(edge => nodes.find(item => item.id === edge.to)?.ticker || edge.to);
   panelContentEl.innerHTML = `
     <h2>${node.ticker}</h2>
-    <div class="subtitle">${node.name} &middot; ${node.market}</div>
+    <div class="subtitle">${node.name} &middot; ${node.market} &middot; ${chokepointTier(node.chokepointScore)}</div>
     <div class="panel-tags">
       <span class="tag ${node.verdict === "BUY" ? "buy" : node.verdict === "AVOID" ? "avoid" : "hold"}">${node.verdict === "context" ? "Context" : node.verdict}</span>
-      ${node.chokepoint ? '<span class="tag chokepoint">Chokepoint</span>' : ''}
+      ${isChokepoint(node) ? '<span class="tag chokepoint">Chokepoint</span>' : ''}
       ${node.chain.includes("siph") ? '<span class="tag hold">SiPh</span>' : ''}
       ${node.chain.includes("inp") ? '<span class="tag hold">InP</span>' : ''}
       ${node.chain.includes("integration") ? '<span class="tag hold">Integration</span>' : ''}
       ${node.chipsLabel ? `<span class="tag ${chipsClass(node.chipsStatus)}">${node.chipsLabel}</span>` : ""}
     </div>
     <div class="metric-grid">
-      <div class="metric"><div class="val">${node.metrics.score}</div><div class="lbl">Score</div></div>
+      <div class="metric"><div class="val">${Number.isFinite(node.chokepointScore) ? `${node.chokepointScore}/25` : node.metrics.chokepoint}</div><div class="lbl">Chokepoint</div></div>
       <div class="metric"><div class="val">${node.metrics.target}</div><div class="lbl">Target</div></div>
       <div class="metric"><div class="val">${node.metrics.upside || "-"}</div><div class="lbl">Upside</div></div>
       <div class="metric"><div class="val">${node.metrics.catalyst}</div><div class="lbl">Primary Catalyst</div></div>
