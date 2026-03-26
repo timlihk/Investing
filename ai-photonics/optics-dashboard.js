@@ -1,0 +1,621 @@
+(function () {
+  const data = window.OPTICS_DASHBOARD_DATA;
+
+  if (!data || !Array.isArray(data.rows)) {
+    document.getElementById("segments").innerHTML = '<div class="empty">Dashboard data is not available yet.</div>';
+    document.getElementById("detail-top").innerHTML = '<div class="empty">No row selected.</div>';
+    return;
+  }
+
+  const state = {
+    search: "",
+    sortKey: "score",
+    sortDirection: "desc",
+    verdict: "all",
+    selectedTicker: pickInitialTicker(data.rows)
+  };
+
+  const elements = {
+    generatedStamp: document.getElementById("generated-stamp"),
+    coverageStamp: document.getElementById("coverage-stamp"),
+    summaryCards: document.getElementById("summary-cards"),
+    segmentNav: document.getElementById("segment-nav"),
+    boardNote: document.getElementById("board-note"),
+    segments: document.getElementById("segments"),
+    detailTop: document.getElementById("detail-top"),
+    chartHost: document.getElementById("chart-host"),
+    searchInput: document.getElementById("search-input"),
+    sortSelect: document.getElementById("sort-select"),
+    directionToggle: document.getElementById("direction-toggle"),
+    verdictButtons: Array.from(document.querySelectorAll("[data-verdict]"))
+  };
+
+  bindEvents();
+  render();
+
+  function bindEvents() {
+    elements.searchInput.addEventListener("input", (event) => {
+      state.search = event.target.value.trim().toLowerCase();
+      render();
+    });
+
+    elements.sortSelect.addEventListener("change", (event) => {
+      state.sortKey = event.target.value;
+      render();
+    });
+
+    elements.directionToggle.addEventListener("click", () => {
+      state.sortDirection = state.sortDirection === "desc" ? "asc" : "desc";
+      elements.directionToggle.textContent = state.sortDirection === "desc" ? "Desc" : "Asc";
+      render();
+    });
+
+    elements.verdictButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        state.verdict = button.dataset.verdict;
+        elements.verdictButtons.forEach((candidate) => candidate.classList.toggle("active", candidate === button));
+        render();
+      });
+    });
+
+    elements.segments.addEventListener("click", (event) => {
+      const trigger = event.target.closest("[data-select-ticker]");
+      if (!trigger) {
+        return;
+      }
+      state.selectedTicker = trigger.dataset.selectTicker;
+      render();
+    });
+  }
+
+  function render() {
+    const filteredRows = getFilteredRows();
+    const groupedRows = groupRows(filteredRows);
+    const selectedRow = getSelectedRow(filteredRows);
+
+    renderSummary(filteredRows, groupedRows);
+    renderSegments(groupedRows);
+    renderDetail(selectedRow);
+  }
+
+  function getFilteredRows() {
+    return data.rows.filter((row) => {
+      if (state.verdict !== "all" && row.verdict !== state.verdict) {
+        return false;
+      }
+
+      if (!state.search) {
+        return true;
+      }
+
+      const haystack = [
+        row.ticker,
+        row.name,
+        row.segment,
+        row.oneLiner,
+        row.thesis
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      return haystack.includes(state.search);
+    });
+  }
+
+  function groupRows(rows) {
+    return data.segmentOrder
+      .map((segment) => {
+        const segmentRows = rows
+          .filter((row) => row.segment === segment)
+          .sort(compareRows);
+
+        return {
+          segment,
+          rows: segmentRows
+        };
+      })
+      .filter((group) => group.rows.length > 0);
+  }
+
+  function compareRows(left, right) {
+    const leftValue = getSortValue(left, state.sortKey);
+    const rightValue = getSortValue(right, state.sortKey);
+
+    const emptyLeft = leftValue == null;
+    const emptyRight = rightValue == null;
+
+    if (emptyLeft && emptyRight) {
+      return left.name.localeCompare(right.name);
+    }
+    if (emptyLeft) {
+      return 1;
+    }
+    if (emptyRight) {
+      return -1;
+    }
+
+    if (typeof leftValue === "string" || typeof rightValue === "string") {
+      const comparison = String(leftValue).localeCompare(String(rightValue));
+      return state.sortDirection === "asc" ? comparison : -comparison;
+    }
+
+    const comparison = leftValue - rightValue;
+    return state.sortDirection === "asc" ? comparison : -comparison;
+  }
+
+  function getSortValue(row, sortKey) {
+    switch (sortKey) {
+      case "oneYearReturn":
+        return row.marketMetrics.oneYearReturn;
+      case "relativeStrength":
+        return row.relativeStrength;
+      case "currentPrice":
+        return row.marketMetrics.currentPrice;
+      case "marketCap":
+        return row.marketMetrics.marketCap;
+      case "opticsPct":
+        return row.opticsPct;
+      case "score":
+      default:
+        return row.score;
+    }
+  }
+
+  function getSelectedRow(filteredRows) {
+    const current = filteredRows.find((row) => row.ticker === state.selectedTicker);
+    if (current) {
+      return current;
+    }
+
+    const fallback = filteredRows[0] || data.rows[0] || null;
+    state.selectedTicker = fallback ? fallback.ticker : null;
+    return fallback;
+  }
+
+  function renderSummary(filteredRows, groupedRows) {
+    const generatedAt = new Date(data.generatedAt);
+    elements.generatedStamp.textContent = `Snapshot ${formatDateTime(generatedAt)}`;
+    elements.coverageStamp.textContent = `${filteredRows.length} of ${data.totalCompanies} names visible`;
+
+    const visibleSegments = groupedRows.length;
+    const visibleBuyCount = filteredRows.filter((row) => row.verdict === "BUY").length;
+    const visibleAvgScore = average(filteredRows.map((row) => row.score));
+    const visibleAvgReturn = average(filteredRows.map((row) => row.marketMetrics.oneYearReturn));
+    const liveCount = filteredRows.filter((row) => row.marketDataStatus === "ok").length;
+
+    const cards = [
+      {
+        label: "Coverage",
+        value: formatNumber(filteredRows.length),
+        note: `${visibleSegments} segment groups are currently visible.`
+      },
+      {
+        label: "BUY Calls",
+        value: formatNumber(visibleBuyCount),
+        note: `${formatPercent(percentage(visibleBuyCount, filteredRows.length), 0)} of the filtered view is rated BUY.`
+      },
+      {
+        label: "Avg 1Y Return",
+        value: formatPercent(visibleAvgReturn),
+        note: "Computed from the embedded Yahoo Finance yearly chart snapshot."
+      },
+      {
+        label: "Avg Score",
+        value: visibleAvgScore == null ? "n/a" : visibleAvgScore.toFixed(1),
+        note: `${liveCount} names have live market data in the current snapshot.`
+      }
+    ];
+
+    elements.summaryCards.innerHTML = cards
+      .map((card) => `
+        <article class="card">
+          <span class="card-label">${escapeHtml(card.label)}</span>
+          <span class="card-value">${escapeHtml(card.value)}</span>
+          <p class="card-note">${escapeHtml(card.note)}</p>
+        </article>
+      `)
+      .join("");
+
+    elements.segmentNav.innerHTML = groupedRows
+      .map((group) => `
+        <a class="segment-link" href="#segment-${slugify(group.segment)}">${escapeHtml(group.segment)} (${group.rows.length})</a>
+      `)
+      .join("");
+
+    const failureCount = Array.isArray(data.failures) ? data.failures.length : 0;
+    const failureNote = failureCount ? ` ${failureCount} ticker${failureCount === 1 ? "" : "s"} fell back to research-only values.` : "";
+    elements.boardNote.textContent = `Showing ${filteredRows.length} names across ${visibleSegments} segments. Rows are grouped by segment and sorted inside each segment.${failureNote}`;
+  }
+
+  function renderSegments(groupedRows) {
+    if (!groupedRows.length) {
+      elements.segments.innerHTML = '<div class="empty">No companies match the current filter.</div>';
+      return;
+    }
+
+    elements.segments.innerHTML = groupedRows
+      .map((group) => {
+        const avgScore = average(group.rows.map((row) => row.score));
+        const avgReturn = average(group.rows.map((row) => row.marketMetrics.oneYearReturn));
+        const buyCount = group.rows.filter((row) => row.verdict === "BUY").length;
+
+        return `
+          <section class="segment-card" id="segment-${slugify(group.segment)}">
+            <header class="segment-header">
+              <div>
+                <p class="eyebrow">Segment</p>
+                <h2>${escapeHtml(group.segment)}</h2>
+                <p class="segment-meta">${group.rows.length} names grouped here.</p>
+              </div>
+              <div class="segment-badges">
+                <span class="badge">${buyCount} BUY</span>
+                <span class="badge">Avg score ${avgScore == null ? "n/a" : avgScore.toFixed(1)}</span>
+                <span class="badge">Avg 1Y ${formatPercent(avgReturn)}</span>
+              </div>
+            </header>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="sticky-col">Ticker / Company</th>
+                    <th>Price</th>
+                    <th>Market Cap</th>
+                    <th>P/S</th>
+                    <th>P/E</th>
+                    <th>Chart 1Y</th>
+                    <th>1M</th>
+                    <th>YTD</th>
+                    <th>1Y</th>
+                    <th>High Gap</th>
+                    <th>RS</th>
+                    <th>20D</th>
+                    <th>50D</th>
+                    <th>200D</th>
+                    <th>Score</th>
+                    <th>Verdict</th>
+                    <th>Target / Upside</th>
+                    <th>Optics %</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${group.rows.map(renderRow).join("")}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        `;
+      })
+      .join("");
+  }
+
+  function renderRow(row) {
+    const currentPrice = formatPrice(row.marketMetrics.currentPrice, row.marketMetrics.currency);
+    const marketCap = formatMarketCap(row.marketMetrics.marketCap, row.marketMetrics.currency);
+    const target = renderTarget(row);
+    const verdictClass = getVerdictClass(row.verdict);
+    const selected = row.ticker === state.selectedTicker;
+
+    return `
+      <tr class="${selected ? "is-selected" : ""}">
+        <td class="sticky-col">
+          <button class="company-button" type="button" data-select-ticker="${escapeHtml(row.ticker)}">
+            <span class="ticker-dot">${escapeHtml(row.ticker.slice(0, 4))}</span>
+            <span class="identity">
+              <span class="ticker">${escapeHtml(row.ticker)}</span>
+              <span class="company">${escapeHtml(row.name)}</span>
+              <span class="subcopy">${escapeHtml(row.market || "")}</span>
+            </span>
+          </button>
+        </td>
+        <td class="mono">${escapeHtml(currentPrice)}</td>
+        <td class="mono">${escapeHtml(marketCap)}</td>
+        <td class="mono">${escapeHtml(formatRatio(row.marketMetrics.priceToSales))}</td>
+        <td class="mono">${escapeHtml(formatRatio(row.marketMetrics.trailingPE))}</td>
+        <td>${renderSparkline(row.marketMetrics.sparkline)}</td>
+        <td>${renderMetricPill(row.marketMetrics.oneMonthReturn)}</td>
+        <td>${renderMetricPill(row.marketMetrics.ytdReturn)}</td>
+        <td>${renderMetricPill(row.marketMetrics.oneYearReturn)}</td>
+        <td>${renderMetricPill(row.marketMetrics.distanceFromHigh, { invert: true })}</td>
+        <td>${renderStrength(row.relativeStrength)}</td>
+        <td>${renderTrend(row.marketMetrics.above20Sma)}</td>
+        <td>${renderTrend(row.marketMetrics.above50Sma)}</td>
+        <td>${renderTrend(row.marketMetrics.above200Sma)}</td>
+        <td class="mono">${escapeHtml(row.score == null ? "n/a" : row.score.toFixed(0))}</td>
+        <td><span class="verdict ${verdictClass}">${escapeHtml(row.verdict || "n/a")}</span></td>
+        <td class="mono">${escapeHtml(target)}</td>
+        <td class="mono">${row.opticsPct == null ? "n/a" : `${row.opticsPct.toFixed(0)}%`}</td>
+      </tr>
+    `;
+  }
+
+  function renderDetail(row) {
+    if (!row) {
+      elements.detailTop.innerHTML = '<div class="empty">No row selected.</div>';
+      elements.chartHost.innerHTML = "";
+      return;
+    }
+
+    elements.detailTop.innerHTML = `
+      <div class="detail-heading">
+        <div>
+          <p class="eyebrow">Selected Company</p>
+          <h2>${escapeHtml(row.ticker)}</h2>
+          <p>${escapeHtml(row.name)} / ${escapeHtml(row.segment)}</p>
+        </div>
+        <div class="detail-links">
+          ${row.reportPath ? `<a class="detail-link" href="${escapeHtml(row.reportPath)}">Research note</a>` : ""}
+          <a class="detail-link" href="${escapeHtml(getYahooUrl(row.yahooSymbol))}" target="_blank" rel="noreferrer">Yahoo</a>
+          <a class="detail-link" href="${escapeHtml(getTradingViewUrl(row.tradingViewSymbol))}" target="_blank" rel="noreferrer">TradingView</a>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="detail-stat">
+          <span class="label">Current Price</span>
+          <span class="value">${escapeHtml(formatPrice(row.marketMetrics.currentPrice, row.marketMetrics.currency))}</span>
+          <span class="small">${escapeHtml(formatMarketCap(row.marketMetrics.marketCap, row.marketMetrics.currency))}</span>
+        </article>
+        <article class="detail-stat">
+          <span class="label">Research Target</span>
+          <span class="value">${escapeHtml(renderTarget(row))}</span>
+          <span class="small">${escapeHtml(row.verdict || "n/a")} / score ${row.score == null ? "n/a" : row.score.toFixed(0)}</span>
+        </article>
+        <article class="detail-stat">
+          <span class="label">Momentum</span>
+          <span class="value">${escapeHtml(formatPercent(row.marketMetrics.oneYearReturn))}</span>
+          <span class="small">1M ${escapeHtml(formatPercent(row.marketMetrics.oneMonthReturn))} / YTD ${escapeHtml(formatPercent(row.marketMetrics.ytdReturn))}</span>
+        </article>
+        <article class="detail-stat">
+          <span class="label">Trend Setup</span>
+          <span class="value">${escapeHtml(renderTrendLabel(row))}</span>
+          <span class="small">RS ${row.relativeStrength == null ? "n/a" : `${row.relativeStrength}/100`} / optics ${row.opticsPct == null ? "n/a" : `${row.opticsPct.toFixed(0)}%`}</span>
+        </article>
+      </div>
+      <div class="detail-copy">
+        ${row.oneLiner ? `<p class="note"><strong>Research view:</strong> ${escapeHtml(row.oneLiner)}</p>` : ""}
+        ${row.thesis ? `<p class="note"><strong>Thesis:</strong> ${escapeHtml(row.thesis)}</p>` : ""}
+        ${row.catalystShort ? `<p class="note"><strong>Catalyst:</strong> ${escapeHtml(row.catalystShort)}</p>` : ""}
+        <p class="note"><strong>Chokepoint:</strong> ${escapeHtml(row.chokepointTier || "n/a")} / score ${row.chokepointScore == null ? "n/a" : row.chokepointScore.toFixed(0)}. <strong>Moat:</strong> ${escapeHtml(row.moat || "n/a")}.</p>
+        <p class="note"><strong>Risk:</strong> ${escapeHtml(row.riskLevel || "n/a")}. <strong>CHIPS status:</strong> ${escapeHtml(row.chipsStatus || "n/a")}${row.chipsDetail ? ` - ${escapeHtml(row.chipsDetail)}` : ""}</p>
+      </div>
+    `;
+
+    renderTradingView(row);
+  }
+
+  function renderTradingView(row) {
+    const params = new URLSearchParams({
+      symbol: row.tradingViewSymbol,
+      interval: "D",
+      hidesidetoolbar: "1",
+      symboledit: "1",
+      saveimage: "0",
+      toolbarbg: "f5efe3",
+      theme: "light",
+      style: "1",
+      timezone: "Asia/Hong_Kong",
+      withdateranges: "1",
+      hide_top_toolbar: "0",
+      hide_legend: "0",
+      locale: "en",
+      utm_source: "github_pages",
+      utm_medium: "widget",
+      utm_campaign: "optics_dashboard"
+    });
+
+    elements.chartHost.innerHTML = `
+      <iframe
+        title="TradingView chart for ${escapeHtml(row.ticker)}"
+        src="https://s.tradingview.com/widgetembed/?${params.toString()}"
+        style="width:100%;height:100%;border:0"
+        loading="lazy"
+        allowtransparency="true">
+      </iframe>
+    `;
+  }
+
+  function renderSparkline(values) {
+    if (!values || !values.length) {
+      return '<span class="subcopy">n/a</span>';
+    }
+
+    const width = 118;
+    const height = 34;
+    const min = Math.min.apply(null, values);
+    const max = Math.max.apply(null, values);
+    const range = max - min || 1;
+
+    const points = values
+      .map((value, index) => {
+        const x = (index / Math.max(values.length - 1, 1)) * width;
+        const y = height - ((value - min) / range) * (height - 4) - 2;
+        return `${x.toFixed(2)},${y.toFixed(2)}`;
+      })
+      .join(" ");
+
+    const endValue = values[values.length - 1];
+    const startValue = values[0];
+    const stroke = endValue >= startValue ? "#0f6c4b" : "#c64a3d";
+
+    return `
+      <svg class="sparkline" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" aria-hidden="true">
+        <polyline fill="none" stroke="${stroke}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="${points}"></polyline>
+      </svg>
+    `;
+  }
+
+  function renderMetricPill(value, options) {
+    if (value == null) {
+      return '<span class="metric-pill metric-neutral">n/a</span>';
+    }
+
+    const invert = Boolean(options && options.invert);
+    const positive = invert ? value >= -8 : value >= 0;
+    const negative = invert ? value < -20 : value < 0;
+    const className = positive ? "metric-positive" : negative ? "metric-negative" : "metric-neutral";
+
+    return `<span class="metric-pill ${className}">${escapeHtml(formatPercent(value))}</span>`;
+  }
+
+  function renderStrength(value) {
+    if (value == null) {
+      return '<span class="subcopy">n/a</span>';
+    }
+
+    return `
+      <div class="strength">
+        <span class="mono">${escapeHtml(String(value))}</span>
+        <span class="strength-bar">
+          <span class="strength-fill" style="width:${Math.max(0, Math.min(100, value))}%"></span>
+        </span>
+      </div>
+    `;
+  }
+
+  function renderTrend(flag) {
+    if (flag == null) {
+      return '<span class="trend trend-flat">n/a</span>';
+    }
+    return flag
+      ? '<span class="trend trend-up">UP</span>'
+      : '<span class="trend trend-down">DN</span>';
+  }
+
+  function renderTrendLabel(row) {
+    const labels = [];
+    labels.push(`20D ${row.marketMetrics.above20Sma ? "UP" : row.marketMetrics.above20Sma == null ? "n/a" : "DN"}`);
+    labels.push(`50D ${row.marketMetrics.above50Sma ? "UP" : row.marketMetrics.above50Sma == null ? "n/a" : "DN"}`);
+    labels.push(`200D ${row.marketMetrics.above200Sma ? "UP" : row.marketMetrics.above200Sma == null ? "n/a" : "DN"}`);
+    return labels.join(" / ");
+  }
+
+  function renderTarget(row) {
+    if (row.targetPrice == null) {
+      return row.upsidePct == null ? "n/a" : formatPercent(row.upsidePct);
+    }
+    const targetText = formatPrice(row.targetPrice, row.marketMetrics.currency || "USD");
+    if (row.upsidePct == null) {
+      return targetText;
+    }
+    return `${targetText} / ${formatPercent(row.upsidePct)}`;
+  }
+
+  function getVerdictClass(verdict) {
+    switch (verdict) {
+      case "BUY":
+        return "verdict-buy";
+      case "AVOID":
+        return "verdict-avoid";
+      case "HOLD":
+      default:
+        return "verdict-hold";
+    }
+  }
+
+  function pickInitialTicker(rows) {
+    const ranked = rows
+      .slice()
+      .sort((left, right) => (right.score || -Infinity) - (left.score || -Infinity));
+    return ranked[0] ? ranked[0].ticker : null;
+  }
+
+  function getYahooUrl(symbol) {
+    return `https://finance.yahoo.com/quote/${encodeURIComponent(symbol)}`;
+  }
+
+  function getTradingViewUrl(symbol) {
+    return `https://www.tradingview.com/chart/?symbol=${encodeURIComponent(symbol)}`;
+  }
+
+  function formatDateTime(date) {
+    return new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: "Asia/Hong_Kong"
+    }).format(date);
+  }
+
+  function formatPrice(value, currency) {
+    if (value == null) {
+      return "n/a";
+    }
+
+    const decimals = currency === "JPY" ? 0 : 2;
+
+    try {
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: currency || "USD",
+        maximumFractionDigits: decimals,
+        minimumFractionDigits: decimals
+      }).format(value);
+    } catch (error) {
+      return `${currency || ""} ${value.toFixed(decimals)}`.trim();
+    }
+  }
+
+  function formatMarketCap(value, currency) {
+    if (value == null) {
+      return "n/a";
+    }
+
+    const compact = new Intl.NumberFormat("en-US", {
+      notation: "compact",
+      maximumFractionDigits: 1
+    }).format(value);
+
+    return `${compact} ${currency || ""}`.trim();
+  }
+
+  function formatRatio(value) {
+    return value == null ? "n/a" : value.toFixed(2);
+  }
+
+  function formatPercent(value, digits) {
+    if (value == null || Number.isNaN(value)) {
+      return "n/a";
+    }
+
+    const precision = typeof digits === "number" ? digits : Math.abs(value) >= 100 ? 0 : 1;
+    const prefix = value > 0 ? "+" : "";
+    return `${prefix}${value.toFixed(precision)}%`;
+  }
+
+  function percentage(value, total) {
+    if (!total) {
+      return null;
+    }
+    return (value / total) * 100;
+  }
+
+  function formatNumber(value) {
+    return new Intl.NumberFormat("en-US").format(value);
+  }
+
+  function average(values) {
+    const valid = values.filter((value) => typeof value === "number" && !Number.isNaN(value));
+    if (!valid.length) {
+      return null;
+    }
+    return valid.reduce((sum, value) => sum + value, 0) / valid.length;
+  }
+
+  function slugify(value) {
+    return String(value)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+})();

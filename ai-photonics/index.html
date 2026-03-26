@@ -22,18 +22,20 @@ iframe{flex:1;border:none;width:100%}
 <div class="top-bar">
   <h1>AI Photonics Supply Chain</h1>
   <div class="tabs">
-    <div class="tab active" onclick="switchTab('network',this)"><span class="icon">&#9678;</span>Network Map</div>
+    <div class="tab active" onclick="switchTab('dashboard',this)"><span class="icon">&#9638;</span>Optics Dashboard</div>
+    <div class="tab" onclick="switchTab('network',this)"><span class="icon">&#9678;</span>Network Map</div>
     <div class="tab" onclick="switchTab('layers',this)"><span class="icon">&#9776;</span>Layer View</div>
     <div class="tab" onclick="switchTab('economics',this)"><span class="icon">&#9701;</span>Economics Scatter</div>
   </div>
-  <div class="info">78 companies &middot; 8 BUY &middot; 11 monopoly chokepoints &middot; 44 chokepoints 16+/25</div>
+  <div class="info">78 companies &middot; grouped dashboard &middot; supply chain maps &middot; economics view</div>
 </div>
-<iframe id="view" src="chokepoint-map.html"></iframe>
+<iframe id="view" src="optics-dashboard.html"></iframe>
 <script>
 function switchTab(view, el){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
   const pages = {
+    dashboard: 'optics-dashboard.html',
     network: 'chokepoint-map.html',
     layers: 'supply-chain-map.html',
     economics: 'chokepoint-economics-map.html'

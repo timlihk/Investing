@@ -12,6 +12,7 @@ The scorecard now includes `chips_status` and `chips_detail` columns from the la
 The scorecard also now carries `chokepoint_score` and `chokepoint_tier`, with raw 5-question inputs stored in `chokepoint_scores.tsv` and the fixed rubric documented in [chokepoint-method.md](chokepoint-method.md).
 
 Interactive map:
+- [Optics dashboard](https://timlihk.github.io/Investing/ai-photonics/optics-dashboard.html) - full repo universe grouped by segment, with Yahoo snapshot data and TradingView detail charts
 - [GitHub Pages map](https://timlihk.github.io/Investing/ai-photonics/supply-chain-map.html) - curated subset, synced to the main scorecard
 - [Local HTML file](supply-chain-map.html)
 - [Chokepoint vs economics scatter](chokepoint-economics-map.html)
@@ -61,6 +62,8 @@ Individual company reports with full analysis in [reports/](reports/).
 - [chokepoint_scores.tsv](chokepoint_scores.tsv) - Canonical 5-question chokepoint dataset
 - [chokepoint-method.md](chokepoint-method.md) - Fixed chokepoint scoring method
 - [company-metrics.js](company-metrics.js) - Full-universe metrics dataset for the scatter chart
+- [optics-dashboard.html](optics-dashboard.html) - Segment-grouped dashboard for all covered names
+- [optics-dashboard-data.js](optics-dashboard-data.js) - Generated Yahoo Finance snapshot consumed by the dashboard
 - [universe.txt](universe.txt) - Stock universe (expanding via discovery)
 - [supply-chain-map.html](supply-chain-map.html) - Interactive chokepoint map for GitHub Pages
 - [chokepoint-economics-map.html](chokepoint-economics-map.html) - Scatter view of chokepoint vs margins / growth
@@ -68,3 +71,15 @@ Individual company reports with full analysis in [reports/](reports/).
 - [ic-review.md](ic-review.md) - Independent committee review of every covered company
 - [criteria.md](criteria.md) - Scoring rubric
 - [program.md](program.md) - Research agent operating instructions
+
+## Dashboard Refresh
+The segment dashboard is a static page, so GitHub Pages can host it directly. The market snapshot is generated with Yahoo Finance on the server side and written into `optics-dashboard-data.js`.
+
+Refresh locally:
+```bash
+npm install
+npm run refresh:dashboard
+```
+
+Automated refresh:
+- `.github/workflows/refresh-optics-dashboard.yml` refreshes the dashboard on a schedule, on manual dispatch, and when the research inputs change on `main`.

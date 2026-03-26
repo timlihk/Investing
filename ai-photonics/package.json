@@ -1,0 +1,17 @@
+{
+  "name": "ai-photonics-dashboard",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static optics dashboard for the AI photonics universe",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "refresh:dashboard": "node scripts/generate-optics-dashboard-data.mjs"
+  },
+  "dependencies": {
+    "papaparse": "^5.5.3",
+    "yahoo-finance2": "^3.13.2"
+  }
+}
