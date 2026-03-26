@@ -1,6 +1,6 @@
 # SMTC - Semtech Corporation
-## Date: 2026-03-24
-## Score: 70/100
+## Date: 2026-03-26 (UPDATED)
+## Score: 74/100 (upgraded from 70 — HIFU InP laser acquisition + DC +58% + CopperEdge > LPO revenue)
 
 ### Thesis (2-3 sentences)
 Semtech is an under-discovered optical analog IC company with a transformative position in Linear Pluggable Optics (LPO) -- a disruptive architecture that REMOVES the power-hungry DSP chip from optical modules, saving significant power and cost. With FiberEdge TIAs inside transceiver modules across multiple hyperscaler design wins, CopperEdge ACC technology offering 90% power savings vs optical alternatives, and data center revenue growing 50%+, Semtech is pivoting from an IoT company into an AI interconnect powerhouse. Record $1.05B FY26 revenue, deleveraged from 8.8x to 1.6x, trending toward 60% gross margins.
@@ -53,14 +53,6 @@ Semtech is an under-discovered optical analog IC company with a transformative p
 3. **Scale disadvantage**: $1.05B revenue vs Broadcom ($75B), Marvell ($7B). Smaller R&D budgets.
 4. **Stock volatility**: $24 to $96 in 52 weeks. High beta.
 5. **IoT segment cyclicality**: LoRa business can drag overall results during IoT downturns.
-
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
 
 ### Verdict: HOLD
 Semtech is the most under-discovered optical IC play in this research -- the LPO thesis (removing the DSP from optical modules) is genuinely disruptive if it gains adoption, and FiberEdge TIAs are already inside hyperscaler-validated modules. The CopperEdge ACC competes directly with Credo's AEC monopoly. At $7-8B market cap with record revenue and 50%+ DC growth projected, the valuation is reasonable if the LPO ramp materializes. Would upgrade to BUY on: (1) LPO becoming the majority architecture at a major hyperscaler, or (2) data center revenue exceeding $200M/quarter.
