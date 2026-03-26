@@ -376,56 +376,16 @@
       </div>
     `;
 
-    renderTradingView(row);
+    renderLocalChart(row);
   }
 
-  function renderTradingView(row) {
-    if (shouldUseFallbackChart(row)) {
-      renderFallbackChart(row);
-      return;
-    }
-
-    const params = new URLSearchParams({
-      symbol: row.tradingViewSymbol,
-      interval: "D",
-      hidesidetoolbar: "1",
-      symboledit: "1",
-      saveimage: "0",
-      toolbarbg: "f5efe3",
-      theme: "light",
-      style: "1",
-      timezone: "Asia/Hong_Kong",
-      withdateranges: "1",
-      hide_top_toolbar: "0",
-      hide_legend: "0",
-      locale: "en",
-      utm_source: "github_pages",
-      utm_medium: "widget",
-      utm_campaign: "optics_dashboard"
-    });
-
-    elements.chartHost.innerHTML = `
-      <iframe
-        title="TradingView chart for ${escapeHtml(row.ticker)}"
-        src="https://s.tradingview.com/widgetembed/?${params.toString()}"
-        style="width:100%;height:100%;border:0"
-        loading="lazy"
-        allowtransparency="true">
-      </iframe>
-    `;
-  }
-
-  function shouldUseFallbackChart(row) {
-    return row.tradingViewSymbol.startsWith("HKEX:");
-  }
-
-  function renderFallbackChart(row) {
+  function renderLocalChart(row) {
     const values = row.marketMetrics.sparkline || [];
     if (!values.length) {
       elements.chartHost.innerHTML = `
         <div class="fallback-chart">
-          <div class="empty">No embeddable TradingView chart is available for this market, and no Yahoo snapshot is available for this ticker.</div>
-          <div class="fallback-caption">Use the TradingView or Yahoo buttons above for the full external page.</div>
+          <div class="empty">No Yahoo snapshot is available for this ticker yet.</div>
+          <div class="fallback-caption">Use the Yahoo or TradingView buttons above for the full external page.</div>
         </div>
       `;
       return;
@@ -467,7 +427,7 @@
           <polyline fill="none" stroke="${stroke}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="${linePoints}"></polyline>
         </svg>
         <div class="fallback-caption">
-          TradingView does not expose an embeddable widget for this market, so this panel is showing the Yahoo Finance yearly snapshot instead.
+          Local 1-year chart built from the embedded Yahoo Finance snapshot. Use the buttons above to open the full Yahoo or TradingView page.
         </div>
       </div>
     `;
