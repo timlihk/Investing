@@ -53,14 +53,6 @@ VIAV's moat is subtle but durable:
 ### Valuation
 At $6B market cap on $1.24B TTM revenue (~5x sales) with 19.3% operating margins, VIAV is the most attractively valued name in the AI photonics universe. Annualized operating income of ~$240M puts the P/operating income at ~25x -- reasonable for a company growing 36% with expanding margins. If revenue reaches $1.5B in FY26 with 20% operating margins, that's $300M operating income and ~20x P/OI. The restructuring plan should improve margins further. Rosenblatt's $42 target implies 24% upside from current levels.
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
 ### Verdict: HOLD
 VIAV is the under-discovered, well-valued picks-and-shovels play in AI photonics. The test and measurement moat is real -- every transceiver needs testing -- and the financial profile (positive FCF, $772M cash, expanding margins) is the cleanest in the group after Fabrinet. The stock has run but remains reasonable on forward estimates. Close to a BUY -- would upgrade on any pullback to $28-30 or confirmation that FY26 revenue will exceed $1.5B. Among the best risk/reward profiles in the photonics space.
 

@@ -84,14 +84,6 @@ Arista is the most important **downstream demand signal** for all photonics comp
 ### Valuation
 At $178B market cap, Arista trades at ~40x FY26E earnings ($4.5B) and ~32x FY27E earnings ($5.5B). For a company with 64% gross margins, 43% operating margins, $4.25B FCF, and 25%+ revenue growth, this is a reasonable premium. The net cash ($10.7B, ~6% of market cap) provides downside support. Analyst consensus target of $173.56 implies 32% upside from $131.22. If AI revenue reaches $5B+ by FY27, Arista's total revenue could approach $14B with $6B+ net income, justifying a $200B+ market cap.
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
 ### Verdict: BUY
 Arista is not "under-discovered" -- it's a well-known $178B franchise. But its role as the demand signal for the entire photonics supply chain makes it essential context for this research. The financial quality (64% GM, 43% OPM, $10.7B net cash) is the best in the sector, and the AI revenue doubling provides strong visibility into upstream photonics demand. At $131 with analyst targets at $173, the risk/reward is favorable even at this scale.
 

@@ -51,14 +51,6 @@ Teradyne is the #2 ATE (automatic test equipment) company that strategically acq
 3. **Quantifi early stage**: PIC testing acquisition is new -- revenue contribution will take time.
 4. **Robotics dilution**: Universal Robots segment diversifies away from pure semiconductor focus.
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
 ### Verdict: HOLD (near BUY)
 Teradyne is the Advantest counterpart in the ATE duopoly, with the strategic Quantifi Photonics acquisition directly addressing the photonic IC testing bottleneck. AI driving 70% of revenue with compute +90% growth creates strong momentum. The PIC testing capability is a genuine differentiator as SiPh volumes scale. Would upgrade to BUY on confirmation that Quantifi revenue exceeds $50M annually.
 

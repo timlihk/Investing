@@ -14,17 +14,6 @@ Intel is a silicon photonics pioneer with 25+ years of research, 8M+ PICs shippe
 | Next-Gen | 200G/lane PICs for 800G/1.6T |
 | Overall Business | Struggling; restructuring |
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `FINAL`.
-
-In the latest official ai-photonics sweep, this company screened as CHIPS-linked: Up to $7.865B final award for Arizona, New Mexico, Ohio, and Oregon. This is real awarded CHIPS support and should be treated as a strategic tailwind for capacity, process control, or packaging capability. It is a positive update, but not a standalone reason to own the stock.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
-Primary sources:
-- https://www.commerce.gov/news/press-releases/2024/11/biden-harris-administration-announces-chips-incentives-award-intel
-
 ### Verdict: HOLD
 Intel's SiPh technology is genuinely best-in-class (OCI chiplet, 5pJ/bit efficiency, massive production experience), but the company's overall challenges make it a poor vehicle for photonics investment. If Intel spins off or licenses the SiPh business, it could unlock significant value. For now, Tower Semiconductor (TSEM) or Broadcom (AVGO) offer cleaner SiPh exposure.
 

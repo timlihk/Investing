@@ -27,14 +27,6 @@ Prysmian is the world's largest cable company (€15B revenue) with a cutting-ed
 - **Differentiator**: Hollow-core fiber technology (via Relativity Networks) -- potential next-gen replacement for conventional fiber in AI data centers
 - **Downstream**: Hyperscalers, telcos, data center builders
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
 ### Verdict: HOLD
 Prysmian is the European fiber cable heavyweight with a unique HCF angle, but it's primarily a power cable company where fiber/AI is a secondary driver. The Relativity Networks HCF partnership is genuinely interesting long-term (50% faster fiber could become standard for AI clusters), but volume production is years away. For near-term AI fiber exposure, Corning (GLW) is more direct. For long-term HCF optionality, Prysmian is worth monitoring.
 

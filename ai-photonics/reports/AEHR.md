@@ -22,14 +22,6 @@ Aehr Test Systems is the niche leader in wafer-level burn-in (WLBI) for silicon 
 - Niche leader in WLBI for photonics. No direct competitor at wafer-level burn-in scale.
 - But very small ($10M quarterly revenue) and margin-challenged. Equipment orders are lumpy.
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
 ### Verdict: AVOID
 AEHR has the right technology (SiPh wafer burn-in is a real bottleneck) but the wrong financial profile ($880M cap on $40M annualized revenue, unprofitable, declining margins). The "hundreds of millions" AI vision is years away. Revisit when annual revenue exceeds $100M and margins recover above 40%.
 

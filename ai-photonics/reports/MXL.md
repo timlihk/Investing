@@ -16,14 +16,6 @@ MaxLinear is a small-cap ($1.6B) optical DSP and retimer company competing with 
 | Analyst | Buy (5), target $21.55 |
 | Q1 2026 Guide | $130-140M |
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
 ### Verdict: HOLD
 MaxLinear has the right products (1.6T DSP, 224G retimer) but at $1.6B market cap is the smallest competitor vs Broadcom ($1.5T), Marvell ($76B), and Credo ($20B). Interesting if Rushmore wins hyperscaler design-ins; risky if it doesn't. Watch for OFC 2026 customer validation.
 

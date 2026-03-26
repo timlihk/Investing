@@ -29,11 +29,3 @@ NVIDIA's entry into CPO-based switches with own silicon photonics means:
 
 ### Note
 NVIDIA is not rated as a standalone photonics play (it's a $3T+ GPU company). But its $4B optical investment and CPO switch launches are the most important demand signal in the entire photonics ecosystem.
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-This report is not currently part of `ai-photonics/results.tsv`. I did not add a separate positive CHIPS tag for it in the latest project sweep, so this report should still be read primarily as a contextual or commercial AI-photonics note rather than a CHIPS-linked scorecard name.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-

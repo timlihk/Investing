@@ -16,18 +16,6 @@ Nokia is Ciena's primary competitor in optical networking with ~€3.4B combined
 | Exchange | NYSE (NOK), Helsinki |
 | Competitor | Ciena (CIEN) ~20% share |
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `INDIRECT_FINAL`.
-
-In the latest official ai-photonics sweep, this company screened as CHIPS-linked: Infinera, acquired by Nokia on 2025-02-28, received up to $93M final CHIPS award. The benefit here flows through an acquired operating asset rather than the legacy parent on a stand-alone basis, so it should be treated as inherited strategic support rather than simple direct funding for the whole company.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
-Primary sources:
-- https://www.commerce.gov/news/press-releases/2025/01/us-department-commerce-announces-chips-incentives-awards-corning
-- https://www.nokia.com/system/files/2026-01/nokia_slides_2025_q4.pdf
-
 ### Verdict: HOLD
 Nokia is the Ciena competitor with similar optical market share but diluted by telecom infrastructure. The Infinera integration adds InP technology alongside Nokia SiPh. New coherent solutions at OFC 2026 are competitive. For pure optical networking exposure, Ciena (CIEN) is more targeted. Nokia offers diversified telecom infrastructure with optical upside.
 

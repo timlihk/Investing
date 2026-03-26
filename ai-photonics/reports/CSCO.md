@@ -16,14 +16,6 @@ Cisco is the sleeping giant of AI photonics -- with $5B+ in AI orders (FY26), ~$
 | Q2 Hyperscaler AI Orders | $2.1B (+62% QoQ) |
 | 1.6T Pluggables | SiPh-based OSFP launching |
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
 ### Verdict: HOLD
 Cisco's AI optics business ($1.2B+) is meaningful but small relative to the $250B+ enterprise. Acacia's coherent pluggable dominance and Silicon One G300 are genuine competitive advantages. For pure AI optical exposure, Arista (ANET) or Ciena (CIEN) are more targeted. Cisco is the conservative, diversified play.
 

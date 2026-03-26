@@ -31,14 +31,6 @@
 ```
 Every InP wafer starts with purified indium and phosphorus. Every GaAs VCSEL starts with purified gallium and arsenic. 5N Plus refines these metals to semiconductor-grade purity.
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
 ### Verdict: HOLD
 5N Plus is the most upstream name in the entire AI photonics supply chain -- supplying the raw metals that become compound semiconductor wafers. Revenue +35% and +322% stock return show the market is beginning to recognize this positioning. However, the company is primarily solar-focused (CdTe) with semiconductor as a secondary driver, and raw materials are less differentiated than processed components. Interesting for deep supply chain exposure but not a primary photonics play.
 

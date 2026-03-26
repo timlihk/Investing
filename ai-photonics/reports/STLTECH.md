@@ -21,14 +21,6 @@ Sterlite Technologies (STL) is India's leading optical fiber and cable company w
 - Optical interconnect segment growing 53% at 30% margins -- higher-value data center products.
 - Competes with Corning, Fujikura, Hengtong globally. Small in comparison.
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
 ### Verdict: HOLD
 STL is the Indian entry point for AI data center fiber infrastructure investment. The 53% optical interconnect growth and 30% margins show the pivot to higher-value data center products is working. At ~$1B market cap, it's small but growing. For India-focused portfolios, this is the optical fiber play. For global exposure, Corning (GLW) offers more scale and hyperscaler relationships.
 

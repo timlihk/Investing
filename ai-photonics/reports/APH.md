@@ -37,14 +37,6 @@ Amphenol is the dominant interconnect company riding the AI data center wave -- 
 - **Complements**: Corning (fiber), Arista (switches), Fabrinet (modules)
 - **Competes with**: TE Connectivity, Molex (Koch, private), Samtec
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
 ### Verdict: BUY
 Amphenol is a franchise-quality business with dominant AI data center interconnect market share, record margins, and the CommScope CCS acquisition adding $4.1B of fiber optic revenue. At 27.5% operating margins on $23B revenue growing 52%, this is one of the highest-quality industrial businesses exposed to AI infrastructure. The physical layer of every AI data center runs through Amphenol connectors.
 

@@ -57,14 +57,6 @@ Fabrinet's moat is process-based rather than IP-based, but it's deep:
 ### Valuation
 At 33x forward P/E and 4.6x TTM sales, Fabrinet is the most reasonably valued name in the AI photonics group. For a CM, this is still a premium multiple -- but justified by the NVIDIA sole-source position and 50% capacity expansion. If FN reaches $5B revenue with 10% net margins in FY27, that implies ~$500M net income and ~$14/share EPS, putting the forward P/E at ~36x at current prices. At the average analyst target of $517, that's ~37x forward -- full but not unreasonable for a company growing 20%+ with near-zero debt. Current pullback from $633 to $506 creates a more attractive entry.
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
 ### Verdict: HOLD
 Fabrinet offers the best risk-adjusted exposure to the AI photonics theme. The fortress balance sheet, NVIDIA sole-source relationship, consistent profitability, and "agnostic winner" positioning make it the safest way to play the optical interconnect buildout. The recent 20% pullback from ATH improves the entry point. Would upgrade to BUY on a further dip to the $420-450 range (30x forward P/E) or evidence of margin expansion above 13% gross.
 

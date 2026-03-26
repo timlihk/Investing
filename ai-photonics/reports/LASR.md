@@ -43,14 +43,6 @@ nLIGHT is a semiconductor and fiber laser company primarily serving aerospace/de
 ### Valuation
 At $3.5B market cap on $261M revenue (13.4x sales) and $23.5M EBITDA (149x), nLIGHT is priced as if the AI data center pivot is certain to succeed. If the company remains primarily a defense laser company, fair value is likely $1-1.5B (4-6x sales). The AI optionality is real but unpriced-for in terms of probability. This is a speculation, not an investment.
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
 ### Verdict: AVOID
 nLIGHT has interesting technology and a strong defense franchise, but the AI photonics angle is speculative sentiment, not commercial reality. The stock has been swept up in the broader photonics mania without demonstrating data center design wins, hyperscaler relationships, or a credible product roadmap for optical communications. Wait for concrete evidence of data center revenue before revisiting. For AI photonics exposure, COHR/LITE/FN offer proven demand.
 

@@ -39,14 +39,6 @@ IQE is a UK-listed compound semiconductor epitaxial wafer supplier making InP, G
 4. **Strategic review uncertainty**: Could result in acquisition (upside) or failed process (downside).
 5. **Cyclical business**: Epiwafer demand is tied to smartphone, telecom, and data center cycles.
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
 ### Verdict: HOLD
 IQE is interesting primarily as an acquisition target -- a compound semiconductor epiwafer platform that could be strategically valuable to a larger photonics player seeking vertical integration into InP/GaAs substrates. On standalone merits, the barely-breakeven financials and small scale are uninvestable for most portfolios. Monitor for strategic review outcome. If acquired at a premium, the entry point is now; if review fails, the stock likely sells off.
 

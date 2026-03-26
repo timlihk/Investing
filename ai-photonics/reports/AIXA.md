@@ -33,14 +33,6 @@ Aixtron MOCVD → grows InP/GaAs/GaN epitaxial layers → on substrates (AXT/JX)
 - Sells to: Lumentum, Coherent, WIN Semi, IQE, Sivers, SMART Photonics, and all compound semi chip makers
 - Strongest growth: optoelectronics for AI optical communications
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
 ### Verdict: HOLD
 Aixtron is the European MOCVD leader with the highest market share in the industry, directly enabling every compound semiconductor laser chip for AI optical transceivers. The "most underappreciated AI beneficiary" label is earned -- without Aixtron tools, no InP lasers get made. However, the flat 2026 guidance (SiC overcapacity offset) limits near-term re-rating. Would upgrade to BUY if optoelectronics segment growth accelerates to 30%+ and SiC headwinds fade.
 

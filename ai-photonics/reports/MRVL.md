@@ -81,14 +81,6 @@ Marvell is making the boldest bet on photonic interconnects of any large semicon
 ### Valuation
 At $76B market cap on ~$7B FY26 revenue (10.8x sales), Marvell trades at a reasonable premium for a 60% GM semiconductor company growing 40%+. On FY27 estimates of ~$9-10B revenue, that's ~7.6-8.4x forward sales -- cheaper than CRDO (21x) or LITE (25x). If Celestial AI reaches $1B revenue by FY29 at 60%+ margins, it adds ~$10-15B of value alone. Analyst targets of $116-120 imply 33% upside, which is consistent with 25x FY27 earnings of ~$3.5B.
 
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
-
 ### Verdict: BUY
 Marvell is the most strategically positioned semiconductor company for the convergence of AI compute and photonic interconnects. The Celestial AI acquisition is a bold bet that no other large semi company has made -- bringing photonic fabric technology in-house for die-to-die optical links. Combined with the leading 1.6T optical DSP portfolio and dominant custom AI silicon programs, Marvell is building the complete data center silicon stack. The stock at $88 with analyst targets at $116-120 offers attractive risk/reward. The main risk is Celestial AI integration timeline and Broadcom competition in optical DSP.
 
