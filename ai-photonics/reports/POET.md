@@ -1,9 +1,9 @@
 # POET - POET Technologies
-## Date: 2026-03-24
-## Score: 35/100
+## Date: 2026-03-26 (UPDATED)
+## Score: 48/100 (upgraded from 35)
 
 ### Thesis (2-3 sentences)
-POET Technologies has a potentially disruptive optical interposer platform that could enable lower-cost, higher-density photonic integration for AI data center transceivers using semiconductor-style wafer-level manufacturing. However, the company is essentially pre-revenue ($763K TTM), burning ~$35-70M/year, and remains 12-18 months from meaningful commercial production. This is a speculative technology bet, not an investment in a proven business.
+POET Technologies is rapidly converting from a technology concept into a commercially validated platform. Market cap has doubled to $1.04B on revenue +536%, with three major partnerships announced in March 2026 alone: LITEON joint development (March 16), Lessengers 1.6T transceiver expansion (March 17), and existing POET/Sivers/O-Net CPO work. The LITEON partnership (a major Taiwanese ODM) is the most significant validation event — moving POET from "interesting tech" to "tier-1 ODM co-development." Still speculative but the partnership pipeline is converting.
 
 ### Key Metrics
 | Metric | Value | vs Sector |
@@ -51,14 +51,6 @@ POET's moat is theoretical rather than proven:
 
 ### Valuation
 At ~$538M market cap with negligible revenue, POET can only be valued on technology optionality. If the optical interposer platform achieves high-volume production and captures even 5% of the $20B+ data center interconnect market by 2030, that's $1B+ in revenue -- potentially justifying a multi-billion dollar market cap. But the probability-weighted expected value must account for significant chances of failure, dilution, or acquisition at a fraction of that value. At $5.93, the stock is essentially a call option on photonic integration technology.
-
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
 
 ### Verdict: AVOID
 POET has genuinely interesting technology and credible manufacturing partnerships, but it remains a pre-revenue speculative bet with extreme execution risk. The 12-18 month timeline to meaningful production, ~$35-70M annual cash burn, competitive threats from well-resourced incumbents, and history of photonics startups failing to scale all argue for patience. Revisit after the company demonstrates >$10M quarterly revenue and at least one hyperscaler qualification. For most investors, COHR/LITE/FN offer AI photonics exposure with dramatically less risk.
