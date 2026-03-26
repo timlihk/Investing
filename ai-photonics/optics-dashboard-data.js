@@ -1,5 +1,5 @@
 window.OPTICS_DASHBOARD_DATA = {
-  "generatedAt": "2026-03-26T07:31:19.233Z",
+  "generatedAt": "2026-03-26T11:36:40.615Z",
   "totalCompanies": 78,
   "buyCount": 8,
   "segmentOrder": [
@@ -20,21 +20,21 @@ window.OPTICS_DASHBOARD_DATA = {
       "count": 5,
       "buys": 0,
       "avgScore": 58.4,
-      "avgOneYear": 971.2
+      "avgOneYear": 967.8
     },
     {
       "name": "Foundry & Platforms",
       "count": 7,
       "buys": 1,
       "avgScore": 61.4,
-      "avgOneYear": 120.7
+      "avgOneYear": 120.5
     },
     {
       "name": "Components & Connectivity",
       "count": 14,
       "buys": 4,
       "avgScore": 63.4,
-      "avgOneYear": 255.2
+      "avgOneYear": 251.5
     },
     {
       "name": "Modules & Transceivers",
@@ -55,28 +55,28 @@ window.OPTICS_DASHBOARD_DATA = {
       "count": 7,
       "buys": 1,
       "avgScore": 64.4,
-      "avgOneYear": 294.1
+      "avgOneYear": 290.2
     },
     {
       "name": "Test & Infrastructure",
       "count": 10,
       "buys": 0,
       "avgScore": 64.2,
-      "avgOneYear": 210
+      "avgOneYear": 209.8
     },
     {
       "name": "Assembly & Packaging",
       "count": 13,
       "buys": 0,
       "avgScore": 66,
-      "avgOneYear": 130.8
+      "avgOneYear": 130.9
     },
     {
       "name": "Equipment",
       "count": 7,
       "buys": 0,
       "avgScore": 63.7,
-      "avgOneYear": 124.1
+      "avgOneYear": 122.2
     },
     {
       "name": "Raw Materials",
@@ -121,19 +121,19 @@ window.OPTICS_DASHBOARD_DATA = {
       "marketMetrics": {
         "exchangeName": "Amsterdam",
         "currency": "EUR",
-        "currentPrice": 185.5,
-        "marketCap": 14608821248,
-        "priceToSales": 24.7,
-        "trailingPE": 112.42,
-        "oneMonthReturn": -3.54,
-        "ytdReturn": 24.41,
-        "oneYearReturn": 76.84,
-        "distanceFromHigh": -7.48,
+        "currentPrice": 186.9,
+        "marketCap": 14719075328,
+        "priceToSales": 24.89,
+        "trailingPE": 113.27,
+        "oneMonthReturn": -5.41,
+        "ytdReturn": 25.35,
+        "oneYearReturn": 78.17,
+        "distanceFromHigh": -6.78,
         "week52High": 200.5,
         "week52Low": 79.62,
-        "sma20": 181.76,
-        "sma50": 177.03,
-        "sma200": 142.02,
+        "sma20": 181.83,
+        "sma50": 177.06,
+        "sma200": 142.03,
         "above20Sma": true,
         "above50Sma": true,
         "above200Sma": true,
@@ -209,12 +209,12 @@ window.OPTICS_DASHBOARD_DATA = {
           174.95,
           188.45,
           178.5,
-          185.5
+          186.9
         ],
         "chartPoints": 256
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 27
+      "relativeStrength": 29
     },
     {
       "ticker": "0522.HK",
@@ -226,7 +226,7 @@ window.OPTICS_DASHBOARD_DATA = {
       "catalystShort": "SiPh die bonding + TCB record + AI packaging",
       "share": "SiPh die bonding",
       "reportPath": "reports/0522HK.md",
-      "tradingViewSymbol": "HKEX:0522",
+      "tradingViewSymbol": "HKEX:522",
       "yahooSymbol": "0522.HK",
       "verdict": "HOLD",
       "score": 66,
@@ -243,14 +243,14 @@ window.OPTICS_DASHBOARD_DATA = {
       "marketMetrics": {
         "exchangeName": "HKSE",
         "currency": "HKD",
-        "currentPrice": 107.3,
-        "marketCap": 44825767936,
+        "currentPrice": 107.2,
+        "marketCap": 44783992832,
         "priceToSales": 3.26,
-        "trailingPE": 41.27,
-        "oneMonthReturn": -2.9,
-        "ytdReturn": 32.14,
-        "oneYearReturn": 85,
-        "distanceFromHigh": -8.29,
+        "trailingPE": 41.23,
+        "oneMonthReturn": -2.99,
+        "ytdReturn": 32.02,
+        "oneYearReturn": 84.83,
+        "distanceFromHigh": -8.38,
         "week52High": 117,
         "week52Low": 42.85,
         "sma20": 107.97,
@@ -331,7 +331,7 @@ window.OPTICS_DASHBOARD_DATA = {
           109.3,
           103.8,
           102.6,
-          107.3
+          107.2
         ],
         "chartPoints": 247
       },
@@ -702,7 +702,7 @@ window.OPTICS_DASHBOARD_DATA = {
         "chartPoints": 243
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 87
+      "relativeStrength": 88
     },
     {
       "ticker": "3711.TW",
@@ -2044,7 +2044,7 @@ window.OPTICS_DASHBOARD_DATA = {
         "chartPoints": 252
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 97
+      "relativeStrength": 99
     },
     {
       "ticker": "6503.T",
@@ -2532,7 +2532,7 @@ window.OPTICS_DASHBOARD_DATA = {
         "chartPoints": 245
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 66
+      "relativeStrength": 68
     },
     {
       "ticker": "MRVL",
@@ -3049,19 +3049,19 @@ window.OPTICS_DASHBOARD_DATA = {
       "marketMetrics": {
         "exchangeName": "Stockholm",
         "currency": "SEK",
-        "currentPrice": 14.47,
-        "marketCap": 4290857984,
-        "priceToSales": 11.89,
+        "currentPrice": 12.42,
+        "marketCap": 3682961664,
+        "priceToSales": 10.21,
         "trailingPE": null,
-        "oneMonthReturn": 349.38,
-        "ytdReturn": 238.08,
-        "oneYearReturn": 259.95,
-        "distanceFromHigh": -6.16,
+        "oneMonthReturn": 293.79,
+        "ytdReturn": 190.19,
+        "oneYearReturn": 208.96,
+        "distanceFromHigh": -19.46,
         "week52High": 15.42,
         "week52Low": 2.85,
-        "sma20": 6.69,
-        "sma50": 4.64,
-        "sma200": 4.05,
+        "sma20": 6.59,
+        "sma50": 4.6,
+        "sma200": 4.04,
         "above20Sma": true,
         "above50Sma": true,
         "above200Sma": true,
@@ -3137,12 +3137,12 @@ window.OPTICS_DASHBOARD_DATA = {
           4.12,
           6.91,
           8.44,
-          14.47
+          12.42
         ],
         "chartPoints": 250
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 88
+      "relativeStrength": 86
     },
     {
       "ticker": "IPGP",
@@ -3659,19 +3659,19 @@ window.OPTICS_DASHBOARD_DATA = {
       "marketMetrics": {
         "exchangeName": "XETRA",
         "currency": "EUR",
-        "currentPrice": 36.57,
-        "marketCap": 4124578816,
-        "priceToSales": 7.41,
-        "trailingPE": 48.12,
-        "oneMonthReturn": 51.37,
-        "ytdReturn": 86.68,
-        "oneYearReturn": 221.92,
-        "distanceFromHigh": -0.49,
-        "week52High": 36.75,
+        "currentPrice": 35.34,
+        "marketCap": 3985852160,
+        "priceToSales": 7.16,
+        "trailingPE": 46.5,
+        "oneMonthReturn": 45.73,
+        "ytdReturn": 80.4,
+        "oneYearReturn": 211.09,
+        "distanceFromHigh": -3.34,
+        "week52High": 36.56,
         "week52Low": 8.45,
-        "sma20": 32.04,
-        "sma50": 25.73,
-        "sma200": 17.94,
+        "sma20": 31.98,
+        "sma50": 25.7,
+        "sma200": 17.93,
         "above20Sma": true,
         "above50Sma": true,
         "above200Sma": true,
@@ -3747,12 +3747,12 @@ window.OPTICS_DASHBOARD_DATA = {
           33.04,
           33.95,
           33.09,
-          36.57
+          35.34
         ],
         "chartPoints": 254
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 68
+      "relativeStrength": 64
     },
     {
       "ticker": "VECO",
@@ -4147,18 +4147,18 @@ window.OPTICS_DASHBOARD_DATA = {
       "marketMetrics": {
         "exchangeName": "XETRA",
         "currency": "EUR",
-        "currentPrice": 29.26,
-        "marketCap": 1674787328,
-        "priceToSales": 1.6,
-        "trailingPE": 24.59,
-        "oneMonthReturn": 4.43,
-        "ytdReturn": 44.14,
-        "oneYearReturn": 32.28,
-        "distanceFromHigh": -1.94,
+        "currentPrice": 28.66,
+        "marketCap": 1640444416,
+        "priceToSales": 1.57,
+        "trailingPE": 24.08,
+        "oneMonthReturn": 1.56,
+        "ytdReturn": 41.18,
+        "oneYearReturn": 29.57,
+        "distanceFromHigh": -3.95,
         "week52High": 29.84,
         "week52Low": 14.36,
-        "sma20": 26.96,
-        "sma50": 26.17,
+        "sma20": 26.93,
+        "sma50": 26.16,
         "sma200": 20.73,
         "above20Sma": true,
         "above50Sma": true,
@@ -4235,12 +4235,12 @@ window.OPTICS_DASHBOARD_DATA = {
           27.04,
           26.18,
           24.94,
-          29.26
+          28.66
         ],
         "chartPoints": 254
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 17
+      "relativeStrength": 16
     },
     {
       "ticker": "APH",
@@ -4484,7 +4484,7 @@ window.OPTICS_DASHBOARD_DATA = {
         "chartPoints": 245
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 82
+      "relativeStrength": 83
     },
     {
       "ticker": "6869.HK",
@@ -4513,19 +4513,19 @@ window.OPTICS_DASHBOARD_DATA = {
       "marketMetrics": {
         "exchangeName": "HKSE",
         "currency": "HKD",
-        "currentPrice": 184.5,
-        "marketCap": 250077954048,
-        "priceToSales": 18.15,
-        "trailingPE": 207.3,
-        "oneMonthReturn": 40.52,
-        "ytdReturn": 252.1,
-        "oneYearReturn": 1004.79,
-        "distanceFromHigh": -10.78,
+        "currentPrice": 180.6,
+        "marketCap": 244791754752,
+        "priceToSales": 17.77,
+        "trailingPE": 202.92,
+        "oneMonthReturn": 37.55,
+        "ytdReturn": 244.66,
+        "oneYearReturn": 981.44,
+        "distanceFromHigh": -12.67,
         "week52High": 206.8,
         "week52Low": 12.22,
-        "sma20": 157.19,
-        "sma50": 114.51,
-        "sma200": 56.26,
+        "sma20": 157,
+        "sma50": 114.43,
+        "sma200": 56.24,
         "above20Sma": true,
         "above50Sma": true,
         "above200Sma": true,
@@ -4601,12 +4601,12 @@ window.OPTICS_DASHBOARD_DATA = {
           158.2,
           140,
           145.9,
-          184.5
+          180.6
         ],
         "chartPoints": 247
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 99
+      "relativeStrength": 97
     },
     {
       "ticker": "GLW",
@@ -4879,19 +4879,19 @@ window.OPTICS_DASHBOARD_DATA = {
       "marketMetrics": {
         "exchangeName": "Milan",
         "currency": "EUR",
-        "currentPrice": 98.42,
-        "marketCap": 28228001792,
-        "priceToSales": 1.4,
-        "trailingPE": 22.27,
-        "oneMonthReturn": 0.57,
-        "ytdReturn": 9.5,
-        "oneYearReturn": 84.86,
-        "distanceFromHigh": -7.63,
+        "currentPrice": 96.28,
+        "marketCap": 27614224384,
+        "priceToSales": 1.37,
+        "trailingPE": 21.78,
+        "oneMonthReturn": -3.72,
+        "ytdReturn": 7.12,
+        "oneYearReturn": 80.84,
+        "distanceFromHigh": -9.64,
         "week52High": 106.55,
         "week52Low": 38.57,
-        "sma20": 98.74,
-        "sma50": 99.01,
-        "sma200": 83.04,
+        "sma20": 98.63,
+        "sma50": 98.97,
+        "sma200": 83.02,
         "above20Sma": false,
         "above50Sma": false,
         "above200Sma": true,
@@ -4967,12 +4967,12 @@ window.OPTICS_DASHBOARD_DATA = {
           101.2,
           98.08,
           93.9,
-          98.42
+          96.28
         ],
         "chartPoints": 253
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 29
+      "relativeStrength": 27
     },
     {
       "ticker": "STLTECH.NS",
@@ -5216,7 +5216,7 @@ window.OPTICS_DASHBOARD_DATA = {
         "chartPoints": 252
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 86
+      "relativeStrength": 87
     },
     {
       "ticker": "3105.TW",
@@ -5338,7 +5338,7 @@ window.OPTICS_DASHBOARD_DATA = {
         "chartPoints": 243
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 65
+      "relativeStrength": 66
     },
     {
       "ticker": "GFS",
@@ -5826,7 +5826,7 @@ window.OPTICS_DASHBOARD_DATA = {
         "chartPoints": 252
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 16
+      "relativeStrength": 17
     },
     {
       "ticker": "XFAB.PA",
@@ -5855,14 +5855,14 @@ window.OPTICS_DASHBOARD_DATA = {
       "marketMetrics": {
         "exchangeName": "Paris",
         "currency": "EUR",
-        "currentPrice": 4.91,
-        "marketCap": 641925248,
-        "priceToSales": 0.74,
-        "trailingPE": 24.57,
-        "oneMonthReturn": 5,
-        "ytdReturn": -6.93,
-        "oneYearReturn": 19.97,
-        "distanceFromHigh": -33.95,
+        "currentPrice": 4.87,
+        "marketCap": 636177408,
+        "priceToSales": 0.73,
+        "trailingPE": 24.35,
+        "oneMonthReturn": 3.66,
+        "ytdReturn": -7.77,
+        "oneYearReturn": 18.9,
+        "distanceFromHigh": -34.54,
         "week52High": 7.44,
         "week52Low": 3,
         "sma20": 4.7,
@@ -5943,7 +5943,7 @@ window.OPTICS_DASHBOARD_DATA = {
           4.76,
           4.77,
           4.55,
-          4.91
+          4.87
         ],
         "chartPoints": 256
       },
@@ -5977,19 +5977,19 @@ window.OPTICS_DASHBOARD_DATA = {
       "marketMetrics": {
         "exchangeName": "Paris",
         "currency": "EUR",
-        "currentPrice": 54.54,
-        "marketCap": 1946485888,
-        "priceToSales": 2.48,
-        "trailingPE": 194.79,
-        "oneMonthReturn": 35.23,
-        "ytdReturn": 119.3,
-        "oneYearReturn": -0.38,
-        "distanceFromHigh": -16.3,
+        "currentPrice": 56.26,
+        "marketCap": 2007871232,
+        "priceToSales": 2.56,
+        "trailingPE": 200.93,
+        "oneMonthReturn": 35.96,
+        "ytdReturn": 126.22,
+        "oneYearReturn": 2.76,
+        "distanceFromHigh": -13.66,
         "week52High": 65.16,
         "week52Low": 22.62,
-        "sma20": 50.5,
-        "sma50": 39.69,
-        "sma200": 37.17,
+        "sma20": 50.59,
+        "sma50": 39.72,
+        "sma200": 37.18,
         "above20Sma": true,
         "above50Sma": true,
         "above200Sma": true,
@@ -6065,12 +6065,12 @@ window.OPTICS_DASHBOARD_DATA = {
           51.3,
           61.38,
           51.76,
-          54.54
+          56.26
         ],
         "chartPoints": 256
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 23
+      "relativeStrength": 25
     },
     {
       "ticker": "8258.TW",
@@ -6465,19 +6465,19 @@ window.OPTICS_DASHBOARD_DATA = {
       "marketMetrics": {
         "exchangeName": "LSE",
         "currency": "GBp",
-        "currentPrice": 29.5,
-        "marketCap": 288796576,
-        "priceToSales": 2.97,
+        "currentPrice": 27.04,
+        "marketCap": 264681056,
+        "priceToSales": 2.72,
         "trailingPE": null,
-        "oneMonthReturn": 141.8,
-        "ytdReturn": 472.82,
-        "oneYearReturn": 139.45,
-        "distanceFromHigh": -4.07,
-        "week52High": 30.75,
+        "oneMonthReturn": 68.77,
+        "ytdReturn": 424.98,
+        "oneYearReturn": 119.45,
+        "distanceFromHigh": -13.34,
+        "week52High": 31.2,
         "week52Low": 4.66,
-        "sma20": 23.77,
-        "sma50": 15.29,
-        "sma200": 9.5,
+        "sma20": 23.64,
+        "sma50": 15.24,
+        "sma200": 9.48,
         "above20Sma": true,
         "above50Sma": true,
         "above200Sma": true,
@@ -6553,12 +6553,12 @@ window.OPTICS_DASHBOARD_DATA = {
           24.3,
           21.6,
           23.6,
-          29.5
+          27.04
         ],
         "chartPoints": 254
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 84
+      "relativeStrength": 82
     },
     {
       "ticker": "300308.SZ",
@@ -6692,7 +6692,7 @@ window.OPTICS_DASHBOARD_DATA = {
       "catalystShort": "Sivers/Enablence CPO ELS partnership",
       "share": "Passive optical",
       "reportPath": "reports/0877HK.md",
-      "tradingViewSymbol": "HKEX:0877",
+      "tradingViewSymbol": "HKEX:877",
       "yahooSymbol": "0877.HK",
       "verdict": "HOLD",
       "score": 56,
@@ -8193,7 +8193,7 @@ window.OPTICS_DASHBOARD_DATA = {
         "chartPoints": 252
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 25
+      "relativeStrength": 23
     },
     {
       "ticker": "VNP.TO",
@@ -8803,7 +8803,7 @@ window.OPTICS_DASHBOARD_DATA = {
         "chartPoints": 252
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 83
+      "relativeStrength": 84
     },
     {
       "ticker": "FORM",
@@ -8954,20 +8954,20 @@ window.OPTICS_DASHBOARD_DATA = {
       "marketMetrics": {
         "exchangeName": "Swiss",
         "currency": "CHF",
-        "currentPrice": 176.4,
-        "marketCap": 3255904768,
-        "priceToSales": 3.77,
-        "trailingPE": 43.88,
-        "oneMonthReturn": -4.85,
-        "ytdReturn": 15.29,
-        "oneYearReturn": 128.79,
-        "distanceFromHigh": -9.35,
+        "currentPrice": 175.2,
+        "marketCap": 3233755648,
+        "priceToSales": 3.74,
+        "trailingPE": 43.58,
+        "oneMonthReturn": -5.6,
+        "ytdReturn": 14.51,
+        "oneYearReturn": 127.24,
+        "distanceFromHigh": -9.97,
         "week52High": 194.6,
         "week52Low": 58,
-        "sma20": 175.36,
-        "sma50": 171.31,
-        "sma200": 137.11,
-        "above20Sma": true,
+        "sma20": 175.3,
+        "sma50": 171.28,
+        "sma200": 137.1,
+        "above20Sma": false,
         "above50Sma": true,
         "above200Sma": true,
         "sparkline": [
@@ -9042,7 +9042,7 @@ window.OPTICS_DASHBOARD_DATA = {
           173.2,
           172.6,
           171.4,
-          176.4
+          175.2
         ],
         "chartPoints": 250
       },
@@ -9291,7 +9291,7 @@ window.OPTICS_DASHBOARD_DATA = {
         "chartPoints": 252
       },
       "marketDataStatus": "ok",
-      "relativeStrength": 64
+      "relativeStrength": 65
     },
     {
       "ticker": "MKSI",

@@ -1,5 +1,6 @@
 (function () {
   const data = window.OPTICS_DASHBOARD_DATA;
+  const requestedTicker = new URLSearchParams(window.location.search).get("ticker");
 
   if (!data || !Array.isArray(data.rows)) {
     document.getElementById("segments").innerHTML = '<div class="empty">Dashboard data is not available yet.</div>';
@@ -9,10 +10,10 @@
 
   const state = {
     search: "",
-    sortKey: "score",
+    sortKey: "oneYearReturn",
     sortDirection: "desc",
-    verdict: "all",
-    selectedTicker: pickInitialTicker(data.rows)
+    status: "all",
+    selectedTicker: pickInitialTicker(data.rows, requestedTicker)
   };
 
   const elements = {
@@ -27,7 +28,7 @@
     searchInput: document.getElementById("search-input"),
     sortSelect: document.getElementById("sort-select"),
     directionToggle: document.getElementById("direction-toggle"),
-    verdictButtons: Array.from(document.querySelectorAll("[data-verdict]"))
+    statusButtons: Array.from(document.querySelectorAll("[data-status]"))
   };
 
   bindEvents();
@@ -50,10 +51,10 @@
       render();
     });
 
-    elements.verdictButtons.forEach((button) => {
+    elements.statusButtons.forEach((button) => {
       button.addEventListener("click", () => {
-        state.verdict = button.dataset.verdict;
-        elements.verdictButtons.forEach((candidate) => candidate.classList.toggle("active", candidate === button));
+        state.status = button.dataset.status;
+        elements.statusButtons.forEach((candidate) => candidate.classList.toggle("active", candidate === button));
         render();
       });
     });
@@ -80,7 +81,7 @@
 
   function getFilteredRows() {
     return data.rows.filter((row) => {
-      if (state.verdict !== "all" && row.verdict !== state.verdict) {
+      if (state.status !== "all" && row.marketDataStatus !== state.status) {
         return false;
       }
 
@@ -156,6 +157,10 @@
         return row.marketMetrics.marketCap;
       case "opticsPct":
         return row.opticsPct;
+      case "name":
+        return row.name;
+      case "ticker":
+        return row.ticker;
       case "score":
       default:
         return row.score;
@@ -179,10 +184,9 @@
     elements.coverageStamp.textContent = `${filteredRows.length} of ${data.totalCompanies} names visible`;
 
     const visibleSegments = groupedRows.length;
-    const visibleBuyCount = filteredRows.filter((row) => row.verdict === "BUY").length;
-    const visibleAvgScore = average(filteredRows.map((row) => row.score));
     const visibleAvgReturn = average(filteredRows.map((row) => row.marketMetrics.oneYearReturn));
     const liveCount = filteredRows.filter((row) => row.marketDataStatus === "ok").length;
+    const avgOptics = average(filteredRows.map((row) => row.opticsPct));
 
     const cards = [
       {
@@ -191,9 +195,9 @@
         note: `${visibleSegments} segment groups are currently visible.`
       },
       {
-        label: "BUY Calls",
-        value: formatNumber(visibleBuyCount),
-        note: `${formatPercent(percentage(visibleBuyCount, filteredRows.length), 0)} of the filtered view is rated BUY.`
+        label: "Live Rows",
+        value: formatNumber(liveCount),
+        note: `${filteredRows.length - liveCount} names are research-only fallbacks in the current view.`
       },
       {
         label: "Avg 1Y Return",
@@ -201,9 +205,9 @@
         note: "Computed from the embedded Yahoo Finance yearly chart snapshot."
       },
       {
-        label: "Avg Score",
-        value: visibleAvgScore == null ? "n/a" : visibleAvgScore.toFixed(1),
-        note: `${liveCount} names have live market data in the current snapshot.`
+        label: "Avg Optics %",
+        value: avgOptics == null ? "n/a" : `${avgOptics.toFixed(0)}%`,
+        note: "Exposure share comes from the local company metrics dataset."
       }
     ];
 
@@ -236,9 +240,9 @@
 
     elements.segments.innerHTML = groupedRows
       .map((group) => {
-        const avgScore = average(group.rows.map((row) => row.score));
         const avgReturn = average(group.rows.map((row) => row.marketMetrics.oneYearReturn));
-        const buyCount = group.rows.filter((row) => row.verdict === "BUY").length;
+        const liveCount = group.rows.filter((row) => row.marketDataStatus === "ok").length;
+        const avgOptics = average(group.rows.map((row) => row.opticsPct));
 
         return `
           <section class="segment-card" id="segment-${slugify(group.segment)}">
@@ -249,9 +253,9 @@
                 <p class="segment-meta">${group.rows.length} names grouped here.</p>
               </div>
               <div class="segment-badges">
-                <span class="badge">${buyCount} BUY</span>
-                <span class="badge">Avg score ${avgScore == null ? "n/a" : avgScore.toFixed(1)}</span>
+                <span class="badge">${liveCount}/${group.rows.length} live</span>
                 <span class="badge">Avg 1Y ${formatPercent(avgReturn)}</span>
+                <span class="badge">Avg optics ${avgOptics == null ? "n/a" : `${avgOptics.toFixed(0)}%`}</span>
               </div>
             </header>
             <div class="table-wrap">
@@ -272,9 +276,6 @@
                     <th>20D</th>
                     <th>50D</th>
                     <th>200D</th>
-                    <th>Score</th>
-                    <th>Verdict</th>
-                    <th>Target / Upside</th>
                     <th>Optics %</th>
                   </tr>
                 </thead>
@@ -292,8 +293,6 @@
   function renderRow(row) {
     const currentPrice = formatPrice(row.marketMetrics.currentPrice, row.marketMetrics.currency);
     const marketCap = formatMarketCap(row.marketMetrics.marketCap, row.marketMetrics.currency);
-    const target = renderTarget(row);
-    const verdictClass = getVerdictClass(row.verdict);
     const selected = row.ticker === state.selectedTicker;
 
     return `
@@ -321,9 +320,6 @@
         <td>${renderTrend(row.marketMetrics.above20Sma)}</td>
         <td>${renderTrend(row.marketMetrics.above50Sma)}</td>
         <td>${renderTrend(row.marketMetrics.above200Sma)}</td>
-        <td class="mono">${escapeHtml(row.score == null ? "n/a" : row.score.toFixed(0))}</td>
-        <td><span class="verdict ${verdictClass}">${escapeHtml(row.verdict || "n/a")}</span></td>
-        <td class="mono">${escapeHtml(target)}</td>
         <td class="mono">${row.opticsPct == null ? "n/a" : `${row.opticsPct.toFixed(0)}%`}</td>
       </tr>
     `;
@@ -356,9 +352,9 @@
           <span class="small">${escapeHtml(formatMarketCap(row.marketMetrics.marketCap, row.marketMetrics.currency))}</span>
         </article>
         <article class="detail-stat">
-          <span class="label">Research Target</span>
-          <span class="value">${escapeHtml(renderTarget(row))}</span>
-          <span class="small">${escapeHtml(row.verdict || "n/a")} / score ${row.score == null ? "n/a" : row.score.toFixed(0)}</span>
+          <span class="label">Optics Exposure</span>
+          <span class="value">${row.opticsPct == null ? "n/a" : `${escapeHtml(row.opticsPct.toFixed(0))}%`}</span>
+          <span class="small">${escapeHtml(row.share || row.market || "n/a")}</span>
         </article>
         <article class="detail-stat">
           <span class="label">Momentum</span>
@@ -375,7 +371,7 @@
         ${row.oneLiner ? `<p class="note"><strong>Research view:</strong> ${escapeHtml(row.oneLiner)}</p>` : ""}
         ${row.thesis ? `<p class="note"><strong>Thesis:</strong> ${escapeHtml(row.thesis)}</p>` : ""}
         ${row.catalystShort ? `<p class="note"><strong>Catalyst:</strong> ${escapeHtml(row.catalystShort)}</p>` : ""}
-        <p class="note"><strong>Chokepoint:</strong> ${escapeHtml(row.chokepointTier || "n/a")} / score ${row.chokepointScore == null ? "n/a" : row.chokepointScore.toFixed(0)}. <strong>Moat:</strong> ${escapeHtml(row.moat || "n/a")}.</p>
+        <p class="note"><strong>Chokepoint:</strong> ${escapeHtml(row.chokepointTier || "n/a")}. <strong>Moat:</strong> ${escapeHtml(row.moat || "n/a")}.</p>
         <p class="note"><strong>Risk:</strong> ${escapeHtml(row.riskLevel || "n/a")}. <strong>CHIPS status:</strong> ${escapeHtml(row.chipsStatus || "n/a")}${row.chipsDetail ? ` - ${escapeHtml(row.chipsDetail)}` : ""}</p>
       </div>
     `;
@@ -384,6 +380,11 @@
   }
 
   function renderTradingView(row) {
+    if (shouldUseFallbackChart(row)) {
+      renderFallbackChart(row);
+      return;
+    }
+
     const params = new URLSearchParams({
       symbol: row.tradingViewSymbol,
       interval: "D",
@@ -411,6 +412,64 @@
         loading="lazy"
         allowtransparency="true">
       </iframe>
+    `;
+  }
+
+  function shouldUseFallbackChart(row) {
+    return row.tradingViewSymbol.startsWith("HKEX:");
+  }
+
+  function renderFallbackChart(row) {
+    const values = row.marketMetrics.sparkline || [];
+    if (!values.length) {
+      elements.chartHost.innerHTML = `
+        <div class="fallback-chart">
+          <div class="empty">No embeddable TradingView chart is available for this market, and no Yahoo snapshot is available for this ticker.</div>
+          <div class="fallback-caption">Use the TradingView or Yahoo buttons above for the full external page.</div>
+        </div>
+      `;
+      return;
+    }
+
+    const width = 760;
+    const height = 320;
+    const leftPad = 10;
+    const topPad = 10;
+    const chartWidth = width - 20;
+    const chartHeight = height - 20;
+    const min = Math.min.apply(null, values);
+    const max = Math.max.apply(null, values);
+    const range = max - min || 1;
+
+    const linePoints = values
+      .map((value, index) => {
+        const x = leftPad + (index / Math.max(values.length - 1, 1)) * chartWidth;
+        const y = topPad + chartHeight - ((value - min) / range) * chartHeight;
+        return `${x.toFixed(2)},${y.toFixed(2)}`;
+      })
+      .join(" ");
+
+    const areaPoints = `${leftPad},${topPad + chartHeight} ${linePoints} ${leftPad + chartWidth},${topPad + chartHeight}`;
+    const stroke = values[values.length - 1] >= values[0] ? "#0f6c4b" : "#c64a3d";
+
+    elements.chartHost.innerHTML = `
+      <div class="fallback-chart">
+        <svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" aria-label="Yahoo snapshot chart for ${escapeHtml(row.ticker)}">
+          <defs>
+            <linearGradient id="chart-fill" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="${stroke}" stop-opacity="0.28"></stop>
+              <stop offset="100%" stop-color="${stroke}" stop-opacity="0.04"></stop>
+            </linearGradient>
+          </defs>
+          <line x1="${leftPad}" y1="${topPad}" x2="${leftPad}" y2="${topPad + chartHeight}" stroke="#e9dec8" stroke-width="1"></line>
+          <line x1="${leftPad}" y1="${topPad + chartHeight}" x2="${leftPad + chartWidth}" y2="${topPad + chartHeight}" stroke="#e9dec8" stroke-width="1"></line>
+          <polygon fill="url(#chart-fill)" points="${areaPoints}"></polygon>
+          <polyline fill="none" stroke="${stroke}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="${linePoints}"></polyline>
+        </svg>
+        <div class="fallback-caption">
+          TradingView does not expose an embeddable widget for this market, so this panel is showing the Yahoo Finance yearly snapshot instead.
+        </div>
+      </div>
     `;
   }
 
@@ -489,33 +548,17 @@
     return labels.join(" / ");
   }
 
-  function renderTarget(row) {
-    if (row.targetPrice == null) {
-      return row.upsidePct == null ? "n/a" : formatPercent(row.upsidePct);
+  function pickInitialTicker(rows, requested) {
+    if (requested) {
+      const matched = rows.find((row) => row.ticker.toUpperCase() === requested.toUpperCase());
+      if (matched) {
+        return matched.ticker;
+      }
     }
-    const targetText = formatPrice(row.targetPrice, row.marketMetrics.currency || "USD");
-    if (row.upsidePct == null) {
-      return targetText;
-    }
-    return `${targetText} / ${formatPercent(row.upsidePct)}`;
-  }
 
-  function getVerdictClass(verdict) {
-    switch (verdict) {
-      case "BUY":
-        return "verdict-buy";
-      case "AVOID":
-        return "verdict-avoid";
-      case "HOLD":
-      default:
-        return "verdict-hold";
-    }
-  }
-
-  function pickInitialTicker(rows) {
     const ranked = rows
       .slice()
-      .sort((left, right) => (right.score || -Infinity) - (left.score || -Infinity));
+      .sort((left, right) => (right.marketMetrics.oneYearReturn || -Infinity) - (left.marketMetrics.oneYearReturn || -Infinity));
     return ranked[0] ? ranked[0].ticker : null;
   }
 
@@ -582,13 +625,6 @@
     const precision = typeof digits === "number" ? digits : Math.abs(value) >= 100 ? 0 : 1;
     const prefix = value > 0 ? "+" : "";
     return `${prefix}${value.toFixed(precision)}%`;
-  }
-
-  function percentage(value, total) {
-    if (!total) {
-      return null;
-    }
-    return (value / total) * 100;
   }
 
   function formatNumber(value) {

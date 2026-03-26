@@ -30,6 +30,48 @@ const YAHOO_SYMBOL_OVERRIDES = {
   "8258.TW": "4971.TWO"
 };
 
+const TRADINGVIEW_SYMBOL_OVERRIDES = {
+  "0522.HK": "HKEX:522",
+  "042700.KS": "KRX:042700",
+  "300394.SZ": "SZSE:300394",
+  "3711.TW": "TWSE:3711",
+  "2317.TW": "TWSE:2317",
+  "2382.TW": "TWSE:2382",
+  "3231.TW": "TWSE:3231",
+  "002475.SZ": "SZSE:002475",
+  "6503.T": "TSE:6503",
+  "6777.T": "TSE:6777",
+  "5802.T": "TSE:5802",
+  "4991.TW": "TPEX:4991",
+  "SIVE.ST": "OMXSTO:SIVE",
+  "6146.T": "TSE:6146",
+  "AIXA.DE": "XETR:AIXA",
+  "JEN.DE": "XETR:JEN",
+  "5803.T": "TSE:5803",
+  "6869.HK": "HKEX:6869",
+  "600487.SS": "SSE:600487",
+  "PRY.MI": "MIL:PRY",
+  "STLTECH.NS": "NSE:STLTECH",
+  "3105.TW": "TPEX:3105",
+  "XFAB.PA": "EURONEXT:XFAB",
+  "SOI.PA": "EURONEXT:SOI",
+  "8258.TW": "TPEX:4971",
+  "5016.T": "TSE:5016",
+  "IQE.L": "LSE:IQE",
+  "300308.SZ": "SZSE:300308",
+  "0877.HK": "HKEX:877",
+  "300502.SZ": "SZSE:300502",
+  "000936.SZ": "SZSE:000936",
+  "002281.SZ": "SZSE:002281",
+  "300548.SZ": "SZSE:300548",
+  "000988.SZ": "SZSE:000988",
+  "VNP.TO": "TSX:VNP",
+  "4973.T": "TSE:4973",
+  "6857.T": "TSE:6857",
+  "HUBN.SW": "SIX:HUBN",
+  "BESI.AS": "EURONEXT:BESI"
+};
+
 const yahooFinance = new YahooFinance({
   suppressNotices: ["yahooSurvey"]
 });
@@ -329,7 +371,7 @@ function buildRows(companies, resultsMap, reportFiles, marketMap) {
       catalystShort: company.catalyst ?? null,
       share: company.share ?? null,
       reportPath: findReportPath(company.ticker, reportFiles),
-      tradingViewSymbol: formatTradingViewSymbol(yahooSymbol, marketMetrics.exchangeName),
+      tradingViewSymbol: TRADINGVIEW_SYMBOL_OVERRIDES[company.ticker] || formatTradingViewSymbol(yahooSymbol, marketMetrics.exchangeName),
       yahooSymbol,
       verdict: research.verdict ?? company.verdict ?? null,
       score: parseMaybeNumber(research.score ?? company.chokepointScore),
