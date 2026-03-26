@@ -1,9 +1,9 @@
 # LITE - Lumentum Holdings
-## Date: 2026-03-24
-## Score: 70/100
+## Date: 2026-03-26 (UPDATED)
+## Score: 72/100 (upgraded from 70)
 
 ### Thesis (2-3 sentences)
-Lumentum is the laser chip kingmaker of the AI optical buildout, holding 50-60% share in high-end EML laser chips and being the only supplier shipping 200Gbps/lane EMLs at scale for 1.6T transceivers. Demand exceeds supply by 25-30%, with a $2B NVIDIA strategic investment and a credible path to $8B annual revenue within 18-24 months. However, at $52B market cap and 62x forward P/E, the stock has priced in an extraordinary amount of execution.
+Lumentum just joined the S&P 500 (March 23, 2026) — capping a 989% one-year gain to $802/share. The laser chip kingmaker holds 50-60% high-end EML share, the only supplier shipping 200G/lane EMLs at scale. Revenue hit $1.645B, OCS backlog surged above $400M, and the NVIDIA $2B partnership secures multi-year demand. Targeting $2B/quarter ($8B annual) in 18-24 months. S&P 500 inclusion creates structural index fund buying pressure. The 2nd best performer in the entire S&P 500 over the past year.
 
 ### Key Metrics
 | Metric | Value | vs Sector |
@@ -61,14 +61,6 @@ Lumentum's moat is arguably the deepest in the photonics stack:
 LITE trades at ~25x TTM revenue and 62x forward non-GAAP P/E -- pricing in near-perfect execution of the $8B revenue target. If Lumentum achieves $8B revenue with 40% operating margins ($3.2B operating income), and assuming a 25x P/E on ~$2.5B net income, that implies a ~$62.5B market cap -- only ~20% above today. In other words, the stock is discounting the bull case already. Any stumble on yield, capacity timing, or demand moderation could trigger a sharp de-rating given the small float (71.4M shares) and high beta (1.41).
 
 If you believe the $2B quarterly target is achievable AND sustainable, there's still some upside. But the risk/reward is asymmetric to the downside at current levels.
-
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
 
 ### Verdict: HOLD
 Lumentum may be the single best-positioned company in AI photonics -- the laser chip bottleneck is real and their dominance is undeniable. But the stock has re-rated from $46 to $729 in one year, pricing in nearly the full $8B revenue trajectory. The NVIDIA deal provides a demand floor but also brings dilution. This is a "right company, wrong price" situation. Aggressive entry would require a pullback to the $450-500 range where the risk/reward becomes more compelling.
