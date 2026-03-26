@@ -1,6 +1,6 @@
 # BESI.AS - BE Semiconductor Industries (Besi)
-## Date: 2026-03-24
-## Score: 73/100
+## Date: 2026-03-26 (UPDATED)
+## Score: 77/100 (upgraded from 73 — potential M&A target)
 
 ### Thesis (2-3 sentences)
 Besi is the global leader in semiconductor die-attach equipment (42% market share) and the undisputed pioneer of hybrid bonding -- the breakthrough packaging technology enabling AI chiplets, HBM stacking, and co-packaged optics. Q4 2025 orders surged 105% YoY driven by AI 2.5D packaging and photonics applications, with hybrid bonding projected to reach €476M revenue by 2026 (~1/3 of total business). At 63-65% gross margins and a target model of €1.5-1.9B revenue with 40-55% operating margins, Besi is the equipment chokepoint for advanced photonic chip packaging.
@@ -55,14 +55,6 @@ Besi is the global leader in semiconductor die-attach equipment (42% market shar
 3. **Equipment cyclicality**: Semiconductor equipment orders can swing dramatically quarter to quarter.
 4. **Hybrid bonding still early**: €476M by 2026 is a projection, not a guarantee. Technology adoption can stall.
 5. **Valuation premium**: ~€15B market cap on €591M revenue (25x sales) is expensive even for best-in-class equipment.
-
-
-### CHIPS Act Update (2026-03-25)
-Status: `NONE`.
-
-The latest official CHIPS sweep through 2026-03-24 did not identify a direct CHIPS incentives award or a CHIPS-linked R&D / hub award for this company. The investment case in this report therefore remains a commercial AI-photonics thesis rather than a subsidy-driven one.
-
-Cross-reference: see [results.tsv](../results.tsv) and [chips-act-status.md](../chips-act-status.md).
 
 ### Verdict: HOLD (near BUY)
 Besi is the equipment chokepoint for the advanced packaging revolution driving AI chips, HBM, and co-packaged optics. The 105% order growth, hybrid bonding leadership, and photonics application demand create a compelling growth trajectory. The 63-65% gross margin and target model of €1.5-1.9B with 40-55% OPM make this a premium franchise. Would upgrade to BUY when revenue growth catches up to order growth (expected H1 2026) or on any pullback to 20x trailing sales.
