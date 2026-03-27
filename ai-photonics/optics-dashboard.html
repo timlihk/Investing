@@ -639,13 +639,16 @@ tbody tr.is-selected{background:rgba(15,108,75,.08)}
   width:100%;
   border-collapse:collapse;
   font-size:13px;
+  table-layout:fixed;
 }
 .report-table th,
 .report-table td{
-  padding:10px 12px;
+  padding:9px 10px;
   border-bottom:1px solid #ece2cf;
   text-align:left;
   vertical-align:top;
+  overflow-wrap:anywhere;
+  word-break:break-word;
 }
 .report-table th{
   background:#f5eee1;
@@ -658,6 +661,26 @@ tbody tr.is-selected{background:rgba(15,108,75,.08)}
 }
 .report-table tr:last-child td{
   border-bottom:none;
+}
+.report-table th:nth-child(1),
+.report-table td:nth-child(1){
+  width:20%;
+}
+.report-table th:nth-child(2),
+.report-table td:nth-child(2){
+  width:18%;
+}
+.report-table th:nth-child(3),
+.report-table td:nth-child(3){
+  width:18%;
+}
+.report-table th:nth-child(4),
+.report-table td:nth-child(4){
+  width:18%;
+}
+.report-table th:nth-child(5),
+.report-table td:nth-child(5){
+  width:26%;
 }
 .empty{
   padding:28px;
