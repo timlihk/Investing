@@ -536,6 +536,18 @@ tbody tr.is-selected{background:rgba(15,108,75,.08)}
   margin:0;
   font-size:18px;
 }
+.key-metrics-panel{
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:var(--panel-strong);
+  padding:18px;
+  display:grid;
+  gap:14px;
+}
+.key-metrics-panel h3{
+  margin:0;
+  font-size:18px;
+}
 .research-note-panel .loading{
   color:var(--muted);
   font-size:13px;
@@ -673,6 +685,7 @@ tbody tr.is-selected{background:rgba(15,108,75,.08)}
       <div class="chart-shell">
         <div class="chart-host" id="chart-host"></div>
       </div>
+      <div class="key-metrics-panel" id="key-metrics-panel"></div>
       <div class="research-note-panel" id="research-note-panel"></div>
       <div class="footnote">
         Yahoo Finance data is generated outside the browser and embedded as a static snapshot for GitHub Pages.

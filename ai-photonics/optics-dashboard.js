@@ -27,6 +27,7 @@
     segments: document.getElementById("segments"),
     detailTop: document.getElementById("detail-top"),
     chartHost: document.getElementById("chart-host"),
+    keyMetricsPanel: document.getElementById("key-metrics-panel"),
     researchNotePanel: document.getElementById("research-note-panel"),
     searchInput: document.getElementById("search-input"),
     sortSelect: document.getElementById("sort-select"),
@@ -332,6 +333,7 @@
     if (!row) {
       elements.detailTop.innerHTML = '<div class="empty">No row selected.</div>';
       elements.chartHost.innerHTML = "";
+      elements.keyMetricsPanel.innerHTML = "";
       elements.researchNotePanel.innerHTML = "";
       return;
     }
@@ -398,10 +400,16 @@
       <h3>Research Note</h3>
       <div class="loading">Loading ${escapeHtml(row.reportPath)}...</div>
     `;
+    elements.keyMetricsPanel.innerHTML = `
+      <h3>Key Metrics</h3>
+      <div class="loading">Loading metrics...</div>
+    `;
 
     if (noteCache.has(row.reportPath)) {
       if (requestToken === noteRequestToken) {
-        elements.researchNotePanel.innerHTML = renderResearchNoteMarkup(noteCache.get(row.reportPath));
+        const markdown = noteCache.get(row.reportPath);
+        elements.keyMetricsPanel.innerHTML = renderKeyMetricsMarkup(markdown);
+        elements.researchNotePanel.innerHTML = renderResearchNoteMarkup(markdown);
       }
       return;
     }
@@ -416,10 +424,15 @@
       noteCache.set(row.reportPath, markdown);
 
       if (requestToken === noteRequestToken) {
+        elements.keyMetricsPanel.innerHTML = renderKeyMetricsMarkup(markdown);
         elements.researchNotePanel.innerHTML = renderResearchNoteMarkup(markdown);
       }
     } catch (error) {
       if (requestToken === noteRequestToken) {
+        elements.keyMetricsPanel.innerHTML = `
+          <h3>Key Metrics</h3>
+          <div class="loading">Could not load key metrics for ${escapeHtml(row.ticker)}.</div>
+        `;
         elements.researchNotePanel.innerHTML = `
           <h3>Research Note</h3>
           <div class="loading">Could not load ${escapeHtml(row.reportPath)}. Use the research note link above.</div>
@@ -541,6 +554,47 @@
     return `
       <h3>Research Note</h3>
       <div class="report-body">${blocks.join("")}</div>
+    `;
+  }
+
+  function renderKeyMetricsMarkup(markdown) {
+    const lines = markdown.split(/\r?\n/);
+    const headingIndex = lines.findIndex((line) => line.trim().toLowerCase() === "### key metrics");
+    if (headingIndex === -1) {
+      return `
+        <h3>Key Metrics</h3>
+        <div class="loading">No dedicated Key Metrics table was found in this report.</div>
+      `;
+    }
+
+    const tableLines = [];
+    for (let index = headingIndex + 1; index < lines.length; index += 1) {
+      const trimmed = lines[index].trim();
+      if (!trimmed) {
+        if (tableLines.length) {
+          break;
+        }
+        continue;
+      }
+      if (trimmed.startsWith("|")) {
+        tableLines.push(trimmed);
+        continue;
+      }
+      if (tableLines.length) {
+        break;
+      }
+    }
+
+    if (!tableLines.length) {
+      return `
+        <h3>Key Metrics</h3>
+        <div class="loading">No dedicated Key Metrics table was found in this report.</div>
+      `;
+    }
+
+    return `
+      <h3>Key Metrics</h3>
+      ${renderMarkdownTable(tableLines)}
     `;
   }
 
