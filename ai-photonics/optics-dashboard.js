@@ -1,6 +1,8 @@
 (function () {
   const data = window.OPTICS_DASHBOARD_DATA;
   const requestedTicker = new URLSearchParams(window.location.search).get("ticker");
+  const noteCache = new Map();
+  let noteRequestToken = 0;
 
   if (!data || !Array.isArray(data.rows)) {
     document.getElementById("segments").innerHTML = '<div class="empty">Dashboard data is not available yet.</div>';
@@ -25,6 +27,7 @@
     segments: document.getElementById("segments"),
     detailTop: document.getElementById("detail-top"),
     chartHost: document.getElementById("chart-host"),
+    researchNotePanel: document.getElementById("research-note-panel"),
     searchInput: document.getElementById("search-input"),
     sortSelect: document.getElementById("sort-select"),
     directionToggle: document.getElementById("direction-toggle"),
@@ -329,6 +332,7 @@
     if (!row) {
       elements.detailTop.innerHTML = '<div class="empty">No row selected.</div>';
       elements.chartHost.innerHTML = "";
+      elements.researchNotePanel.innerHTML = "";
       return;
     }
 
@@ -377,6 +381,174 @@
     `;
 
     renderLocalChart(row);
+    renderResearchNote(row);
+  }
+
+  async function renderResearchNote(row) {
+    if (!row.reportPath) {
+      elements.researchNotePanel.innerHTML = `
+        <h3>Research Note</h3>
+        <div class="loading">No local research note is linked to this company yet.</div>
+      `;
+      return;
+    }
+
+    const requestToken = ++noteRequestToken;
+    elements.researchNotePanel.innerHTML = `
+      <h3>Research Note</h3>
+      <div class="loading">Loading ${escapeHtml(row.reportPath)}...</div>
+    `;
+
+    if (noteCache.has(row.reportPath)) {
+      if (requestToken === noteRequestToken) {
+        elements.researchNotePanel.innerHTML = renderResearchNoteMarkup(noteCache.get(row.reportPath));
+      }
+      return;
+    }
+
+    try {
+      const response = await fetch(row.reportPath);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const markdown = await response.text();
+      noteCache.set(row.reportPath, markdown);
+
+      if (requestToken === noteRequestToken) {
+        elements.researchNotePanel.innerHTML = renderResearchNoteMarkup(markdown);
+      }
+    } catch (error) {
+      if (requestToken === noteRequestToken) {
+        elements.researchNotePanel.innerHTML = `
+          <h3>Research Note</h3>
+          <div class="loading">Could not load ${escapeHtml(row.reportPath)}. Use the research note link above.</div>
+        `;
+      }
+    }
+  }
+
+  function renderResearchNoteMarkup(markdown) {
+    const lines = markdown.split(/\r?\n/);
+    const blocks = [];
+    let paragraph = [];
+    let listItems = [];
+    let orderedItems = [];
+    let tableLines = [];
+
+    function flushParagraph() {
+      if (!paragraph.length) {
+        return;
+      }
+      blocks.push(`<p>${formatInline(paragraph.join(" "))}</p>`);
+      paragraph = [];
+    }
+
+    function flushList() {
+      if (!listItems.length) {
+        return;
+      }
+      blocks.push(`<ul>${listItems.map((item) => `<li>${formatInline(item)}</li>`).join("")}</ul>`);
+      listItems = [];
+    }
+
+    function flushOrderedList() {
+      if (!orderedItems.length) {
+        return;
+      }
+      blocks.push(`<ol>${orderedItems.map((item) => `<li>${formatInline(item)}</li>`).join("")}</ol>`);
+      orderedItems = [];
+    }
+
+    function flushTable() {
+      if (!tableLines.length) {
+        return;
+      }
+      blocks.push(`<pre class="report-pre">${escapeHtml(tableLines.join("\n"))}</pre>`);
+      tableLines = [];
+    }
+
+    for (const rawLine of lines) {
+      const line = rawLine.trimEnd();
+      const trimmed = line.trim();
+
+      if (!trimmed) {
+        flushParagraph();
+        flushList();
+        flushOrderedList();
+        flushTable();
+        continue;
+      }
+
+      if (trimmed.startsWith("|")) {
+        flushParagraph();
+        flushList();
+        flushOrderedList();
+        tableLines.push(trimmed);
+        continue;
+      }
+
+      flushTable();
+
+      if (trimmed.startsWith("# ")) {
+        flushParagraph();
+        flushList();
+        flushOrderedList();
+        blocks.push(`<h4>${formatInline(trimmed.slice(2))}</h4>`);
+        continue;
+      }
+
+      if (trimmed.startsWith("## ")) {
+        flushParagraph();
+        flushList();
+        flushOrderedList();
+        blocks.push(`<h4>${formatInline(trimmed.slice(3))}</h4>`);
+        continue;
+      }
+
+      if (trimmed.startsWith("### ")) {
+        flushParagraph();
+        flushList();
+        flushOrderedList();
+        blocks.push(`<h5>${formatInline(trimmed.slice(4))}</h5>`);
+        continue;
+      }
+
+      if (/^- /.test(trimmed)) {
+        flushParagraph();
+        flushOrderedList();
+        listItems.push(trimmed.slice(2));
+        continue;
+      }
+
+      if (/^\d+\.\s/.test(trimmed)) {
+        flushParagraph();
+        flushList();
+        orderedItems.push(trimmed.replace(/^\d+\.\s/, ""));
+        continue;
+      }
+
+      flushList();
+      flushOrderedList();
+      paragraph.push(trimmed);
+    }
+
+    flushParagraph();
+    flushList();
+    flushOrderedList();
+    flushTable();
+
+    return `
+      <h3>Research Note</h3>
+      <div class="report-body">${blocks.join("")}</div>
+    `;
+  }
+
+  function formatInline(value) {
+    return escapeHtml(value)
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>')
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/`([^`]+)`/g, "<code>$1</code>");
   }
 
   function renderLocalChart(row) {

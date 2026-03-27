@@ -524,6 +524,58 @@ tbody tr.is-selected{background:rgba(15,108,75,.08)}
   font-size:12px;
   line-height:1.5;
 }
+.research-note-panel{
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:var(--panel-strong);
+  padding:18px;
+  display:grid;
+  gap:14px;
+}
+.research-note-panel h3{
+  margin:0;
+  font-size:18px;
+}
+.research-note-panel .loading{
+  color:var(--muted);
+  font-size:13px;
+}
+.report-body{
+  max-height:540px;
+  overflow:auto;
+  padding-right:8px;
+  display:grid;
+  gap:12px;
+}
+.report-body h4,
+.report-body h5{
+  margin:0;
+  font-size:15px;
+}
+.report-body p,
+.report-body ul,
+.report-body ol{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.6;
+}
+.report-body ul,
+.report-body ol{
+  padding-left:20px;
+}
+.report-pre{
+  margin:0;
+  padding:12px 14px;
+  border-radius:16px;
+  background:#f4ede1;
+  color:var(--muted);
+  font-family:var(--mono);
+  font-size:12px;
+  line-height:1.5;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
 .empty{
   padding:28px;
   text-align:center;
@@ -603,6 +655,7 @@ tbody tr.is-selected{background:rgba(15,108,75,.08)}
       <div class="chart-shell">
         <div class="chart-host" id="chart-host"></div>
       </div>
+      <div class="research-note-panel" id="research-note-panel"></div>
       <div class="footnote">
         Yahoo Finance data is generated outside the browser and embedded as a static snapshot for GitHub Pages.
         The detail chart is rendered locally from that snapshot. TradingView remains linked as an external page.
