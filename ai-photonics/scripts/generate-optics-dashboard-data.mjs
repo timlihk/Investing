@@ -231,6 +231,141 @@ function average(values) {
   return valid.reduce((sum, value) => sum + value, 0) / valid.length;
 }
 
+function scoreStructuralControl(tier) {
+  switch (tier) {
+    case "Monopoly Chokepoint":
+      return 12;
+    case "Duopoly Chokepoint":
+      return 9;
+    case "Oligopoly with Moat":
+      return 6;
+    case "Competitive / Linked":
+      return 3;
+    default:
+      return 4.5;
+  }
+}
+
+function scoreMoat(moat) {
+  switch (moat) {
+    case "Exceptional":
+      return 5;
+    case "Very Strong":
+      return 4.5;
+    case "Strong":
+    case "Strong Niche":
+    case "Strong in EML":
+      return 4;
+    case "Moderate-Strong":
+      return 3.5;
+    case "Strong but Fragile":
+    case "Strong but Eroding":
+      return 3;
+    case "Moderate":
+      return 2.5;
+    case "Emerging":
+      return 1.5;
+    case "Speculative":
+      return 0.5;
+    default:
+      return 2.5;
+  }
+}
+
+function scoreOpticsPurity(opticsPct) {
+  if (!Number.isFinite(opticsPct)) {
+    return 1.5;
+  }
+  if (opticsPct >= 70) {
+    return 5;
+  }
+  if (opticsPct >= 50) {
+    return 4;
+  }
+  if (opticsPct >= 30) {
+    return 3;
+  }
+  if (opticsPct >= 15) {
+    return 2;
+  }
+  if (opticsPct >= 5) {
+    return 1;
+  }
+  return 0;
+}
+
+function scoreGrossMargin(grossMargin) {
+  if (!Number.isFinite(grossMargin)) {
+    return 0.5;
+  }
+  if (grossMargin >= 65) {
+    return 1.5;
+  }
+  if (grossMargin >= 50) {
+    return 1.2;
+  }
+  if (grossMargin >= 35) {
+    return 0.9;
+  }
+  if (grossMargin >= 20) {
+    return 0.6;
+  }
+  if (grossMargin > 0) {
+    return 0.3;
+  }
+  return 0;
+}
+
+function scoreOperatingMargin(operatingMargin) {
+  if (!Number.isFinite(operatingMargin)) {
+    return 0.5;
+  }
+  if (operatingMargin >= 30) {
+    return 1.5;
+  }
+  if (operatingMargin >= 20) {
+    return 1.2;
+  }
+  if (operatingMargin >= 10) {
+    return 0.9;
+  }
+  if (operatingMargin >= 0) {
+    return 0.6;
+  }
+  if (operatingMargin >= -10) {
+    return 0.3;
+  }
+  return 0;
+}
+
+function buildChokepointProfile(company, research) {
+  const structuralTier = research.chokepoint_tier ?? company.chokepointTier ?? null;
+  const moat = research.moat ?? null;
+  const opticsPct = parseMaybeNumber(company.opticsPct);
+  const structuralControl = scoreStructuralControl(structuralTier);
+  const moatDurability = scoreMoat(moat);
+  const opticsPurity = scoreOpticsPurity(opticsPct);
+  const pricingPower = roundNumber(
+    scoreGrossMargin(company.grossMargin) + scoreOperatingMargin(company.operatingMargin),
+    1
+  );
+  const total = roundNumber(
+    structuralControl + moatDurability + opticsPurity + pricingPower,
+    1
+  );
+
+  return {
+    score: total,
+    breakdown: {
+      structuralControl: roundNumber(structuralControl, 1),
+      moatDurability: roundNumber(moatDurability, 1),
+      opticsPurity: roundNumber(opticsPurity, 1),
+      pricingPower
+    },
+    rubric: "12 structure + 5 moat + 5 optics purity + 3 pricing power"
+  };
+}
+
 function calcReturn(current, previous) {
   if (!Number.isFinite(current) || !Number.isFinite(previous) || previous === 0) {
     return null;
@@ -334,6 +469,7 @@ async function fetchSymbolData(symbol) {
 function buildRows(companies, resultsMap, reportFiles, marketMap) {
   return companies.map((company) => {
     const research = resultsMap.get(company.ticker) || {};
+    const chokepointProfile = buildChokepointProfile(company, research);
     const market = marketMap.get(company.ticker);
     const yahooSymbol = YAHOO_SYMBOL_OVERRIDES[company.ticker] || company.ticker;
     const marketMetrics = market
@@ -383,8 +519,17 @@ function buildRows(companies, resultsMap, reportFiles, marketMap) {
       riskLevel: research.risk_level ?? null,
       chipsStatus: research.chips_status ?? null,
       chipsDetail: research.chips_detail ?? null,
-      chokepointScore: parseMaybeNumber(research.chokepoint_score ?? company.chokepointScore),
-      chokepointTier: research.chokepoint_tier ?? company.chokepointTier ?? null,
+      chokepointScore: chokepointProfile.score,
+      chokepointTier: chokepointProfile.score >= 20
+        ? "Elite Chokepoint"
+        : chokepointProfile.score >= 16
+          ? "Strong Chokepoint"
+          : chokepointProfile.score >= 12
+            ? "Relevant Bottleneck"
+            : "Linked Exposure",
+      chokepointStructure: research.chokepoint_tier ?? company.chokepointTier ?? null,
+      chokepointBreakdown: chokepointProfile.breakdown,
+      chokepointRubric: chokepointProfile.rubric,
       marketMetrics,
       marketDataStatus: market ? "ok" : "fallback"
     };

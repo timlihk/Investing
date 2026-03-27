@@ -307,7 +307,7 @@
     const failureCount = Array.isArray(data.failures) ? data.failures.length : 0;
     const failureNote = failureCount ? ` ${failureCount} ticker${failureCount === 1 ? "" : "s"} fell back to research-only values.` : "";
     const sortNote = state.sortKey === "chokepointScore"
-      ? " Choking power uses the local chokepoint score, then optics exposure and market cap as tie-breakers."
+      ? " Choking power uses a 25-point rubric: structure, moat durability, optics purity, and pricing power; ties break on optics exposure and market cap."
       : "";
     elements.boardNote.textContent = `Showing ${filteredRows.length} names across ${visibleSegments} segments. Rows are grouped by segment and sorted inside each segment.${failureNote}${sortNote}`;
   }
@@ -442,6 +442,11 @@
           <span class="small">1M ${escapeHtml(formatPercent(row.marketMetrics.oneMonthReturn))} / YTD ${escapeHtml(formatPercent(row.marketMetrics.ytdReturn))}</span>
         </article>
         <article class="detail-stat">
+          <span class="label">Choking Power</span>
+          <span class="value">${row.chokepointScore == null ? "n/a" : `${escapeHtml(row.chokepointScore.toFixed(1))}/25`}</span>
+          <span class="small">${escapeHtml(row.chokepointTier || "n/a")} / ${escapeHtml(row.chokepointStructure || "n/a")}</span>
+        </article>
+        <article class="detail-stat">
           <span class="label">Trend Setup</span>
           <span class="value">${escapeHtml(renderTrendLabel(row))}</span>
           <span class="small">RS ${row.relativeStrength == null ? "n/a" : `${row.relativeStrength}/100`} / optics ${row.opticsPct == null ? "n/a" : `${row.opticsPct.toFixed(0)}%`}</span>
@@ -451,7 +456,8 @@
         ${row.oneLiner ? `<p class="note"><strong>Research view:</strong> ${escapeHtml(row.oneLiner)}</p>` : ""}
         ${row.thesis ? `<p class="note"><strong>Thesis:</strong> ${escapeHtml(row.thesis)}</p>` : ""}
         ${row.catalystShort ? `<p class="note"><strong>Catalyst:</strong> ${escapeHtml(row.catalystShort)}</p>` : ""}
-        <p class="note"><strong>Chokepoint:</strong> ${escapeHtml(row.chokepointTier || "n/a")}. <strong>Moat:</strong> ${escapeHtml(row.moat || "n/a")}.</p>
+        <p class="note"><strong>Choking power:</strong> ${row.chokepointScore == null ? "n/a" : `${escapeHtml(row.chokepointScore.toFixed(1))}/25`} (${escapeHtml(row.chokepointTier || "n/a")}). <strong>Structure:</strong> ${escapeHtml(row.chokepointStructure || "n/a")}. <strong>Moat:</strong> ${escapeHtml(row.moat || "n/a")}.</p>
+        ${row.chokepointBreakdown ? `<p class="note"><strong>Rubric:</strong> structure ${escapeHtml(formatBreakdownValue(row.chokepointBreakdown.structuralControl))}/12, moat ${escapeHtml(formatBreakdownValue(row.chokepointBreakdown.moatDurability))}/5, optics ${escapeHtml(formatBreakdownValue(row.chokepointBreakdown.opticsPurity))}/5, pricing ${escapeHtml(formatBreakdownValue(row.chokepointBreakdown.pricingPower))}/3.</p>` : ""}
         <p class="note"><strong>Risk:</strong> ${escapeHtml(row.riskLevel || "n/a")}. <strong>CHIPS status:</strong> ${escapeHtml(row.chipsStatus || "n/a")}${row.chipsDetail ? ` - ${escapeHtml(row.chipsDetail)}` : ""}</p>
       </div>
     `;
@@ -640,6 +646,10 @@
       <div class="loading">${escapeHtml(row.ticker)} / ${escapeHtml(row.name)}</div>
       <div class="report-body">${blocks.join("")}</div>
     `;
+  }
+
+  function formatBreakdownValue(value) {
+    return Number.isFinite(value) ? value.toFixed(1) : "n/a";
   }
 
   function formatInline(value) {
