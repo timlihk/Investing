@@ -174,12 +174,56 @@
       return state.sortDirection === "asc" ? comparison : -comparison;
     }
 
+    if (state.sortKey === "chokepointScore") {
+      const tieBreakers = [
+        (row) => row.opticsPct,
+        (row) => row.marketMetrics.marketCap,
+        (row) => row.name
+      ];
+      const primaryComparison = leftValue - rightValue;
+
+      if (primaryComparison !== 0) {
+        return state.sortDirection === "asc" ? primaryComparison : -primaryComparison;
+      }
+
+      for (const tieBreaker of tieBreakers) {
+        const leftTie = tieBreaker(left);
+        const rightTie = tieBreaker(right);
+
+        if (leftTie == null && rightTie == null) {
+          continue;
+        }
+        if (leftTie == null) {
+          return 1;
+        }
+        if (rightTie == null) {
+          return -1;
+        }
+
+        if (typeof leftTie === "string" || typeof rightTie === "string") {
+          const comparison = String(leftTie).localeCompare(String(rightTie));
+          if (comparison !== 0) {
+            return state.sortDirection === "asc" ? comparison : -comparison;
+          }
+          continue;
+        }
+
+        const comparison = leftTie - rightTie;
+        if (comparison !== 0) {
+          return state.sortDirection === "asc" ? comparison : -comparison;
+        }
+      }
+      return 0;
+    }
+
     const comparison = leftValue - rightValue;
     return state.sortDirection === "asc" ? comparison : -comparison;
   }
 
   function getSortValue(row, sortKey) {
     switch (sortKey) {
+      case "chokepointScore":
+        return row.chokepointScore;
       case "oneYearReturn":
         return row.marketMetrics.oneYearReturn;
       case "relativeStrength":
@@ -262,7 +306,10 @@
 
     const failureCount = Array.isArray(data.failures) ? data.failures.length : 0;
     const failureNote = failureCount ? ` ${failureCount} ticker${failureCount === 1 ? "" : "s"} fell back to research-only values.` : "";
-    elements.boardNote.textContent = `Showing ${filteredRows.length} names across ${visibleSegments} segments. Rows are grouped by segment and sorted inside each segment.${failureNote}`;
+    const sortNote = state.sortKey === "chokepointScore"
+      ? " Choking power uses the local chokepoint score, then optics exposure and market cap as tie-breakers."
+      : "";
+    elements.boardNote.textContent = `Showing ${filteredRows.length} names across ${visibleSegments} segments. Rows are grouped by segment and sorted inside each segment.${failureNote}${sortNote}`;
   }
 
   function renderSegments(groupedRows) {
