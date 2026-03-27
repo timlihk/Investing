@@ -564,17 +564,35 @@ tbody tr.is-selected{background:rgba(15,108,75,.08)}
 .report-body ol{
   padding-left:20px;
 }
-.report-pre{
-  margin:0;
-  padding:12px 14px;
+.report-table-wrap{
+  overflow:auto;
+  border:1px solid var(--line);
   border-radius:16px;
-  background:#f4ede1;
-  color:var(--muted);
-  font-family:var(--mono);
+  background:#fff;
+}
+.report-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+}
+.report-table th,
+.report-table td{
+  padding:10px 12px;
+  border-bottom:1px solid #ece2cf;
+  text-align:left;
+  vertical-align:top;
+}
+.report-table th{
+  background:#f5eee1;
+  color:var(--ink);
   font-size:12px;
+}
+.report-table td{
+  color:var(--muted);
   line-height:1.5;
-  white-space:pre-wrap;
-  overflow-wrap:anywhere;
+}
+.report-table tr:last-child td{
+  border-bottom:none;
 }
 .empty{
   padding:28px;

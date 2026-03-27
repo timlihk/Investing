@@ -464,7 +464,7 @@
       if (!tableLines.length) {
         return;
       }
-      blocks.push(`<pre class="report-pre">${escapeHtml(tableLines.join("\n"))}</pre>`);
+      blocks.push(renderMarkdownTable(tableLines));
       tableLines = [];
     }
 
@@ -549,6 +549,42 @@
       .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>')
       .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
       .replace(/`([^`]+)`/g, "<code>$1</code>");
+  }
+
+  function renderMarkdownTable(lines) {
+    if (lines.length < 2) {
+      return `<p>${formatInline(lines.join(" "))}</p>`;
+    }
+
+    const rows = lines.map(parseMarkdownTableRow).filter((row) => row.length);
+    if (rows.length < 2) {
+      return `<p>${formatInline(lines.join(" "))}</p>`;
+    }
+
+    const header = rows[0];
+    const body = rows.slice(2);
+
+    return `
+      <div class="report-table-wrap">
+        <table class="report-table">
+          <thead>
+            <tr>${header.map((cell) => `<th>${formatInline(cell)}</th>`).join("")}</tr>
+          </thead>
+          <tbody>
+            ${body.map((row) => `<tr>${row.map((cell) => `<td>${formatInline(cell)}</td>`).join("")}</tr>`).join("")}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  function parseMarkdownTableRow(line) {
+    return line
+      .trim()
+      .replace(/^\|/, "")
+      .replace(/\|$/, "")
+      .split("|")
+      .map((cell) => cell.trim());
   }
 
   function renderLocalChart(row) {
