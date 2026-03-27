@@ -3,6 +3,7 @@
   const requestedTicker = new URLSearchParams(window.location.search).get("ticker");
   const noteCache = new Map();
   let noteRequestToken = 0;
+  let activeModalRow = null;
 
   if (!data || !Array.isArray(data.rows)) {
     document.getElementById("segments").innerHTML = '<div class="empty">Dashboard data is not available yet.</div>';
@@ -29,6 +30,11 @@
     chartHost: document.getElementById("chart-host"),
     keyMetricsPanel: document.getElementById("key-metrics-panel"),
     researchNotePanel: document.getElementById("research-note-panel"),
+    noteModal: document.getElementById("note-modal"),
+    noteModalTitle: document.getElementById("note-modal-title"),
+    noteModalSubtitle: document.getElementById("note-modal-subtitle"),
+    noteModalLink: document.getElementById("note-modal-link"),
+    noteModalClose: document.getElementById("note-modal-close"),
     searchInput: document.getElementById("search-input"),
     sortSelect: document.getElementById("sort-select"),
     directionToggle: document.getElementById("direction-toggle"),
@@ -70,6 +76,30 @@
       }
       state.selectedTicker = trigger.dataset.selectTicker;
       render();
+    });
+
+    document.addEventListener("click", (event) => {
+      const trigger = event.target.closest("[data-open-note]");
+      if (trigger) {
+        event.preventDefault();
+        const row = data.rows.find((candidate) => candidate.ticker === trigger.dataset.openNote);
+        if (row) {
+          openNoteModal(row);
+        }
+        return;
+      }
+
+      if (event.target === elements.noteModal) {
+        closeNoteModal();
+      }
+    });
+
+    elements.noteModalClose.addEventListener("click", closeNoteModal);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && elements.noteModal.classList.contains("open")) {
+        closeNoteModal();
+      }
     });
   }
 
@@ -333,8 +363,6 @@
     if (!row) {
       elements.detailTop.innerHTML = '<div class="empty">No row selected.</div>';
       elements.chartHost.innerHTML = "";
-      elements.keyMetricsPanel.innerHTML = "";
-      elements.researchNotePanel.innerHTML = "";
       return;
     }
 
@@ -346,7 +374,7 @@
           <p>${escapeHtml(row.name)} / ${escapeHtml(row.segment)}</p>
         </div>
         <div class="detail-links">
-          ${row.reportPath ? `<a class="detail-link" href="${escapeHtml(row.reportPath)}">Research note</a>` : ""}
+          ${row.reportPath ? `<button class="detail-link" type="button" data-open-note="${escapeHtml(row.ticker)}">Research note</button>` : ""}
           <a class="detail-link" href="${escapeHtml(getYahooUrl(row.yahooSymbol))}" target="_blank" rel="noreferrer">Yahoo</a>
           <a class="detail-link" href="${escapeHtml(getTradingViewUrl(row.tradingViewSymbol))}" target="_blank" rel="noreferrer">TradingView</a>
         </div>
@@ -383,13 +411,31 @@
     `;
 
     renderLocalChart(row);
+  }
+
+  function openNoteModal(row) {
+    activeModalRow = row;
+    elements.noteModal.classList.add("open");
+    elements.noteModal.setAttribute("aria-hidden", "false");
+    elements.noteModalTitle.textContent = `${row.ticker} Research Note`;
+    elements.noteModalSubtitle.textContent = row.name;
+    elements.noteModalLink.href = row.reportPath || "#";
     renderResearchNote(row);
+  }
+
+  function closeNoteModal() {
+    elements.noteModal.classList.remove("open");
+    elements.noteModal.setAttribute("aria-hidden", "true");
   }
 
   async function renderResearchNote(row) {
     if (!row.reportPath) {
       elements.researchNotePanel.innerHTML = `
         <h3>Research Note</h3>
+        <div class="loading">No local research note is linked to this company yet.</div>
+      `;
+      elements.keyMetricsPanel.innerHTML = `
+        <h3>Key Metrics</h3>
         <div class="loading">No local research note is linked to this company yet.</div>
       `;
       return;
@@ -408,6 +454,9 @@
     if (noteCache.has(row.reportPath)) {
       if (requestToken === noteRequestToken) {
         const markdown = noteCache.get(row.reportPath);
+        if (activeModalRow?.ticker !== row.ticker) {
+          return;
+        }
         elements.keyMetricsPanel.innerHTML = renderKeyMetricsMarkup(markdown);
         elements.researchNotePanel.innerHTML = renderResearchNoteMarkup(markdown);
       }
@@ -424,6 +473,9 @@
       noteCache.set(row.reportPath, markdown);
 
       if (requestToken === noteRequestToken) {
+        if (activeModalRow?.ticker !== row.ticker) {
+          return;
+        }
         elements.keyMetricsPanel.innerHTML = renderKeyMetricsMarkup(markdown);
         elements.researchNotePanel.innerHTML = renderResearchNoteMarkup(markdown);
       }
