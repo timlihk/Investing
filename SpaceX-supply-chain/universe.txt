@@ -1,0 +1,169 @@
+# Stock Universe — SpaceX Supply Chain (Pre-IPO Beneficiaries)
+# Focus: public companies in the SpaceX / Starlink supply chain with chokepoint positions
+# Format: TICKER (one per line, comments start with #)
+
+# ============================================================
+# SPACEX LAUNCH & MANUFACTURING
+# ============================================================
+
+# Structures, Subassemblies & Forgings
+ATRO    # Astronics — testing equipment, power & lighting systems for aerospace
+DCO     # Ducommun — aerostructures, electronic subassemblies
+HEI     # HEICO — replacement parts, sub-components, repair (PMA king)
+SIF     # SIFCO Industries — closed-die forgings for aerospace (turbine disks, rings)
+GHM     # Graham Corp — Merlin engine turbopumps (Falcon 9?)
+
+# Metals & Materials
+ATI     # ATI Inc — titanium sponge, nickel-based superalloys, specialty alloys
+HXL     # Hexcel — aerospace carbon fiber composites
+TRYIY   # Toray Industries ADR — PAN-based carbon fibers (world #1)
+3402.T  # Toray Industries — PAN-based carbon fibers (Tokyo listing)
+PKE     # Park Electrochemical — advanced composite materials, hot-melt prepregs
+STLD    # Steel Dynamics — stainless steel (Starship skin)
+CRS     # Carpenter Technology — specialty alloys, metal products
+MTRN    # Materion — beryllium alloys, precision optics, advanced materials
+
+# Additive Manufacturing
+VELO    # Velo3D — large-format metal 3D printing (rocket engine parts)
+
+# Propulsion & Fluid Systems
+PH      # Parker Hannifin — cryogenic valves, seals, fluid handling (Falcon 9 match?)
+MOG.A   # Moog Inc — isolation valves, actuators (also appears in Optimus BOM)
+TDG     # TransDigm — pumps, valves, igniters (aerospace monopolies)
+
+# Propellants & Industrial Gases
+LIN     # Linde — LOX, helium, nitrogen, noble gases
+APD     # Air Products — LOX, nitrogen, industrial gases
+GTLS    # Chart Industries — propellant handling & storage at launch sites
+
+# Launch-Adjacent
+014300.KS  # SeAH Besteel — specialty alloy steel, near Starbase (South Korea)
+NIC.AX     # Nickel Industries — base nickel commodities (ASX)
+
+# ============================================================
+# STARLINK SATELLITE & USER TERMINAL
+# ============================================================
+
+# RF / Antenna / Microwave
+STM     # STMicroelectronics — phased-array antenna ICs
+FLTCF   # Filtronic — custom RF transceivers (also ground station)
+3491.TWO   # Universal Microwave Technology — RF components (TPEx)
+6568.TWO   # Rafael Microelectronics — RF/mixed-signal ICs (TPEx)
+3138.TW    # Auden Techno — capacitors for satellite systems (TWSE)
+
+# Baseband, Comms & Semiconducttic
+AVGO    # Broadcom — baseband processors, networking, comm ICs
+MPWR    # Monolithic Power Systems — PFC controller, power management
+TXN     # Texas Instruments — DC/DC converters
+DIOD    # Diodes Inc — shunt regulators
+# Mediatek — baseband/modem (private-ish, skip for now)
+# Qualcomm — potential modem supplier
+
+# Laser Inter-Satellite Links (ISLs)
+M0YN.DE   # Mynaric AG — laser communication terminals for satellite constellations
+
+# PCB & Board-Level
+4927.TW    # APEX International — PCB manufacturing (TWSE)
+4916.TW    # Parpro Corporation — PCB / packaging (TWSE)
+6285.TW    # Wistron NeWeb — PCB supplier, wireless modules (TWSE)
+2355.TW    # Chin-Poon Industrial — direct satellite component supplier (TWSE)
+
+# ============================================================
+# STARLINK GROUND INFRASTRUCTURE
+# ============================================================
+
+# Ground Stations & Terminals
+CMTL    # Comtech Telecomm — ground station equipment, satellite modems
+TRMB    # Trimble — precision timing, GNSS
+FLTCF   # Filtronic (again) — ground station RF
+# Compeq Manufacturing (TWSE: 2313) — routers, ground terminal PCBs
+2313.TW    # Compeq Manufacturing — high-layer PCBs for ground terminals
+
+# Taiwan ODM / EMS for Ground Stations
+# Tong Hsing (TWSE: 6271) — RF transceiver modules
+6271.TW    # Tong Hsing Electronic — RF transceiver packaging
+# Kinpo Electronics (TWSE: 2312) — ground station motherboards
+2312.TW    # Kinpo Electronics — ground station motherboard assembly
+
+# Memory (user terminals)
+MU      # Micron — DRAM/NAND in user terminals and satellites
+
+# ============================================================
+# BROAD SEMICONDUCTOR (appears in Starlink BOM)
+# ============================================================
+
+# Win Semiconductors — GaAs foundry for RF front-ends
+3105.TW    # Win Semiconductors — GaAs foundry (also in ai-photonics universe)
+
+# ============================================================
+# DISCOVERED DURING RESEARCH — NEW ADDITIONS
+# ============================================================
+
+# Confirmed SpaceX Suppliers (discovered via DD)
+# Marotta Controls — PRIVATE, SpaceX's confirmed primary valve supplier (30,000+ CoRe valves, 14yr partnership). Cannot invest.
+347700.KQ  # Sphere Corp — CONFIRMED $1.05B/10yr SpaceX superalloy deal. Ex-healthcare shell pivot. KOSDAQ only. RESEARCHED.
+
+# STM is MORE important than originally thought — confirmed Starlink chip partner
+STM     # STMicroelectronics — CONFIRMED 5B+ chips shipped for Starlink; co-designed RF/phased-array ICs; partnership doubling by 2027. KEY NAME.
+
+# Starlink Semiconductor (additional)
+# Infineon — MOSFETs on Starlink power board (teardown confirmed)
+# ON Semi — potential alternative power components
+
+# NEW DISCOVERIES from Deep DD (2026-03-28)
+3481.TW    # Innolux Corporation — FOPLP chip packaging for Starlink RF chips (confirmed)
+3340.TWO   # Shenmao Technology — soldering materials for Starlink PCBs (confirmed, Vietnam expansion)
+MU         # Micron — eMMC flash (4GB MTFC4GACAJCN-1M) found in Starlink terminal teardown
+
+# CRITICAL RISK FLAG: SpaceX building own FOPLP chip packaging plant in Texas
+# 700mm x 700mm substrate (largest in industry). Equipment delivery Sept 2025.
+# Limited production Q3 2026, full volume Q1 2027.
+# HEADWIND for STM packaging revenue and Innolux over time.
+# SpaceX also completed own PCB factory in Texas — already operational.
+
+# NEW DISCOVERIES — Confirmed via teardowns, earnings calls, press releases (2026-03-28)
+AMD     # AMD — CONFIRMED: CEO Lisa Su named SpaceX on Q3 2024 earnings call. Versal AI Core adaptive SoCs power Starlink V2 mini satellites. Every new satellite = AMD silicon.
+6723.T  # Renesas Electronics — CONFIRMED (teardown): GreenPAK SLG46620 in PoE detection + beamforming transceivers in antenna array
+IFX.DE  # Infineon Technologies — CONFIRMED (teardown): Power MOSFETs (FDMS series) in Starlink terminal power supply
+ADI     # Analog Devices — CONFIRMED (teardown): MAX16056 power supervisor IC in Starlink Rev 3 terminals
+ON      # ON Semiconductor — HIGHLY PROBABLE: FDMS86182 MOSFET identified in Starlink Rev 3 teardown by part number
+LFUS    # Littelfuse — HIGHLY PROBABLE: P6SMB TVS diodes for ESD/surge protection in Starlink terminals
+MCHP    # Microchip Technology — HIGHLY PROBABLE: 19% space-grade semiconductor market share. Rad-hard MCUs/power converters for satellites
+3402.T  # Toray Industries (Tokyo) — CONFIRMED: TenCate exec quote "We support SpaceX on all key platforms with advanced composites"
+ACX.MC  # Acerinox (Madrid) — SPECULATED: Acquired Haynes International ($970M, Nov 2024). Haynes = world leader in high-temp Ni superalloys. Probable SpaceX supplier via HASTELLOY alloys
+ETN     # Eaton Corporation — SPECULATED: Cryogenic propulsion valves, check/relief valves, tank assemblies for launch vehicles. Space-qualified product line
+HWM     # Howmet Aerospace — SPECULATED: #1 global aerospace fastener supplier + superalloy castings. Any rocket needs these
+LSCC    # Lattice Semiconductor — SPECULATED: Low-power rad-tolerant FPGAs for LEO satellite subsystems
+
+# NEW from SEC Filing Hunt (2026-03-28)
+2454.TW    # MediaTek — CONFIRMED (teardown + GitHub): MT7629 Wi-Fi SoC + MT7762/MT7761 in Starlink routers including Mini
+AI.PA      # Air Liquide — CONFIRMED: Operates NASA LOX plant at KSC (265 tonnes/day). Supplies LOX for Falcon 9 launches at Cape
+KULR       # KULR Technology — PROBABLE: Battery safety testing for "one of world's largest private space companies" (thinly veiled SpaceX)
+
+# NEW from BOM Teardown Deep Dive (2026-03-28)
+# === TIER 1 NEW CHOKEPOINTS ===
+CDNS       # Cadence Design Systems — CONFIRMED: Sierra SerDes IP baked into Catapult SoC architecture. EDA tools for SpaceX chip design. Deep architectural dependency
+ARM        # ARM Holdings — CONFIRMED: Cortex-A53 CPU IP in EVERY Starlink terminal SoC (Catson/Catapult). No x86 alternative at this power envelope
+# Xsight Labs — PRIVATE (backed by AMD/Intel/Marvell): X2 12.8Tbps switch for V3 satellites on TSMC N5. MAJOR chokepoint. No public pure-play
+
+# === TIER 2 CONFIRMED (Router/Terminal BOM) ===
+QCOM       # Qualcomm — **KEY D2C PLAY**: X105 5G NR NTN modem with native Starlink connectivity. In billions of future phones. Paradigm shift beyond old Gen1 router
+SWKS       # Skyworks Solutions — CONFIRMED: WiFi RF frontends (SKY85743/SKY8533) in Gen1 router
+MRVL       # Marvell Technology — CONFIRMED: Alaska 88E1512 Ethernet PHY in Gen2 router
+NXPI       # NXP Semiconductors — PROBABLE: PowerPC MCUs in Falcon 9 engine/grid fin control
+2344.TW    # Winbond Electronics — CONFIRMED (teardown): 1Gbit NAND flash in routers
+603986.SS  # GigaDevice — CONFIRMED (teardown): 128Mbit SPI NOR flash in Gen1 router (Shanghai-listed)
+2383.TW    # Elite Material Co — CONFIRMED: High-frequency PCB laminate materials for Starlink
+6412.TW    # Chicony Power Technology — CONFIRMED (teardown): Router power supplies (50V 2.4A). NOTE: was incorrectly listed as 2392.TW; 2392.TW = Cheng Uei Precision (unrelated)
+SNPS       # Synopsys — CONFIRMED: EDA tools for SpaceX custom chip design (job listings)
+
+# CONFIRMED NON-SUPPLIERS (eliminate from future research)
+# Aerojet Rocketdyne (L3Harris) — NOT a SpaceX supplier; they are COMPETITORS in propulsion
+# Starship heat shield tiles — Made ENTIRELY in-house at SpaceX's "Bakery" facility at Cape Canaveral
+# Laser ISL terminals — SpaceX in-house (8,000+ in orbit). Mynaric/CACI serve other constellations
+# Honeywell — No confirmed SpaceX supplier relationship; SpaceX builds navigation in-house
+# PCTEL, Airgain, BWX Technologies — No SpaceX connection found
+
+# SpaceX Vietnam Manufacturing Hub
+# SpaceX explored $1.5B Vietnam manufacturing hub (Vietnamese govt disclosure Sept 2024)
+# Driving Taiwan suppliers to relocate: WNC→Vietnam, UMT→Vietnam, Chin-Poon→Thailand, Shenmao→Vietnam

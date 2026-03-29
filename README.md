@@ -49,6 +49,34 @@ HBM supply --> HBM bonding --> test / probe --> SSD controller --> AI storage
 Interactive map:
 - https://timlihk.github.io/Investing/memory-supercycle/supply-chain-map.html
 
+### [SpaceX Supply Chain](SpaceX-supply-chain/)
+75 companies in universe, 54 scored, 56 reports/analyses. 29 confirmed suppliers. SpaceX IPO expected June 2026 at $1.75T. Most "SpaceX supplier" claims are speculation — vertical integration is the #1 risk.
+
+**Top Picks — Valuation-Adjusted (as of 2026-03-29):**
+| Ticker | Score | Verdict | SpaceX % | Target | Key Thesis |
+|--------|-------|---------|----------|--------|------------|
+| STM | 82 | BUY | 5-8% ($600-950M) | $40 | Crown jewel RFOC at 23.4% OM (5x company avg). Trough auto masks Starlink growth |
+| FLTCF | 74 | BUY | 83% ($60M) | 220-240p | Best risk/reward. GaN SSPAs. Min $10M/yr + 15% equity warrants. £200M capacity |
+| 014300.KS | 62 | BUY | <1% rising | N/A | Cheapest confirmed supplier. Temple TX plant Q1 2026. 6% yield |
+| 3491.TWO | 72 | HOLD | 60-70% | TWD 550 | Great but 101x P/E. Accumulate at TWD 450-550 |
+| 2313.TW | 60 | HOLD | 15-22% ($280-440M) | TWD 160 | 80% LEO PCB share but 42x fwd P/E. SpaceX building own PCB factory |
+
+**Key Supply Chain Discovery (Confirmed Only):**
+```
+STM (5B+ custom co-designed RF chips) → Every Starlink terminal + satellite
+FLTCF (GaN SSPAs, strategic partner) → Ground station RF amplifiers
+AMD Versal (CEO-confirmed) → Every Starlink V2+ satellite SoC
+QCOM X105 (D2C modem) → Every future smartphone gets native Starlink connectivity
+3491.TWO (RF modules) → Satellite comms, expanding in Vietnam at SpaceX request
+Compeq 2313.TW (80% LEO PCB share) → Satellite bodies + ground stations
+SeAH Besteel (Ni-Cr-Ti alloys) → Raptor engines
+Sphere Corp ($1.05B/10yr deal) → Superalloys for engines/nozzles
+```
+
+Interactive dashboard:
+- https://timlihk.github.io/Investing/SpaceX-supply-chain/
+- Direct dashboard page: https://timlihk.github.io/Investing/SpaceX-supply-chain/spacex-dashboard.html
+
 ## Methodology
 - Pull IR presentations, quarterly/annual filings for every company
 - Focus on moats and chokepoints (monopoly positions, sole-source relationships)

@@ -1,0 +1,63 @@
+ticker	breakage	alternatives	qualification	cogs	capacity	chokepoint_score	chokepoint_tier
+ATRO	1	1	2	1	1	6	Commodity / Indirect
+HEI	2	2	3	2	2	11	Oligopoly with Moat
+DCO	2	2	3	1	2	10	Competitive / Linked
+ATI	5	4	5	2	4	20	Duopoly Chokepoint
+PH	3	2	3	1	2	11	Oligopoly with Moat
+MOG.A	4	3	4	2	3	16	Duopoly Chokepoint
+VELO	3	3	4	2	2	14	Oligopoly with Moat
+SIF	3	2	4	2	3	14	Oligopoly with Moat
+TDG	1	2	4	5	2	14	Oligopoly with Moat
+GTLS	1	2	3	1	2	9	Competitive / Linked
+FLTCF	4	4	4	2	3	17	Duopoly Chokepoint
+HXL	4	4	5	2	3	18	Duopoly Chokepoint
+CRS	5	3	4	3	4	19	Duopoly Chokepoint
+MTRN	5	5	5	3	4	22	Monopoly Chokepoint
+PKE	3	2	3	2	2	12	Oligopoly with Moat
+STLD	1	1	1	1	1	5	Commodity / Indirect
+GHM	4	4	4	3	3	18	Duopoly Chokepoint
+AVGO	1	1	1	1	1	4	Commodity / Indirect (wrong company)
+TXN	2	1	2	1	1	7	Commodity / Indirect
+DIOD	2	1	2	1	1	7	Commodity / Indirect
+014300.KS	3	3	4	3	3	16	Duopoly Chokepoint
+NIC.AX	1	1	1	2	1	6	Commodity / Indirect
+3491.TWO	4	4	4	4	3	19	Duopoly Chokepoint
+2313.TW	4	4	4	3	2	17	Duopoly Chokepoint
+6271.TW	4	4	4	3	3	18	Duopoly Chokepoint
+6285.TW	3	3	3	3	4	16	Duopoly Chokepoint
+2355.TW	3	2	3	2	2	12	Oligopoly with Moat
+4916.TW	3	2	3	2	2	12	Oligopoly with Moat
+6568.TWO	3	2	3	2	2	12	Oligopoly with Moat
+3138.TW	3	2	3	1	2	11	Competitive / Linked
+2312.TW	2	2	2	1	2	9	Competitive / Linked
+4927.TW	2	2	2	1	1	8	Competitive / Linked
+STM	5	4	4	4	3	20	Duopoly Chokepoint
+LIN	2	2	1	1	3	9	Competitive / Linked
+APD	1	1	1	1	1	5	Commodity / Indirect
+CMTL	1	1	2	1	1	5	Commodity / Indirect (unconfirmed)
+MPWR	3	2	2	2	2	11	Oligopoly with Moat
+M0YN.DE	1	2	2	1	1	5	Commodity / Indirect (bankrupt)
+TRMB	1	1	1	1	1	4	Commodity / Indirect (not supplier)
+347700.KQ	3	2	3	2	3	13	Oligopoly with Moat
+AMD	4	3	4	3	2	16	Duopoly Chokepoint
+3402.T	4	4	5	2	3	18	Duopoly Chokepoint
+6723.T	4	4	4	1	3	16	Duopoly Chokepoint
+3481.TW	2	2	3	1	2	10	Competitive / Linked
+3305.TW	2	1	2	3	1	9	Competitive / Linked
+ADI	2	1	2	1	1	7	Competitive / Linked
+ON	1	1	2	1	1	6	Commodity / Indirect
+MCHP	3	3	4	2	2	14	Oligopoly with Moat
+LFUS	1	1	1	1	1	5	Commodity / Indirect
+2344.TW	1	1	2	2	1	7	Commodity / Indirect
+2383.TW	3	3	3	2	2	13	Oligopoly with Moat
+6412.TW	1	1	2	1	1	6	Commodity / Indirect
+MU	1	1	1	1	1	5	Commodity / Indirect
+NXPI	3	2	2	1	2	10	Competitive with Differentiation
+SNPS	3	3	2	1	2	11	Oligopoly with Moat
+HWM	3	2	3	2	2	12	Oligopoly with Moat
+ACX.MC	3	2	3	1	2	11	Competitive / Linked
+ETN	2	2	3	1	2	10	Competitive / Linked
+LSCC	2	2	3	1	2	10	Competitive / Linked
+KULR	1	1	2	1	1	6	Commodity / Indirect
+603986.SS	1	1	1	1	1	5	Commodity / Indirect
+TRYIY	4	4	5	2	3	18	Duopoly Chokepoint

@@ -1,0 +1,17 @@
+{
+  "name": "spacex-supply-chain-dashboard",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static dashboard for the SpaceX supply chain research universe",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "refresh:dashboard": "node scripts/generate-spacex-dashboard-data.mjs"
+  },
+  "dependencies": {
+    "papaparse": "^5.5.3",
+    "yahoo-finance2": "^3.13.2"
+  }
+}
