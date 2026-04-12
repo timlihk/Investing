@@ -794,7 +794,7 @@ tbody tr.is-selected{background:rgba(15,108,75,.08)}
   dataScript.src = `optics-dashboard-data.js?v=${cacheBucket}`;
   dataScript.onload = () => {
     const appScript = document.createElement("script");
-    appScript.src = "optics-dashboard.js";
+    appScript.src = `optics-dashboard.js?v=${cacheBucket}`;
     document.body.appendChild(appScript);
   };
   document.body.appendChild(dataScript);
