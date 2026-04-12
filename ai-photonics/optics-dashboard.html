@@ -793,7 +793,18 @@ tbody tr.is-selected{background:rgba(15,108,75,.08)}
   </div>
 </div>
 
-<script src="optics-dashboard-data.js"></script>
-<script src="optics-dashboard.js"></script>
+<script>
+(() => {
+  const cacheBucket = Math.floor(Date.now() / 600000);
+  const dataScript = document.createElement("script");
+  dataScript.src = `optics-dashboard-data.js?v=${cacheBucket}`;
+  dataScript.onload = () => {
+    const appScript = document.createElement("script");
+    appScript.src = "optics-dashboard.js";
+    document.body.appendChild(appScript);
+  };
+  document.body.appendChild(dataScript);
+})();
+</script>
 </body>
 </html>
