@@ -83,3 +83,19 @@ npm run refresh:dashboard
 
 Automated refresh:
 - `.github/workflows/refresh-optics-dashboard.yml` refreshes the dashboard on a schedule, on manual dispatch, and when the research inputs change on `main`.
+
+## Cloudflare Pages
+This repo is ready to publish as a static Cloudflare Pages project.
+
+Recommended Pages settings:
+- Framework preset: `None`
+- Production branch: `main`
+- Build command: `npm ci && npm run build`
+- Build output directory: `.`
+- Root directory: `ai-photonics` if you connect the monorepo root, otherwise leave blank if this folder is its own repo
+- Environment variable: `NODE_VERSION=20`
+
+Notes:
+- `npm run build` regenerates `optics-dashboard-data.js` before deploy.
+- The output directory is the repo root because the site is plain HTML / JS, not a `dist/` app.
+- If Cloudflare Pages build stability becomes an issue because Yahoo Finance is queried during build, move the data refresh upstream into GitHub Actions and let Pages publish prebuilt artifacts only.
