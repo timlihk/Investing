@@ -88,10 +88,33 @@ CAMT       # Camtek — advanced packaging/SiPh AOI inspection (NASDAQ)
 5801.T     # Furukawa Electric — DFB laser chips for SiPh CW sources (Tokyo)
 6971.T     # Kyocera — ceramic packages for optical modules (Tokyo)
 
+# Discovery Wave 3 — Optical Networking / ODM
+ADTN       # Adtran Holdings — post-ADVA optical networking, 4th-tier (NASDAQ)
+TEL        # TE Connectivity — #2 connector company, AI DC growing 70% (NYSE)
+2308.TW    # Delta Electronics — DC power/cooling mega-cap, not photonics (TWSE)
+2345.TW    # Accton Technology — Edgecore white box switch ODM, +125% rev (TWSE)
+
+# Discovery Wave 3 — Chinese STAR Market / ChiNext Optical
+688498.SS  # Yuanjie Semi (源杰科技) — China's InP laser chip monopoly, 20/25 CP (STAR)
+688048.SS  # Everbright Photonics (长光华芯) — VCSEL + CW DFB, pre-profit (STAR)
+300620.SZ  # Adv. Fiber Resources (光库科技) — TFLN modulator pioneer (ChiNext)
+688313.SS  # Shijia Photons (仕佳光子) — AWG chip + PLC splitter leader (STAR)
+688167.SS  # Focuslight (炬光科技) — WLO/micro-optics for CPO/OCS (STAR)
+
+# Discovery Wave 3 — European / Misc Equipment
+MYCR.ST    # Mycronic — SiPh mask writers + MRSI photonic die bonders (Stockholm)
+LWLG       # Lightwave Logic — EO polymer for SiPh modulators, pre-revenue (NASDAQ)
+
+# Scored but no full report (too generic or commodity)
+# ATS.VI   # AT&S — IC substrates, 9.5% GM, Ibiden covers this layer better
+# 300570.SZ # T&S Comms (太辰光) — 30% MPO share but standardized commodity connector
+
 # Monitor List — Future Coverage
 # 4980.T   # Dexerials — photonics adhesives subsidiary, revisit at 25%+ photonics rev
 # AEVA     # Aeva Technologies — SOA for CPO, revisit when DC revenue materializes
 # 3008.TW  # Largan Precision — CPO collimator optics, revisit when revenue quantifiable
 # SMOP.OL  # Smartoptics — European DCI pure-play, revisit at $100M+ revenue
-# LWLG     # Lightwave Logic — EO polymer modulators, revisit at first commercial revenue
 # Nouryon  # MOCVD precursor chemicals monopoly (TMGa/TMIn), watch for IPO
+# XNDU     # Xanadu Quantum — photonic quantum computing IPO Mar 2026, not AI interconnect
+# Lightmatter # Private $4.4B — photonic AI compute, potential IPO
+# Ayar Labs   # Private $1.5B+ — optical I/O chiplets, potential IPO
