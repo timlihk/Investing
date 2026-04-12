@@ -17,6 +17,7 @@ const SEGMENT_ORDER = [
   "Components & Connectivity",
   "Modules & Transceivers",
   "Networking & Systems",
+  "Context & Adjacent",
   "Fiber & Connectors",
   "Test & Infrastructure",
   "Assembly & Packaging",
@@ -25,9 +26,10 @@ const SEGMENT_ORDER = [
 ];
 
 const YAHOO_SYMBOL_OVERRIDES = {
+  "3081.TW": "3081.TWO",
   "3105.TW": "3105.TWO",
   "4991.TW": "4991.TWO",
-  "8258.TW": "4971.TWO"
+  "4971.TW": "4971.TWO"
 };
 
 const TRADINGVIEW_SYMBOL_OVERRIDES = {
@@ -39,6 +41,7 @@ const TRADINGVIEW_SYMBOL_OVERRIDES = {
   "2382.TW": "TWSE:2382",
   "3231.TW": "TWSE:3231",
   "002475.SZ": "SZSE:002475",
+  "3081.TW": "TPEX:3081",
   "6503.T": "TSE:6503",
   "6777.T": "TSE:6777",
   "5802.T": "TSE:5802",
@@ -55,7 +58,7 @@ const TRADINGVIEW_SYMBOL_OVERRIDES = {
   "3105.TW": "TPEX:3105",
   "XFAB.PA": "EURONEXT:XFAB",
   "SOI.PA": "EURONEXT:SOI",
-  "8258.TW": "TPEX:4971",
+  "4971.TW": "TPEX:4971",
   "5016.T": "TSE:5016",
   "IQE.L": "LSE:IQE",
   "300308.SZ": "SZSE:300308",
@@ -156,28 +159,30 @@ async function readCompanyMetrics() {
 
 async function readReportFiles() {
   const entries = await fs.readdir(reportsDir);
-  return entries
+  return Promise.all(entries
     .filter((entry) => entry.endsWith(".md"))
-    .map((entry) => ({
+    .map(async (entry) => ({
       file: entry,
       base: entry.replace(/\.md$/i, ""),
-      normalized: normalizeToken(entry.replace(/\.md$/i, ""))
-    }));
+      normalized: normalizeToken(entry.replace(/\.md$/i, "")),
+      path: path.posix.join("reports", entry),
+      markdown: await fs.readFile(path.join(reportsDir, entry), "utf8")
+    })));
 }
 
-function findReportPath(ticker, reportFiles) {
+function findReportEntry(ticker, reportFiles) {
   const tickerKey = normalizeToken(ticker);
 
   const exact = reportFiles.find((entry) => entry.normalized === tickerKey);
   if (exact) {
-    return path.posix.join("reports", exact.file);
+    return exact;
   }
 
   const partialMatches = reportFiles
     .filter((entry) => tickerKey.startsWith(entry.normalized) || entry.normalized.startsWith(tickerKey))
     .sort((left, right) => right.normalized.length - left.normalized.length);
 
-  return partialMatches[0] ? path.posix.join("reports", partialMatches[0].file) : null;
+  return partialMatches[0] ?? null;
 }
 
 function formatTradingViewSymbol(ticker, exchangeName) {
@@ -398,13 +403,64 @@ function compressSeries(values, maxPoints = 72) {
   return sample;
 }
 
-function buildMarketMetrics(symbol, summary, chart) {
+function normalizeAnnualFinancials(entries) {
+  return (entries || [])
+    .filter((entry) => entry?.date)
+    .sort((left, right) => new Date(left.date).getTime() - new Date(right.date).getTime())
+    .slice(-5)
+    .map((entry) => ({
+      period: String(new Date(entry.date).getUTCFullYear()),
+      endDate: new Date(entry.date).toISOString().slice(0, 10),
+      revenue: roundNumber(entry.totalRevenue, 0),
+      ebitda: roundNumber(entry.EBITDA ?? entry.normalizedEBITDA, 0),
+      netIncome: roundNumber(entry.netIncome ?? entry.netIncomeCommonStockholders, 0),
+      eps: roundNumber(entry.dilutedEPS ?? entry.basicEPS, 2)
+    }));
+}
+
+function normalizeForwardEstimates(trendEntries) {
+  return (trendEntries || [])
+    .filter((entry) => entry?.period === "0y" || entry?.period === "+1y")
+    .sort((left, right) => new Date(left.endDate).getTime() - new Date(right.endDate).getTime())
+    .map((entry) => ({
+      period: `${new Date(entry.endDate).getUTCFullYear()}E`,
+      endDate: new Date(entry.endDate).toISOString().slice(0, 10),
+      revenue: roundNumber(entry.revenueEstimate?.avg, 0),
+      revenueGrowth: roundNumber((entry.revenueEstimate?.growth ?? null) * 100, 1),
+      eps: roundNumber(entry.earningsEstimate?.avg, 2),
+      epsGrowth: roundNumber((entry.earningsEstimate?.growth ?? null) * 100, 1),
+      analysts: entry.revenueEstimate?.numberOfAnalysts ?? entry.earningsEstimate?.numberOfAnalysts ?? null
+    }));
+}
+
+function buildMarketMetrics(symbol, summary, chart, annualFinancials) {
   const quotes = (chart?.quotes || []).filter((quote) => Number.isFinite(quote.close));
   const closes = quotes.map((quote) => quote.close);
   const chartSeries = quotes.map((quote) => ({
     time: new Date(quote.date).toISOString().slice(0, 10),
     value: roundNumber(quote.close, 2)
   }));
+  const chartCandleSeries = quotes
+    .filter((quote) => [quote.open, quote.high, quote.low, quote.close].every((value) => Number.isFinite(value)))
+    .map((quote) => ({
+      time: new Date(quote.date).toISOString().slice(0, 10),
+      open: roundNumber(quote.open, 2),
+      high: roundNumber(quote.high, 2),
+      low: roundNumber(quote.low, 2),
+      close: roundNumber(quote.close, 2)
+    }));
+  const chartVolumeSeries = quotes
+    .filter((quote) => Number.isFinite(quote.volume))
+    .map((quote, index) => {
+      const previousClose = index > 0 ? quotes[index - 1].close : quote.close;
+      const rising = quote.close >= previousClose;
+
+      return {
+        time: new Date(quote.date).toISOString().slice(0, 10),
+        value: Math.round(quote.volume),
+        color: rising ? "rgba(15,108,75,0.45)" : "rgba(198,74,61,0.45)"
+      };
+    });
   const latestClose = closes.at(-1) ?? null;
   const now = new Date();
   const oneMonthDate = new Date(now);
@@ -417,12 +473,17 @@ function buildMarketMetrics(symbol, summary, chart) {
 
   const summaryPrice = summary?.price || {};
   const summaryDetail = summary?.summaryDetail || {};
+  const defaultKeyStatistics = summary?.defaultKeyStatistics || {};
+  const financialData = summary?.financialData || {};
+  const earningsTrend = summary?.earningsTrend || {};
   const latestPrice = summaryPrice.regularMarketPrice ?? latestClose ?? null;
   const week52High = summaryDetail.fiftyTwoWeekHigh ?? chart?.meta?.fiftyTwoWeekHigh ?? (closes.length ? Math.max(...closes) : null);
   const week52Low = summaryDetail.fiftyTwoWeekLow ?? chart?.meta?.fiftyTwoWeekLow ?? (closes.length ? Math.min(...closes) : null);
   const sma20 = movingAverage(closes, 20);
   const sma50 = movingAverage(closes, 50);
   const sma200 = movingAverage(closes, 200);
+  const historicalFinancials = normalizeAnnualFinancials(annualFinancials);
+  const forwardFinancials = normalizeForwardEstimates(earningsTrend.trend);
 
   return {
     exchangeName: summaryPrice.exchangeName ?? chart?.meta?.exchangeName ?? null,
@@ -431,6 +492,20 @@ function buildMarketMetrics(symbol, summary, chart) {
     marketCap: summaryPrice.marketCap ?? null,
     priceToSales: roundNumber(summaryDetail.priceToSalesTrailing12Months, 2),
     trailingPE: roundNumber(summaryDetail.trailingPE, 2),
+    forwardPE: roundNumber(summaryDetail.forwardPE, 2),
+    priceToBook: roundNumber(defaultKeyStatistics.priceToBook, 2),
+    enterpriseValue: defaultKeyStatistics.enterpriseValue ?? financialData.enterpriseValue ?? null,
+    enterpriseToEbitda: roundNumber(defaultKeyStatistics.enterpriseToEbitda ?? financialData.enterpriseToEbitda, 2),
+    enterpriseToRevenue: roundNumber(defaultKeyStatistics.enterpriseToRevenue ?? financialData.enterpriseToRevenue, 2),
+    bookValuePerShare: roundNumber(defaultKeyStatistics.bookValue, 2),
+    sharesOutstanding: summaryPrice.sharesOutstanding ?? defaultKeyStatistics.sharesOutstanding ?? null,
+    totalCash: financialData.totalCash ?? null,
+    totalDebt: financialData.totalDebt ?? null,
+    ebitdaTtm: roundNumber(financialData.ebitda, 0),
+    revenueTtm: roundNumber(financialData.totalRevenue, 0),
+    grossMargins: roundNumber((financialData.grossMargins ?? null) * 100, 1),
+    operatingMargins: roundNumber((financialData.operatingMargins ?? null) * 100, 1),
+    ebitdaMargins: roundNumber((financialData.ebitdaMargins ?? null) * 100, 1),
     oneMonthReturn: roundNumber(calcReturn(latestPrice, oneMonthClose), 2),
     ytdReturn: roundNumber(calcReturn(latestPrice, yearStartClose), 2),
     oneYearReturn: roundNumber(calcReturn(latestPrice, oneYearClose), 2),
@@ -445,15 +520,22 @@ function buildMarketMetrics(symbol, summary, chart) {
     above200Sma: Number.isFinite(latestPrice) && Number.isFinite(sma200) ? latestPrice >= sma200 : null,
     sparkline: compressSeries(closes, 72),
     chartSeries,
-    chartPoints: closes.length
+    chartCandleSeries,
+    chartVolumeSeries,
+    chartPoints: closes.length,
+    historicalFinancials,
+    forwardFinancials,
+    longTermGrowth: roundNumber((earningsTrend.trend || []).find((entry) => entry?.period === "+5y")?.growth * 100, 1)
   };
 }
 
 async function fetchSymbolData(symbol) {
-  const modules = ["price", "summaryDetail"];
+  const modules = ["price", "summaryDetail", "defaultKeyStatistics", "financialData", "earningsTrend"];
   const period2 = new Date();
   const period1 = new Date(period2);
   period1.setUTCFullYear(period1.getUTCFullYear() - 1);
+  const fundamentalsPeriod1 = new Date(period2);
+  fundamentalsPeriod1.setUTCFullYear(fundamentalsPeriod1.getUTCFullYear() - 6);
 
   const summary = await retry(
     `${symbol} quoteSummary`,
@@ -467,7 +549,23 @@ async function fetchSymbolData(symbol) {
     () => yahooFinance.chart(symbol, { period1, period2, interval: "1d" })
   );
 
-  return { summary, chart };
+  await sleep(160);
+
+  const annualFinancials = await retry(
+    `${symbol} fundamentalsTimeSeries`,
+    () =>
+      yahooFinance.fundamentalsTimeSeries(symbol, {
+        period1: fundamentalsPeriod1,
+        period2,
+        type: "annual",
+        module: "financials"
+      })
+  ).catch((error) => {
+    console.warn(`[fundamentals] ${symbol} annual financials unavailable: ${error.message}`);
+    return [];
+  });
+
+  return { summary, chart, annualFinancials };
 }
 
 function buildRows(companies, resultsMap, reportFiles, marketMap) {
@@ -476,8 +574,9 @@ function buildRows(companies, resultsMap, reportFiles, marketMap) {
     const chokepointProfile = buildChokepointProfile(company, research);
     const market = marketMap.get(company.ticker);
     const yahooSymbol = YAHOO_SYMBOL_OVERRIDES[company.ticker] || company.ticker;
+    const reportEntry = findReportEntry(company.ticker, reportFiles);
     const marketMetrics = market
-      ? buildMarketMetrics(company.ticker, market.summary, market.chart)
+      ? buildMarketMetrics(company.ticker, market.summary, market.chart, market.annualFinancials)
       : {
           exchangeName: null,
           currency: null,
@@ -485,6 +584,20 @@ function buildRows(companies, resultsMap, reportFiles, marketMap) {
           marketCap: null,
           priceToSales: null,
           trailingPE: null,
+          forwardPE: null,
+          priceToBook: null,
+          enterpriseValue: null,
+          enterpriseToEbitda: null,
+          enterpriseToRevenue: null,
+          bookValuePerShare: null,
+          sharesOutstanding: null,
+          totalCash: null,
+          totalDebt: null,
+          ebitdaTtm: null,
+          revenueTtm: null,
+          grossMargins: null,
+          operatingMargins: null,
+          ebitdaMargins: null,
           oneMonthReturn: null,
           ytdReturn: null,
           oneYearReturn: null,
@@ -499,7 +612,12 @@ function buildRows(companies, resultsMap, reportFiles, marketMap) {
           above200Sma: null,
           sparkline: [],
           chartSeries: [],
-          chartPoints: 0
+          chartCandleSeries: [],
+          chartVolumeSeries: [],
+          chartPoints: 0,
+          historicalFinancials: [],
+          forwardFinancials: [],
+          longTermGrowth: null
         };
 
     return {
@@ -511,7 +629,8 @@ function buildRows(companies, resultsMap, reportFiles, marketMap) {
       thesis: company.thesis ?? null,
       catalystShort: company.catalyst ?? null,
       share: company.share ?? null,
-      reportPath: findReportPath(company.ticker, reportFiles),
+      reportPath: reportEntry?.path ?? null,
+      reportMarkdown: reportEntry?.markdown ?? null,
       tradingViewSymbol: TRADINGVIEW_SYMBOL_OVERRIDES[company.ticker] || formatTradingViewSymbol(yahooSymbol, marketMetrics.exchangeName),
       yahooSymbol,
       verdict: research.verdict ?? company.verdict ?? null,

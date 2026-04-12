@@ -5,6 +5,16 @@
 ### Thesis (2-3 sentences)
 Marvell is making the boldest bet on photonic interconnects of any large semiconductor company -- acquiring Celestial AI for $3.25-5.5B (photonic fabric technology for multi-rack AI scale-up), while simultaneously expanding its 1.6T optical DSP portfolio (Ara platform, mass-shipping on 3nm) and dominating custom AI silicon design (50+ programs with all 4 hyperscalers). With 74% of revenue from data center, 60% gross margins, and AI representing the majority of revenue, Marvell has completed its transformation into an AI-first data center pure-play. The Celestial AI acquisition positions Marvell uniquely at the intersection of compute and photonics.
 
+### Latest Official Management Outlook (2026-03-05)
+Sources:
+- [Marvell Q4 and FY2026 results](https://investor.marvell.com/news-events/press-releases/detail/1011/marvell-technology-inc-reports-fourth-quarter-and-fiscal-year-2026-financial-results)
+- [OFC 2026 1.6T DSP portfolio expansion](https://investor.marvell.com/news-events/press-releases/detail/1013/marvell-ushers-in-the-1-6t-era-with-expanded-optical-dsp-platform-portfolio-redefining-ai-data-center-end-to-end-connectivity)
+
+- Marvell reported record FY2026 revenue of $8.195B and Q4 revenue of $2.219B. Management said growth was driven by robust AI demand and that bookings are continuing to grow at a record pace.
+- For Q1 FY2027, management guided to $2.4B revenue plus or minus 5%, with 58.25%-59.25% non-GAAP gross margin. Management also said it expects YoY revenue growth to accelerate each quarter in FY2027.
+- Demand read-through: this is not just AI enthusiasm. Management tied the outlook to continued strength in data center, record design wins, and over 50 new opportunities across more than 10 customers.
+- Supply-side read-through: the OFC 2026 release broadens the optical DSP roadmap into the 1.6T era, which supports the view that Marvell is positioning to capture more optical content rather than just ride custom-compute demand. The main uncertainty is still integration and monetization timing for Celestial AI and XConn, not end-demand softness.
+
 ### Historical & Projected Financials
 | Period | Revenue | DC Revenue | Gross Margin (NG) | Op Margin (NG) | Notes |
 |--------|---------|------------|-------------------|----------------|-------|

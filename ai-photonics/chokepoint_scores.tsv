@@ -24,6 +24,7 @@ MRVL	3	3	4	4	3	17	Duopoly Chokepoint
 GFS	3	3	4	5	4	19	Duopoly Chokepoint
 AVGO	5	4	4	5	4	22	Monopoly Chokepoint
 IQE.L	3	3	4	5	3	18	Duopoly Chokepoint
+2455.TW	4	4	4	4	3	19	Duopoly Chokepoint
 GLW	3	3	3	3	3	15	Oligopoly with Moat
 5803.T	3	3	3	3	3	15	Oligopoly with Moat
 600487.SS	2	3	2	3	2	12	Oligopoly with Moat
@@ -69,6 +70,9 @@ NOK	2	3	3	3	2	13	Oligopoly with Moat
 STLTECH.NS	2	3	2	3	2	12	Oligopoly with Moat
 4991.TW	3	3	3	4	2	15	Oligopoly with Moat
 8258.TW	4	4	4	5	3	20	Duopoly Chokepoint
+3081.TW	3	3	4	5	2	17	Duopoly Chokepoint
+6442.TW	2	3	3	4	2	14	Oligopoly with Moat
+2408.TW	1	1	1	2	1	6	Competitive / Linked
 UMC	2	3	4	4	3	16	Duopoly Chokepoint
 300394.SZ	3	3	3	4	3	16	Duopoly Chokepoint
 000988.SZ	2	3	2	3	2	12	Oligopoly with Moat
@@ -77,3 +81,33 @@ STM	2	3	3	4	3	15	Oligopoly with Moat
 AMAT	3	3	4	5	3	18	Duopoly Chokepoint
 LRCX	3	3	4	5	3	18	Duopoly Chokepoint
 ASML	5	5	5	5	5	25	Monopoly Chokepoint
+KLAC	4	4	4	5	3	20	Duopoly Chokepoint
+6965.T	1	1	1	1	1	5	Commodity
+4062.T	4	3	3	4	3	17	Duopoly Chokepoint
+ENTG	2	2	3	4	2	13	Oligopoly with Moat
+4063.T	4	3	3	4	3	17	Duopoly Chokepoint
+6890.T	3	2	2	4	2	13	Oligopoly with Moat
+5801.T	2	2	3	4	3	14	Oligopoly with Moat
+6971.T	2	2	3	4	2	13	Oligopoly with Moat
+ONTO	2	2	2	4	2	12	Oligopoly with Moat
+4004.T	2	2	2	4	2	12	Oligopoly with Moat
+5344.T	3	3	4	4	3	17	Duopoly Chokepoint
+HIMX	4	4	3	5	3	19	Duopoly Chokepoint
+
+3363.TWO	3	3	4	4	3	17	Duopoly Chokepoint
+6524.T	4	3	3	5	3	18	Duopoly Chokepoint
+KEYS	3	3	3	4	3	16	Duopoly Chokepoint
+5714.T	2	3	2	5	1	13	Oligopoly with Moat
+SITM	3	3	3	5	3	17	Duopoly Chokepoint
+
+011790.KS	2	3	3	4	3	15	Oligopoly with Moat
+CAMT	3	3	3	4	1	14	Oligopoly with Moat
+6754.T	3	3	3	4	2	15	Oligopoly with Moat
+TEL	3	3	3	4	2	15	Oligopoly with Moat
+ADTN	1	2	2	2	1	8	Competitive / Linked
+2308.TW	1	1	1	2	1	6	Competitive / Linked
+2345.TW	2	2	3	3	3	13	Oligopoly with Moat
+688498.SS	4	4	4	5	3	20	Duopoly Chokepoint
+688048.SS	3	3	3	4	2	15	Oligopoly with Moat
+300620.SZ	3	3	4	4	2	16	Duopoly Chokepoint
+688313.SS	3	3	3	3	3	15	Oligopoly with Moat

@@ -120,7 +120,7 @@ LOOP FOREVER:
 | 4. What % of customer's COGS is this product? | <5% = 5 (low cost, high pain), 5-15% = 3, >15% = 1 |
 | 5. Is capacity physically constrained? | Yes, laws of physics/geology = 5, Yes, capex cycle = 3, No = 1 |
 
-**Chokepoint Score = sum / 25 → multiply into Business Quality score**
+**Chokepoint Score = sum out of 25, then convert to the 30-point `Chokepoint Strength` dimension using `criteria.md`.**
 
 A company scoring 20+/25 on the chokepoint test is a **monopoly chokepoint** — the highest conviction tier.
 
@@ -150,6 +150,8 @@ For the specific company, document:
 - Recent news: earnings, guidance, analyst actions
 - Market-wide put/call ratio for macro context
 
+Use these signals for the explicit post-score adjustments in `criteria.md`. Do not count the same RSI / insider / earnings / sentiment item inside both the base score and the adjustment section.
+
 ### 4. Score the Stock
 
 Use `criteria.md` rubric with chokepoint-adjusted weights:
@@ -160,7 +162,7 @@ Use `criteria.md` rubric with chokepoint-adjusted weights:
 | **Financial Strength** | 25 pts | Margins, FCF, debt, ROIC |
 | **Growth** | 20 pts | Revenue growth, TAM expansion |
 | **Valuation** | 15 pts | Multiples vs peers and growth |
-| **Catalyst & Timing** | 10 pts | News, sentiment, insider, RSI |
+| **Catalyst & Timing** | 10 pts | Near-term demand inflection, capacity unlock, product cycle, setup |
 
 **Signal Adjustments** (applied after base score):
 - Insider cluster buying (3+ buys, 90 days): **+3**
@@ -174,15 +176,34 @@ Use `criteria.md` rubric with chokepoint-adjusted weights:
 
 ### 5. Write the Research Note
 
-Save to `reports/<TICKER>.md`:
+Save to `reports/<TICKER>.md`.
+
+Report standards:
+- Every factual claim that is not obvious from price action must be traceable to a named source in the report.
+- Every metric must include an `As of` date or reporting period.
+- Distinguish clearly between **reported**, **management-guided**, and **estimated** figures.
+- If a number is estimated, explain the basis in one short clause.
+- Include a score breakdown so the final score can be reconstructed.
+- Maintain the canonical 5-question chokepoint dataset in `chokepoint_scores.tsv`.
+
+Template:
 
 ```
 # <TICKER> - <Company Name>
 ## Date: <date>
 ## Score: <total>/100
 ## Chokepoint Tier: Monopoly / Duopoly / Oligopoly / Commodity
+## As Of: <price date> | Latest Filing / Quarter: <period>
 
 ### Thesis (2-3 sentences — lead with the chokepoint)
+
+### Source Trail
+| Topic | Source | Date / Period |
+|-------|--------|---------------|
+| Financials | 10-K / 10-Q / annual report | ... |
+| Price / technicals | Yahoo Finance chart API | ... |
+| Customer / market claims | Earnings call / investor presentation / industry source | ... |
+| Insider / news / CHIPS | SEC Form 4 / company release / official CHIPS source | ... |
 
 ### Value Chain Position
 [Where this company sits, what breaks without it, who depends on it]
@@ -215,20 +236,36 @@ Save to `reports/<TICKER>.md`:
 | Insider Activity | Net X buys/sells | Bullish/Neutral/Bearish |
 | Sentiment | XX% bullish | |
 
+### Score Breakdown
+| Dimension | Points | Why |
+|-----------|--------|-----|
+| Chokepoint Strength | XX/30 | ... |
+| Financial Strength | XX/25 | ... |
+| Growth | XX/20 | ... |
+| Valuation | XX/15 | ... |
+| Catalyst & Timing | XX/10 | ... |
+| Base Score | XX/100 | |
+
 ### Moat Analysis
 ### Catalysts
 ### Risks (especially: what could break the chokepoint?)
 ### Valuation
 ### Signal Adjustments
+List each adjustment separately, cite the trigger, and show the arithmetic from base score to final score.
 ### Verdict: BUY / HOLD / AVOID
 ### Price Target (if BUY): $XX (XX% upside)
+
+If giving a price target, state the method explicitly:
+- Multiple-based: `<metric> x <multiple> = <equity value>`
+- Sum-of-parts: show segment assumptions
+- If there is no defendable method, omit the target and keep the verdict.
 ```
 
 ### 6. Log Results
 
 Append to `results.tsv`:
 ```
-ticker	score	chokepoint_score	chokepoint_tier	verdict	price	target	upside	gross_margin	rev_growth	top_customer_pct	risk_level	one_liner
+ticker	chokepoint_score	chokepoint_tier	score	verdict	price	target	upside	moat	catalyst	risk_level	chips_status	chips_detail	one_liner
 ```
 
 ### 7. Git Commit

@@ -5,6 +5,14 @@
 ### Thesis (2-3 sentences)
 Tower Semiconductor just demonstrated the most important silicon photonics breakthrough of 2026: on March 23, Tower and Coherent achieved **400Gbps/lane data transmission using a production-ready silicon modulator** — enabling 3.2T transceivers (8×400G) and doubling the bandwidth available for next-gen AI inference. This cements Tower's 85% SiPh foundry position as the pathway to 3.2T. With $920M capex expansion to 5x capacity (70%+ reserved), Q4 record $440M revenue (+14%), analyst targets raised to $165-$180, and the Soitec monopoly wafer supply, Tower is the "TSMC of photonics" now validated for the 3.2T generation. Stock surged 11% on the announcement.
 
+### Latest Official Management Outlook (2026-02-11)
+Source: [Tower Semiconductor Reports Record Revenue for the Fourth Quarter of 2025](https://towersemi.com/2026/02/11/02112026/)
+
+- Tower reported record Q4 2025 revenue of $440M, up 14% YoY and 11% QoQ, and said it met its stated goal of sequential growth through 2025 with acceleration in the second half.
+- The critical management message is supply-side: Tower announced an additional $270M SiPho investment, bringing total SiPho expansion capex to $920M, targeting December 2026 monthly SiPho wafer-start capacity at more than 5x actual Q4 2025 shipment levels, with customer-committed consumption behind the build.
+- Demand read-through: management explicitly tied the expansion to an "extremely high adoption rate" of SiPho for 1.6T transceivers, which is the cleanest official confirmation in the repo that 1.6T demand is now pulling foundry capacity, not just module marketing.
+- Risk update: Tower also disclosed that Intel does not intend to perform under the New Mexico capacity agreement and that customers are being redirected to Fab7 in Japan. The bullish thesis survives, but execution risk now sits more clearly on Tower's own ramp and Fab7 support rather than on Intel's external corridor.
+
 ### Historical & Projected Financials
 | Period | Revenue | SiPh Revenue | Gross Margin | Net Income | Notes |
 |--------|---------|--------------|--------------|------------|-------|

@@ -106,8 +106,12 @@ function init(){
     "60-70% InP substrates. Mostly optical end-markets. Beijing mfg risk.","60-70% InP","US/China");
   addN("JX Metals","5016.T",1,.6,false,false,                     15,  23,  7,  "JPY820B FY25E",                8,  21,
     "IPO'd Mar 2025. Rev JPY775B TTM, 23% GM. Raised FY25 guidance on AI demand. InP small but strategic.","40yr InP exp","Japan");
-  addN("IntelliEPI","8258.TW",1,.8,false,false,                   54,  23,  13,"",                             90,  0.3,
-    "Taiwan InP epiwafer. Primarily optical comms end-markets.","53.8% growth","Taiwan");
+  addN("IntelliEPI","4971.TW",1,.8,false,false,                   54,  23,  13,"",                             90,  0.3,
+    "Taiwan InP epi specialist. Taiwan press now ties APD-related outsourcing to both Lumentum and Coherent.","53.8% growth","Taiwan");
+  addN("VPEC","2455.TW",1,.7,true,false,                          null,null, null,"",                           55,  1.2,
+    "Current-production III-V epi beneficiary of AI data-center optical demand and SiPh-linked optical growth.","Current production ramp","Taiwan");
+  addN("LandMark","3081.TW",1,.92,false,false,                    82,  40,  null,"NT$2.2B FY25",               90,  4,
+    "Taiwan III-V epi supplier for InP/GaAs laser and photodetector wafers used in 400G/800G/1.6T optics.","76.2% growth","Taiwan");
 
   addN("ASML","ASML",2,.55,true,true,                              30,  51,  35, "EUR30B+ FY26E",               5,  320,
     "Only lithography supplier. SiPh uses DUV but is tiny fraction of total.","100% litho | SOLE SOURCE","Netherlands");
@@ -135,8 +139,14 @@ function init(){
     "Optical DSP ~25% of DC rev. Rest is custom silicon, storage, networking.","$3.25B Celestial","US");
   addN("Semtech","SMTC",4,.76,false,false,                         16,  58,  19, "$1.3B FY27E",                 20,  7.5,
     "Signal integrity (optical TIA/CDR) ~20%. Rest is LoRa IoT.","LPO architecture","US");
+  addN("Himax","HIMX",4,.83,false,false,                           -8,  31,  5,  "$850-900M FY26E",             5,  1.6,
+    "Stealth CPO supplier via WLO nanoimprint for FOCI FAUs, but the chokepoint sits inside a cyclical display-driver business.","WLO nanoimprint","Taiwan");
+  addN("Maruwa","5344.T",4,.88,true,false,                         null,55,  37, "",                            12.5, 5,
+    "Global #1 AlN laser submount. AI optical is still a minority of revenue but the niche economics are excellent.","60%+ AlN submount","Japan");
   addN("Mitsubishi","6503.T",4,.9,true,false,                      5,   31,  10,"",                           3,  33,
     "50% total EML volume but EML is tiny part of JPY5.5T conglomerate.","50% EML","Japan");
+  addN("Furukawa","5801.T",4,.96,false,false,                      null,17,  null,"",                           5,  15,
+    "DFB laser diode maker for SiPh transceivers, but weak margins and conglomerate dilution cap the choke point quality.","DFB laser expansion","Japan");
 
   addN("Innolight","300308.SZ",5,.2,true,false,                    60,  43,  28, "CNY55-60B FY26E",             95,  81,
     "Pure-play optical transceivers. Nearly all revenue from DC optics.","50%+ NVIDIA","China");
@@ -144,16 +154,24 @@ function init(){
     "Networking ~58% of rev. Rest is lasers + materials.","$6.3B TTM","US");
   addN("AAOI","AAOI",5,.6,false,false,                             83,  31,  -12,"$1B+ CY26E",                 85,  7,
     "Primarily optical transceivers + CATV optical products.","US manufacturing","US");
+  addN("FOCI","3363.TWO",5,.72,false,false,                        39,  19,  0,  "NT$1.9B FY25",                90,  2.8,
+    "Sole validated FAU supplier for TSMC COUPE CPO, but valuation prices a perfect CPO ramp before earnings are proven.","Validated COUPE FAU","Taiwan");
+  addN("EZconn","6442.TW",5,.82,false,false,                       64,  49,  null,"NT$10.5B FY25",             92,  8,
+    "Optical active/passive components and modules. 400G/800G products plus IntelliEPI tie-up for SiPh/CPO.","~92% optical mix","Taiwan");
 
   addN("Fabrinet","FN",6,.15,true,false,                           19,  12,  11, "$5B+ FY27E",                  75,  18,
     "~75% of revenue from optical assembly. Rest is automotive/industrial.","NVIDIA sole-src","Thailand");
   addN("Celestica","CLS",6,.35,true,false,                         28,  11,  8,"$17B FY26E",                 40,  12,
     "CCS ~75% of rev but includes compute + networking, not just optical.","55% custom sw","Canada");
+  addN("ELASER","3450.TW",6,.62,false,false,                       null,null, null,"",                           60,  1.1,
+    "Taiwan optical manufacturing / packaging node. Trade press explicitly ties it to both Lumentum and Coherent.","COHR/LITE mfg","Taiwan");
 
   addN("Corning","GLW",7,.2,true,false,                            35,  42,  20, "$8B optical FY26E",           45,  40,
     "Optical Comms $6.3B of ~$14B total. Rest is display, specialty glass.",">50% NA fiber","US");
   addN("Amphenol","APH",7,.45,true,false,                          52,  33,  28, "$28-30B FY26E",               15,  100,
     "Comms Solutions $3.4B of $23B. Rest is auto, defense, industrial.","33% AI DC conn","US");
+  addN("Kohoku","6524.T",7,.68,true,false,                         10,  44,  29, "JPY17.5B FY25",               45,  0.8,
+    "Only public pure-play isolator + fiber-array company. Strong passive-component bottleneck, though lead terminals still dilute the thesis.",">50% submarine isolators","Japan");
   addN("Prysmian","PRY.MI",7,.9,false,false,                       5,   14,  10,"",                           10,  20,
     "Fiber is ~10%. Primarily a power cable company (EUR15B).","HCF 50% faster","Italy");
 
@@ -165,7 +183,11 @@ function init(){
     "Acacia optical is ~5% of $60B+ total. Enterprise/security dominant.","Acacia ~50%","US");
 
 
-  // === ADDITIONAL COMPANIES (from 80-report universe) ===
+  // === ADDITIONAL COMPANIES (from 100-report universe) ===
+
+  // Raw materials - additional
+  addN("Dowa","5714.T",0,.7,false,false,                            -5,  13,  5,  "$4.5B",                       5,  3.8,
+    "Japan's largest indium refiner and top high-purity gallium producer. Useful non-China upstream hedge, but commodity economics dilute the moat.","Indium / gallium","Japan");
 
   // Substrates - additional
   addN("IQE","IQE.L",1,.95,false,false,                              -31, 13, null,"GBP97M",                     70, 0.3,
@@ -200,6 +222,8 @@ function init(){
     "Japan conglomerate with EML/CW-LD lasers and optical fiber.","Major EML","Japan");
   addN("MaxLinear","MXL",4,.82,false,false,                            -7,  null, null,"$500M",                     20, 1.6,
     "Small-cap 1.6T Rushmore DSP turnaround. Annapurna retimer.","1.6T DSP","US");
+  addN("SiTime","SITM",4,.7,false,false,                              61,  56,  null,"$420M",                      8,  11,
+    "MEMS timing monopolist for AI optics. Cheap-but-critical BOM layer, but valuation and deal risk are extreme.","MEMS timing","US");
 
   // Transceivers - additional
   addN("Accelink","002281.SZ",5,.9,false,false,                       37,  null, null,"$1.1B",                      80, 3,
@@ -214,6 +238,8 @@ function init(){
     "Chinese Fabrinet. $35B cap OSA packaging bridge. 45% GM, 41% OPM.","Chinese OSA","China");
   addN("Amkor","AMKR",6,0.58,false,false,                               null,null, null,"$7B",                        5,  8,
     "#2 OSAT. 2.5D tripling 2026. $7B Arizona campus.","#2 OSAT","US");
+  addN("SKC / Absolics","011790.KS",6,0.66,false,false,                 2,  -1, null,"$1.3B",                        0,  2.7,
+    "Glass-substrate and advanced-packaging context node. Real CPO adjacency, but still a venture-stage asset inside a troubled parent.","Glass substrates","Korea");
   addN("Quanta","2382.TW",6,.92,false,false,                          108, null, null,"$70B",                       5,  30,
     "#2 AI server ODM. +108% growth. NVIDIA GB200 orders.","AI server #2","Taiwan");
   addN("Wistron","3231.TW",6,.96,false,false,                         108, null, null,"$80B",                       5,  20,
@@ -236,6 +262,8 @@ function init(){
   // Test/OCS/Infra - additional
   addN("VIAV","VIAV",9,.1,false,false,                                 36,  60,  19, "$1.5B",                       60, 6,
     "Under-discovered optical test at 5x sales. 60% GM, 19% OPM.","Optical test","US");
+  addN("Keysight","KEYS",9,.22,false,false,                            23,  62,  16, "$6.5B FY26E",                 18, 56,
+    "Dominant optical R&D and design-validation test platform. Every 1.6T transceiver lab touches Keysight-class gear.","Optical R&D test","US");
   addN("Huber+Suhner","HUBN.SW",9,.55,true,false,                     -3,  38,  11, "$1.1B",                       15, 3.6,
     "Polatis OCS leader. Market $2.5B by 2029.","OCS leader","Switzerland");
   addN("Japan Pure Chem","4973.T",9,.72,true,false,                    null,null, 11, "$99M",                       40, 0.2,
@@ -266,20 +294,22 @@ function init(){
     "70-90% MOCVD. Every InP/GaAs laser chip needs Aixtron.","70-90% MOCVD","Germany");
 
   // EDGES
-  addEdge("VNP.TO","SOI.PA"); addEdge("VNP.TO","AXTI"); addEdge("VNP.TO","5016.T");
+  addEdge("VNP.TO","SOI.PA"); addEdge("VNP.TO","AXTI"); addEdge("VNP.TO","5016.T"); addEdge("5714.T","AXTI"); addEdge("5714.T","5016.T");
   addEdge("SOI.PA","TSEM",true); addEdge("SOI.PA","GFS"); addEdge("AXTI","LITE"); addEdge("AXTI","6503.T"); addEdge("5016.T","LITE");
   addEdge("AIXA.DE","LITE"); addEdge("AIXA.DE","COHR"); addEdge("AIXA.DE","3105.TW");
   addEdge("ASML","TSEM"); addEdge("ASML","GFS"); addEdge("6146.T","TSEM"); addEdge("6146.T","GFS");
   addEdge("BESI.AS","3711.TW"); addEdge("BESI.AS","TSEM");
   addEdge("TSEM","AVGO",true); addEdge("TSEM","COHR"); addEdge("TSEM","300308.SZ");
-  addEdge("GFS","AVGO"); addEdge("GFS","MRVL"); addEdge("3105.TW","LITE");
+  addEdge("GFS","AVGO"); addEdge("GFS","MRVL"); addEdge("3105.TW","LITE"); addEdge("3105.TW","COHR");
   addEdge("LITE","300308.SZ",true); addEdge("LITE","COHR"); addEdge("LITE","AAOI");
   addEdge("MTSI","300308.SZ"); addEdge("MTSI","COHR"); addEdge("MTSI","AAOI");
   addEdge("CRDO","ANET",true); addEdge("CRDO","300308.SZ");
   addEdge("AVGO","ANET",true); addEdge("AVGO","300308.SZ");
   addEdge("MRVL","300308.SZ"); addEdge("MRVL","COHR");
-  addEdge("SMTC","300308.SZ"); addEdge("SMTC","COHR"); addEdge("6503.T","300308.SZ");
+  addEdge("SMTC","300308.SZ"); addEdge("SMTC","COHR"); addEdge("6503.T","300308.SZ"); addEdge("SITM","LITE"); addEdge("SITM","COHR");
+  addEdge("HIMX","3363.TWO"); addEdge("5344.T","LITE"); addEdge("5801.T","300308.SZ");
   addEdge("300308.SZ","FN"); addEdge("COHR","FN"); addEdge("AAOI","FN");
+  addEdge("3363.TWO","ANET"); addEdge("6524.T","300308.SZ"); addEdge("6524.T","CIEN");
   addEdge("300308.SZ","300394.SZ"); addEdge("300502.SZ","300394.SZ");
   addEdge("FN","ANET"); addEdge("CLS","ANET"); addEdge("2317.TW","ANET");
   addEdge("FN","CIEN"); addEdge("CLS","CSCO");
@@ -289,7 +319,11 @@ function init(){
   addEdge("SIVE.ST","300308.SZ"); addEdge("SIVE.ST","0877.HK"); // Sivers lasers → transceiver makers
   addEdge("5802.T","300308.SZ"); // Sumitomo EML → Innolight
   addEdge("IQE.L","LITE"); addEdge("IQE.L","SIVE.ST"); // IQE epiwafers → laser makers
-  addEdge("8258.TW","300308.SZ"); // IntelliEPI → transceiver makers
+  addEdge("2455.TW","300308.SZ"); // VPEC epi → transceiver makers
+  addEdge("4971.TW","LITE"); addEdge("4971.TW","COHR"); addEdge("4971.TW","300308.SZ"); // IntelliEPI → APD / transceiver chain
+  addEdge("3081.TW","6442.TW"); addEdge("3081.TW","300308.SZ"); // LandMark epi → modules / transceivers
+  addEdge("3081.TW","COHR"); addEdge("4971.TW","6442.TW"); // Taiwan epi links
+  addEdge("LITE","3450.TW"); addEdge("COHR","3450.TW"); // ELASER manufacturing bridge
   addEdge("AXTI","SIVE.ST"); addEdge("5016.T","SIVE.ST"); // InP substrates → Sivers
   addEdge("002281.SZ","300308.SZ"); // Accelink components → Innolight
   addEdge("0877.HK","300308.SZ"); addEdge("0877.HK","300502.SZ"); // O-Net passive → transceivers
@@ -297,11 +331,11 @@ function init(){
   addEdge("MXL","300308.SZ"); addEdge("MXL","COHR"); // MaxLinear DSP → transceivers
   addEdge("042700.KS","3711.TW"); // Hanmi TC bonder → ASE packaging
   addEdge("0522.HK","3711.TW"); addEdge("0522.HK","FN"); // ASMPT → assembly
-  addEdge("FORM","TSEM"); addEdge("TER","TSEM"); // Test equipment → foundry
+  addEdge("FORM","TSEM"); addEdge("TER","TSEM"); addEdge("KEYS","LITE"); addEdge("KEYS","COHR"); // Test equipment → foundry / module validation
   addEdge("300502.SZ","ANET"); // Eoptolink → Arista
   addEdge("UMC","AVGO"); addEdge("STM","AVGO"); // New SiPh foundries → Broadcom
   addEdge("AEIS","TSEM"); addEdge("AEIS","ANET"); // Power supply → foundry + DC
-  addEdge("AMKR","AVGO"); // Amkor packaging → Broadcom
+  addEdge("AMKR","AVGO"); addEdge("011790.KS","AVGO"); addEdge("011790.KS","MRVL"); // Packaging substrate context
   addEdge("002475.SZ","ANET"); // Luxshare → networking
   addEdge("2382.TW","ANET"); addEdge("3231.TW","ANET"); // ODMs → Arista
   addEdge("600487.SS","ANET"); addEdge("6869.HK","CIEN"); // Fiber → networking

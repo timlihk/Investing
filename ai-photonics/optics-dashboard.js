@@ -18,10 +18,13 @@
     sortKey: "oneYearReturn",
     sortDirection: "desc",
     status: "all",
-    selectedTicker: pickInitialTicker(data.rows, requestedTicker)
+    selectedTicker: pickInitialTicker(data.rows, requestedTicker),
+    isResizingPanels: false
   };
 
   const elements = {
+    layout: document.querySelector(".layout"),
+    panelDivider: document.getElementById("panel-divider"),
     generatedStamp: document.getElementById("generated-stamp"),
     coverageStamp: document.getElementById("coverage-stamp"),
     summaryCards: document.getElementById("summary-cards"),
@@ -43,6 +46,7 @@
   };
 
   bindEvents();
+  initializePanelSizing();
   render();
 
   function bindEvents() {
@@ -102,6 +106,85 @@
         closeNoteModal();
       }
     });
+
+    if (elements.panelDivider) {
+      elements.panelDivider.addEventListener("pointerdown", beginPanelResize);
+    }
+
+    window.addEventListener("resize", handleWindowResize);
+  }
+
+  function initializePanelSizing() {
+    if (!elements.layout || window.innerWidth <= 1180) {
+      return;
+    }
+
+    const bounds = elements.layout.getBoundingClientRect();
+    const defaultWidth = Math.round(bounds.width * 0.64);
+    elements.layout.style.setProperty("--left-panel-width", `${defaultWidth}px`);
+  }
+
+  function beginPanelResize(event) {
+    if (!elements.layout || window.innerWidth <= 1180) {
+      return;
+    }
+
+    state.isResizingPanels = true;
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+    elements.panelDivider.setPointerCapture(event.pointerId);
+    elements.panelDivider.addEventListener("pointermove", resizePanels);
+    elements.panelDivider.addEventListener("pointerup", endPanelResize);
+    elements.panelDivider.addEventListener("pointercancel", endPanelResize);
+  }
+
+  function resizePanels(event) {
+    if (!state.isResizingPanels || !elements.layout) {
+      return;
+    }
+
+    const bounds = elements.layout.getBoundingClientRect();
+    const minLeft = 360;
+    const minRight = 320;
+    const dividerWidth = 14;
+    const nextWidth = Math.min(
+      Math.max(event.clientX - bounds.left, minLeft),
+      bounds.width - minRight - dividerWidth
+    );
+
+    elements.layout.style.setProperty("--left-panel-width", `${Math.round(nextWidth)}px`);
+  }
+
+  function endPanelResize(event) {
+    state.isResizingPanels = false;
+    document.body.style.cursor = "";
+    document.body.style.userSelect = "";
+    elements.panelDivider.releasePointerCapture(event.pointerId);
+    elements.panelDivider.removeEventListener("pointermove", resizePanels);
+    elements.panelDivider.removeEventListener("pointerup", endPanelResize);
+    elements.panelDivider.removeEventListener("pointercancel", endPanelResize);
+  }
+
+  function handleWindowResize() {
+    if (!elements.layout) {
+      return;
+    }
+
+    if (window.innerWidth <= 1180) {
+      elements.layout.style.removeProperty("--left-panel-width");
+      return;
+    }
+
+    const bounds = elements.layout.getBoundingClientRect();
+    const current = parseFloat(elements.layout.style.getPropertyValue("--left-panel-width"));
+    if (!Number.isFinite(current)) {
+      initializePanelSizing();
+      return;
+    }
+
+    const maxWidth = bounds.width - 320 - 14;
+    const clamped = Math.min(Math.max(current, 360), maxWidth);
+    elements.layout.style.setProperty("--left-panel-width", `${Math.round(clamped)}px`);
   }
 
   function render() {
@@ -457,6 +540,7 @@
       <div class="detail-copy">
         ${row.oneLiner ? `<p class="note"><strong>Research view:</strong> ${escapeHtml(row.oneLiner)}</p>` : ""}
         ${row.thesis ? `<p class="note"><strong>Thesis:</strong> ${escapeHtml(row.thesis)}</p>` : ""}
+        ${renderFinancialSnapshotMarkup(row, { title: "Yahoo Financial Snapshot" })}
         ${row.catalystShort ? `<p class="note"><strong>Catalyst:</strong> ${escapeHtml(row.catalystShort)}</p>` : ""}
         <p class="note"><strong>Choking power:</strong> ${row.chokepointScore == null ? "n/a" : `${escapeHtml(row.chokepointScore.toFixed(1))}/25`} (${escapeHtml(row.chokepointTier || "n/a")}). <strong>Structure:</strong> ${escapeHtml(row.chokepointStructure || "n/a")}. <strong>Moat:</strong> ${escapeHtml(row.moat || "n/a")}.</p>
         ${row.chokepointBreakdown ? `<p class="note"><strong>Rubric:</strong> structure ${escapeHtml(formatBreakdownValue(row.chokepointBreakdown.structuralControl))}/12, moat ${escapeHtml(formatBreakdownValue(row.chokepointBreakdown.moatDurability))}/5, optics ${escapeHtml(formatBreakdownValue(row.chokepointBreakdown.opticsPurity))}/5, pricing ${escapeHtml(formatBreakdownValue(row.chokepointBreakdown.pricingPower))}/3.</p>` : ""}
@@ -473,7 +557,8 @@
     elements.noteModal.setAttribute("aria-hidden", "false");
     elements.noteModalTitle.textContent = `${row.ticker} Research Note`;
     elements.noteModalSubtitle.textContent = row.name;
-    elements.noteModalLink.href = row.reportPath || "#";
+    const candidates = getReportCandidates(row);
+    elements.noteModalLink.href = candidates[0] || "#";
     renderResearchNote(row);
   }
 
@@ -483,7 +568,13 @@
   }
 
   async function renderResearchNote(row) {
-    if (!row.reportPath) {
+    const candidates = getReportCandidates(row);
+    if (row.reportMarkdown) {
+      elements.researchNotePanel.innerHTML = renderResearchNoteMarkup(row.reportMarkdown, row);
+      return;
+    }
+
+    if (!candidates.length) {
       elements.researchNotePanel.innerHTML = `
         <h3>Research Note</h3>
         <div class="loading">No local research note is linked to this company yet.</div>
@@ -494,12 +585,13 @@
     const requestToken = ++noteRequestToken;
     elements.researchNotePanel.innerHTML = `
       <h3>Research Note</h3>
-      <div class="loading">Loading ${escapeHtml(row.reportPath)}...</div>
+      <div class="loading">Loading ${escapeHtml(candidates[0])}...</div>
     `;
 
-    if (noteCache.has(row.reportPath)) {
+    const cachedPath = candidates.find((candidate) => noteCache.has(candidate));
+    if (cachedPath) {
       if (requestToken === noteRequestToken) {
-        const markdown = noteCache.get(row.reportPath);
+        const markdown = noteCache.get(cachedPath);
         if (activeModalRow?.ticker !== row.ticker) {
           return;
         }
@@ -509,28 +601,71 @@
     }
 
     try {
-      const response = await fetch(row.reportPath);
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+      let markdown = null;
+      let resolvedPath = null;
+
+      for (const candidate of candidates) {
+        const response = await fetch(candidate);
+        if (!response.ok) {
+          continue;
+        }
+
+        markdown = await response.text();
+        resolvedPath = candidate;
+        noteCache.set(candidate, markdown);
+        break;
       }
 
-      const markdown = await response.text();
-      noteCache.set(row.reportPath, markdown);
+      if (!markdown || !resolvedPath) {
+        throw new Error("No matching report file could be loaded");
+      }
 
       if (requestToken === noteRequestToken) {
         if (activeModalRow?.ticker !== row.ticker) {
           return;
         }
+        elements.noteModalLink.href = resolvedPath;
         elements.researchNotePanel.innerHTML = renderResearchNoteMarkup(markdown, row);
       }
     } catch (error) {
       if (requestToken === noteRequestToken) {
         elements.researchNotePanel.innerHTML = `
           <h3>Research Note</h3>
-          <div class="loading">Could not load ${escapeHtml(row.reportPath)}. Use the research note link above.</div>
+          <div class="loading">Could not load a local research note for ${escapeHtml(row.ticker)}. Use the research note link above if available.</div>
         `;
       }
     }
+  }
+
+  function getReportCandidates(row) {
+    const base = window.location.href;
+    const candidates = [];
+    const seen = new Set();
+
+    function pushCandidate(candidate) {
+      if (!candidate) {
+        return;
+      }
+
+      const resolved = new URL(candidate, base).href;
+      if (seen.has(resolved)) {
+        return;
+      }
+
+      seen.add(resolved);
+      candidates.push(resolved);
+    }
+
+    pushCandidate(row.reportPath);
+
+    const ticker = String(row.ticker || "").toUpperCase();
+    const compactTicker = ticker.replace(/[^A-Z0-9]/g, "");
+    const baseTicker = ticker.split(".")[0];
+
+    pushCandidate(`reports/${compactTicker}.md`);
+    pushCandidate(`reports/${baseTicker}.md`);
+
+    return candidates;
   }
 
   function renderResearchNoteMarkup(markdown, row) {
@@ -646,7 +781,76 @@
     return `
       <h3>Research Note</h3>
       <div class="loading">${escapeHtml(row.ticker)} / ${escapeHtml(row.name)}</div>
+      ${renderFinancialSnapshotMarkup(row, { title: "Yahoo Financial Snapshot" })}
       <div class="report-body">${blocks.join("")}</div>
+    `;
+  }
+
+  function renderFinancialSnapshotMarkup(row, { title } = {}) {
+    const metrics = row.marketMetrics || {};
+    const valuationRows = [
+      ["Share Price", formatPrice(metrics.currentPrice, metrics.currency)],
+      ["Market Cap", formatMarketCap(metrics.marketCap, metrics.currency)],
+      ["Enterprise Value", formatMoneyCompact(metrics.enterpriseValue, metrics.currency)],
+      ["P/E", formatRatio(metrics.trailingPE)],
+      ["Forward P/E", formatRatio(metrics.forwardPE)],
+      ["P/B", formatRatio(metrics.priceToBook)],
+      ["EV/EBITDA", formatRatio(metrics.enterpriseToEbitda)],
+      ["EV/Sales", formatRatio(metrics.enterpriseToRevenue ?? metrics.priceToSales)],
+      ["Gross Margin", metrics.grossMargins == null ? "n/a" : formatPercent(metrics.grossMargins, 1)],
+      ["Operating Margin", metrics.operatingMargins == null ? "n/a" : formatPercent(metrics.operatingMargins, 1)],
+      ["LT EPS Growth", metrics.longTermGrowth == null ? "n/a" : formatPercent(metrics.longTermGrowth, 1)],
+      ["TTM Revenue", formatMoneyCompact(metrics.revenueTtm, metrics.currency)],
+      ["TTM EBITDA", formatMoneyCompact(metrics.ebitdaTtm, metrics.currency)],
+      ["Cash", formatMoneyCompact(metrics.totalCash, metrics.currency)],
+      ["Debt", formatMoneyCompact(metrics.totalDebt, metrics.currency)]
+    ].filter(([, value]) => value !== "n/a");
+
+    const historicalRows = (metrics.historicalFinancials || []).map((entry) => [
+      entry.period,
+      formatMoneyCompact(entry.revenue, metrics.currency),
+      formatMoneyCompact(entry.ebitda, metrics.currency),
+      formatMoneyCompact(entry.netIncome, metrics.currency),
+      formatRatio(entry.eps)
+    ]);
+
+    const forwardRows = (metrics.forwardFinancials || []).map((entry) => [
+      entry.period,
+      formatMoneyCompact(entry.revenue, metrics.currency),
+      entry.revenueGrowth == null ? "n/a" : formatPercent(entry.revenueGrowth, 1),
+      formatRatio(entry.eps),
+      entry.epsGrowth == null ? "n/a" : formatPercent(entry.epsGrowth, 1)
+    ]);
+
+    if (!valuationRows.length && !historicalRows.length && !forwardRows.length) {
+      return "";
+    }
+
+    return `
+      <div class="note note-table-wrap">
+        ${title ? `<strong>${escapeHtml(title)}</strong>` : ""}
+        ${valuationRows.length ? renderMetricTable(["Metric", "Value"], valuationRows) : ""}
+        ${historicalRows.length ? renderMetricTable(["Actual", "Revenue", "EBITDA", "Net Income", "EPS"], historicalRows) : ""}
+        ${forwardRows.length ? renderMetricTable(["Street View", "Revenue", "Rev YoY", "EPS", "EPS YoY"], forwardRows) : ""}
+        <div class="fallback-caption">Source: embedded Yahoo Finance valuation, annual financials, and analyst estimates. Forward years appear only when Yahoo provides coverage.</div>
+      </div>
+    `;
+  }
+
+  function renderMetricTable(headers, rows) {
+    return `
+      <table class="note-table">
+        <thead>
+          <tr>${headers.map((header) => `<th>${escapeHtml(header)}</th>`).join("")}</tr>
+        </thead>
+        <tbody>
+          ${rows
+            .map(
+              (row) => `<tr>${row.map((cell) => `<td class="${cell === "n/a" ? "is-dim" : ""}">${escapeHtml(cell)}</td>`).join("")}</tr>`
+            )
+            .join("")}
+        </tbody>
+      </table>
     `;
   }
 
@@ -699,6 +903,8 @@
 
   function renderLocalChart(row) {
     const series = row.marketMetrics.chartSeries || [];
+    const candleSeries = row.marketMetrics.chartCandleSeries || [];
+    const volumeSeries = row.marketMetrics.chartVolumeSeries || [];
     if (!series.length) {
       elements.chartHost.innerHTML = `
         <div class="fallback-chart">
@@ -719,7 +925,7 @@
       <div class="fallback-chart">
         <div class="tv-chart-canvas" id="tv-chart-canvas"></div>
         <div class="fallback-caption">
-          Local 1-year price chart rendered with TradingView Lightweight Charts from the embedded Yahoo Finance snapshot, with SMA 10, 20, 50, and 200 overlays.
+          Local 1-year chart rendered from the embedded Yahoo Finance snapshot, with candlesticks, daily volume, and SMA 10, 20, 50, and 200 overlays.
         </div>
       </div>
     `;
@@ -745,11 +951,17 @@
         horzLines: { color: "#f0e7d8" }
       },
       rightPriceScale: {
-        borderColor: "#e0d5c3"
+        borderColor: "#e0d5c3",
+        scaleMargins: {
+          top: 0.08,
+          bottom: 0.28
+        }
       },
       timeScale: {
         borderColor: "#e0d5c3",
-        timeVisible: true
+        timeVisible: true,
+        rightOffset: 4,
+        minBarSpacing: 0.35
       },
       crosshair: {
         vertLine: { color: "#9a8b74", labelBackgroundColor: "#17140f" },
@@ -757,16 +969,39 @@
       }
     });
 
-    const priceStroke = series[series.length - 1].value >= series[0].value ? "#0f6c4b" : "#c64a3d";
-    const priceSeries = detailChart.addAreaSeries({
-      lineColor: priceStroke,
-      topColor: `${priceStroke}22`,
-      bottomColor: `${priceStroke}06`,
-      lineWidth: 2,
+    const priceSeries = detailChart.addCandlestickSeries({
+      upColor: "#0f6c4b",
+      downColor: "#c64a3d",
+      borderUpColor: "#0f6c4b",
+      borderDownColor: "#c64a3d",
+      wickUpColor: "#0f6c4b",
+      wickDownColor: "#c64a3d",
       priceLineVisible: false,
       lastValueVisible: true
     });
-    priceSeries.setData(series);
+    priceSeries.setData(candleSeries.length ? candleSeries : series.map((point) => ({
+      time: point.time,
+      open: point.value,
+      high: point.value,
+      low: point.value,
+      close: point.value
+    })));
+
+    if (volumeSeries.length) {
+      const histogramSeries = detailChart.addHistogramSeries({
+        priceFormat: { type: "volume" },
+        priceScaleId: "",
+        priceLineVisible: false,
+        lastValueVisible: false
+      });
+      histogramSeries.priceScale().applyOptions({
+        scaleMargins: {
+          top: 0.74,
+          bottom: 0.02
+        }
+      });
+      histogramSeries.setData(volumeSeries);
+    }
 
     addSmaSeries(detailChart, series, 10, "#ce8b2d");
     addSmaSeries(detailChart, series, 20, "#8262d8");
@@ -1016,6 +1251,10 @@
     }).format(value);
 
     return `${compact} ${currency || ""}`.trim();
+  }
+
+  function formatMoneyCompact(value, currency) {
+    return formatMarketCap(value, currency);
   }
 
   function formatRatio(value) {

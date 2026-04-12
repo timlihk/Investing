@@ -5,6 +5,14 @@
 ### Thesis (2-3 sentences)
 MACOM is the most under-discovered high-quality name in the AI photonics value chain -- a vertically integrated analog/optical semiconductor company supplying the TIAs, laser drivers, CDRs, and DSPs that are essential components inside every 800G and 1.6T optical transceiver. With 57.4% gross margins (best in the photonics group), data center revenue surging 48% in FY25, and management raising their growth outlook from 20% to 35-40%, MACOM has the financial quality of an analog semiconductor franchise and the growth tailwinds of AI photonics. This is the "Intel Inside" of optical transceivers.
 
+### Latest Official Management Outlook (2026-02-05)
+Source: [MACOM Reports Fiscal First Quarter 2026 Financial Results](https://www.macom.com/updates/news/2026/macom-reports-fiscal-first-quarter-2026-financial-results)
+
+- MACOM reported fiscal Q1 2026 revenue of $271.6M, up 24.5% YoY and 4.0% QoQ, with 57.6% adjusted gross margin and $1.02 adjusted EPS.
+- Management commentary in the release was measured rather than promotional, but the guide still points to continued sequential growth: fiscal Q2 2026 revenue of $281M-$289M, adjusted gross margin of 57.0%-59.0%, and adjusted EPS of $1.05-$1.09.
+- The key forward read-through is that demand remains healthy enough to sustain growth and margin discipline without MACOM needing to sacrifice profitability for share. That supports the analog-component chokepoint thesis, but it is not the same as management giving a multi-year AI supercycle guide.
+- Supply-side takeaway: MACOM's owned III-V capability still matters, but the latest release is more about orderly execution than acute supply shortage. Conviction should rest on design-win stickiness and content growth per module, not on a scarcity narrative alone.
+
 ### Key Metrics
 | Metric | Value | vs Sector |
 |--------|-------|-----------|

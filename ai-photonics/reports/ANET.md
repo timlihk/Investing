@@ -5,6 +5,14 @@
 ### Thesis (2-3 sentences)
 Arista Networks is the "demand signal" for the entire AI photonics supply chain -- the dominant AI data center switch company with 40%+ market share in high-speed 400G/800G switching, 64% gross margins, $10.7B net cash, and $4.25B annual FCF. When Arista raises AI revenue guidance to $3.25B (100% growth), it directly signals demand for every upstream photonics company in our universe. The most franchise-quality business in AI networking, though well-known and not under-discovered.
 
+### Latest Official Management Outlook (2026-02-12)
+Source: [Arista Networks Reports Fourth Quarter and Year End 2025 Financial Results](https://investors.arista.com/Communications/Press-Releases-and-Events/Press-Release-Detail/2026/Arista-Networks-Inc--Reports-Fourth-Quarter-and-Year-End-2025-Financial-Results/default.aspx)
+
+- Arista reported Q4 2025 revenue of $2.488B, up 28.9% YoY, and management said 2025 exceeded both AI networking and campus expansion goals.
+- For Q1 2026, management guided to roughly $2.6B revenue, 62%-63% non-GAAP gross margin, and about 46% non-GAAP operating margin.
+- Demand read-through: the latest official commentary confirms AI and campus are both contributing, which matters because it reduces the risk that the photonics read-through is just one hyperscaler capex spike.
+- Supply-side read-through: Arista's latest release is more about product cadence and execution than shortage commentary. That supports the view that upstream optical demand remains real, but it also means investors should not rely on a "supply squeeze" thesis to justify premium multiples.
+
 ### Historical & Projected Financials
 | Period | Revenue | AI Revenue | Gross Margin | Op Margin | Net Income | FCF |
 |--------|---------|------------|--------------|-----------|------------|-----|

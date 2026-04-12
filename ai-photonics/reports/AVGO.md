@@ -5,6 +5,16 @@
 ### Thesis (2-3 sentences)
 Broadcom is the undisputed gorilla of AI networking silicon -- the only company that competes at EVERY layer of the photonics stack simultaneously: Tomahawk switching ASICs ($10B+ AI switch backlog), Taurus optical DSP (first 400G/lane), in-house EML lasers and SiPh transceivers, AND custom AI XPU chips for Google, Meta, and OpenAI. With $162B total backlog, 68% EBITDA margins, and AI revenue doubling to $40.4B in FY26, Broadcom is the foundational infrastructure company of the AI era. Not under-discovered, but essential context as the company every photonics supplier either sells to or competes against.
 
+### Latest Official Management Outlook (2026-03-04)
+Sources:
+- [Broadcom Q4 and FY2025 results](https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-fourth-quarter-and-fiscal-year-2025)
+- [Q1 2026 Broadcom Company Overview](https://investors.broadcom.com/static-files/602c2fd3-89a0-436f-b638-4890f20feda7)
+
+- In official Q4 FY2025 results, Broadcom reported $18.0B quarterly revenue, up 28% YoY, with 68% adjusted EBITDA margin. Management said AI semiconductor revenue grew 74% YoY in Q4.
+- Management guided Q1 FY2026 revenue to about $19.1B and adjusted EBITDA margin to 67%, and specifically said it expects AI semiconductor revenue to double YoY to $8.2B, driven by custom AI accelerators and Ethernet AI switches.
+- Demand read-through: this remains one of the strongest official AI infrastructure demand signals in the market because management is guiding not only AI compute but Ethernet switch demand at scale.
+- Supply-side read-through: Broadcom's official materials emphasize portfolio breadth and production-volume readiness, including 102.4T switching and optical interconnect. The core question is no longer whether Broadcom can participate, but whether current valuation fully prices the durability of that demand.
+
 ### Historical & Projected Financials
 | Period | Total Revenue | AI Revenue | EBITDA Margin | Notes |
 |--------|--------------|------------|---------------|-------|

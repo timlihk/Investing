@@ -46,6 +46,8 @@ INFN     # Infinera — merged with Nokia optical, skip (acquired)
 
 # China Optical (if researchable)
 300308.SZ  # Zhongji Innolight — dominant AI transceiver supplier, NVDA key partner
+3450.TW    # ELASER — Taiwan optical manufacturing / packaging node tied by trade press to COHR/LITE
+4971.TW    # IntelliEPI (IET-KY) — Taiwan III-V epi supplier tied by trade press to COHR/LITE APD outsourcing
 # 002281.SZ  — Guangxun Technology (Chinese optical transceiver)
 
 # Japan Photonics
@@ -57,3 +59,39 @@ INFN     # Infinera — merged with Nokia optical, skip (acquired)
 
 # Korea
 058470.KQ  # LEENO Industrial — test sockets for photonic ICs (Korea)
+
+# Discovery Wave 2 — Infrastructure / Materials / Equipment
+KLAC       # KLA Corp — #1 process control/inspection for SiPh fabs (20/25 chokepoint)
+4063.T     # Shin-Etsu Chemical — #1 silicon wafers + photoresist duopoly (Tokyo)
+4062.T     # Ibiden — AI GPU substrates, 85% share in highest-complexity (Tokyo)
+ENTG       # Entegris — ultra-pure materials/filtration for semiconductor fabs
+6890.T     # Ferrotec — #1 thermoelectric coolers for laser modules (Tokyo)
+ONTO       # Onto Innovation — #2 optical metrology/inspection
+4004.T     # Resonac Holdings — packaging materials, JOINT3 CPO consortium (Tokyo)
+011790.KS  # SKC Co. — Absolics glass core substrates for CPO (Korea)
+5714.T     # Dowa Holdings — Japan's largest indium producer (Tokyo)
+
+# Discovery Wave 2 — Components / Niche Chokepoints
+8249.T     # Maruwa — 60%+ AlN ceramic laser submount share, 55% GM (Tokyo)
+6524.T     # Kohoku Kogyo — >50% optical isolator share, fiber arrays (Tokyo)
+HIMX       # Himax Technologies — WLO nanoimprint optics for CPO FAUs (NASDAQ)
+3363.TWO   # FOCI Fiber Optic — CPO fiber array units for NVIDIA/TSMC (Taiwan OTC)
+SITM       # SiTime — MEMS precision timing for optical transceivers (NASDAQ)
+
+# Discovery Wave 2 — Test & Measurement
+KEYS       # Keysight Technologies — R&D optical test, BERTs, optical analyzers
+6754.T     # Anritsu — BERTWave MP2110A production test for 800G/1.6T (Tokyo)
+CAMT       # Camtek — advanced packaging/SiPh AOI inspection (NASDAQ)
+
+# Discovery Wave 2 — Japanese Conglomerates (photonics exposure too small)
+6965.T     # Hamamatsu Photonics — PMT monopoly, scientific not AI DC (Tokyo)
+5801.T     # Furukawa Electric — DFB laser chips for SiPh CW sources (Tokyo)
+6971.T     # Kyocera — ceramic packages for optical modules (Tokyo)
+
+# Monitor List — Future Coverage
+# 4980.T   # Dexerials — photonics adhesives subsidiary, revisit at 25%+ photonics rev
+# AEVA     # Aeva Technologies — SOA for CPO, revisit when DC revenue materializes
+# 3008.TW  # Largan Precision — CPO collimator optics, revisit when revenue quantifiable
+# SMOP.OL  # Smartoptics — European DCI pure-play, revisit at $100M+ revenue
+# LWLG     # Lightwave Logic — EO polymer modulators, revisit at first commercial revenue
+# Nouryon  # MOCVD precursor chemicals monopoly (TMGa/TMIn), watch for IPO

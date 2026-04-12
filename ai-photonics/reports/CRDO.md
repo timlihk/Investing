@@ -5,6 +5,16 @@
 ### Thesis (2-3 sentences)
 Credo is the chokepoint company for AI data center connectivity -- owning 88% of the active electrical cable (AEC) market that connects GPU racks, plus the leading optical DSP (Bluebird, 3nm) for 1.6T transceivers and industry-leading SerDes IP that powers the entire data pipeline. With 65-68% gross margins rivaling the best analog semiconductor franchises, 200%+ YoY revenue growth, and strategic co-design partnerships with Microsoft and Amazon, Credo has built a multi-layered moat. The stock's 53% pullback from $214 to $100 creates a rare entry point into a franchise-quality AI infrastructure business.
 
+### Latest Official Management Outlook (2026-02-09)
+Sources:
+- [Credo Q2 FY2026 results](https://investors.credosemi.com/news-events/news/news-details/2025/Credo-Technology-Group-Holding-Ltd-Reports-Second-Quarter-of-Fiscal-Year-2026-Financial-Results/default.aspx)
+- [Credo preliminary Q3 FY2026 update](https://investors.credosemi.com/news-events/news/news-details/2026/Credo-Provides-Preliminary-Third-Quarter-Fiscal-Year-2026-Revenue-Results-Updated-Revenue-Guidance-for-Fourth-Quarter-of-Fiscal-Year-2026-and-Schedules-Third-Quarter-Fiscal-Year-2026-Financial-Results-Conference-Call/default.aspx)
+
+- In official Q2 FY2026 results, Credo reported $268.0M revenue, up 272.1% YoY and 20.2% QoQ, with 67.7% non-GAAP gross margin. Management said the results reflected the continued build-out of the world's largest AI training and inference clusters.
+- In the February 9, 2026 update, management pre-announced Q3 FY2026 revenue of $404M-$408M, above the prior $335M-$345M guide, and said it expects sequential revenue growth in the mid-single digits into Q4 with more than 200% YoY growth for the full fiscal year.
+- Demand read-through: this is one of the strongest official demand signals in the group. The latest commentary says growth is no longer just AEC; management is now pointing to additional ramps in ZeroFlap Optics, ALCs, and OmniConnect gearbox solutions.
+- Supply-side read-through: management is guiding through demand acceleration, not warning about constrained output. That is positive, but it also means the core debate shifts from "can they supply?" to "how durable is the customer and product diversification?"
+
 ### Historical & Projected Financials
 | Period | Revenue | Gross Margin | Net Income | EPS (Non-GAAP) | Notes |
 |--------|---------|--------------|------------|-----------------|-------|

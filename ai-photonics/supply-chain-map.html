@@ -563,7 +563,7 @@ body {
 </div>
 
 <div class="note">
-  This is a curated map of the key interlinks, not every company in the photonics universe. It currently visualizes the highest-signal nodes from a broader 78-report scorecard. A node is tagged as a chokepoint when its systematic `chokepoint_score` is `16/25` or higher. CHIPS labels track direct U.S. CHIPS incentives awards, CHIPS R&D awards, and CHIPS-linked hub funding as of 2026-03-24; the full scorecard sweep lives in the scorecard and CHIPS notes linked above.
+  This is a curated map of the key interlinks, not every company in the photonics universe. It currently visualizes the highest-signal nodes from a broader 100-report scorecard. A node is tagged as a chokepoint when its systematic `chokepoint_score` is `16/25` or higher. CHIPS labels track direct U.S. CHIPS incentives awards, CHIPS R&D awards, and CHIPS-linked hub funding as of 2026-03-24; the full scorecard sweep lives in the scorecard and CHIPS notes linked above.
 </div>
 
 <div class="panel" id="panel">
@@ -620,6 +620,19 @@ const nodes = [
     upstream: ["Metal refining", "Strategic materials"],
     downstream: ["AXT", "JX", "Compound semi chain"],
     metrics: { chokepoint: "10/25", target: "-", upside: "-", catalyst: "Germanium / compound semi growth" },
+    chipsStatus: "na",
+    chipsLabel: "Non-U.S. / no direct CHIPS award",
+    chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
+    chipsSources: []
+  },
+  {
+    id: "DOWA", ticker: "5714.T", name: "Dowa Holdings", chokepointScore: 13, verdict: "HOLD", market: "Japan",
+    x: 245, y: 875, chokepoint: false, chain: ["inp"], report: "5714T.md",
+    role: "Deep-upstream indium and high-purity gallium refiner relevant to InP photonics.",
+    thesis: "A non-China raw-material hedge rather than a clean optical chokepoint, but still worth mapping because indium and gallium sit below the InP device chain.",
+    upstream: ["Zinc-smelting by-product stream", "High-purity refining", "Japan materials base"],
+    downstream: ["AXT", "JX Advanced Metals", "InP device chain"],
+    metrics: { chokepoint: "13/25", target: "-", upside: "-", catalyst: "Indium price / export-control read-through" },
     chipsStatus: "na",
     chipsLabel: "Non-U.S. / no direct CHIPS award",
     chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
@@ -693,6 +706,45 @@ const nodes = [
     chipsStatus: "none",
     chipsLabel: "No direct CHIPS award found",
     chipsNote: "No FormFactor-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
+    chipsSources: []
+  },
+  {
+    id: "LANDMARK", ticker: "3081.TW", name: "LandMark", chokepointScore: 17, verdict: "HOLD", market: "Taiwan",
+    x: 245, y: 620, chokepoint: false, chain: ["inp"], report: "3081TW.md",
+    role: "Taiwan III-V epi supplier for InP / GaAs laser and photodetector wafers.",
+    thesis: "Taiwan press now points to Coherent procurement of InP epi wafers from LandMark, which upgrades it from generic beneficiary to mapped supplier candidate.",
+    upstream: ["III-V materials", "Epi process know-how", "Taiwan supply base"],
+    downstream: ["Coherent", "Optical module ecosystem", "Datacom optics"],
+    metrics: { chokepoint: "17/25", target: "-", upside: "-", catalyst: "COHR InP epi demand + 1.6T datacom" },
+    chipsStatus: "na",
+    chipsLabel: "Non-U.S. / no direct CHIPS award",
+    chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
+    chipsSources: []
+  },
+  {
+    id: "IET", ticker: "4971.TW", name: "IntelliEPI", chokepointScore: 20, verdict: "HOLD", market: "Taiwan",
+    x: 245, y: 735, chokepoint: true, chain: ["inp"], report: "4971TW.md",
+    role: "Taiwan III-V epi and APD-related supplier in the InP receiver chain.",
+    thesis: "The strongest new Taiwan clue in the COHR / LITE sweep: trade press ties IntelliEPI to APD-related outsourcing from both companies.",
+    upstream: ["III-V materials", "MBE / epitaxy process", "Taiwan optical supply base"],
+    downstream: ["Lumentum", "Coherent", "Receiver-side optical components"],
+    metrics: { chokepoint: "20/25", target: "-", upside: "-", catalyst: "COHR/LITE APD outsourcing" },
+    chipsStatus: "na",
+    chipsLabel: "Non-U.S. / no direct CHIPS award",
+    chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
+    chipsSources: []
+  },
+  {
+    id: "WIN", ticker: "3105.TW", name: "WIN Semi", chokepointScore: 20, verdict: "HOLD", market: "Taiwan",
+    x: 565, y: 620, chokepoint: true, chain: ["inp"], report: "3105TW.md",
+    role: "Taiwan compound-semiconductor foundry tied to optical receiver / VCSEL demand.",
+    thesis: "Taiwan press frames WIN as winning Lumentum-linked PD orders in the Google TPU optical chain, which is enough to map it as a real supplier candidate.",
+    upstream: ["GaAs / compound semi foundry capacity", "Process know-how"],
+    downstream: ["Lumentum", "Coherent VCSEL path", "Optical receiver chain"],
+    metrics: { chokepoint: "20/25", target: "-", upside: "-", catalyst: "Lumentum PD / TPU optical orders" },
+    chipsStatus: "na",
+    chipsLabel: "Non-U.S. / no direct CHIPS award",
+    chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
     chipsSources: []
   },
 
@@ -782,6 +834,19 @@ const nodes = [
     chipsNote: "No Marvell-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
     chipsSources: []
   },
+  {
+    id: "SITM", ticker: "SITM", name: "SiTime", chokepointScore: 17, verdict: "HOLD", market: "United States",
+    x: 890, y: 625, chokepoint: false, chain: ["integration"], report: "SITM.md",
+    role: "Precision timing supplier for optical modules and AI systems.",
+    thesis: "A cheap-but-critical timing layer that does not dominate optical revenue today, but does sit inside the systems that ship high-speed optics.",
+    upstream: ["Bosch MEMS fabrication", "Timing IP", "Clocking platform"],
+    downstream: ["Lumentum", "Coherent", "AI hardware timing chain"],
+    metrics: { chokepoint: "17/25", target: "$350", upside: "-17%", catalyst: "Renesas timing deal + 1.6T ramp" },
+    chipsStatus: "none",
+    chipsLabel: "No direct CHIPS award found",
+    chipsNote: "No SiTime-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
+    chipsSources: []
+  },
 
   {
     id: "INNOLIGHT", ticker: "300308.SZ", name: "Innolight", chokepointScore: 17, verdict: "BUY", market: "China",
@@ -841,6 +906,19 @@ const nodes = [
     chipsSources: []
   },
   {
+    id: "ELASER", ticker: "3450.TW", name: "ELASER", chokepointScore: 13, verdict: "HOLD", market: "Taiwan",
+    x: 910, y: 885, chokepoint: false, chain: ["integration"], report: "3450TW.md",
+    role: "Taiwan optical manufacturing / packaging bridge.",
+    thesis: "Not a raw-material bottleneck, but worth mapping because Taiwan trade press explicitly identifies it as a contract-manufacturing partner to both Lumentum and Coherent.",
+    upstream: ["Optical components", "Packaging materials", "Qualified assembly lines"],
+    downstream: ["Lumentum", "Coherent", "Advanced optical hardware programs"],
+    metrics: { chokepoint: "13/25", target: "-", upside: "-", catalyst: "COHR/LITE assembly read-through" },
+    chipsStatus: "na",
+    chipsLabel: "Non-U.S. / no direct CHIPS award",
+    chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
+    chipsSources: []
+  },
+  {
     id: "EOPTOLINK", ticker: "300502.SZ", name: "Eoptolink", chokepointScore: 16, verdict: "HOLD", market: "China",
     x: 1055, y: 670, chokepoint: false, chain: ["siph", "inp", "integration"], report: "300502SZ.md",
     role: "Large second-source transceiver vendor and major Chinese optical module supplier.",
@@ -894,6 +972,19 @@ const nodes = [
     chipsSources: []
   },
   {
+    id: "KEYS", ticker: "KEYS", name: "Keysight", chokepointScore: 16, verdict: "HOLD", market: "United States",
+    x: 1220, y: 620, chokepoint: true, chain: ["integration"], report: "KEYS.md",
+    role: "Optical R&D and design-validation test platform.",
+    thesis: "A major omission in the older visual set. Keysight is the qualification gate before many 1.6T optical designs can reach production.",
+    upstream: ["Test instrumentation IP", "Optical measurement stack", "Installed lab base"],
+    downstream: ["Lumentum", "Coherent", "Transceiver R&D and qualification"],
+    metrics: { chokepoint: "16/25", target: "$340", upside: "+5%", catalyst: "1.6T validation cycle + wireline inflection" },
+    chipsStatus: "none",
+    chipsLabel: "No direct CHIPS award found",
+    chipsNote: "No Keysight-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
+    chipsSources: []
+  },
+  {
     id: "APH", ticker: "APH", name: "Amphenol", chokepointScore: 17, verdict: "BUY", market: "United States",
     x: 1380, y: 720, chokepoint: false, chain: ["integration"], report: "APH.md",
     role: "Physical interconnect layer spanning copper, cable, connector, and fiber assemblies into AI systems.",
@@ -904,6 +995,20 @@ const nodes = [
     chipsStatus: "none",
     chipsLabel: "No direct CHIPS award found",
     chipsNote: "No Amphenol-specific Department of Commerce CHIPS incentives announcement was located through 2026-03-24.",
+    chipsSources: []
+  },
+  {
+    id: "SKC", ticker: "011790.KS", name: "SKC / Absolics", chokepointScore: 15, verdict: "AVOID", market: "Korea / US",
+    x: 1220, y: 890, chokepoint: false, chain: ["integration"], report: "011790KS.md",
+    role: "Adjacent advanced-packaging and glass-substrate context node.",
+    thesis: "Relevant to future CPO and advanced packaging, but not yet a core optical choke point and still wrapped inside a financially weak parent.",
+    upstream: ["Glass-substrate process", "CHIPS-backed Covington facility", "Advanced packaging R&D"],
+    downstream: ["AI packaging programs", "Potential CPO substrate adoption", "AI cluster buildouts"],
+    metrics: { chokepoint: "15/25", target: "KRW 75,000", upside: "-22%", catalyst: "Absolics production / design wins" },
+    chipsStatus: "final",
+    chipsLabel: "CHIPS-linked funding",
+    chipsAmount: "$75M CHIPS + $100M R&D grants",
+    chipsNote: "Absolics, SKC's glass-substrate subsidiary, received CHIPS-linked support for Covington, Georgia. This is strategically relevant but still early.",
     chipsSources: []
   },
   {
@@ -947,10 +1052,17 @@ const edges = [
 
   { from: "VNP", to: "AXTI", kind: "inp" },
   { from: "VNP", to: "JX", kind: "inp" },
+  { from: "DOWA", to: "AXTI", kind: "inp" },
+  { from: "DOWA", to: "JX", kind: "inp" },
   { from: "AXTI", to: "LITE", kind: "inp" },
   { from: "AXTI", to: "SIVE", kind: "inp" },
   { from: "JX", to: "LITE", kind: "inp" },
   { from: "JX", to: "SIVE", kind: "inp" },
+  { from: "LANDMARK", to: "COHR", kind: "inp" },
+  { from: "IET", to: "LITE", kind: "inp" },
+  { from: "IET", to: "COHR", kind: "inp" },
+  { from: "WIN", to: "LITE", kind: "inp" },
+  { from: "WIN", to: "COHR", kind: "inp" },
   { from: "AIXTRON", to: "LITE", kind: "inp" },
   { from: "AIXTRON", to: "SIVE", kind: "inp" },
 
@@ -967,11 +1079,18 @@ const edges = [
   { from: "LITE", to: "INNOLIGHT", kind: "inp" },
   { from: "LITE", to: "COHR", kind: "inp" },
   { from: "LITE", to: "EOPTOLINK", kind: "inp" },
+  { from: "SITM", to: "LITE", kind: "shared" },
+  { from: "SITM", to: "COHR", kind: "shared" },
+  { from: "LITE", to: "ELASER", kind: "integration" },
+  { from: "COHR", to: "ELASER", kind: "integration" },
 
   { from: "COHR", to: "FN", kind: "integration" },
   { from: "INNOLIGHT", to: "FN", kind: "integration" },
   { from: "EOPTOLINK", to: "CLOUD", kind: "integration" },
   { from: "MRVL", to: "ANET", kind: "integration" },
+  { from: "KEYS", to: "LITE", kind: "integration" },
+  { from: "KEYS", to: "COHR", kind: "integration" },
+  { from: "SKC", to: "CLOUD", kind: "integration" },
 
   { from: "CRDO", to: "ANET", kind: "integration" },
   { from: "AVGO", to: "ANET", kind: "integration" },
@@ -1047,7 +1166,7 @@ function renderStats() {
     <div class="stat"><div class="val" style="color:#fbbf24">${chokepoints}</div><div class="lbl">Chokepoints</div></div>
     <div class="stat"><div class="val" style="color:#7dd3fc">${avgChokepoint}/25</div><div class="lbl">Avg Chokepoint</div></div>
     <div class="stat"><div class="val" style="color:#c084fc">${chipsLinked}</div><div class="lbl">CHIPS-Linked</div></div>
-    <div class="stat"><div class="val" style="color:#a5b4fc">78</div><div class="lbl">Reports Backing Map</div></div>
+    <div class="stat"><div class="val" style="color:#a5b4fc">100</div><div class="lbl">Reports Backing Map</div></div>
   `;
 }
 

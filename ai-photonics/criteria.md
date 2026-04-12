@@ -2,6 +2,13 @@
 
 Total score out of 100, weighted across 5 dimensions + signal adjustments.
 
+Scoring discipline:
+- Score the 5 base dimensions first.
+- Apply signal adjustments only after the base score is complete.
+- Do not double-count the same fact in both `Catalyst & Timing` and `Signal Adjustments`.
+- Label all inputs as `reported`, `guided`, or `estimated` in the report.
+- Maintain the raw 5-question chokepoint inputs in `chokepoint_scores.tsv` so `chokepoint_score` is auditable and separable from the broader investment score.
+
 ## 1. Chokepoint Strength (30 points) — THE PRIMARY DIMENSION
 
 This replaces generic "business quality." Score based on the 5-question chokepoint test:
@@ -67,13 +74,15 @@ This replaces generic "business quality." Score based on the 5-question chokepoi
 
 | Score | Criteria |
 |-------|----------|
-| 9-10  | Downstream demand inflection + positive technical setup (RSI <40, above 200d SMA) |
-| 7-8   | Clear catalyst within 6 months (capacity expansion, new product cycle, regulatory approval) |
-| 5-6   | No clear catalyst, neutral sentiment and technicals |
-| 3-4   | Headwinds: demand softening, capacity coming online at competitors, negative sentiment |
+| 9-10  | Clear demand or capacity inflection within 6 months, with evidence the market has not fully priced it |
+| 7-8   | Concrete catalyst within 6-12 months (capacity expansion, new product cycle, regulatory approval, major design win) |
+| 5-6   | Plausible catalyst but timing or impact is uncertain |
+| 3-4   | Headwinds: demand softening, capacity coming online at competitors, unclear timing |
 | 1-2   | Active demand destruction, technology displacement, regulatory threat to chokepoint |
 
 ## Signal Adjustments
+
+These are narrow, mechanical overlays. If one is already materially embedded in the base score, do not apply it again here.
 
 ### Bullish
 | Signal | Adjustment | How to Verify |
@@ -110,6 +119,14 @@ This replaces generic "business quality." Score based on the 5-question chokepoi
 | 75+   | **BUY** | High chokepoint strength + reasonable valuation + catalyst |
 | 55-74 | **HOLD** | Good chokepoint but overvalued, or moderate chokepoint with ok value |
 | <55   | **AVOID** | Weak chokepoint, or strong chokepoint with fatal flaw (execution, geopolitics, customer concentration) |
+
+## Report Minimums
+
+Every report should include:
+- A `Source Trail` table with named sources and dates.
+- An explicit `Score Breakdown` table that sums to the base score.
+- A short explanation for every non-trivial estimate.
+- A valuation method behind any stated price target.
 
 ## Self-Correction
 
