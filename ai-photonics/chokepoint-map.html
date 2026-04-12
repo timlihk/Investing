@@ -36,6 +36,40 @@ canvas{display:block}
 #mode-toggle button{padding:8px 14px;border-radius:8px;border:1px solid #30363d;background:#161b22;color:#8b949e;cursor:pointer;font-size:12px;transition:all .2s}
 #mode-toggle button:hover,#mode-toggle button.active{background:#1f6feb;color:#fff;border-color:#1f6feb}
 #mode-toggle button.gp.active{background:#8957e5;border-color:#8957e5}
+#coverage-index{
+  position:fixed;
+  top:64px;
+  right:16px;
+  z-index:95;
+  width:min(420px,calc(100vw - 32px));
+  max-height:280px;
+  overflow:auto;
+  padding:14px 16px 16px;
+  border:1px solid #30363d;
+  border-radius:14px;
+  background:#0d1117ee;
+  box-shadow:0 8px 24px rgba(0,0,0,.4);
+}
+#coverage-index h3{font-size:13px;color:#f0f6fc;margin-bottom:6px}
+#coverage-index p{font-size:11px;color:#8b949e;line-height:1.5;margin-bottom:10px}
+.coverage-group{margin-bottom:10px}
+.coverage-group:last-child{margin-bottom:0}
+.coverage-group h4{font-size:10px;color:#58a6ff;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.coverage-chips{display:flex;flex-wrap:wrap;gap:6px}
+.coverage-chip{
+  display:inline-flex;
+  gap:5px;
+  align-items:center;
+  padding:6px 8px;
+  border-radius:999px;
+  border:1px solid #30363d;
+  background:#161b22;
+  color:#c9d1d9;
+  text-decoration:none;
+  font-size:11px;
+}
+.coverage-chip:hover{border-color:#58a6ff;color:#f0f6fc}
+.coverage-chip .name{color:#8b949e}
 </style>
 </head>
 <body>
@@ -58,6 +92,7 @@ canvas{display:block}
   <button onclick="setMode('margin',this)">Margin Heat</button>
   <button onclick="setMode('growth',this)">Growth Heat</button>
 </div>
+<div id="coverage-index"></div>
 <div id="flow-label">RAW MATERIALS &rarr; SUBSTRATES &rarr; FOUNDRY &rarr; COMPONENTS &rarr; MODULES &rarr; SYSTEMS &rarr; DATA CENTERS</div>
 <div id="tooltip"></div>
 <canvas id="c"></canvas>
@@ -71,11 +106,13 @@ canvas{display:block}
   <b style="color:#6e7681">Golden Path</b> = chokepoint (50%+ share) AND gross margin ≥ 40% AND revenue growth ≥ 20% YoY.
   Source: Latest earnings releases, IR presentations, web search. Not audited — see research reports for full sourcing.
 </div>
+<script src="optics-dashboard-data.js"></script>
 <script>
 const W=()=>window.innerWidth,H=()=>window.innerHeight;
 const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
 const tooltip=document.getElementById('tooltip');
 let nodes=[],edges=[],hoveredNode=null,mx=0,my=0,viewMode='default';
+const coverageRows = Array.isArray(window.OPTICS_DASHBOARD_DATA?.rows) ? window.OPTICS_DASHBOARD_DATA.rows.slice() : [];
 
 const LAYERS=[
   {y:.06,label:"Raw Materials",         bg:'rgba(139,148,158,.04)'},
@@ -341,6 +378,31 @@ function init(){
   addEdge("600487.SS","ANET"); addEdge("6869.HK","CIEN"); // Fiber → networking
   addEdge("STLTECH.NS","CIEN"); // Sterlite fiber → Ciena
   addEdge("000988.SZ","300308.SZ"); // Huagong lasers → Innolight
+}
+
+function renderCoverageIndex(){
+  const el=document.getElementById('coverage-index');
+  if(!el||!coverageRows.length){ if(el) el.style.display='none'; return; }
+  const groups=new Map();
+  coverageRows
+    .slice()
+    .sort((a,b)=>a.segment.localeCompare(b.segment)||a.ticker.localeCompare(b.ticker))
+    .forEach((row)=>{
+      if(!groups.has(row.segment)) groups.set(row.segment,[]);
+      groups.get(row.segment).push(row);
+    });
+  el.innerHTML=`
+    <h3>Coverage Index (${coverageRows.length})</h3>
+    <p>Every profiled optics name in the scorecard is listed here, even when the graph only visualizes the highest-signal choke points.</p>
+    ${Array.from(groups.entries()).map(([segment,rows])=>`
+      <div class="coverage-group">
+        <h4>${segment} (${rows.length})</h4>
+        <div class="coverage-chips">
+          ${rows.map((row)=>`<a class="coverage-chip" href="optics-dashboard.html?ticker=${encodeURIComponent(row.ticker)}"><strong>${row.ticker}</strong><span class="name">${row.name}</span></a>`).join('')}
+        </div>
+      </div>
+    `).join('')}
+  `;
 }
 
 function addN(name,ticker,layer,xFrac,chokepoint,monopoly,revGrowth,grossMargin,opMargin,revFwd,opticsPct,mktCapB,thesis,share,market){
@@ -615,6 +677,7 @@ function handleMove(e){
 
 canvas.addEventListener('mousemove',handleMove);
 window.addEventListener('resize',layout);
+renderCoverageIndex();
 init();layout();draw();
 </script>
 </body>

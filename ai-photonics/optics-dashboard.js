@@ -6,6 +6,12 @@
   let activeModalRow = null;
   let detailChart = null;
   let detailChartResizeObserver = null;
+  const liveState = {
+    quotesBySymbol: new Map(),
+    detailsBySymbol: new Map(),
+    detailRequests: new Map(),
+    quoteHydrated: false
+  };
 
   if (!data || !Array.isArray(data.rows)) {
     document.getElementById("segments").innerHTML = '<div class="empty">Dashboard data is not available yet.</div>';
@@ -48,6 +54,7 @@
   bindEvents();
   initializePanelSizing();
   render();
+  hydrateLiveQuotes();
 
   function bindEvents() {
     elements.searchInput.addEventListener("input", (event) => {
@@ -262,7 +269,7 @@
     if (state.sortKey === "chokepointScore") {
       const tieBreakers = [
         (row) => row.opticsPct,
-        (row) => row.marketMetrics.marketCap,
+        (row) => getMarketMetrics(row).marketCap,
         (row) => row.name
       ];
       const primaryComparison = leftValue - rightValue;
@@ -310,13 +317,13 @@
       case "chokepointScore":
         return row.chokepointScore;
       case "oneYearReturn":
-        return row.marketMetrics.oneYearReturn;
+        return getMarketMetrics(row).oneYearReturn;
       case "relativeStrength":
         return row.relativeStrength;
       case "currentPrice":
-        return row.marketMetrics.currentPrice;
+        return getMarketMetrics(row).currentPrice;
       case "marketCap":
-        return row.marketMetrics.marketCap;
+        return getMarketMetrics(row).marketCap;
       case "opticsPct":
         return row.opticsPct;
       case "name":
@@ -346,7 +353,7 @@
     elements.coverageStamp.textContent = `${filteredRows.length} of ${data.totalCompanies} names visible`;
 
     const visibleSegments = groupedRows.length;
-    const visibleAvgReturn = average(filteredRows.map((row) => row.marketMetrics.oneYearReturn));
+    const visibleAvgReturn = average(filteredRows.map((row) => getMarketMetrics(row).oneYearReturn));
     const liveCount = filteredRows.filter((row) => row.marketDataStatus === "ok").length;
     const avgOptics = average(filteredRows.map((row) => row.opticsPct));
 
@@ -364,7 +371,7 @@
       {
         label: "Avg 1Y Return",
         value: formatPercent(visibleAvgReturn),
-        note: "Computed from the embedded Yahoo Finance yearly chart snapshot."
+        note: "Computed from the latest live Yahoo Finance chart payload served through the Worker."
       },
       {
         label: "Avg Optics %",
@@ -405,7 +412,7 @@
 
     elements.segments.innerHTML = groupedRows
       .map((group) => {
-        const avgReturn = average(group.rows.map((row) => row.marketMetrics.oneYearReturn));
+        const avgReturn = average(group.rows.map((row) => getMarketMetrics(row).oneYearReturn));
         const liveCount = group.rows.filter((row) => row.marketDataStatus === "ok").length;
         const avgOptics = average(group.rows.map((row) => row.opticsPct));
 
@@ -456,8 +463,9 @@
   }
 
   function renderRow(row) {
-    const currentPrice = formatPrice(row.marketMetrics.currentPrice, row.marketMetrics.currency);
-    const marketCap = formatMarketCap(row.marketMetrics.marketCap, row.marketMetrics.currency);
+    const metrics = getMarketMetrics(row);
+    const currentPrice = formatPrice(metrics.currentPrice, metrics.currency);
+    const marketCap = formatMarketCap(metrics.marketCap, metrics.currency);
     const selected = row.ticker === state.selectedTicker;
 
     return `
@@ -474,17 +482,17 @@
         </td>
         <td class="mono">${escapeHtml(currentPrice)}</td>
         <td class="mono">${escapeHtml(marketCap)}</td>
-        <td class="mono">${escapeHtml(formatRatio(row.marketMetrics.priceToSales))}</td>
-        <td class="mono">${escapeHtml(formatRatio(row.marketMetrics.trailingPE))}</td>
-        <td>${renderSparkline(row.marketMetrics.sparkline)}</td>
-        <td>${renderMetricPill(row.marketMetrics.oneMonthReturn)}</td>
-        <td>${renderMetricPill(row.marketMetrics.ytdReturn)}</td>
-        <td>${renderMetricPill(row.marketMetrics.oneYearReturn)}</td>
-        <td>${renderMetricPill(row.marketMetrics.distanceFromHigh, { invert: true })}</td>
+        <td class="mono">${escapeHtml(formatRatio(metrics.priceToSales))}</td>
+        <td class="mono">${escapeHtml(formatRatio(metrics.trailingPE))}</td>
+        <td>${renderSparkline(metrics.sparkline)}</td>
+        <td>${renderMetricPill(metrics.oneMonthReturn)}</td>
+        <td>${renderMetricPill(metrics.ytdReturn)}</td>
+        <td>${renderMetricPill(metrics.oneYearReturn)}</td>
+        <td>${renderMetricPill(metrics.distanceFromHigh, { invert: true })}</td>
         <td>${renderStrength(row.relativeStrength)}</td>
-        <td>${renderTrend(row.marketMetrics.above20Sma)}</td>
-        <td>${renderTrend(row.marketMetrics.above50Sma)}</td>
-        <td>${renderTrend(row.marketMetrics.above200Sma)}</td>
+        <td>${renderTrend(metrics.above20Sma)}</td>
+        <td>${renderTrend(metrics.above50Sma)}</td>
+        <td>${renderTrend(metrics.above200Sma)}</td>
         <td class="mono">${row.opticsPct == null ? "n/a" : `${row.opticsPct.toFixed(0)}%`}</td>
       </tr>
     `;
@@ -496,6 +504,8 @@
       elements.chartHost.innerHTML = "";
       return;
     }
+
+    const metrics = getMarketMetrics(row);
 
     elements.detailTop.innerHTML = `
       <div class="detail-heading">
@@ -513,8 +523,8 @@
       <div class="detail-grid">
         <article class="detail-stat">
           <span class="label">Current Price</span>
-          <span class="value">${escapeHtml(formatPrice(row.marketMetrics.currentPrice, row.marketMetrics.currency))}</span>
-          <span class="small">${escapeHtml(formatMarketCap(row.marketMetrics.marketCap, row.marketMetrics.currency))}</span>
+          <span class="value">${escapeHtml(formatPrice(metrics.currentPrice, metrics.currency))}</span>
+          <span class="small">${escapeHtml(formatMarketCap(metrics.marketCap, metrics.currency))}</span>
         </article>
         <article class="detail-stat">
           <span class="label">Optics Exposure</span>
@@ -523,8 +533,8 @@
         </article>
         <article class="detail-stat">
           <span class="label">Momentum</span>
-          <span class="value">${escapeHtml(formatPercent(row.marketMetrics.oneYearReturn))}</span>
-          <span class="small">1M ${escapeHtml(formatPercent(row.marketMetrics.oneMonthReturn))} / YTD ${escapeHtml(formatPercent(row.marketMetrics.ytdReturn))}</span>
+          <span class="value">${escapeHtml(formatPercent(metrics.oneYearReturn))}</span>
+          <span class="small">1M ${escapeHtml(formatPercent(metrics.oneMonthReturn))} / YTD ${escapeHtml(formatPercent(metrics.ytdReturn))}</span>
         </article>
         <article class="detail-stat">
           <span class="label">Choking Power</span>
@@ -549,6 +559,7 @@
     `;
 
     renderLocalChart(row);
+    ensureLiveDetail(row);
   }
 
   function openNoteModal(row) {
@@ -787,7 +798,7 @@
   }
 
   function renderFinancialSnapshotMarkup(row, { title } = {}) {
-    const metrics = row.marketMetrics || {};
+    const metrics = getMarketMetrics(row);
     const valuationRows = [
       ["Share Price", formatPrice(metrics.currentPrice, metrics.currency)],
       ["Market Cap", formatMarketCap(metrics.marketCap, metrics.currency)],
@@ -832,7 +843,7 @@
         ${valuationRows.length ? renderMetricTable(["Metric", "Value"], valuationRows) : ""}
         ${historicalRows.length ? renderMetricTable(["Actual", "Revenue", "EBITDA", "Net Income", "EPS"], historicalRows) : ""}
         ${forwardRows.length ? renderMetricTable(["Street View", "Revenue", "Rev YoY", "EPS", "EPS YoY"], forwardRows) : ""}
-        <div class="fallback-caption">Source: embedded Yahoo Finance valuation, annual financials, and analyst estimates. Forward years appear only when Yahoo provides coverage.</div>
+        <div class="fallback-caption">Source: Yahoo Finance. Live quote summary overrides the embedded snapshot when available; annual financials and analyst estimates fall back to the embedded data.</div>
       </div>
     `;
   }
@@ -902,9 +913,10 @@
   }
 
   function renderLocalChart(row) {
-    const series = row.marketMetrics.chartSeries || [];
-    const candleSeries = row.marketMetrics.chartCandleSeries || [];
-    const volumeSeries = row.marketMetrics.chartVolumeSeries || [];
+    const metrics = getMarketMetrics(row);
+    const series = metrics.chartSeries || [];
+    const candleSeries = metrics.chartCandleSeries || [];
+    const volumeSeries = metrics.chartVolumeSeries || [];
     if (!series.length) {
       elements.chartHost.innerHTML = `
         <div class="fallback-chart">
@@ -925,7 +937,7 @@
       <div class="fallback-chart">
         <div class="tv-chart-canvas" id="tv-chart-canvas"></div>
         <div class="fallback-caption">
-          Local 1-year chart rendered from the embedded Yahoo Finance snapshot, with candlesticks, daily volume, and SMA 10, 20, 50, and 200 overlays.
+          Live Yahoo Finance candles rendered locally with TradingView Lightweight Charts, including daily volume and SMA 10, 20, 50, and 200 overlays.
         </div>
       </div>
     `;
@@ -1107,7 +1119,7 @@
           <polyline fill="none" stroke="${stroke}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="${linePoints}"></polyline>
         </svg>
         <div class="fallback-caption">
-          TradingView Lightweight Charts was unavailable, so this local SVG fallback is using the embedded Yahoo Finance snapshot instead.
+          TradingView Lightweight Charts was unavailable, so this local SVG fallback is using the latest Yahoo Finance payload instead.
         </div>
       </div>
     `;
@@ -1181,10 +1193,11 @@
   }
 
   function renderTrendLabel(row) {
+    const metrics = getMarketMetrics(row);
     const labels = [];
-    labels.push(`20D ${row.marketMetrics.above20Sma ? "UP" : row.marketMetrics.above20Sma == null ? "n/a" : "DN"}`);
-    labels.push(`50D ${row.marketMetrics.above50Sma ? "UP" : row.marketMetrics.above50Sma == null ? "n/a" : "DN"}`);
-    labels.push(`200D ${row.marketMetrics.above200Sma ? "UP" : row.marketMetrics.above200Sma == null ? "n/a" : "DN"}`);
+    labels.push(`20D ${metrics.above20Sma ? "UP" : metrics.above20Sma == null ? "n/a" : "DN"}`);
+    labels.push(`50D ${metrics.above50Sma ? "UP" : metrics.above50Sma == null ? "n/a" : "DN"}`);
+    labels.push(`200D ${metrics.above200Sma ? "UP" : metrics.above200Sma == null ? "n/a" : "DN"}`);
     return labels.join(" / ");
   }
 
@@ -1208,6 +1221,99 @@
 
   function getTradingViewUrl(symbol) {
     return `https://www.tradingview.com/chart/?symbol=${encodeURIComponent(symbol)}`;
+  }
+
+  function getRowSymbol(row) {
+    return row.yahooSymbol || row.ticker;
+  }
+
+  function getMarketMetrics(row) {
+    const symbol = getRowSymbol(row);
+    const quoteMetrics = liveState.quotesBySymbol.get(symbol)?.marketMetrics || {};
+    const detailMetrics = liveState.detailsBySymbol.get(symbol)?.marketMetrics || {};
+    return {
+      ...(row.marketMetrics || {}),
+      ...quoteMetrics,
+      ...detailMetrics
+    };
+  }
+
+  async function hydrateLiveQuotes() {
+    if (liveState.quoteHydrated) {
+      return;
+    }
+    liveState.quoteHydrated = true;
+
+    const symbols = Array.from(new Set(data.rows.map(getRowSymbol).filter(Boolean)));
+    const chunkSize = 40;
+    const requests = [];
+
+    for (let index = 0; index < symbols.length; index += chunkSize) {
+      const chunk = symbols.slice(index, index + chunkSize);
+      requests.push(fetchLiveQuoteChunk(chunk));
+    }
+
+    const chunks = await Promise.allSettled(requests);
+    let updated = false;
+
+    chunks.forEach((result) => {
+      if (result.status !== "fulfilled") {
+        return;
+      }
+      result.value.forEach((entry) => {
+        if (!entry?.symbol) {
+          return;
+        }
+        liveState.quotesBySymbol.set(entry.symbol, entry);
+        updated = true;
+      });
+    });
+
+    if (updated) {
+      render();
+    }
+  }
+
+  async function fetchLiveQuoteChunk(symbols) {
+    if (!symbols.length) {
+      return [];
+    }
+
+    const response = await fetch(`/api/market/quotes?symbols=${encodeURIComponent(symbols.join(","))}`);
+    if (!response.ok) {
+      throw new Error(`Quote request failed with status ${response.status}`);
+    }
+    const payload = await response.json();
+    return Array.isArray(payload?.results) ? payload.results : [];
+  }
+
+  async function ensureLiveDetail(row) {
+    const symbol = getRowSymbol(row);
+    if (!symbol || liveState.detailsBySymbol.has(symbol) || liveState.detailRequests.has(symbol)) {
+      return;
+    }
+
+    const request = fetch(`/api/market/detail?symbol=${encodeURIComponent(symbol)}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Detail request failed with status ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((payload) => {
+        liveState.detailsBySymbol.set(symbol, payload);
+        if (state.selectedTicker === row.ticker) {
+          render();
+        }
+      })
+      .catch((error) => {
+        console.warn(`Live market detail failed for ${symbol}`, error);
+      })
+      .finally(() => {
+        liveState.detailRequests.delete(symbol);
+      });
+
+    liveState.detailRequests.set(symbol, request);
   }
 
   function formatDateTime(date) {

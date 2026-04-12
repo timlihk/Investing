@@ -478,8 +478,69 @@ body {
   font-size: 12px;
   color: #94a3b8;
 }
+.coverage-index {
+  margin: 0 32px 24px;
+  padding: 16px 18px 18px;
+  border: 1px solid #243244;
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(8px);
+}
+.coverage-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+.coverage-head h3 {
+  font-size: 14px;
+  color: #f8fafc;
+}
+.coverage-head p {
+  color: #94a3b8;
+  font-size: 12px;
+}
+.coverage-groups {
+  display: grid;
+  gap: 12px;
+}
+.coverage-group h4 {
+  margin-bottom: 8px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #67e8f9;
+}
+.coverage-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.coverage-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid #334155;
+  background: rgba(15, 23, 42, 0.68);
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 1;
+}
+.coverage-chip:hover {
+  border-color: #38bdf8;
+  color: #f8fafc;
+}
+.coverage-chip .name {
+  color: #94a3b8;
+}
 @media (max-width: 980px) {
   .header, .controls, .legend, .note { padding-left: 18px; padding-right: 18px; }
+  .coverage-index { margin-left: 18px; margin-right: 18px; }
+  .coverage-head { flex-direction: column; align-items: flex-start; }
 }
 </style>
 </head>
@@ -563,15 +624,19 @@ body {
 </div>
 
 <div class="note">
-  This is a curated map of the key interlinks, not every company in the photonics universe. It currently visualizes the highest-signal nodes from a broader 100-report scorecard. A node is tagged as a chokepoint when its systematic `chokepoint_score` is `16/25` or higher. CHIPS labels track direct U.S. CHIPS incentives awards, CHIPS R&D awards, and CHIPS-linked hub funding as of 2026-03-24; the full scorecard sweep lives in the scorecard and CHIPS notes linked above.
+  This is a curated map of the key interlinks, not every company in the photonics universe. It currently visualizes the highest-signal nodes from a broader 121-company scorecard. A node is tagged as a chokepoint when its systematic `chokepoint_score` is `16/25` or higher. CHIPS labels track direct U.S. CHIPS incentives awards, CHIPS R&D awards, and CHIPS-linked hub funding as of 2026-03-24; the full scorecard sweep lives in the scorecard and CHIPS notes linked above.
 </div>
+
+<div class="coverage-index" id="coverage-index"></div>
 
 <div class="panel" id="panel">
   <button class="panel-close" id="panel-close">&times;</button>
   <div class="panel-inner" id="panel-content"></div>
 </div>
 
+<script src="optics-dashboard-data.js"></script>
 <script>
+const coverageRows = Array.isArray(window.OPTICS_DASHBOARD_DATA?.rows) ? window.OPTICS_DASHBOARD_DATA.rows.slice() : [];
 const nodes = [
   {
     id: "SOI", ticker: "SOI.PA", name: "Soitec", chokepointScore: 23, verdict: "HOLD", market: "France",
@@ -1160,13 +1225,54 @@ function renderStats() {
   const chokepoints = mapped.filter(node => isChokepoint(node)).length;
   const avgChokepoint = Math.round(mapped.reduce((sum, node) => sum + node.chokepointScore, 0) / mapped.length);
   const chipsLinked = chipsLinkedCount();
+  const coverageCount = coverageRows.length || 121;
   statsEl.innerHTML = `
     <div class="stat"><div class="val">${mapped.length}</div><div class="lbl">Visualized Nodes</div></div>
     <div class="stat"><div class="val" style="color:#34d399">${buys}</div><div class="lbl">BUY Ratings</div></div>
     <div class="stat"><div class="val" style="color:#fbbf24">${chokepoints}</div><div class="lbl">Chokepoints</div></div>
     <div class="stat"><div class="val" style="color:#7dd3fc">${avgChokepoint}/25</div><div class="lbl">Avg Chokepoint</div></div>
     <div class="stat"><div class="val" style="color:#c084fc">${chipsLinked}</div><div class="lbl">CHIPS-Linked</div></div>
-    <div class="stat"><div class="val" style="color:#a5b4fc">100</div><div class="lbl">Reports Backing Map</div></div>
+    <div class="stat"><div class="val" style="color:#a5b4fc">${coverageCount}</div><div class="lbl">Profiled Names</div></div>
+  `;
+}
+
+function renderCoverageIndex() {
+  const coverageEl = document.getElementById("coverage-index");
+  if (!coverageEl) return;
+  if (!coverageRows.length) {
+    coverageEl.style.display = "none";
+    return;
+  }
+
+  const groups = new Map();
+  coverageRows
+    .slice()
+    .sort((a, b) => a.segment.localeCompare(b.segment) || a.ticker.localeCompare(b.ticker))
+    .forEach((row) => {
+      if (!groups.has(row.segment)) groups.set(row.segment, []);
+      groups.get(row.segment).push(row);
+    });
+
+  coverageEl.innerHTML = `
+    <div class="coverage-head">
+      <h3>Coverage Index</h3>
+      <p>Every profiled optics name in the scorecard, linked back to the dashboard detail view.</p>
+    </div>
+    <div class="coverage-groups">
+      ${Array.from(groups.entries()).map(([segment, rows]) => `
+        <div class="coverage-group">
+          <h4>${segment} (${rows.length})</h4>
+          <div class="coverage-chips">
+            ${rows.map((row) => `
+              <a class="coverage-chip" href="optics-dashboard.html?ticker=${encodeURIComponent(row.ticker)}">
+                <strong>${row.ticker}</strong>
+                <span class="name">${row.name}</span>
+              </a>
+            `).join("")}
+          </div>
+        </div>
+      `).join("")}
+    </div>
   `;
 }
 
@@ -1354,6 +1460,7 @@ document.querySelectorAll(".filter-btn").forEach(btn => {
 });
 
 renderStats();
+renderCoverageIndex();
 renderNodes();
 renderEdges();
 updateVisibility();
