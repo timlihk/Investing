@@ -918,23 +918,6 @@ window.COMPANY_METRICS = [
     "thesis": "Pure-play optical transceivers. Nearly all revenue from DC optics."
   },
   {
-    "ticker": "0877.HK",
-    "name": "O-Net",
-    "segment": "Modules & Transceivers",
-    "verdict": "HOLD",
-    "chokepointScore": 16,
-    "chokepointTier": "Duopoly Chokepoint",
-    "revenueGrowth": null,
-    "grossMargin": null,
-    "operatingMargin": null,
-    "market": "China/HK",
-    "oneLiner": "Chinese passive optical component layer. Amplifiers, isolators, filters. CPO ELS module partner.",
-    "catalyst": "Sivers/Enablence CPO ELS partnership",
-    "share": "Passive optical",
-    "opticsPct": 80.0,
-    "thesis": "Chinese passive optical components. Sivers/Enablence CPO ELS partner."
-  },
-  {
     "ticker": "300502.SZ",
     "name": "Eoptolink",
     "segment": "Modules & Transceivers",

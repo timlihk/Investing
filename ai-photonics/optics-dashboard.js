@@ -4,6 +4,8 @@
   const noteCache = new Map();
   let noteRequestToken = 0;
   let activeModalRow = null;
+  let detailChart = null;
+  let detailChartResizeObserver = null;
 
   if (!data || !Array.isArray(data.rows)) {
     document.getElementById("segments").innerHTML = '<div class="empty">Dashboard data is not available yet.</div>';
@@ -696,17 +698,144 @@
   }
 
   function renderLocalChart(row) {
-    const values = row.marketMetrics.sparkline || [];
-    if (!values.length) {
+    const series = row.marketMetrics.chartSeries || [];
+    if (!series.length) {
       elements.chartHost.innerHTML = `
         <div class="fallback-chart">
           <div class="empty">No Yahoo snapshot is available for this ticker yet.</div>
           <div class="fallback-caption">Use the Yahoo or TradingView buttons above for the full external page.</div>
         </div>
       `;
+      destroyDetailChart();
       return;
     }
 
+    if (!window.LightweightCharts || typeof window.LightweightCharts.createChart !== "function") {
+      renderSvgFallbackChart(row, series.map((point) => point.value));
+      return;
+    }
+
+    elements.chartHost.innerHTML = `
+      <div class="fallback-chart">
+        <div class="tv-chart-canvas" id="tv-chart-canvas"></div>
+        <div class="fallback-caption">
+          Local 1-year price chart rendered with TradingView Lightweight Charts from the embedded Yahoo Finance snapshot, with SMA 10, 20, 50, and 200 overlays.
+        </div>
+      </div>
+    `;
+
+    const canvas = document.getElementById("tv-chart-canvas");
+    if (!canvas) {
+      return;
+    }
+
+    destroyDetailChart();
+
+    const LightweightCharts = window.LightweightCharts;
+    detailChart = LightweightCharts.createChart(canvas, {
+      width: canvas.clientWidth || elements.chartHost.clientWidth || 760,
+      height: canvas.clientHeight || elements.chartHost.clientHeight || 420,
+      layout: {
+        background: { color: "#ffffff" },
+        textColor: "#625749",
+        fontFamily: "\"IBM Plex Mono\", ui-monospace, monospace"
+      },
+      grid: {
+        vertLines: { color: "#f0e7d8" },
+        horzLines: { color: "#f0e7d8" }
+      },
+      rightPriceScale: {
+        borderColor: "#e0d5c3"
+      },
+      timeScale: {
+        borderColor: "#e0d5c3",
+        timeVisible: true
+      },
+      crosshair: {
+        vertLine: { color: "#9a8b74", labelBackgroundColor: "#17140f" },
+        horzLine: { color: "#9a8b74", labelBackgroundColor: "#17140f" }
+      }
+    });
+
+    const priceStroke = series[series.length - 1].value >= series[0].value ? "#0f6c4b" : "#c64a3d";
+    const priceSeries = detailChart.addAreaSeries({
+      lineColor: priceStroke,
+      topColor: `${priceStroke}22`,
+      bottomColor: `${priceStroke}06`,
+      lineWidth: 2,
+      priceLineVisible: false,
+      lastValueVisible: true
+    });
+    priceSeries.setData(series);
+
+    addSmaSeries(detailChart, series, 10, "#ce8b2d");
+    addSmaSeries(detailChart, series, 20, "#8262d8");
+    addSmaSeries(detailChart, series, 50, "#277da1");
+    addSmaSeries(detailChart, series, 200, "#7a8b2e");
+
+    detailChart.timeScale().fitContent();
+    detailChartResizeObserver = new ResizeObserver(() => {
+      if (!detailChart) {
+        return;
+      }
+      detailChart.applyOptions({
+        width: canvas.clientWidth || elements.chartHost.clientWidth || 760,
+        height: canvas.clientHeight || elements.chartHost.clientHeight || 420
+      });
+      detailChart.timeScale().fitContent();
+    });
+    detailChartResizeObserver.observe(canvas);
+  }
+
+  function destroyDetailChart() {
+    if (detailChartResizeObserver) {
+      detailChartResizeObserver.disconnect();
+      detailChartResizeObserver = null;
+    }
+    if (detailChart) {
+      detailChart.remove();
+      detailChart = null;
+    }
+  }
+
+  function addSmaSeries(chart, series, period, color) {
+    const smaSeries = computeSmaSeries(series, period);
+    if (!smaSeries.length) {
+      return;
+    }
+    const lineSeries = chart.addLineSeries({
+      color,
+      lineWidth: 1.5,
+      priceLineVisible: false,
+      lastValueVisible: false
+    });
+    lineSeries.setData(smaSeries);
+  }
+
+  function computeSmaSeries(series, period) {
+    if (!series.length || period <= 0) {
+      return [];
+    }
+    const output = [];
+    let rollingSum = 0;
+
+    for (let index = 0; index < series.length; index += 1) {
+      rollingSum += series[index].value;
+      if (index >= period) {
+        rollingSum -= series[index - period].value;
+      }
+      if (index >= period - 1) {
+        output.push({
+          time: series[index].time,
+          value: Number((rollingSum / period).toFixed(2))
+        });
+      }
+    }
+
+    return output;
+  }
+
+  function renderSvgFallbackChart(row, values) {
     const width = 760;
     const height = 320;
     const leftPad = 10;
@@ -743,7 +872,7 @@
           <polyline fill="none" stroke="${stroke}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="${linePoints}"></polyline>
         </svg>
         <div class="fallback-caption">
-          Local 1-year chart built from the embedded Yahoo Finance snapshot. Use the buttons above to open the full Yahoo or TradingView page.
+          TradingView Lightweight Charts was unavailable, so this local SVG fallback is using the embedded Yahoo Finance snapshot instead.
         </div>
       </div>
     `;

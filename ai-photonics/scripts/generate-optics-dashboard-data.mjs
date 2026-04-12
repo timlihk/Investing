@@ -59,7 +59,6 @@ const TRADINGVIEW_SYMBOL_OVERRIDES = {
   "5016.T": "TSE:5016",
   "IQE.L": "LSE:IQE",
   "300308.SZ": "SZSE:300308",
-  "0877.HK": "HKEX:877",
   "300502.SZ": "SZSE:300502",
   "000936.SZ": "SZSE:000936",
   "002281.SZ": "SZSE:002281",
@@ -402,6 +401,10 @@ function compressSeries(values, maxPoints = 72) {
 function buildMarketMetrics(symbol, summary, chart) {
   const quotes = (chart?.quotes || []).filter((quote) => Number.isFinite(quote.close));
   const closes = quotes.map((quote) => quote.close);
+  const chartSeries = quotes.map((quote) => ({
+    time: new Date(quote.date).toISOString().slice(0, 10),
+    value: roundNumber(quote.close, 2)
+  }));
   const latestClose = closes.at(-1) ?? null;
   const now = new Date();
   const oneMonthDate = new Date(now);
@@ -441,6 +444,7 @@ function buildMarketMetrics(symbol, summary, chart) {
     above50Sma: Number.isFinite(latestPrice) && Number.isFinite(sma50) ? latestPrice >= sma50 : null,
     above200Sma: Number.isFinite(latestPrice) && Number.isFinite(sma200) ? latestPrice >= sma200 : null,
     sparkline: compressSeries(closes, 72),
+    chartSeries,
     chartPoints: closes.length
   };
 }
@@ -494,6 +498,7 @@ function buildRows(companies, resultsMap, reportFiles, marketMap) {
           above50Sma: null,
           above200Sma: null,
           sparkline: [],
+          chartSeries: [],
           chartPoints: 0
         };
 
