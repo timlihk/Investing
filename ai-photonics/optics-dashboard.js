@@ -855,11 +855,24 @@
     return `
       <div class="note note-table-wrap">
         ${title ? `<strong>${escapeHtml(title)}</strong>` : ""}
-        ${valuationRows.length ? renderMetricTable(["Metric", "Value"], valuationRows, { variant: "is-compact" }) : ""}
+        ${valuationRows.length ? renderMetricKeyValue(valuationRows) : ""}
         ${historicalRows.length ? renderMetricTable(["Actual", "Revenue", "EBITDA", "Net Income", "EPS"], historicalRows) : ""}
         ${forwardRows.length ? renderMetricTable(["Street View", "Revenue", "Rev YoY", "EPS", "EPS YoY"], forwardRows) : ""}
         <div class="fallback-caption">Source: Yahoo Finance. Live quote summary overrides the embedded snapshot when available; annual financials and analyst estimates fall back to the embedded data.</div>
       </div>
+    `;
+  }
+
+  function renderMetricKeyValue(rows) {
+    return `
+      <dl class="note-kv">
+        ${rows
+          .map(
+            ([label, value]) =>
+              `<dt>${escapeHtml(label)}</dt><dd class="${value === "n/a" ? "is-dim" : ""}">${escapeHtml(value)}</dd>`
+          )
+          .join("")}
+      </dl>
     `;
   }
 
