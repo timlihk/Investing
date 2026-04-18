@@ -35,7 +35,7 @@ body{
 .hero{
   display:grid;
   gap:18px;
-  margin-bottom:28px;
+  margin-bottom:32px;
 }
 .eyebrow{
   margin:0;
@@ -61,6 +61,11 @@ h1{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:18px;
+}
+.hero-stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
 }
 .card{
   border:1px solid var(--line);
@@ -122,7 +127,7 @@ h1{
   color:var(--muted);
 }
 .footer{
-  margin-top:18px;
+  margin-top:20px;
   color:var(--muted);
   font-size:13px;
 }
@@ -135,11 +140,16 @@ h1{
   <div class="page">
     <section class="hero">
       <p class="eyebrow">Tim Li Research Hub</p>
-      <h1>Investing dashboards and supply-chain maps.</h1>
+      <h1>Research dashboards for industrial and technology supply chains.</h1>
       <p>
-        This front page is the entrypoint for the project dashboards under the shared <code>investing</code> deployment.
-        Each section links into its own static app so new research can be added without changing the top-level URL structure.
+        A shared front page for the active research apps under the <code>investing</code> deployment.
+        Each dashboard is a separate working surface with its own notes, maps, and company-level analysis.
       </p>
+      <div class="hero-stats">
+        <span class="pill">Shared Cloudflare entrypoint</span>
+        <span class="pill">Multi-project research hub</span>
+        <span class="pill">Static dashboards with room for live APIs later</span>
+      </div>
     </section>
 
     <section class="grid">
@@ -152,10 +162,9 @@ h1{
           <span class="pill">Teardown-driven</span>
           <span class="pill">Supplier map</span>
         </div>
-        <p>Confirmed and inferred SpaceX / Starlink suppliers, teardown-backed routing, and company-level research notes.</p>
+        <p>Confirmed and inferred SpaceX and Starlink suppliers, teardown-backed routing, and supplier-level research notes.</p>
         <div class="links">
-          <a class="link" href="./SpaceX-supply-chain/"><span>Main dashboard</span><small>/SpaceX-supply-chain/</small></a>
-          <a class="link" href="./SpaceX-supply-chain/spacex-dashboard.html"><span>Direct dashboard</span><small>full screen</small></a>
+          <a class="link" href="./SpaceX-supply-chain/"><span>Open dashboard</span><small>/SpaceX-supply-chain/</small></a>
         </div>
       </article>
 
@@ -168,11 +177,9 @@ h1{
           <span class="pill">Live-style charts</span>
           <span class="pill">Supplier maps</span>
         </div>
-        <p>Optical interconnect, silicon photonics, suppliers, chokepoints, and dashboard-level valuation snapshots.</p>
+        <p>Optical interconnect, silicon photonics, chokepoints, supplier mapping, and dashboard-level financial snapshots.</p>
         <div class="links">
-          <a class="link" href="./ai-photonics/"><span>Main entry</span><small>/ai-photonics/</small></a>
-          <a class="link" href="./ai-photonics/optics-dashboard.html"><span>Optics dashboard</span><small>detail charts + notes</small></a>
-          <a class="link" href="./ai-photonics/chokepoint-map.html"><span>Network map</span><small>chokepoint view</small></a>
+          <a class="link" href="./ai-photonics/"><span>Open dashboard</span><small>/ai-photonics/</small></a>
         </div>
       </article>
 
@@ -185,15 +192,14 @@ h1{
           <span class="pill">Packaging</span>
           <span class="pill">Value chain</span>
         </div>
-        <p>Memory and packaging bottlenecks tied to HBM, AI server demand, enterprise SSDs, and related beneficiaries.</p>
+        <p>HBM, advanced packaging, AI server demand, enterprise SSDs, and the bottlenecks around the memory stack.</p>
         <div class="links">
-          <a class="link" href="./memory-supercycle/"><span>Main entry</span><small>/memory-supercycle/</small></a>
-          <a class="link" href="./memory-supercycle/supply-chain-map.html"><span>Supply-chain map</span><small>current visual entry</small></a>
+          <a class="link" href="./memory-supercycle/"><span>Open dashboard</span><small>/memory-supercycle/</small></a>
         </div>
       </article>
     </section>
 
-    <p class="footer">Suggested deployment shape: root landing page plus one route per research app.</p>
+    <p class="footer">Each route is intended to remain stable as the underlying dashboards evolve.</p>
   </div>
 </body>
 </html>

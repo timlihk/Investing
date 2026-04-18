@@ -167,3 +167,58 @@ SNPS       # Synopsys — CONFIRMED: EDA tools for SpaceX custom chip design (jo
 # SpaceX Vietnam Manufacturing Hub
 # SpaceX explored $1.5B Vietnam manufacturing hub (Vietnamese govt disclosure Sept 2024)
 # Driving Taiwan suppliers to relocate: WNC→Vietnam, UMT→Vietnam, Chin-Poon→Thailand, Shenmao→Vietnam
+
+# ============================================================
+# RESEARCH SWEEP 2026-03-29 — New Angles Investigated
+# ============================================================
+
+# POTENTIAL NEW ADD (needs further DD)
+6674.T     # GS Yuasa — World #1 space-qualified Li-ion cells (250+ satellites, 5+ MWh flown). SPECULATED Starlink supplier. Key Q: does SpaceX use space-grade or commercial cells?
+
+# UPGRADE NOTES (existing names)
+# LIN — UPGRADE: $100M dedicated Brownsville ASU for SpaceX (start-up Q1 2026) + Mims FL expansion (Q1 2027). Geographic captive infrastructure = real switching cost
+# 3481.TW — NOW CONFIRMED as SpaceX FOPLP chip packaging subcontractor (Dec 2025 reports). Innolux handles STM overflow orders
+
+# ============================================================
+# ASIAN EXPANSION RESEARCH — 2026-03-29
+# ============================================================
+
+# NEW KOREAN SUPPLIERS (confirmed/probable)
+274090.KQ  # Kencoa Aerospace — CONFIRMED SpaceX vendor since 2018 via California Metal & Supply (special alloys for rockets)
+321370.KQ  # Sensorview — CONFIRMED (Korean press): radar antennas for SpaceX. mmWave/5G antenna specialist. Stock +170% since late 2025
+295310.KQ  # HVM Co. — PROBABLE: Nickel special alloys, Ti alloys for launch vehicles. Space order backlog doubled. New Seosan vacuum melting plant (15,600t/yr)
+
+# SAMSUNG D2D MODEM (development stage — monitor only)
+# 005930.KS Samsung Electronics — Developing Exynos NTN modem w/ NPU for SpaceX Starlink D2D. 3nm GAA process. Beta 2026, full 6G NTN by 2030. Too diversified to invest on SpaceX thesis
+
+# TAIWAN — NEW NAMES (mostly secondary/speculated)
+# 1101.TW Taiwan Cement — CONFIRMED: Molicel lithium batteries supply SpaceX. But cement conglomerate, SpaceX revenue negligible. SKIP
+# 2367.TW Unitech PCB — PROBABLE: HDI PCBs for Starlink ground terminals. Secondary to Compeq (2313). SpaceX in-housing PCBs. SKIP
+# 7717.TWO Lightel Corp — SPECULATED: Satellite laser comm components. SpaceX ISLs are in-house. Need IR confirmation. MONITOR
+# 2314.TW MTI (Microelectronics Technology) — SPECULATED: Ka-band VSAT transceivers. Telesat Lightspeed confirmed. No SpaceX evidence yet. MONITOR
+# 2485.TW Zhaohz/Tera Probe — AVOID: LNB technology irrelevant to Starlink's phased-array architecture
+# 6274.TW Tai-Yo Scientific — AVOID: CCL supplier redundant with already-covered Elite Material (2383.TW)
+# 6213.TW ITEQ Corp — AVOID: CCL supplier redundant with already-covered Elite Material (2383.TW)
+# 8086.TWO Advanced Wireless Semi — AVOID: Skyworks PA foundry partner, too indirect
+
+# INDIA — Distribution partners only, not supply chain
+# BHARTIARTL.NS Bharti Airtel — Starlink distribution agreement (March 2025). NOT a hardware supplier
+# RELIANCE.NS Reliance Jio — Starlink distribution agreement (March 2025). NOT a hardware supplier
+
+# KEY FINDING: Xsight Labs (PRIVATE) — Confirmed X2 Ethernet switch for Starlink V3 satellites (Dec 2025 press release). 12.8Tbps switch on TSMC N5. Backed by AMD, Intel Capital, Marvell. >$150M raised. CANNOT INVEST (private)
+
+# CONFIRMED DEAD ENDS (2026-03-29 research sweep)
+# Satellite bus (reaction wheels, star trackers, Hall thrusters, solar panels) — ALL built in-house by SpaceX
+# Starship heat tiles — 100% in-house at SpaceX "Bakery"
+# SX500 superalloy — SpaceX Foundry in-house (Elon confirmed)
+# Injection molding / terminal housing — SpaceX hired in-house plastic injection molding specialists
+# TEA-TEB igniter fluid — No public pure-play; Starship uses electric torch ignition (declining relevance)
+# RP-1 kerosene — Haltermann Carless (private, H&R GmbH 2HRA.DE parent). Declining as Starship replaces Falcon 9
+# Ground station networking/timing — Opaque. Only confirmed supplier is Filtronic (FLTCF) for E-band SSPAs
+# Outokumpu (OUT1V.HE) — Probable Starship stainless supplier but commodity, no differentiation vs STLD. SKIP
+# Royal Helium (RHC.V) — Probable SpaceX helium offtake but acquired by Keranic (Nov 2025), penny stock. DEAD
+# Marotta Controls — Private. 30,000+ CoRe valves to SpaceX. Cannot invest (already noted above)
+# MES Inc — Private. Confirmed Starlink machined component supplier (actuator masts). Cannot invest
+# EaglePicher — Private. Major satellite battery maker but uses GS Yuasa cells. Cannot invest
+# GenOx Transportation — Private. Confirmed SpaceX liquid methane carrier. Cannot invest
+# Blue Canyon Technologies (RTX) — Supplies reaction wheels to Kuiper (Amazon), NOT SpaceX. SpaceX builds in-house

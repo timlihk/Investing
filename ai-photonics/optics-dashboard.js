@@ -87,7 +87,7 @@
         return;
       }
       state.selectedTicker = trigger.dataset.selectTicker;
-      render();
+      renderSelection();
     });
 
     document.addEventListener("click", (event) => {
@@ -202,6 +202,21 @@
     renderSummary(filteredRows, groupedRows);
     renderSegments(groupedRows);
     renderDetail(selectedRow);
+  }
+
+  function renderSelection() {
+    const filteredRows = getFilteredRows();
+    const selectedRow = getSelectedRow(filteredRows);
+    updateSelectedRowStyles();
+    renderDetail(selectedRow);
+  }
+
+  function updateSelectedRowStyles() {
+    const rows = elements.segments.querySelectorAll("tr");
+    rows.forEach((rowElement) => {
+      const trigger = rowElement.querySelector("[data-select-ticker]");
+      rowElement.classList.toggle("is-selected", trigger?.dataset.selectTicker === state.selectedTicker);
+    });
   }
 
   function getFilteredRows() {
@@ -840,7 +855,7 @@
     return `
       <div class="note note-table-wrap">
         ${title ? `<strong>${escapeHtml(title)}</strong>` : ""}
-        ${valuationRows.length ? renderMetricTable(["Metric", "Value"], valuationRows) : ""}
+        ${valuationRows.length ? renderMetricTable(["Metric", "Value"], valuationRows, { variant: "is-compact" }) : ""}
         ${historicalRows.length ? renderMetricTable(["Actual", "Revenue", "EBITDA", "Net Income", "EPS"], historicalRows) : ""}
         ${forwardRows.length ? renderMetricTable(["Street View", "Revenue", "Rev YoY", "EPS", "EPS YoY"], forwardRows) : ""}
         <div class="fallback-caption">Source: Yahoo Finance. Live quote summary overrides the embedded snapshot when available; annual financials and analyst estimates fall back to the embedded data.</div>
@@ -848,9 +863,10 @@
     `;
   }
 
-  function renderMetricTable(headers, rows) {
+  function renderMetricTable(headers, rows, { variant } = {}) {
+    const tableClass = variant ? `note-table ${variant}` : "note-table";
     return `
-      <table class="note-table">
+      <table class="${tableClass}">
         <thead>
           <tr>${headers.map((header) => `<th>${escapeHtml(header)}</th>`).join("")}</tr>
         </thead>
@@ -1227,15 +1243,26 @@
     return row.yahooSymbol || row.ticker;
   }
 
+  function mergeDefinedMetrics(...sources) {
+    const merged = {};
+    sources.forEach((source) => {
+      if (!source || typeof source !== "object") {
+        return;
+      }
+      Object.entries(source).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          merged[key] = value;
+        }
+      });
+    });
+    return merged;
+  }
+
   function getMarketMetrics(row) {
     const symbol = getRowSymbol(row);
     const quoteMetrics = liveState.quotesBySymbol.get(symbol)?.marketMetrics || {};
     const detailMetrics = liveState.detailsBySymbol.get(symbol)?.marketMetrics || {};
-    return {
-      ...(row.marketMetrics || {}),
-      ...quoteMetrics,
-      ...detailMetrics
-    };
+    return mergeDefinedMetrics(row.marketMetrics || {}, quoteMetrics, detailMetrics);
   }
 
   async function hydrateLiveQuotes() {
@@ -1303,7 +1330,7 @@
       .then((payload) => {
         liveState.detailsBySymbol.set(symbol, payload);
         if (state.selectedTicker === row.ticker) {
-          render();
+          renderDetail(row);
         }
       })
       .catch((error) => {

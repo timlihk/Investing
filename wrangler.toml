@@ -1,0 +1,9 @@
+name = "investing"
+main = "worker.js"
+compatibility_date = "2026-04-08"
+workers_dev = true
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = ".cloudflare-deploy"
+binding = "ASSETS"
