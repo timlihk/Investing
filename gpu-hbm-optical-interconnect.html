@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPU-HBM Optical Interconnect Architecture</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: #020617;
+      min-height: 100vh;
+      padding: 2rem;
+      color: white;
+    }
+    .container { max-width: 1300px; margin: 0 auto; }
+    .header { margin-bottom: 2rem; }
+    .header-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; }
+    .pulse-dot { width: 12px; height: 12px; background: #22d3ee; border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em; }
+    .subtitle { color: #94a3b8; font-size: 0.875rem; margin-left: 1.75rem; }
+    .diagram-container {
+      background: rgba(15, 23, 42, 0.5);
+      border-radius: 1rem;
+      border: 1px solid #1e293b;
+      padding: 1.5rem;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+    }
+    svg { width: 100%; min-width: 1000px; display: block; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .card {
+      background: rgba(15, 23, 42, 0.5);
+      border-radius: 0.75rem;
+      border: 1px solid #1e293b;
+      padding: 1.25rem;
+    }
+    .card-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+    .card-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .card-dot.cyan { background: #22d3ee; }
+    .card-dot.emerald { background: #34d399; }
+    .card-dot.violet { background: #a78bfa; }
+    .card-dot.amber { background: #fbbf24; }
+    .card-dot.rose { background: #fb7185; }
+    .card-dot.orange { background: #fb923c; }
+    .card h3 { font-size: 0.875rem; font-weight: 600; }
+    .card ul { list-style: none; color: #94a3b8; font-size: 0.75rem; }
+    .card li { margin-bottom: 0.375rem; }
+    .footer { text-align: center; margin-top: 1.5rem; color: #475569; font-size: 0.75rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-row">
+        <div class="pulse-dot"></div>
+        <h1>Breaking the Memory Wall: GPU &middot; HBM Optical Interconnect</h1>
+      </div>
+      <p class="subtitle">From 2.5D Co-Packaging to Decoupled Optical Architecture — Overcoming the Shoreline Bottleneck</p>
+    </div>
+
+    <!-- Diagram 1: Current 2.5D Packaging -->
+    <div class="diagram-container">
+      <svg viewBox="0 0 1050 500">
+        <defs>
+          <marker id="arrow-cyan" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#22d3ee" />
+          </marker>
+          <marker id="arrow-amber" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#fbbf24" />
+          </marker>
+          <marker id="arrow-rose" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#fb7185" />
+          </marker>
+          <marker id="arrow-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#fb923c" />
+          </marker>
+          <marker id="arrow-emerald" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34d399" />
+          </marker>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+
+        <rect width="100%" height="100%" fill="url(#grid)" />
+
+        <!-- ============================================================
+             LEFT SIDE: Current 2.5D Packaging (Today)
+             ============================================================ -->
+        <rect x="20" y="20" width="470" height="460" rx="12" fill="rgba(251, 146, 60, 0.03)" stroke="#fb923c" stroke-width="1" stroke-dasharray="8,4"/>
+        <text x="35" y="42" fill="#fb923c" font-size="11" font-weight="600">Today: 2.5D Co-Packaging (Shoreline Constrained)</text>
+
+        <!-- Silicon Interposer (substrate) -->
+        <rect x="50" y="60" width="410" height="14" rx="3" fill="rgba(30, 41, 59, 0.7)" stroke="#64748b" stroke-width="1"/>
+        <text x="255" y="71" fill="#94a3b8" font-size="8" text-anchor="middle">Silicon Interposer (limited area)</text>
+
+        <!-- GPU Die -->
+        <rect x="165" y="85" width="180" height="100" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+        <text x="255" y="115" fill="white" font-size="13" font-weight="700" text-anchor="middle">GPU Die</text>
+        <text x="255" y="135" fill="#94a3b8" font-size="9" text-anchor="middle">Next-Gen AI Accelerator</text>
+        <text x="255" y="153" fill="#34d399" font-size="8" text-anchor="middle">~800 mm&sup2;</text>
+        <text x="255" y="170" fill="#94a3b8" font-size="7" text-anchor="middle">compute capacity >> memory bandwidth</text>
+
+        <!-- HBM Stacks around GPU -->
+        <!-- HBM Left -->
+        <rect x="50" y="95" width="100" height="80" rx="5" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+        <text x="100" y="125" fill="white" font-size="11" font-weight="600" text-anchor="middle">HBM</text>
+        <text x="100" y="143" fill="#94a3b8" font-size="9" text-anchor="middle">Stack 1</text>
+        <text x="100" y="160" fill="#a78bfa" font-size="7" text-anchor="middle">12-16 layers</text>
+
+        <!-- HBM Right -->
+        <rect x="360" y="95" width="100" height="80" rx="5" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+        <text x="410" y="125" fill="white" font-size="11" font-weight="600" text-anchor="middle">HBM</text>
+        <text x="410" y="143" fill="#94a3b8" font-size="9" text-anchor="middle">Stack 2</text>
+        <text x="410" y="160" fill="#a78bfa" font-size="7" text-anchor="middle">12-16 layers</text>
+
+        <!-- Shoreline arrows pointing to edges -->
+        <line x1="165" y1="85" x2="155" y2="75" stroke="#fb7185" stroke-width="1.5"/>
+        <line x1="345" y1="85" x2="355" y2="75" stroke="#fb7185" stroke-width="1.5"/>
+        <line x1="165" y1="185" x2="155" y2="195" stroke="#fb7185" stroke-width="1.5"/>
+        <line x1="345" y1="185" x2="355" y2="195" stroke="#fb7185" stroke-width="1.5"/>
+
+        <!-- Shoreline label -->
+        <rect x="155" y="205" width="200" height="28" rx="4" fill="rgba(136, 19, 55, 0.3)" stroke="#fb7185" stroke-width="1"/>
+        <text x="255" y="224" fill="#fb7185" font-size="9" font-weight="600" text-anchor="middle">Shoreline Limit: 4 HBM max</text>
+
+        <!-- HBM Bottom (X'd out - can't fit more) -->
+        <rect x="165" y="210" width="85" height="50" rx="5" fill="rgba(136, 19, 55, 0.15)" stroke="#fb7185" stroke-width="1" stroke-dasharray="4,4"/>
+        <text x="207" y="232" fill="#fb7185" font-size="8" text-anchor="middle">HBM Stack 3</text>
+        <text x="207" y="248" fill="#fb7185" font-size="7" text-anchor="middle">NO ROOM</text>
+        <line x1="170" y1="215" x2="245" y2="255" stroke="#fb7185" stroke-width="1" opacity="0.4"/>
+        <line x1="245" y1="215" x2="170" y2="255" stroke="#fb7185" stroke-width="1" opacity="0.4"/>
+
+        <!-- HBM Top (X'd out - can't fit more) -->
+        <rect x="260" y="210" width="85" height="50" rx="5" fill="rgba(136, 19, 55, 0.15)" stroke="#fb7185" stroke-width="1" stroke-dasharray="4,4"/>
+        <text x="302" y="232" fill="#fb7185" font-size="8" text-anchor="middle">HBM Stack 4</text>
+        <text x="302" y="248" fill="#fb7185" font-size="7" text-anchor="middle">NO ROOM</text>
+        <line x1="265" y1="215" x2="340" y2="255" stroke="#fb7185" stroke-width="1" opacity="0.4"/>
+        <line x1="340" y1="215" x2="265" y2="255" stroke="#fb7185" stroke-width="1" opacity="0.4"/>
+
+        <!-- Arrows: GPU to HBM - electrical -->
+        <line x1="165" y1="135" x2="152" y2="135" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
+        <line x1="345" y1="135" x2="358" y2="135" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
+        <text x="255" y="250" fill="#94a3b8" font-size="7" text-anchor="middle">electrical interconnects: ~1 TB/s per stack</text>
+
+        <!-- Pain points list -->
+        <text x="50" y="305" fill="#fb7185" font-size="9" font-weight="600">Pain Points:</text>
+        <text x="60" y="322" fill="#94a3b8" font-size="8">&#x2022; Stack height capped at ~16 layers (physical limit)</text>
+        <text x="60" y="340" fill="#94a3b8" font-size="8">&#x2022; GPU perimeter (shoreline) limits HBM count</text>
+        <text x="60" y="358" fill="#94a3b8" font-size="8">&#x2022; JEDEC height specs relaxed but not solved</text>
+        <text x="60" y="376" fill="#94a3b8" font-size="8">&#x2022; Vertical stacking hits process inflection point</text>
+        <text x="60" y="394" fill="#94a3b8" font-size="8">&#x2022; Memory bandwidth cannot keep pace with compute</text>
+
+        <!-- ============================================================
+             TRANSITION ARROW
+             ============================================================ -->
+        <!-- Big arrow from left to right -->
+        <line x1="495" y1="250" x2="545" y2="250" stroke="#22d3ee" stroke-width="3" marker-end="url(#arrow-cyan)"/>
+        <text x="520" y="240" fill="#22d3ee" font-size="10" font-weight="600" text-anchor="middle">EVOLUTION</text>
+        <text x="520" y="268" fill="#94a3b8" font-size="7" text-anchor="middle">Optical</text>
+        <text x="520" y="280" fill="#94a3b8" font-size="7" text-anchor="middle">Decoupling</text>
+
+        <!-- ============================================================
+             RIGHT SIDE: Future Optical Interconnect (Tomorrow)
+             ============================================================ -->
+        <rect x="555" y="20" width="475" height="460" rx="12" fill="rgba(34, 211, 238, 0.03)" stroke="#22d3ee" stroke-width="1" stroke-dasharray="8,4"/>
+        <text x="570" y="42" fill="#22d3ee" font-size="11" font-weight="600">Future: Decoupled Optical Interconnect &middot; Independent Packaging</text>
+
+        <!-- GPU Board outline -->
+        <rect x="580" y="60" width="430" height="240" rx="8" fill="transparent" stroke="#64748b" stroke-width="0.5" stroke-dasharray="4,4"/>
+        <text x="590" y="75" fill="#64748b" font-size="7">GPU Board (no shoreline constraint)</text>
+
+        <!-- GPU Die (standalone package) -->
+        <rect x="610" y="95" width="170" height="100" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+        <text x="695" y="125" fill="white" font-size="13" font-weight="700" text-anchor="middle">GPU Die</text>
+        <text x="695" y="145" fill="#94a3b8" font-size="9" text-anchor="middle">Independently Packaged</text>
+        <text x="695" y="163" fill="#34d399" font-size="8" text-anchor="middle">No HBM adjacency req.</text>
+        <text x="695" y="180" fill="#94a3b8" font-size="7" text-anchor="middle">CPO / optical I/O tiles</text>
+
+        <!-- Optical Interconnect layer (CPO) -->
+        <rect x="790" y="95" width="100" height="100" rx="6" fill="rgba(34, 211, 238, 0.2)" stroke="#22d3ee" stroke-width="1.5"/>
+        <text x="840" y="120" fill="white" font-size="11" font-weight="600" text-anchor="middle">Optical</text>
+        <text x="840" y="138" fill="white" font-size="11" font-weight="600" text-anchor="middle">Bridge</text>
+        <text x="840" y="158" fill="#22d3ee" font-size="8" text-anchor="middle">CPO / PIC</text>
+        <text x="840" y="176" fill="#94a3b8" font-size="7" text-anchor="middle">silicon photonics</text>
+
+        <!-- Photonic waveguides (arrows from GPU to Optical Bridge to HBM zone) -->
+        <line x1="780" y1="135" x2="788" y2="135" stroke="#22d3ee" stroke-width="1.5"/>
+        <line x1="890" y1="145" x2="920" y2="145" stroke="#22d3ee" stroke-width="1.5"/>
+
+        <!-- HBM Zone (large area with multiple HBM stacks spread out) -->
+        <rect x="920" y="70" width="75" height="180" rx="6" fill="rgba(76, 29, 149, 0.15)" stroke="#a78bfa" stroke-width="1" stroke-dasharray="3,3"/>
+        <text x="957" y="85" fill="#a78bfa" font-size="7" text-anchor="middle">HBM Zone</text>
+        <text x="957" y="96" fill="#a78bfa" font-size="6" text-anchor="middle">(any layout)</text>
+
+        <!-- Multiple HBM stacks in the zone -->
+        <rect x="928" y="105" width="60" height="32" rx="4" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1"/>
+        <text x="958" y="120" fill="white" font-size="8" font-weight="600" text-anchor="middle">HBM 1</text>
+        <text x="958" y="132" fill="#a78bfa" font-size="6" text-anchor="middle">12-16L</text>
+
+        <rect x="928" y="145" width="60" height="32" rx="4" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1"/>
+        <text x="958" y="160" fill="white" font-size="8" font-weight="600" text-anchor="middle">HBM 2</text>
+        <text x="958" y="172" fill="#a78bfa" font-size="6" text-anchor="middle">12-16L</text>
+
+        <rect x="928" y="185" width="60" height="32" rx="4" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1"/>
+        <text x="958" y="200" fill="white" font-size="8" font-weight="600" text-anchor="middle">HBM 3</text>
+        <text x="958" y="212" fill="#a78bfa" font-size="6" text-anchor="middle">12-16L</text>
+
+        <!-- More HBM stacks elsewhere on board (to show many can fit) -->
+        <!-- HBM row below GPU -->
+        <rect x="610" y="215" width="60" height="32" rx="4" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1"/>
+        <text x="640" y="230" fill="white" font-size="8" font-weight="600" text-anchor="middle">HBM 4</text>
+        <text x="640" y="242" fill="#a78bfa" font-size="6" text-anchor="middle">12-16L</text>
+
+        <rect x="680" y="215" width="60" height="32" rx="4" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1"/>
+        <text x="710" y="230" fill="white" font-size="8" font-weight="600" text-anchor="middle">HBM 5</text>
+        <text x="710" y="242" fill="#a78bfa" font-size="6" text-anchor="middle">12-16L</text>
+
+        <rect x="750" y="215" width="60" height="32" rx="4" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1"/>
+        <text x="780" y="230" fill="white" font-size="8" font-weight="600" text-anchor="middle">HBM N</text>
+        <text x="780" y="242" fill="#a78bfa" font-size="6" text-anchor="middle">...</text>
+
+        <!-- Photonic arrows from optical bridge to each HBM -->
+        <line x1="890" y1="122" x2="926" y2="122" stroke="#22d3ee" stroke-width="1" stroke-dasharray="3,2"/>
+        <line x1="890" y1="162" x2="926" y2="162" stroke="#22d3ee" stroke-width="1" stroke-dasharray="3,2"/>
+        <line x1="890" y1="202" x2="926" y2="202" stroke="#22d3ee" stroke-width="1" stroke-dasharray="3,2"/>
+
+        <!-- Light beam annotation -->
+        <text x="855" y="95" fill="#22d3ee" font-size="8">&#x2248;</text>
+
+        <!-- Photonic to bottom row -->
+        <path d="M 840 195 L 840 220 Q 840 232 828 232 L 812 232" fill="none" stroke="#22d3ee" stroke-width="1" stroke-dasharray="3,2"/>
+        <path d="M 840 195 L 840 220 Q 840 232 828 232 L 752 232" fill="none" stroke="#22d3ee" stroke-width="1" stroke-dasharray="3,2"/>
+        <path d="M 840 195 L 840 220 Q 840 232 828 232 L 682 232" fill="none" stroke="#22d3ee" stroke-width="1" stroke-dasharray="3,2"/>
+
+        <!-- Benefits list -->
+        <text x="580" y="330" fill="#34d399" font-size="9" font-weight="600">Key Advantages:</text>
+        <text x="590" y="348" fill="#94a3b8" font-size="8">&#x2022; No shoreline constraint &rarr; any number of HBM stacks</text>
+        <text x="590" y="366" fill="#94a3b8" font-size="8">&#x2022; HBM placed anywhere on board (lateral scaling)</text>
+        <text x="590" y="384" fill="#94a3b8" font-size="8">&#x2022; Several times more total memory capacity</text>
+        <text x="590" y="402" fill="#94a3b8" font-size="8">&#x2022; Dramatically expanded data bandwidth</text>
+        <text x="590" y="420" fill="#94a3b8" font-size="8">&#x2022; Independent GPU & HBM packaging = modular</text>
+
+        <!-- Timing note -->
+        <text x="580" y="450" fill="#94a3b8" font-size="7">Timing: rack-to-rack optical first &rarr; server-to-server &rarr; chip-to-chip</text>
+        <text x="580" y="462" fill="#64748b" font-size="7">"Nothing confirmed as official roadmap yet — preliminary research phase"</text>
+
+        <!-- ============================================================
+             LEGEND
+             ============================================================ -->
+        <text x="35" y="440" fill="white" font-size="10" font-weight="600">Legend</text>
+
+        <rect x="35" y="452" width="16" height="10" rx="2" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1"/>
+        <text x="57" y="461" fill="#94a3b8" font-size="8">GPU / Compute</text>
+
+        <rect x="155" y="452" width="16" height="10" rx="2" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1"/>
+        <text x="177" y="461" fill="#94a3b8" font-size="8">HBM Memory</text>
+
+        <rect x="285" y="452" width="16" height="10" rx="2" fill="rgba(34, 211, 238, 0.2)" stroke="#22d3ee" stroke-width="1"/>
+        <text x="307" y="461" fill="#94a3b8" font-size="8">Optical / Photonic</text>
+
+        <rect x="425" y="452" width="16" height="10" rx="2" fill="rgba(136, 19, 55, 0.3)" stroke="#fb7185" stroke-width="1"/>
+        <text x="447" y="461" fill="#94a3b8" font-size="8">Constraint / Bottleneck</text>
+
+        <line x1="35" y1="478" x2="51" y2="478" stroke="#22d3ee" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="57" y="481" fill="#94a3b8" font-size="8">Optical Signal Path</text>
+
+        <line x1="155" y1="478" x2="171" y2="478" stroke="#64748b" stroke-width="1" stroke-dasharray="4,4"/>
+        <text x="177" y="481" fill="#94a3b8" font-size="8">Board / Boundary</text>
+      </svg>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="cards">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot rose"></div>
+          <h3>The Memory Wall Problem</h3>
+        </div>
+        <ul>
+          <li>&#x2022; GPU compute grows exponentially each generation</li>
+          <li>&#x2022; Memory bandwidth fails to keep pace</li>
+          <li>&#x2022; HBM stacking hits physical limits at 12-16 layers</li>
+          <li>&#x2022; GPU shoreline restricts HBM to max 4 stacks</li>
+          <li>&#x2022; JEDEC relaxing height specs signals ceiling reached</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot cyan"></div>
+          <h3>Optical Interconnect Solution</h3>
+        </div>
+        <ul>
+          <li>&#x2022; Decouple GPU and HBM into separate packages</li>
+          <li>&#x2022; Connect via silicon photonics (CPO/PIC)</li>
+          <li>&#x2022; Eliminates shoreline constraint entirely</li>
+          <li>&#x2022; HBM can be placed anywhere on the board</li>
+          <li>&#x2022; Several times more HBM capacity possible</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot amber"></div>
+          <h3>Key Beneficiaries</h3>
+        </div>
+        <ul>
+          <li>&#x2022; CPO / Silicon Photonics: MRVL, LITE, COHR</li>
+          <li>&#x2022; HBM Memory Makers: MU, Samsung, SK Hynix</li>
+          <li>&#x2022; Advanced Packaging OSATs: ASE, Amkor</li>
+          <li>&#x2022; GPU Makers: NVDA, AMD (system architects)</li>
+          <li>&#x2022; Timing: rack-level first, chip-level later</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <p class="footer">
+      GPU-HBM Optical Interconnect Evolution &middot; Based on ZDNet Korea report (May 22, 2026) &middot; Discussion thread by @jukan05
+    </p>
+  </div>
+</body>
+</html>
