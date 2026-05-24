@@ -1,0 +1,14 @@
+.git/
+.github/
+.wrangler/
+.cloudflare-deploy/
+node_modules/
+**/node_modules/
+.DS_Store
+.gitignore
+.assetsignore
+wrangler.toml
+worker.js
+**/package.json
+**/package-lock.json
+**/scripts/
