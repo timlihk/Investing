@@ -4,12 +4,22 @@ const DEFAULT_CHART_RANGE_DAYS = 365;
 const YAHOO_UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 
+// Company Research Hub lives on the NAS behind the Cloudflare tunnel.
+// research.mangrove-hk.org/company/* proxies through to it, so the hub
+// appears as a tab of this app without a second hostname.
+const COMPANY_HUB_ORIGIN = "https://hermes-research.mangrove-hk.org";
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
     if (url.pathname.startsWith("/api/market/")) {
       return handleMarketApi(url);
+    }
+
+    // Company Research Hub tab: proxy /company/* -> NAS hub (port 3101 via tunnel)
+    if (url.pathname === "/company" || url.pathname.startsWith("/company/")) {
+      return handleCompanyProxy(url, request);
     }
 
     if (url.pathname.endsWith("/")) {
@@ -380,6 +390,34 @@ function unwrapYahooValue(value) {
 function toIsoString(value) {
   const date = value ? new Date(value) : null;
   return date && Number.isFinite(date.getTime()) ? date.toISOString() : null;
+}
+
+async function handleCompanyProxy(url, request) {
+  try {
+    const rest = url.pathname === "/company" ? "/" : url.pathname.slice("/company".length);
+    const target = new URL(rest, COMPANY_HUB_ORIGIN);
+    if (url.search) target.search = url.search;
+
+    const proxied = await fetch(target.toString(), {
+      method: request.method,
+      headers: request.headers,
+      body: ["GET", "HEAD"].includes(request.method) ? undefined : request.body,
+      redirect: "follow",
+    });
+
+    const response = new Response(proxied.body, proxied);
+    // Hub pages/JSON are dynamic — never cache at the edge.
+    response.headers.set("cache-control", "no-store, must-revalidate");
+    response.headers.set("CDN-Cache-Control", "no-store");
+    return response;
+  } catch (error) {
+    return jsonResponse(
+      {
+        error: error instanceof Error ? error.message : "Company hub proxy error"
+      },
+      { status: 502 }
+    );
+  }
 }
 
 function jsonResponse(payload, init = {}) {
