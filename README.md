@@ -77,6 +77,31 @@ Interactive dashboard:
 - https://timlihk.github.io/Investing/SpaceX-supply-chain/
 - Direct dashboard page: https://timlihk.github.io/Investing/SpaceX-supply-chain/spacex-dashboard.html
 
+### [Defense Industrial Base](defense-industrial-base/)
+Where the Western munitions chain physically narrows, and who gets paid at that point. 68 companies across 8 layers (US, Japan, Korea, Europe). The FY27 request puts ~$95bn into missiles and munitions -- about a tripling -- but the expansion headlines are **capex, not revenue**, for the primes announcing them.
+
+**Top Picks (as of 2026-08-03):**
+| Ticker | Chokepoint | Score | Verdict | Key Thesis |
+|--------|-----------|-------|---------|------------|
+| 012450.KS | 18 | 80 | BUY | Hanwha Aerospace building **US** energetics capacity (Pine Bluff ~$1.3bn + ~$1bn modular charge plant). 15.8x, -4.9% YTD, unanimous Buy |
+| NEU | **25** | 76 | BUY | AMPAC = **sole large-scale US ammonium perchlorate producer**. No AP, no solid rockets. Dilution caveat inside a petroleum-additives co |
+| LHX | 22 | 75 | BUY | Half the US SRM duopoly. Beat-and-raised and fell 7% on +92% YTD missile capex -- which is exactly what builds 2028+ earnings |
+| NOC | 22 | 75 | BUY | The other half. $178m Allegany facility doubles SRM capacity by autumn 2026. 18.6x, with B-21 fixed-price hair |
+| 7013.T | 20 | 75 | BUY | IHI Aerospace = Japan's SRM house at 16.9x, flat YTD. Materiality flagged as unverified |
+
+**Key Supply Chain Discovery:**
+```
+AMMONIUM PERCHLORATE --> SOLID ROCKET MOTORS --> TITANIUM SPONGE --> SEEKERS
+ NEU/AMPAC (25/25)        NOC + LHX (22/25)      5726/5727 JP (23/25)  Boeing (16/25)
+ sole US producer         six makers -> two      US has ZERO domestic   gates allied PAC-3
+```
+
+The recursive bottleneck: Japan license-produces PAC-3 at ~30/yr and made the first-ever export of Japanese-built interceptors to the US (Nov 2025). Output can double to ~60/yr -- *once Boeing-built seekers stop being the bottleneck*. The missile bottleneck was never the missile.
+
+**The organising observation:** companies *bearing* the capacity capex de-rated (LHX -5.6%, NOC -4.9% YTD, both after beat-and-raise) while companies *collecting* it re-rated (DCO +88%, CRS +65%, ATI +63%). The `capex_side` field in `results.tsv` tracks this split.
+
+Dashboard: https://research.mangrove-hk.org/defense-industrial-base/
+
 ## Methodology
 - Pull IR presentations, quarterly/annual filings for every company
 - Focus on moats and chokepoints (monopoly positions, sole-source relationships)

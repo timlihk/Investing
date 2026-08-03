@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Munitions Value Chain — Layer Map</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#080b12;color:#c9d1d9;font-size:13px;padding:0 0 60px}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 18px}
+h1{font-size:19px;color:#f0f6fc;margin-bottom:6px}
+.sub{color:#8b949e;line-height:1.65;max-width:900px;margin-bottom:6px}
+.asof{color:#484f58;font-size:11px;margin-bottom:22px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px;padding:11px 14px;background:#0d1117;border:1px solid #21262d;border-radius:8px}
+.legend div{display:flex;align-items:center;gap:6px;color:#8b949e;font-size:11.5px}
+.dot{width:9px;height:9px;border-radius:2px;display:inline-block}
+
+.layer{background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:15px 17px;margin-bottom:0;position:relative}
+.layer.hot{border-color:#f8514966;box-shadow:inset 3px 0 0 #f85149}
+.layer.warm{border-color:#d2992255;box-shadow:inset 3px 0 0 #d29922}
+.lh{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:5px}
+.lh h2{font-size:15px;color:#f0f6fc;font-weight:700}
+.tag{font-size:9.5px;font-weight:700;letter-spacing:.06em;padding:2px 7px;border-radius:3px}
+.t-hot{background:#f8514922;color:#f85149;border:1px solid #f8514955}
+.t-warm{background:#d2992222;color:#d29922;border:1px solid #d2992255}
+.t-cool{background:#8b949e18;color:#8b949e;border:1px solid #8b949e44}
+.desc{color:#8b949e;line-height:1.6;font-size:12.5px;margin-bottom:10px;max-width:920px}
+.ev{background:#161b22;border:1px solid #21262d;border-left:2px solid #58a6ff;padding:8px 11px;border-radius:4px;color:#b0b8c4;font-size:11.5px;line-height:1.55;margin-bottom:11px;max-width:920px}
+.names{display:flex;flex-wrap:wrap;gap:7px}
+.co{display:inline-flex;flex-direction:column;gap:1px;padding:6px 10px;border-radius:6px;border:1px solid #21262d;background:#161b22;min-width:112px}
+.co .tk{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:#e6edf3;font-weight:600}
+.co .nm{font-size:10px;color:#6e7681}
+.co.mono-cp{border-color:#3fb95066;background:#3fb9500e}
+.co.duo{border-color:#58a6ff55;background:#58a6ff0c}
+.co.priv{border-style:dashed;color:#6e7681}
+.co .cs{font-size:9.5px;color:#484f58;font-family:ui-monospace,Menlo,monospace;margin-top:1px}
+.arrow{text-align:center;color:#30363d;font-size:19px;line-height:1;padding:7px 0}
+.foot{margin-top:26px;padding:14px 16px;background:#0d1117;border:1px solid #21262d;border-left:3px solid #58a6ff;border-radius:6px;color:#8b949e;line-height:1.7;font-size:12px}
+.foot b{color:#e6edf3}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Munitions Value Chain — Layer Map</h1>
+<div class="sub">
+  Read this bottom-up. Demand enters at the primes and flows <em>down</em> into layers that cannot expand at the same rate.
+  The layers marked as binding are the ones where money is provably not the constraint.
+</div>
+<div class="asof" id="asof"></div>
+
+<div class="legend">
+  <div><span class="dot" style="background:#f85149"></span> Binding constraint — cannot be relieved with capital alone</div>
+  <div><span class="dot" style="background:#d29922"></span> Tight — long qualification, expanding slowly</div>
+  <div><span class="dot" style="background:#3fb950"></span> Monopoly chokepoint (21-25)</div>
+  <div><span class="dot" style="background:#58a6ff"></span> Duopoly chokepoint (16-20)</div>
+  <div><span class="dot" style="background:#6e7681;opacity:.5"></span> Private / not investable</div>
+</div>
+
+<div id="stack"></div>
+
+<div class="foot">
+  <b>The structural point.</b> Every relieved bottleneck exposes the next one down. Japan can double PAC-3 output from ~30 to ~60 a
+  year — but only once Boeing-built <b>seekers</b> stop being the limit. The US can fund solid rocket motor capacity — but the motors
+  need <b>ammonium perchlorate</b>, and one company makes it at scale. That is why this map is ordered by <em>replaceability</em>
+  rather than by revenue: the investable edge sits at the layers where substitution takes years, not quarters.
+  <br><br>
+  <b>Sources.</b> Company releases (Lockheed, L3Harris, Northrop, NewMarket), CRS FY2027 weapon-systems report, CSIS solid rocket
+  motor and industrial-base analyses, Breaking Defense, and trade press. Full list in <span style="font-family:ui-monospace,Menlo,monospace">value-chain.md</span>.
+  Chokepoint scores are analyst judgement, not sourced data.
+</div>
+</div>
+
+<script src="dib-dashboard-data.js"></script>
+<script>
+const M=window.DIB_META, L=window.DIB_LAYERS, CO=window.DIB_COMPANIES;
+document.getElementById('asof').textContent = `Market data as of ${M.asOf} · scores are analyst judgement`;
+
+const HEAT = { energetics:'hot', srm:'hot', metals:'hot', cases:'warm', guidance:'warm', minerals:'warm', components:'cool', primes:'cool' };
+const TAG  = { hot:['t-hot','BINDING'], warm:['t-warm','TIGHT'], cool:['t-cool','FLOWS'] };
+
+// Order the stack from raw chemistry up to end demand.
+const ORDER = ['energetics','srm','cases','metals','guidance','components','minerals','primes'];
+
+const PRIVATE = {
+  energetics: [['Eurenco','FR — 10x powder expansion'],['Nitrochemie','DE/CH — Rheinmetall JV'],['GD-OTS','inside GD']],
+  srm: [['Anduril','new entrant'],['X-Bow Systems','new entrant'],['Ursa Major','new entrant'],['Mach Energetics','bought Exquadrum $50m']],
+  guidance: [['Boeing seekers','gates allied PAC-3 output']]
+};
+
+const sum = c => c.reduce((a,b)=>a+b,0);
+
+document.getElementById('stack').innerHTML = ORDER.map((id,i)=>{
+  const meta = L.find(x=>x.id===id); if(!meta) return '';
+  const heat = HEAT[id]||'cool', [tc,tl] = TAG[heat];
+  const list = CO.filter(c=>c.layer===id).sort((a,b)=>sum(b.c)-sum(a.c));
+  const chips = list.map(c=>{
+    const s = sum(c.c), cls = s>=21?'mono-cp':s>=16?'duo':'';
+    return `<span class="co ${cls}"><span class="tk">${c.t}</span><span class="nm">${c.n}</span><span class="cs">chokepoint ${s}/25</span></span>`;
+  }).join('');
+  const priv = (PRIVATE[id]||[]).map(([n,d])=>
+    `<span class="co priv"><span class="tk" style="color:#6e7681">${n}</span><span class="nm">${d}</span><span class="cs">private</span></span>`).join('');
+  return `
+  ${i? '<div class="arrow">&#9660;</div>':''}
+  <div class="layer ${heat==='cool'?'':heat}">
+    <div class="lh"><h2>${meta.name}</h2><span class="tag ${tc}">${tl}</span></div>
+    <div class="desc">${meta.blurb}</div>
+    <div class="ev">${meta.evidence}</div>
+    <div class="names">${chips}${priv}</div>
+  </div>`;
+}).join('');
+</script>
+</body>
+</html>

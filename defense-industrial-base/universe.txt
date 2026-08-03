@@ -1,0 +1,99 @@
+# Stock Universe — Defense Industrial Base / Munitions Chokepoints
+# Theme: the FY27 munitions ramp (~$95bn) flowing down into layers that cannot expand at the same rate.
+# Built from value-chain.md, chokepoint layers first, then outward.
+# Format: BLOOMBERG_TICKER  (# comment). Yahoo symbol in brackets where it differs.
+
+# ============ LAYER 1: ENERGETIC CHEMICALS (binding constraint) ============
+NEU US        # NewMarket -> AMPAC, SOLE large-scale US ammonium perchlorate producer. Chokepoint 25/25
+012450 KS     # Hanwha Aerospace [012450.KS] — building US NC/NG/NQ/triple-base propellant capacity
+000880 KS     # Hanwha Corporation [000880.KS] — holdco over the explosives complex
+CHG LN        # Chemring [CHG.L] — Chemring Nobel; EUR66.7m EU funding to double explosives capacity
+RHM GY        # Rheinmetall [RHM.DE] — Nitrochemie + Hagedorn-NC + 1,900 t/yr RDX at Unterluess
+OLN US        # Olin — Winchester / Lake City AAP. Chlor-alkali cyclical wrapper
+103140 KS     # Poongsan [103140.KS] — ammunition, brass. Hanwha deal halted Apr 2026
+# private / not investable: Eurenco (FR, 10x powder expansion), GD-OTS (inside GD), Nitrochemie (RHM JV)
+
+# ============ LAYER 2: SOLID ROCKET MOTORS (binding constraint) ============
+NOC US        # Northrop Grumman — half the US SRM duopoly. $178m NAVSEA Allegany, doubling by autumn 2026
+LHX US        # L3Harris (Aerojet Rocketdyne) — the other half. >$1bn Orange County VA expansion
+7013 JP       # IHI [7013.T] — IHI Aerospace, Japan's SRM house. NOT source-verified in this build
+KTOS US       # Kratos — new-entrant motors, unmanned, space
+RKLB US       # Rocket Lab — launch + solid motor/composite capability; overlaps the SpaceX book
+# private new entrants: Anduril, X-Bow Systems, Ursa Major, Mach Energetics (bought Exquadrum $50m)
+
+# ============ LAYER 3: CASES, ABLATIVES & NOZZLES ============
+PKE US        # Park Aerospace — ablatives for nozzles/motor structures. cogs=5, textbook cheap-but-critical
+HXL US        # Hexcel — aerospace carbon fibre / prepreg
+3402 JP       # Toray [3402.T] — dominant aerospace-grade carbon fibre. Defence split NOT verified
+3401 JP       # Teijin [3401.T] — carbon + aramid fibre
+SGL GY        # SGL Carbon [SGL.DE] — carbon/composites, European rearmament optionality
+
+# ============ LAYER 4: STRUCTURAL METALS & FORGINGS (binding constraint) ============
+5726 JP       # Osaka Titanium [5726.T] — world #2 sponge producer. US has ZERO domestic sponge
+5727 JP       # Toho Titanium [5727.T] — the other Japanese sponge producer. NO PRICE returned, unrated
+ATI US        # ATI — titanium and nickel alloys
+CRS US        # Carpenter Technology — premium specialty alloys
+HWM US        # Howmet Aerospace — castings, forgings, fasteners
+5631 JP       # Japan Steel Works [5631.T] — large forgings + ordnance
+APAM NA       # Aperam [APAM.AS] — stainless/specialty steel. Weak chokepoint (12/25)
+
+# ============ LAYER 5: GUIDANCE, SEEKERS & RF ============
+MTSI US       # MACOM — RF/microwave for radar and seekers. Overlaps the AI Photonics book
+QRVO US       # Qorvo — GaN and RF front-ends; cheapest multiple in the universe
+COHR US       # Coherent — optics/lasers/compound semis. Overlaps AI Photonics
+TDY US        # Teledyne — imaging, FLIR thermal seekers
+MRCY US       # Mercury Systems — rad-hard secure processing
+DRS US        # Leonardo DRS — sensing, power conversion
+6503 JP       # Mitsubishi Electric [6503.T] — Japanese missile guidance/radar
+272210 KS     # Hanwha Systems [272210.KS] — radar, EO/IR
+HAG GY        # Hensoldt [HAG.DE] — radar and EW
+HO FP         # Thales [HO.PA] — air-defence electronics
+THEON NA      # Theon International [THEON.AS] — night vision
+EXA FP        # Exail Technologies [EXA.PA] — inertial nav, GPS-denied
+BA US         # Boeing — builds the PAC-3 seeker that gates allied output. Wrong wrapper at 175x
+
+# ============ LAYER 6: ACTUATION, POWER & PRECISION ============
+MOG/A US      # Moog [MOG-A] — missile control actuation
+CW US         # Curtiss-Wright — naval/nuclear/defence actuation
+DCO US        # Ducommun — structures and electronics. Best 2026 performer, weakest chokepoint of the group
+RBC US        # RBC Bearings — precision bearings
+WWD US        # Woodward — control and actuation systems
+KRMN US       # Karman Holdings — fairings, propulsion structures, hypersonics. Purest component play
+R3NK GY       # Renk Group [R3NK.DE] — tracked-vehicle transmissions
+MTX GY        # MTU Aero Engines [MTX.DE] — engine modules
+QQ/ LN        # QinetiQ [QQ.L] — test & evaluation
+003570 KS     # SNT Dynamics [003570.KS] — Korean ordnance powertrain. Cheapest in book, thinnest liquidity
+
+# ============ LAYER 7: MAGNETS & CRITICAL MINERALS ============
+MP US         # MP Materials — US rare earth + magnets. DoD bans China-origin magnet material from 2027
+USAR US       # USA Rare Earth — magnet manufacturing. Pre-earnings, pure execution option
+4063 JP       # Shin-Etsu Chemical [4063.T] — ex-China NdFeB. Magnet slice is small; NOT verified
+6762 JP       # TDK [6762.T] — magnets and passives. Same dilution caveat
+
+# ============ LAYER 8: INTEGRATION / PRIMES ============
+LMT US        # Lockheed Martin — the headline. THAAD/PrSM x4, PAC-3 MSE x3, >$9bn facility programme
+RTX US        # RTX — Patriot, AMRAAM, Standard Missile
+GD US         # General Dynamics — GD-OTS energetics buried inside a diversified prime
+HII US        # Huntington Ingalls — naval; different bottleneck (yards, labour)
+7011 JP       # Mitsubishi Heavy [7011.T] — PAC-3 licence production, first US export Nov 2025
+7012 JP       # Kawasaki Heavy [7012.T] — aircraft, submarines
+079550 KS     # LIG Nex1 [079550.KS] — Korean guided missiles. Only Korean name that did NOT de-rate
+064350 KS     # Hyundai Rotem [064350.KS] — K2 tanks. Widest consensus gap (+127%), weakest chokepoint (12)
+047810 KS     # Korea Aerospace Industries [047810.KS] — FA-50
+042660 KS     # Hanwha Ocean [042660.KS] — naval shipbuilding, US yards
+BA/ LN        # BAE Systems [BA.L] — real energetics assets (Glascoed) + Roxel SRM JV
+LDO IM        # Leonardo [LDO.MI] — MBDA stake is the interesting unconsolidated asset
+SAABB SS      # Saab [SAAB-B.ST] — missiles, Gripen. 39x for 2% upside
+KOG NO        # Kongsberg [KOG.OL] — NSM/JSM. Best European momentum, no discount
+AM FP         # Dassault Aviation [AM.PA] — Rafale. Cheapest European prime
+RR/ LN        # Rolls-Royce [RR.L] — propulsion, AUKUS reactors
+AVAV US       # AeroVironment — loitering munitions. Attritable by design = weak chokepoint
+
+# ============ WATCHLIST — considered, not scored ============
+# AIR US      # AAR — +69% YTD, aftermarket/MRO rather than a munitions bottleneck
+# TDG US      # TransDigm — aftermarket pricing power, not this theme
+# LOAR US     # Loar Holdings — niche aero components
+# HEI US      # Heico — PMA parts
+# TXT US      # Textron — 12.8x, but weapons content is small
+# 6367 JP     # Daikin — has an ordnance division; immaterial vs HVAC
+# LYC AU      # Lynas — ex-China rare earth; add if the magnet leg is sized up

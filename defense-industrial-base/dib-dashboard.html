@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Defense Industrial Base — Chokepoint Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#080b12;color:#c9d1d9;font-size:13px;padding:0 0 60px}
+a{color:#58a6ff}
+.wrap{max-width:1560px;margin:0 auto;padding:20px 18px}
+.head{border-bottom:1px solid #21262d;padding-bottom:16px;margin-bottom:18px}
+.head h1{font-size:20px;color:#f0f6fc;font-weight:700;letter-spacing:-.01em}
+.head .sub{color:#8b949e;margin-top:6px;line-height:1.6;max-width:1080px}
+.asof{color:#484f58;font-size:11px;margin-top:8px}
+
+.thesis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 22px}
+.tcard{background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:14px 16px}
+.tcard h3{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#58a6ff;margin-bottom:8px;font-weight:600}
+.tcard p{color:#8b949e;line-height:1.65;font-size:12.5px}
+.tcard b{color:#e6edf3;font-weight:600}
+
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px;position:sticky;top:0;background:#080b12;padding:10px 0;z-index:5;border-bottom:1px solid #161b22}
+.grp{display:flex;gap:4px;align-items:center}
+.grp .lbl{color:#484f58;font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-right:2px}
+button.f{background:#0d1117;border:1px solid #21262d;color:#8b949e;padding:5px 10px;border-radius:6px;cursor:pointer;font-size:12px;transition:.12s}
+button.f:hover{border-color:#30363d;color:#c9d1d9}
+button.f.on{background:#1f6feb22;border-color:#58a6ff;color:#79c0ff}
+input#q{background:#0d1117;border:1px solid #21262d;color:#c9d1d9;padding:6px 10px;border-radius:6px;min-width:190px;font-size:12px}
+input#q:focus{outline:none;border-color:#58a6ff}
+.count{color:#484f58;font-size:11px;margin-left:auto}
+
+.layer{margin-bottom:26px}
+.layer-hd{display:flex;align-items:baseline;gap:12px;padding:10px 12px;background:#0d1117;border:1px solid #21262d;border-radius:9px 9px 0 0;border-bottom:none;flex-wrap:wrap}
+.layer-hd h2{font-size:14px;color:#f0f6fc;font-weight:700}
+.layer-hd .n{color:#484f58;font-size:11px}
+.layer-blurb{padding:0 12px 10px;background:#0d1117;border:1px solid #21262d;border-top:none;border-bottom:none;color:#8b949e;font-size:12px;line-height:1.6}
+.layer-ev{padding:0 12px 12px;background:#0d1117;border:1px solid #21262d;border-top:none;border-bottom:none}
+.layer-ev span{display:inline-block;background:#161b22;border:1px solid #21262d;border-left:2px solid #d29922;padding:6px 10px;border-radius:4px;color:#b0b8c4;font-size:11.5px;line-height:1.55}
+
+table{width:100%;border-collapse:collapse;background:#0d1117;border:1px solid #21262d;border-radius:0 0 9px 9px;overflow:hidden}
+th{background:#161b22;color:#8b949e;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;padding:8px 10px;text-align:left;white-space:nowrap;border-bottom:1px solid #21262d;cursor:pointer;user-select:none}
+th:hover{color:#c9d1d9}
+th.num,td.num{text-align:right}
+td{padding:9px 10px;border-bottom:1px solid #161b22;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr.row:hover{background:#161b2288}
+.tk{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#e6edf3;font-weight:600;font-size:12px;white-space:nowrap}
+.nm{color:#8b949e;font-size:11.5px;margin-top:2px}
+.one{color:#9aa4b2;font-size:12px;line-height:1.55;max-width:520px}
+.role{color:#6e7681;font-size:11px;line-height:1.5;max-width:520px;margin-bottom:5px}
+.cat{color:#6e7681;font-size:11px;line-height:1.5;max-width:520px;margin-top:5px;padding-left:8px;border-left:2px solid #21262d}
+.cat b{color:#8b949e;font-weight:600}
+
+.pos{color:#3fb950}.neg{color:#f85149}.flat{color:#8b949e}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.v-BUY{background:#3fb95022;color:#3fb950;border:1px solid #3fb95055}
+.v-HOLD{background:#8b949e18;color:#8b949e;border:1px solid #8b949e44}
+.v-AVOID{background:#f8514922;color:#f85149;border:1px solid #f8514955}
+.v-SPEC{background:#d2992222;color:#d29922;border:1px solid #d2992255}
+.v-WATCH{background:#a371f722;color:#a371f7;border:1px solid #a371f755}
+
+.cs{display:flex;align-items:center;gap:7px}
+.cs .val{font-family:ui-monospace,Menlo,monospace;font-weight:700;font-size:12.5px;min-width:20px;text-align:right}
+.bar{width:56px;height:5px;background:#21262d;border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:3px}
+.tier{font-size:9.5px;color:#6e7681;margin-top:3px;letter-spacing:.03em}
+.pent{font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:#484f58;margin-top:2px;letter-spacing:.5px}
+
+.side{font-size:9.5px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:3px;display:inline-block}
+.s-spends{background:#f8514918;color:#f85149;border:1px solid #f8514944}
+.s-receives{background:#3fb95018;color:#3fb950;border:1px solid #3fb95044}
+.s-both{background:#d2992218;color:#d29922;border:1px solid #d2992244}
+
+.reg{font-size:10px;color:#6e7681;border:1px solid #21262d;padding:1px 5px;border-radius:3px}
+.live{font-size:10px;color:#484f58;margin-top:2px}
+.note{margin-top:24px;padding:14px 16px;background:#0d1117;border:1px solid #21262d;border-left:3px solid #58a6ff;border-radius:6px;color:#8b949e;line-height:1.7;font-size:12px}
+.note b{color:#e6edf3}
+@media (max-width:1100px){.thesis{grid-template-columns:1fr}.one,.role,.cat{max-width:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="head">
+  <h1>Defense Industrial Base — Chokepoint Dashboard</h1>
+  <div class="sub">
+    The US is quadrupling THAAD and PrSM capacity and tripling PAC-3 MSE. The FY2027 request puts roughly
+    <b style="color:#e6edf3">$95bn</b> into missiles and munitions — about a tripling. This book asks the only question that
+    matters for owning it: <b style="color:#e6edf3">where does the chain physically narrow, and who is paid at that point?</b>
+  </div>
+  <div class="asof" id="asof"></div>
+</div>
+
+<div class="thesis">
+  <div class="tcard">
+    <h3>The core asymmetry</h3>
+    <p>The expansion headlines are <b>capex, not revenue</b>, for the company announcing them. The market has already worked this out:
+    the spenders are down YTD (<b>LHX &minus;5.6%</b>, <b>NOC &minus;4.9%</b>) while the receivers ran hard
+    (<b>DCO +88%</b>, <b>CRS +65%</b>, <b>ATI +63%</b>). Buying the prime on the announcement is the worst version of the trade.</p>
+  </div>
+  <div class="tcard">
+    <h3>Where it actually narrows</h3>
+    <p>Not at assembly. At <b>energetic chemistry</b> — 155mm output was still ~56k shells/month against a 100k goal after $6bn
+    invested, because the constraints are energetics, tooling and trained people. Below that sits the
+    <b>SRM duopoly</b> (six domestic makers became two) and <b>titanium sponge</b>, where the US has zero domestic capacity.</p>
+  </div>
+  <div class="tcard">
+    <h3>Why the international names decoupled</h3>
+    <p>Europe and Korea sold off on <b>peace-deal expectations</b>, Germany's F126 cancellation and Korean Q2 misses — a
+    war-consumption de-rating. The US bottleneck is a <b>stockpile-rebuild and capacity</b> story that survives a ceasefire.
+    Those two things are being priced as one trade. They are not one trade.</p>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="grp"><span class="lbl">Region</span><span id="fReg"></span></div>
+  <div class="grp"><span class="lbl">Verdict</span><span id="fVer"></span></div>
+  <div class="grp"><span class="lbl">Capex</span><span id="fSide"></span></div>
+  <input id="q" placeholder="filter ticker / name / text…">
+  <button class="f" id="reset">reset</button>
+  <span class="count" id="count"></span>
+</div>
+
+<div id="out"></div>
+
+<div class="note">
+  <b>Provenance.</b> Prices, YTD, forward P/E and consensus targets are Bloomberg at the close shown above — those are sourced facts.
+  <b>Chokepoint scores, investment scores, verdicts and one-liners are analyst judgement</b>, not Bloomberg outputs, and the raw
+  five-question inputs are kept in <span class="mono">chokepoint_scores.tsv</span> so the scoring is auditable and separable from the
+  price data. Capacity, contract and policy figures cited in the layer headers come from company releases, CRS/CSIS and trade press —
+  see <span class="mono">value-chain.md</span> for the source list. Two items are explicitly flagged as unverified in this build:
+  IHI Aerospace's SRM position, and the defence-revenue split at Toray, Shin-Etsu and TDK. Toho Titanium returned no price and is
+  unrated. Not investment advice.
+</div>
+
+</div>
+
+<script src="dib-dashboard-data.js"></script>
+<script>
+const M = window.DIB_META, LAYERS = window.DIB_LAYERS, CO = window.DIB_COMPANIES;
+document.getElementById('asof').textContent =
+  `Market data as of ${M.asOf} · ${M.priceSource} · ${CO.length} companies across ${LAYERS.length} layers`;
+
+const CSUM = c => c.reduce((a,b)=>a+b,0);
+const TIER = s => s>=21?'Monopoly Chokepoint':s>=16?'Duopoly Chokepoint':s>=11?'Oligopoly with Moat':s>=6?'Competitive / Linked':'Commodity / Indirect';
+const TCOL = s => s>=21?'#3fb950':s>=16?'#58a6ff':s>=11?'#d29922':'#6e7681';
+
+const state = { reg:'all', ver:'all', side:'all', q:'', sort:'chokepoint', dir:-1 };
+
+function mkBtns(host, opts, key){
+  document.getElementById(host).innerHTML = opts.map(o =>
+    `<button class="f${state[key]===o.v?' on':''}" data-k="${key}" data-v="${o.v}">${o.l}</button>`).join('');
+}
+function renderBtns(){
+  mkBtns('fReg',[{v:'all',l:'All'},{v:'US',l:'US'},{v:'JP',l:'Japan'},{v:'KR',l:'Korea'},{v:'EU',l:'Europe'}],'reg');
+  mkBtns('fVer',[{v:'all',l:'All'},{v:'BUY',l:'Buy'},{v:'HOLD',l:'Hold'},{v:'AVOID',l:'Avoid'}],'ver');
+  mkBtns('fSide',[{v:'all',l:'All'},{v:'receives',l:'Receives capex'},{v:'spends',l:'Spends capex'},{v:'both',l:'Both'}],'side');
+}
+document.addEventListener('click', e=>{
+  const b = e.target.closest('button.f[data-k]'); if(!b) return;
+  state[b.dataset.k] = b.dataset.v; renderBtns(); render();
+});
+document.getElementById('q').addEventListener('input', e=>{ state.q = e.target.value.toLowerCase(); render(); });
+document.getElementById('reset').addEventListener('click', ()=>{
+  Object.assign(state,{reg:'all',ver:'all',side:'all',q:''});
+  document.getElementById('q').value=''; renderBtns(); render();
+});
+
+function pass(c){
+  if(state.reg!=='all' && c.reg!==state.reg) return false;
+  if(state.ver!=='all' && c.verdict!==state.ver) return false;
+  if(state.side!=='all' && c.capexSide!==state.side) return false;
+  if(state.q){
+    const hay = (c.t+' '+c.n+' '+c.one+' '+c.role+' '+c.cat+' '+c.layer).toLowerCase();
+    if(!hay.includes(state.q)) return false;
+  }
+  return true;
+}
+
+const fmtPx = (v,ccy) => v==null ? '—' : (ccy==='KRW'||ccy==='JPY') ? v.toLocaleString(undefined,{maximumFractionDigits:0}) : v.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+const pct = v => v==null ? '<span class="flat">—</span>' :
+  `<span class="${v>0.05?'pos':v<-0.05?'neg':'flat'}">${v>0?'+':''}${v.toFixed(1)}%</span>`;
+
+function sortFn(a,b){
+  const d = state.dir;
+  const get = c => ({chokepoint:CSUM(c.c), score:c.score, ytd:c.ytd??-999, pe:c.pe??9999, up:c.up??-999, tk:c.t}[state.sort]);
+  const x=get(a), y=get(b);
+  if(typeof x==='string') return d*x.localeCompare(y);
+  return d*(x-y);
+}
+
+function render(){
+  const rows = CO.filter(pass);
+  document.getElementById('count').textContent = `${rows.length} of ${CO.length} shown`;
+  const byLayer = {};
+  rows.forEach(c => (byLayer[c.layer] = byLayer[c.layer]||[]).push(c));
+
+  const html = LAYERS.filter(L=>byLayer[L.id]).map(L=>{
+    const list = byLayer[L.id].slice().sort(sortFn);
+    return `
+    <div class="layer">
+      <div class="layer-hd"><h2>${L.name}</h2><span class="n">${list.length} name${list.length>1?'s':''}</span></div>
+      <div class="layer-blurb">${L.blurb}</div>
+      <div class="layer-ev"><span>${L.evidence}</span></div>
+      <table>
+        <thead><tr>
+          <th data-s="tk">Company</th>
+          <th data-s="chokepoint" class="num">Chokepoint</th>
+          <th data-s="score" class="num">Score</th>
+          <th>Verdict</th>
+          <th class="num">Price</th>
+          <th data-s="ytd" class="num">YTD</th>
+          <th data-s="pe" class="num">Fwd P/E</th>
+          <th data-s="up" class="num">To target</th>
+          <th>Capex</th>
+          <th>Assessment</th>
+        </tr></thead>
+        <tbody>${list.map(rowHtml).join('')}</tbody>
+      </table>
+    </div>`;
+  }).join('') || `<div class="note">No companies match these filters.</div>`;
+
+  document.getElementById('out').innerHTML = html;
+  document.querySelectorAll('th[data-s]').forEach(th=>{
+    th.onclick = ()=>{ const s=th.dataset.s; state.dir = (state.sort===s)? -state.dir : -1; state.sort=s; render(); };
+  });
+}
+
+function rowHtml(c){
+  const cs = CSUM(c.c);
+  return `<tr class="row">
+    <td>
+      <div class="tk">${c.t}</div>
+      <div class="nm">${c.n}</div>
+      <div style="margin-top:4px"><span class="reg">${c.reg}</span></div>
+    </td>
+    <td class="num">
+      <div class="cs" style="justify-content:flex-end">
+        <div class="bar"><i style="width:${cs/25*100}%;background:${TCOL(cs)}"></i></div>
+        <span class="val" style="color:${TCOL(cs)}">${cs}</span>
+      </div>
+      <div class="tier">${TIER(cs)}</div>
+      <div class="pent" title="breakage / alternatives / qualification / cogs / capacity">${c.c.join('·')}</div>
+    </td>
+    <td class="num mono" style="color:#e6edf3;font-weight:600">${c.score}</td>
+    <td><span class="badge v-${c.verdict}">${c.verdict}</span></td>
+    <td class="num mono">${fmtPx(c.px,c.ccy)}<div class="live" data-y="${c.y}">${c.ccy}</div></td>
+    <td class="num mono">${pct(c.ytd)}</td>
+    <td class="num mono" style="color:${c.pe==null?'#484f58':c.pe>45?'#f85149':c.pe<20?'#3fb950':'#c9d1d9'}">${c.pe==null?'—':c.pe.toFixed(1)}</td>
+    <td class="num mono">${pct(c.up)}</td>
+    <td><span class="side s-${c.capexSide}">${c.capexSide==='receives'?'RECEIVES':c.capexSide==='spends'?'SPENDS':'BOTH'}</span></td>
+    <td>
+      <div class="role">${c.role}</div>
+      <div class="one">${c.one}</div>
+      <div class="cat"><b>Catalyst:</b> ${c.cat} <b style="margin-left:6px">Risk:</b> ${c.risk}</div>
+    </td>
+  </tr>`;
+}
+
+renderBtns(); render();
+
+// Optional live overlay from the worker's Yahoo proxy. Silent no-op if unavailable.
+(async ()=>{
+  const syms = CO.filter(c=>c.y).map(c=>c.y);
+  for(let i=0;i<syms.length;i+=55){
+    try{
+      const r = await fetch('/api/market/quotes?symbols='+encodeURIComponent(syms.slice(i,i+55).join(',')));
+      if(!r.ok) return;
+      const j = await r.json();
+      (j.results||[]).forEach(q=>{
+        const sym = q.symbol || q.ticker; if(!sym) return;
+        const px = q.price ?? q.regularMarketPrice;
+        const ch = q.changePercent ?? q.regularMarketChangePercent;
+        if(px==null) return;
+        document.querySelectorAll(`.live[data-y="${CSS.escape(sym)}"]`).forEach(el=>{
+          const cls = ch>0?'pos':ch<0?'neg':'flat';
+          el.innerHTML = `live <span class="mono">${Number(px).toLocaleString(undefined,{maximumFractionDigits:2})}</span>` +
+            (ch==null?'':` <span class="${cls}">${ch>0?'+':''}${Number(ch).toFixed(1)}%</span>`);
+        });
+      });
+    }catch(e){ return; }
+  }
+})();
+</script>
+</body>
+</html>
