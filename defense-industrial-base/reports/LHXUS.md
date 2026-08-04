@@ -1,8 +1,8 @@
 # L3Harris Technologies (LHX US) — BUY
 
 **Score 75/100 · Chokepoint 22/25 (Monopoly band, duopoly structure) · Layer: Solid Rocket Motors · capex side: spends**
-$277.06 · −5.6% YTD · 22.0x fwd · target $361.71 (**+31%**) · rec 4.35
-*Market data: Bloomberg, 2026-08-03 close.*
+$277.86 · −5.4% YTD · 22.1x fwd · target $358.77 (**+29%**) · rec 4.32
+*Market data: Bloomberg, 2026-08-04. Consensus target eased from $361.71 to $358.77.*
 
 ## The core position
 
@@ -14,7 +14,7 @@ Note `alternatives = 4`, not 5 — this is a duopoly and the raw input says so. 
 
 ## Why it is cheap — and why that is the thesis
 
-On **29 July 2026** L3Harris **beat and raised** — revenue $5.9bn, EPS $3.13 (an ~11.8% beat), guidance up across key metrics — and the stock fell ~2.5% in session and a further ~4.4% after hours. It has since drifted to $277.
+On **29 July 2026** L3Harris **beat and raised** — revenue $5.9bn, EPS $3.13 (an ~11.8% beat), guidance up across key metrics — and the stock fell ~2.5% in session and a further ~4.4% after hours. It has since drifted to ~$278, and unlike most of the sector it did **not** participate in the 4 Aug risk-on move.
 
 The reasons investors gave:
 1. **Missile-business capex +65% QoQ and +92% YTD**
@@ -26,7 +26,7 @@ Both are the thesis, not counter-evidence. The capex compressing today's FCF is 
 
 ## Why LHX over NOC
 
-Same duopoly, same chokepoint score. NOC is cheaper (18.6x vs 22.0x) but carries **~$2.0bn of cumulative B-21 LRIP losses with $1.0bn of accrual remaining** — fixed-price risk entirely unrelated to the missile thesis. LHX is the cleaner expression; NOC is the cheaper one. This book holds both.
+Same duopoly, same chokepoint score. NOC is cheaper (18.8x vs 22.1x) but carries **~$2.0bn of cumulative B-21 LRIP losses with $1.0bn of accrual remaining** — fixed-price risk entirely unrelated to the missile thesis. LHX is the cleaner expression; NOC is the cheaper one. This book holds both.
 
 ## Catalyst
 

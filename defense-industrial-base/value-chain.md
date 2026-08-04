@@ -1,6 +1,6 @@
 # Defense Industrial Base — Value Chain & Chokepoint Map
 
-*Market data as of 2026-08-03 (Bloomberg close). Capacity, contract and policy figures are sourced — see [Sources](#sources). Chokepoint scores, tiers and verdicts are analyst judgement.*
+*Market data as of 2026-08-04 (Bloomberg). Capacity, contract and policy figures are sourced — see [Sources](#sources). Chokepoint scores, tiers and verdicts are analyst judgement.*
 
 ## Core Thesis
 
@@ -18,11 +18,11 @@ Lockheed's ">$9bn" facility programme is money Lockheed **spends**. The market h
 
 | Bearing the capex | YTD | | Collecting the capex | YTD |
 |---|---|---|---|---|
-| L3Harris | **−5.6%** | | Ducommun | **+88.2%** |
-| Northrop | **−4.9%** | | AAR | +69.2% |
-| Boeing | −0.5% | | Carpenter Technology | +65.1% |
-| Huntington Ingalls | −4.0% | | ATI | +63.3% |
-| Lockheed | +20.5% | | Moog | +60.1% |
+| L3Harris | **−5.4%** | | Ducommun | **+92.2%** |
+| Northrop | **−3.8%** | | Carpenter Technology | +72.6% |
+| Huntington Ingalls | −4.2% | | ATI | +68.3% |
+| Lockheed | +21.2% | | Moog | +62.5% |
+| Boeing | +7.5% | | Park Aerospace | +66.8% |
 
 *(S&P 500 +9.4%, ITA +11.6% over the same period.)*
 

@@ -1,8 +1,8 @@
 # NewMarket Corporation (NEU US) — BUY
 
 **Score 76/100 · Chokepoint 25/25 (Monopoly — the highest in the book) · Layer: Energetic Chemicals · capex side: receives**
-$850.16 · +23.7% YTD · no consensus P/E or target returned · market cap ~$7.8bn
-*Market data: Bloomberg, 2026-08-03 close.*
+$854.33 · +24.3% YTD · no consensus P/E or target returned · market cap ~$7.9bn
+*Market data: Bloomberg, 2026-08-04.*
 
 ## The position
 

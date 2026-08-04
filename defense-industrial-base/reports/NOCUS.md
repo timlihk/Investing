@@ -1,8 +1,8 @@
 # Northrop Grumman (NOC US) — BUY
 
 **Score 75/100 · Chokepoint 22/25 · Layer: Solid Rocket Motors · capex side: spends**
-$542.48 · −4.9% YTD · 18.6x fwd · target $650.52 (**+20%**) · rec 4.17
-*Market data: Bloomberg, 2026-08-03 close.*
+$548.47 · −3.8% YTD · 18.8x fwd · target $650.52 (**+19%**) · rec 4.17
+*Market data: Bloomberg, 2026-08-04.*
 
 ## The position
 
@@ -20,7 +20,7 @@ The stock sits well below its $774 52-week high on capital intensity and near-te
 
 **B-21 has ~$2.0bn of cumulative LRIP losses recognised, with $1.0bn of loss accrual remaining in other current liabilities.** A 2026 agreement to expand production capacity is intended to improve returns, but earnings stay sensitive to cost and execution assumptions.
 
-This is real, it is large, and it has **nothing to do with the SRM thesis**. That is the trade-off: you get the same chokepoint as LHX at 18.6x instead of 22.0x, and you accept fixed-price bomber risk to get it. Sizing should reflect that the discount is compensation, not a free lunch.
+This is real, it is large, and it has **nothing to do with the SRM thesis**. That is the trade-off: you get the same chokepoint as LHX at 18.8x instead of 22.1x, and you accept fixed-price bomber risk to get it. Sizing should reflect that the discount is compensation, not a free lunch.
 
 ## Why hold both NOC and LHX
 

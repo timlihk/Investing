@@ -4,7 +4,7 @@ Where the Western munitions chain physically narrows, and who gets paid at that 
 
 **Live:** https://research.mangrove-hk.org/defense-industrial-base/
 
-68 companies · 8 layers · US / Japan / Korea / Europe · market data as of **2026-08-03** (Bloomberg close)
+68 companies · 8 layers · US / Japan / Korea / Europe · market data as of **2026-08-04** (Bloomberg)
 
 ---
 
@@ -14,23 +14,23 @@ The US is quadrupling THAAD and PrSM capacity and has tripled PAC-3 MSE. The FY2
 
 ## Three findings
 
-**1. The expansion headlines are capex, not revenue — for the announcer.** L3Harris beat and raised on 29 July 2026 and fell ~7% (missile capex **+92% YTD**, IPO delayed). Northrop beat with a **record $105bn backlog** and fell on capital intensity. Meanwhile the suppliers collecting that spend re-rated violently: Ducommun **+88%**, Carpenter **+65%**, ATI **+63%** YTD. Buying the prime on the announcement is the worst expression of the trade.
+**1. The expansion headlines are capex, not revenue — for the announcer.** L3Harris beat and raised on 29 July 2026 and fell ~7% (missile capex **+92% YTD**, IPO delayed). Northrop beat with a **record $105bn backlog** and fell on capital intensity. Meanwhile the suppliers collecting that spend re-rated violently: Ducommun **+92%**, Carpenter **+73%**, ATI **+68%** YTD. Buying the prime on the announcement is the worst expression of the trade.
 
 **2. Money is not the binding constraint.** After **$6bn** invested, 155mm output was still **~56k shells/month against a 100k goal** (Feb 2026). The blockers are energetics, tooling and trained people. This is a natural experiment: when a layer absorbs billions and does not expand, its capacity constraint is an observation rather than a forecast.
 
 **3. The international complex has decoupled.** Europe and Korea de-rated on **war-consumption** risk — peace-deal expectations, Germany's F126 cancellation (Rheinmetall −18% on the day), Korean Q2 misses (Hanwha OP ₩947.3bn vs ₩1.02tn consensus). The US bottleneck is a **stockpile-rebuild and capacity** story that survives a ceasefire. These are being priced as one trade. They are not.
 
-## Top picks (as of 2026-08-03)
+## Top picks (as of 2026-08-04)
 
 | Ticker | Chokepoint | Score | Verdict | YTD | Fwd P/E | Key thesis |
 |--------|-----------|-------|---------|-----|---------|------------|
-| 012450 KS | 18 | **80** | BUY | −4.9% | 15.8x | Building **US** energetics capacity — Pine Bluff (~$1.3bn) + modular charge plant (~$1bn, NC/NG/NQ/triple-base). Unanimous Buy, +87% target gap |
-| NEU US | **25** | 76 | BUY | +23.7% | n/a | **AMPAC — sole large-scale US ammonium perchlorate producer.** No AP, no solid rockets. $100m expansion, >50% capacity |
-| LHX US | 22 | 75 | BUY | −5.6% | 22.0x | Half the US SRM duopoly. The capex crushing the stock is what creates 2028+ earnings. Missile-business separation is the catalyst |
-| NOC US | 22 | 75 | BUY | −4.9% | 18.6x | The other half. $178m Allegany facility doubles SRM capacity by autumn 2026. Cheaper than LHX, with B-21 fixed-price hair |
-| 7013 JP | 20 | 75 | BUY | +0.6% | 16.9x | IHI Aerospace = Japan's SRM house. The cheap-duopoly idea in yen |
+| 012450 KS | 18 | **78** | BUY | **+3.6%** | 17.2x | Building **US** energetics capacity — Pine Bluff (~$1.3bn) + modular charge plant (~$1bn, NC/NG/NQ/triple-base). Unanimous Buy, +71% target gap. **Rallied ~9% on 4 Aug — no longer down on the year** |
+| NEU US | **25** | 76 | BUY | +24.3% | n/a | **AMPAC — sole large-scale US ammonium perchlorate producer.** No AP, no solid rockets. $100m expansion, >50% capacity |
+| LHX US | 22 | 75 | BUY | −5.4% | 22.1x | Half the US SRM duopoly. The capex crushing the stock is what creates 2028+ earnings. Missile-business separation is the catalyst |
+| NOC US | 22 | 75 | BUY | −3.8% | 18.8x | The other half. $178m Allegany facility doubles SRM capacity by autumn 2026. Cheaper than LHX, with B-21 fixed-price hair |
+| 7013 JP | 20 | 74 | BUY | +2.7% | 17.3x | IHI Aerospace = Japan's SRM house. The cheap-duopoly idea in yen |
 | 5631 JP | 18 | 73 | BUY | −2.4% | n/a | Large forgings + ordnance. +54% consensus gap, 4.71 rec — the forging bottleneck at a price US names stopped offering in January |
-| 000880 KS | 16 | 73 | BUY | +2.3% | 12.6x | Holdco route into the Hanwha energetics build-out, +99% target gap |
+| 000880 KS | 16 | 73 | BUY | +2.3% | 12.6x | Holdco route into the Hanwha energetics build-out, +99% target gap. **Stale print — no volume on 4 Aug while the opco rallied 9%** |
 
 ## Key chokepoint discovery
 
