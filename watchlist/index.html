@@ -133,7 +133,8 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
 
   <footer>
     Prices: delayed Yahoo Finance quotes via <code>/api/market/quotes</code> + <code>/api/market/detail</code>.
-    Returns: 1D from quote change, others computed from daily closes (1W = 5 sessions, 3M = 63, 6M = 126, 1Y = 252, 5Y = up to 1,258, YTD = first close of the year).
+    Market cap: converted to US$ billions via free FX rates (open.er-api.com).
+    Returns: 1D from quote change, others computed from daily closes (1W = 5 sessions, 3M = 63, 6M = 126, 1Y = 252, 5Y = earliest available).
     Sources may be missing for newly listed or illiquid names. Edit tickers in <code>watchlist/watchlist-themes.js</code>.
   </footer>
 </div>
@@ -308,13 +309,10 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
 
   function fmtPct(v) { return v === null || !Number.isFinite(v) ? "<span class='ret na'>—</span>" : `<span class="ret ${v >= 0 ? "up" : "dn"}">${v >= 0 ? "+" : ""}${v.toFixed(2)}%</span>`; }
   function fmtNum(v, digits = 0) { return Number.isFinite(v) ? v.toLocaleString(undefined, { maximumFractionDigits: digits }) : "—"; }
-  function fmtCap(v) {
+  function fmtCapUsd(v) {
     if (!Number.isFinite(v)) return "—";
-    const abs = Math.abs(v);
-    if (abs >= 1e12) return (v / 1e12).toFixed(2) + "T";
-    if (abs >= 1e9) return (v / 1e9).toFixed(1) + "B";
-    if (abs >= 1e6) return (v / 1e6).toFixed(0) + "M";
-    return fmtNum(v);
+    const b = v / 1e9;
+    return "$" + (Math.abs(b) >= 100 ? b.toLocaleString(undefined, { maximumFractionDigits: 0 }) : b.toFixed(1)) + "B";
   }
 
   function renderTable(theme, card) {
@@ -325,7 +323,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
       const mm = state.quotes.get(tk.symbol) || {};
       const rets = computeReturns(tk.symbol) || {};
       const sortVal = sort.key === "price" ? (mm.currentPrice ?? -Infinity)
-        : sort.key === "cap" ? (mm.marketCap ?? -Infinity)
+        : sort.key === "cap" ? (mm.marketCapUsd ?? -Infinity)
         : sort.key === "pe" ? (mm.trailingPE ?? -Infinity)
         : sort.key === "sym" ? (tk.symbol || "")
         : sort.key === "name" ? (tk.name || "")
@@ -342,7 +340,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
       { key: "price", label: "Price" },
       { key: "d1", label: "1D" },
       ...PERIODS.map(p => ({ key: p.key, label: p.label })),
-      { key: "cap", label: "Mkt Cap" },
+      { key: "cap", label: "Mkt Cap US$B" },
       { key: "pe", label: "P/E" }
     ];
 
@@ -360,7 +358,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
         <td class="price">${Number.isFinite(mm.currentPrice) ? fmtNum(mm.currentPrice, mm.currentPrice < 10 ? 2 : mm.currentPrice < 1000 ? 1 : 0) : "<span class='muted'>—</span>"}${mm.currency ? `<span class="ccy">${mm.currency}</span>` : ""}</td>
         <td>${Number.isFinite(rets.d1) ? fmtPct(rets.d1) : (state.quotesDone ? fmtPct(null) : '<span class="loading-cell">…</span>')}</td>
         ${PERIODS.map(p => `<td>${loading ? '<span class="loading-cell">…</span>' : fmtPct(rets[p.key])}</td>`).join("")}
-        <td class="muted">${fmtCap(mm.marketCap)}</td>
+        <td class="muted">${fmtCapUsd(mm.marketCapUsd)}</td>
         <td class="muted">${Number.isFinite(mm.trailingPE) ? mm.trailingPE.toFixed(1) : "—"}</td>
       </tr>`;
     });

@@ -4,6 +4,41 @@ const DEFAULT_CHART_RANGE_DAYS = 365;
 const YAHOO_UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 
+// Free FX rates (open.er-api.com, no key) for USD-denominated market caps.
+let fxRates = null;
+let fxFetchedAt = 0;
+const FX_CACHE_MS = 12 * 60 * 60 * 1000;
+
+async function getFxRates() {
+  const now = Date.now();
+  if (fxRates && now - fxFetchedAt < FX_CACHE_MS) return fxRates;
+  try {
+    const response = await fetch("https://open.er-api.com/v6/latest/USD", {
+      headers: { "user-agent": YAHOO_UA }
+    });
+    const payload = await response.json();
+    if (payload && payload.result === "success" && payload.rates) {
+      fxRates = payload.rates;
+      fxFetchedAt = now;
+    }
+  } catch (error) {
+    // keep last known rates on failure
+  }
+  return fxRates;
+}
+
+function toUsd(value, currency, rates) {
+  if (!Number.isFinite(value) || !currency) return null;
+  if (currency === "USD") return value;
+  let rate = rates?.[currency] ?? null;
+  // London stocks quote in pence but Yahoo's marketCap is already in pounds
+  if (rate === null && (currency === "GBp" || currency === "GBX")) {
+    rate = rates?.GBP ?? null;
+  }
+  if (!Number.isFinite(rate) || rate <= 0) return null;
+  return value / rate;
+}
+
 // Company Research Hub lives on the NAS behind the Cloudflare tunnel.
 // research.mangrove-hk.org/company/* proxies through to it, so the hub
 // appears as a tab of this app without a second hostname.
@@ -65,7 +100,8 @@ async function getQuotePayload(url) {
     session
   );
   const quotes = response?.quoteResponse?.result || [];
-  const results = quotes.map(normalizeQuotePayload);
+  const rates = await getFxRates();
+  const results = quotes.map((quote) => normalizeQuotePayload(quote, rates));
   return { results };
 }
 
@@ -99,12 +135,13 @@ async function getDetailPayload(url) {
     )
   ]);
 
+  const rates = await getFxRates();
   const summary = summaryResponse?.quoteSummary?.result?.[0] || {};
   const chartResult = chartResponse?.chart?.result?.[0] || {};
   const quotes = buildQuotesFromYahooChart(chartResult);
   const chartMetrics = buildChartMetrics(quotes);
-  const summaryMetrics = normalizeSummaryPayload(summary);
-  const quoteMetrics = normalizeQuotePayload(summary?.price || {});
+  const summaryMetrics = normalizeSummaryPayload(summary, rates);
+  const quoteMetrics = normalizeQuotePayload(summary?.price || {}, rates);
 
   return {
     symbol,
@@ -212,7 +249,7 @@ function clampNumber(raw, min, max, fallback) {
   return Math.min(Math.max(parsed, min), max);
 }
 
-function normalizeQuotePayload(quote) {
+function normalizeQuotePayload(quote, rates) {
   const currency = unwrapYahooValue(quote.currency) || unwrapYahooValue(quote.financialCurrency) || null;
   const currentPrice =
     unwrapYahooValue(quote.regularMarketPrice) ??
@@ -220,6 +257,7 @@ function normalizeQuotePayload(quote) {
     unwrapYahooValue(quote.preMarketPrice) ??
     unwrapYahooValue(quote.currentPrice) ??
     null;
+  const marketCap = toFiniteNumber(unwrapYahooValue(quote.marketCap));
 
   return {
     symbol: unwrapYahooValue(quote.symbol) || unwrapYahooValue(quote.shortName) || null,
@@ -233,7 +271,8 @@ function normalizeQuotePayload(quote) {
       exchangeName: unwrapYahooValue(quote.fullExchangeName) || unwrapYahooValue(quote.exchange) || null,
       marketState: unwrapYahooValue(quote.marketState) || null,
       currentPrice: toFiniteNumber(currentPrice),
-      marketCap: toFiniteNumber(unwrapYahooValue(quote.marketCap)),
+      marketCap: marketCap,
+      marketCapUsd: toUsd(marketCap, currency, rates),
       trailingPE: toFiniteNumber(
         unwrapYahooValue(quote.trailingPE) ??
           (unwrapYahooValue(quote.epsTrailingTwelveMonths) && currentPrice
@@ -251,17 +290,19 @@ function normalizeQuotePayload(quote) {
   };
 }
 
-function normalizeSummaryPayload(summary) {
+function normalizeSummaryPayload(summary, rates) {
   const price = summary?.price || {};
   const detail = summary?.summaryDetail || {};
   const statistics = summary?.defaultKeyStatistics || {};
   const financial = summary?.financialData || {};
+  const marketCap = toFiniteNumber(unwrapYahooValue(price.marketCap));
 
   return {
     marketMetrics: {
       currency: unwrapYahooValue(price.currency) || unwrapYahooValue(price.financialCurrency) || null,
       currentPrice: toFiniteNumber(unwrapYahooValue(price.regularMarketPrice)),
-      marketCap: toFiniteNumber(unwrapYahooValue(price.marketCap)),
+      marketCap: marketCap,
+      marketCapUsd: toUsd(marketCap, unwrapYahooValue(price.currency) || unwrapYahooValue(price.financialCurrency), rates),
       exchangeName: unwrapYahooValue(price.fullExchangeName) || unwrapYahooValue(price.exchangeName) || null,
       enterpriseValue: toFiniteNumber(unwrapYahooValue(statistics.enterpriseValue)),
       trailingPE: toFiniteNumber(unwrapYahooValue(detail.trailingPE)),
