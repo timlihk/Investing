@@ -90,27 +90,37 @@ ZH_NAMES = {
  "ACN":"Accenture",
 }
 
-# Explicit theme membership (curated). Tag mapping below catches the rest.
+# Explicit theme membership (curated, first-principles pass 2026-08-05).
+# Principles: theme = where the company's core revenue/thesis sits, not every tag.
+#  - SMTC Semtech: analog connectivity silicon -> photonics only (not compute core)
+#  - TSEM Tower: SiPh specialty foundry -> photonics only
+#  - VSH Vishay: discrete/passives -> other (not AI compute)
+#  - WOLF Wolfspeed: SiC device maker -> other (not equipment)
+#  - 011070.KS LG Innotek: FC-BGA substrates + MLCC -> substrates-packaging (not memory)
+#  - 3105.TWO WIN Semi: GaAs epiwafer foundry -> photonics (consistent w/ IQE/SOI)
+#  - 6136.T OSG: industrial cutting tools -> other (not semi equipment)
+#  - GOOG: hyperscaler + TPU -> ai-infra (not other)
+#  - NOK: AI networking/optical -> photonics
 MANUAL = {
- "ai-compute": ["AMD","INTC","ARM","QCOM","TSM","GFS","UMC","TSEM","STM","MRVL","LSCC","VSH","SOXX","SMTC"],
- "memory-storage": ["000660.KS","005930.KS","MU","285A.T","032580.KS","080220.KS","WDC","SNDK","STX","SIMO","011070.KS"],
- "semi-equipment": ["AMAT","LRCX","KLAC","TER","ACMR","AEHR","6146.T","8027.TWO","025560.KS","BESI.AS","ENTG","4187.T","6863.T","6136.T","AXTI","WOLF","3105.TWO","ICHR","FORM"],
- "substrates-packaging": ["4062.T","3037.TW","8046.TW","3189.TW","009150.KS","ATS.VI","2802.T","5706.T","5214.T","011790.KS","3481.TW","002916.SZ","002436.SZ","600183.SS","AMKR","ASX","2327.TW"],
- "ai-infra": ["VRT","DELL","2317.TW","2382.TW","2383.TW","2301.TW","6412.TW","CORZ","IREN","CRWV","NBIS","APLD","DOCN","FSLY","DDOG","RXT","VICR"],
- "photonics": ["CRDO","MTSI","AVGO","LITE","COHR","AAOI","CIEN","SMTC","6503.T","6777.T","5802.T","4991.TWO","6442.TW","6869.HK","SIVE.ST","SOI.PA","IQE.L","MXL","LWLG","OPTX","VIAV"],
+ "ai-compute": ["AMD","INTC","ARM","QCOM","TSM","GFS","UMC","STM","MRVL","LSCC","SOXX"],
+ "memory-storage": ["000660.KS","005930.KS","MU","285A.T","032580.KS","080220.KS","WDC","SNDK","STX","SIMO"],
+ "semi-equipment": ["AMAT","LRCX","KLAC","TER","ACMR","AEHR","6146.T","8027.TWO","025560.KS","BESI.AS","ENTG","4187.T","6863.T","AXTI","ICHR","FORM"],
+ "substrates-packaging": ["4062.T","3037.TW","8046.TW","3189.TW","009150.KS","ATS.VI","2802.T","5706.T","5214.T","011790.KS","3481.TW","002916.SZ","002436.SZ","600183.SS","AMKR","ASX","2327.TW","011070.KS"],
+ "ai-infra": ["VRT","DELL","2317.TW","2382.TW","2383.TW","2301.TW","6412.TW","CORZ","IREN","CRWV","NBIS","APLD","DOCN","FSLY","DDOG","RXT","VICR","GOOG"],
+ "photonics": ["CRDO","MTSI","AVGO","LITE","COHR","AAOI","CIEN","SMTC","TSEM","6503.T","6777.T","5802.T","4991.TWO","6442.TW","6869.HK","SIVE.ST","SOI.PA","IQE.L","MXL","LWLG","OPTX","VIAV","3105.TWO","NOK"],
  "defense": ["NEU","012450.KS","103140.KS","LHX","NOC","7013.T","HXL","ATI","CRS","HWM","TDY","MRCY","HO.PA","CW","KRMN","MP","LMT","RTX","GD","KOG.OL","AVAV","KTOS","ONDS","RCAT","UMAC","NXSN.TA","PL","SATL","USAR","UUUU"],
  "starlink": ["5243.TW","2301.TW","6787.T","300433.SZ","2313.TW","6412.TW","2392.TW","6146.T","8027.TWO"],
  "crypto-miners": ["MARA","RIOT","CIFR","WULF","CORZ","IREN","GLXY"],
  "energy-materials": ["AGX","TE","FLNC","SEI","FPS","BE","VNP.TO","ENLT","CLF","3104.T","3110.T"],
- "other": ["GOOG","ROKU","AMC","ALK","CAVA","BROS","RIVN","OSCR","DHR","NKTR","ABVX","CCXI","8021.TW","TTMI","SKM","DXYZ","031330.KS","AUR","CNC","ACN"],
+ "other": ["GOOG","ROKU","AMC","ALK","CAVA","BROS","RIVN","OSCR","DHR","NKTR","ABVX","CCXI","8021.TW","TTMI","SKM","DXYZ","031330.KS","AUR","CNC","ACN","VSH","WOLF","6136.T"],
 }
 
 TAG_MAP = {
  "memory":"memory-storage","dram":"memory-storage","nand":"memory-storage","storage":"memory-storage",
  "semiconductor":"ai-compute","cpu":"ai-compute","gpu":"ai-compute","fpga":"ai-compute","foundry":"ai-compute",
  "equipment":"semi-equipment","test-equipment":"semi-equipment","deposition":"semi-equipment","etch":"semi-equipment",
- "inspection":"semi-equipment","hybrid-bonding":"semi-equipment","wafer-cleaning":"semi-equipment","SiC":"semi-equipment",
- "GaAs-substrates":"semi-equipment","photoresist":"semi-equipment","discrete":"semi-equipment","analog":"semi-equipment",
+ "inspection":"semi-equipment","hybrid-bonding":"semi-equipment","wafer-cleaning":"semi-equipment","SiC":"other",
+ "GaAs-substrates":"semi-equipment","photoresist":"semi-equipment","discrete":"other","analog":"other",
  "packaging":"substrates-packaging","substrates":"substrates-packaging","MLCC":"substrates-packaging",
  "ai-infra":"ai-infra","servers":"ai-infra","power":"ai-infra","cooling":"ai-infra","liquid-cooling":"ai-infra",
  "photonics":"photonics","optical":"photonics","connectivity":"photonics","networking":"photonics","communication-equipment":"photonics",

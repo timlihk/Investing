@@ -47,6 +47,26 @@ h1{margin:6px 0 0;font-size:clamp(32px,5vw,52px);line-height:1;letter-spacing:-.
 }
 .btn:hover{border-color:rgba(125,211,252,.5);background:rgba(125,211,252,.08)}
 .btn:disabled{opacity:.45;cursor:default}
+/* ---- heatmap ---- */
+.hm-wrap{margin:20px 0 26px;border:1px solid var(--line);border-radius:22px;padding:18px 22px;background:linear-gradient(180deg, rgba(19,29,47,.96), rgba(16,24,38,.94));box-shadow:var(--shadow)}
+.hm-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px}
+.hm-title{margin:4px 0 0;font-size:22px;letter-spacing:-.01em}
+.hm-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.hm-periods{display:flex;gap:4px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:3px}
+.hm-periods button{appearance:none;cursor:pointer;font:inherit;font-size:12px;font-weight:600;color:var(--muted);background:transparent;border:0;border-radius:7px;padding:5px 10px}
+.hm-periods button.active{background:rgba(125,211,252,.16);color:var(--accent)}
+.heatmap{position:relative;width:100%;height:380px;border-radius:14px;overflow:hidden;background:rgba(0,0,0,.18)}
+.hm-tile{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid rgba(255,255,255,.12);border-radius:8px;cursor:pointer;overflow:hidden;transition:filter .15s ease;text-align:center;padding:4px}
+.hm-tile:hover{filter:brightness(1.3);z-index:2}
+.hm-tile .n{font-size:11px;font-weight:600;letter-spacing:.02em;color:#fff;line-height:1.25;text-shadow:0 1px 3px rgba(0,0,0,.65)}
+.hm-tile .r{font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;text-shadow:0 1px 3px rgba(0,0,0,.65)}
+.hm-tile .s{font-size:9px;color:rgba(255,255,255,.75);text-shadow:0 1px 2px rgba(0,0,0,.65)}
+.hm-legend{display:flex;align-items:center;gap:8px;margin-top:12px;color:var(--muted);font-size:11px;flex-wrap:wrap}
+.hm-bar{width:120px;height:8px;border-radius:4px;background:linear-gradient(90deg,#f87171 0%,#3a3f4a 50%,#34d399 100%)}
+.hm-note{margin-left:auto}
+/* ---- tradingview links ---- */
+a.tvl{color:var(--accent);text-decoration:none;border-bottom:1px dotted rgba(125,211,252,.45)}
+a.tvl:hover{color:#fff;border-bottom-color:#fff}
 #search{
   flex:1;min-width:220px;font:inherit;font-size:14px;color:var(--text);
   background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:10px;
@@ -121,6 +141,24 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     </div>
   </header>
 
+  <section class="hm-wrap">
+    <div class="hm-head">
+      <div>
+        <p class="eyebrow">Sector Pulse</p>
+        <h2 class="hm-title">Theme heatmap</h2>
+      </div>
+      <div class="hm-controls">
+        <div class="hm-periods" id="hm-periods"></div>
+        <span class="pill" id="hm-status"></span>
+      </div>
+    </div>
+    <div id="heatmap" class="heatmap"></div>
+    <div class="hm-legend">
+      <span>loss</span><div class="hm-bar"></div><span>gain</span>
+      <span class="hm-note">tile size = total market cap · color = equal-weight avg return · click tile to open theme</span>
+    </div>
+  </section>
+
   <div class="toolbar">
     <input id="search" type="text" placeholder="Filter tickers or names across all themes…">
     <button class="btn" id="expand-all">Expand all</button>
@@ -134,7 +172,8 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
   <footer>
     Prices: delayed Yahoo Finance quotes via <code>/api/market/quotes</code> + <code>/api/market/detail</code>.
     Market cap: converted to US$ billions via free FX rates (open.er-api.com).
-    Returns: 1D from quote change, others computed from daily closes (1W = 5 sessions, 3M = 63, 6M = 126, 1Y = 252, 5Y = earliest available).
+    Returns: 1D from quote change, others computed from daily closes (1W = 5 sessions, 1M = 21, 3M = 63, 6M = 126, 1Y = 252, 5Y = earliest available).
+    Tickers link to TradingView charts (free account). Heatmap tiles: size = theme market cap, color = avg return for the selected period.
     Sources may be missing for newly listed or illiquid names. Edit tickers in <code>watchlist/watchlist-themes.js</code>.
   </footer>
 </div>
@@ -146,12 +185,14 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
   const QUOTE_BATCH = 55;
   const PERIODS = [
     { key: "w1",  label: "1W",  sessions: 5   },
+    { key: "m1",  label: "1M",  sessions: 21  },
     { key: "m3",  label: "3M",  sessions: 63  },
-    { key: "ytd", label: "YTD", sessions: null },
     { key: "m6",  label: "6M",  sessions: 126 },
+    { key: "ytd", label: "YTD", sessions: null },
     { key: "y1",  label: "1Y",  sessions: 252 },
     { key: "y5",  label: "5Y",  sessions: 1258}
   ];
+  const HM_PERIODS = [{ key: "d1", label: "1D" }, ...PERIODS];
 
   const state = {
     quotes: new Map(),        // symbol -> marketMetrics
@@ -172,6 +213,13 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     refresh: document.getElementById("refresh")
   };
 
+  const heatmap = {
+    period: "d1",
+    wrap: document.getElementById("heatmap"),
+    periods: document.getElementById("hm-periods"),
+    status: document.getElementById("hm-status")
+  };
+
   const allSymbols = [...new Set(themes.flatMap(t => t.tickers.map(x => x.symbol)))];
   el.count.innerHTML = `<b>${themes.length}</b> themes · <b>${allSymbols.length}</b> tickers`;
   render();
@@ -185,6 +233,148 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
   });
   el.refresh.addEventListener("click", () => { el.refresh.disabled = true; loadQuotes().finally(() => { el.refresh.disabled = false; }); });
   el.search.addEventListener("input", () => { state.search = el.search.value.trim().toLowerCase(); render(); });
+
+  // ---- heatmap wiring ----
+  heatmap.periods.innerHTML = HM_PERIODS.map(p => `<button data-p="${p.key}">${p.label}</button>`).join("");
+  heatmap.periods.querySelector("button[data-p=d1]").classList.add("active");
+  heatmap.periods.addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-p]");
+    if (!btn) return;
+    heatmap.period = btn.dataset.p;
+    heatmap.periods.querySelectorAll("button").forEach(b => b.classList.toggle("active", b === btn));
+    if (heatmap.period !== "d1") hydrateAll();
+    renderHeatmap();
+  });
+  let hydratingAll = false;
+  function hydrateAll() {
+    if (hydratingAll) return;
+    hydratingAll = true;
+    const todo = allSymbols.filter(s => !state.details.has(s));
+    if (todo.length === 0) { hydratingAll = false; return; }
+    todo.forEach(s => { state.details.set(s, null); fetchDetail(s).then(() => {
+      if (heatmap.period !== "d1") renderHeatmap();
+      heatmap.status.textContent = `loading returns ${loadedDetailCount()}/${allSymbols.length}…`;
+    }).catch(() => renderHeatmap()); });
+  }
+  function loadedDetailCount() {
+    let n = 0;
+    state.details.forEach(v => { if (Array.isArray(v)) n++; });
+    return n;
+  }
+  function themeReturn(theme, period) {
+    const vals = [];
+    for (const tk of theme.tickers) {
+      const mm = state.quotes.get(tk.symbol) || {};
+      if (period === "d1") {
+        const v = mm.regularMarketChangePercent;
+        if (Number.isFinite(v)) vals.push(v);
+      } else {
+        const rets = computeReturns(tk.symbol);
+        if (rets && Number.isFinite(rets[period])) vals.push(rets[period]);
+      }
+    }
+    if (!vals.length) return null;
+    return vals.reduce((a, b) => a + b, 0) / vals.length;
+  }
+  function themeCap(theme) {
+    let cap = 0, n = 0;
+    for (const tk of theme.tickers) {
+      const u = (state.quotes.get(tk.symbol) || {}).marketCapUsd;
+      if (Number.isFinite(u)) { cap += u; n++; }
+    }
+    return cap > 0 ? cap : n;
+  }
+  function hmColor(ret, maxAbs) {
+    const t = Math.min(Math.abs(ret) / maxAbs, 1);
+    return ret >= 0 ? `rgba(52,211,153,${(0.18 + 0.72 * t).toFixed(2)})` : `rgba(248,113,113,${(0.18 + 0.72 * t).toFixed(2)})`;
+  }
+  function layoutTreemap(items, W, H) {
+    if (!items.length || W <= 0 || H <= 0) return [];
+    const total = items.reduce((s, it) => s + it.value, 0);
+    const scale = (W * H) / Math.max(total, 1);
+    const nodes = items.map(it => ({ ...it, area: it.value * scale }));
+    const out = [];
+    let x = 0, y = 0, w = W, h = H, idx = 0;
+    const worst = (row, sum, side) => {
+      const m = Math.max(...row.map(n => n.area));
+      return Math.max((side * side * m) / (sum * sum), (sum * sum) / (side * side * m));
+    };
+    while (idx < nodes.length) {
+      const row = [nodes[idx]];
+      let rowSum = nodes[idx].area;
+      idx++;
+      while (idx < nodes.length) {
+        const side = Math.min(w, h);
+        const cur = worst([...row, nodes[idx]], rowSum + nodes[idx].area, side);
+        const prev = worst(row, rowSum, side);
+        if (cur > prev) break;
+        row.push(nodes[idx]); rowSum += nodes[idx].area; idx++;
+      }
+      if (w >= h) {
+        const rw = Math.min(rowSum / h, w);
+        let ry = y;
+        for (const n of row) {
+          const rh = n.area / rw;
+          out.push({ ...n, x, y: ry, w: rw, h: rh });
+          ry += rh;
+        }
+        x += rw; w -= rw;
+      } else {
+        const rh = Math.min(rowSum / w, h);
+        let rx = x;
+        for (const n of row) {
+          const rw = n.area / rh;
+          out.push({ ...n, x: rx, y, w: rw, h: rh });
+          rx += rw;
+        }
+        y += rh; h -= rh;
+      }
+    }
+    return out;
+  }
+  function openTheme(id) {
+    state.expanded.add(id);
+    const theme = themes.find(t => t.id === id);
+    if (theme) { hydrateTheme(theme); render(); }
+    const card = document.querySelector(`[data-theme-id="${id}"]`);
+    if (card) card.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  function renderHeatmap() {
+    const host = heatmap.wrap;
+    if (!host) return;
+    const W = host.clientWidth || 1100;
+    const H = host.clientHeight || 380;
+    const items = themes.map(th => {
+      const ret = themeReturn(th, heatmap.period);
+      return { th, ret, cap: themeCap(th), hasRet: ret !== null };
+    }).sort((a, b) => b.cap - a.cap);
+    const rects = layoutTreemap(items.map(it => ({ ...it, value: Math.max(it.cap, 1e6) })), W, H);
+    const rets = items.map(i => i.ret).filter(Number.isFinite);
+    const maxAbs = Math.max(1, ...rets.map(r => Math.abs(r)));
+    let missing = 0;
+    host.innerHTML = "";
+    rects.forEach(r => {
+      const tile = document.createElement("div");
+      tile.className = "hm-tile";
+      tile.style.left = r.x + "px"; tile.style.top = r.y + "px";
+      tile.style.width = Math.max(r.w - 2, 2) + "px"; tile.style.height = Math.max(r.h - 2, 2) + "px";
+      tile.style.background = r.hasRet ? hmColor(r.ret, maxAbs) : "rgba(255,255,255,.05)";
+      tile.title = `${r.th.name} · ${r.th.tickers.length} tickers · $${(r.cap / 1e9).toFixed(1)}B total cap`;
+      const label = r.w > 100
+        ? `<div class="n">${r.th.name}</div>`
+        : `<div class="n" style="writing-mode:vertical-rl">${r.th.name}</div>`;
+      tile.innerHTML = `${label}<div class="r">${r.hasRet ? (r.ret >= 0 ? "+" : "") + r.ret.toFixed(1) + "%" : "…"}</div>${r.w > 120 && r.h > 46 ? `<div class="s">${fmtCapUsd(r.cap)}</div>` : ""}`;
+      tile.addEventListener("click", () => openTheme(r.th.id));
+      host.appendChild(tile);
+      if (!r.hasRet) missing++;
+    });
+    heatmap.status.textContent = heatmap.period === "d1" ? "" : (missing ? `loading returns ${loadedDetailCount()}/${allSymbols.length}…` : `updated ${new Date().toLocaleTimeString()}`);
+  }
+  let hmResizeTimer = null;
+  window.addEventListener("resize", () => {
+    clearTimeout(hmResizeTimer);
+    hmResizeTimer = setTimeout(renderHeatmap, 200);
+  });
 
   async function loadQuotes() {
     el.status.textContent = "Loading quotes…";
@@ -202,6 +392,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     const ts = new Date();
     el.status.innerHTML = `Quotes: <b>${ts.toLocaleTimeString()}</b> · free Yahoo API`;
     render();
+    renderHeatmap();
     themes.forEach(t => { if (state.expanded.has(t.id)) hydrateTheme(t); });
   }
 
@@ -315,6 +506,45 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     return "$" + (Math.abs(b) >= 100 ? b.toLocaleString(undefined, { maximumFractionDigits: 0 }) : b.toFixed(1)) + "B";
   }
 
+  function tvLink(mm, symbol) {
+    const ex = String(mm.exchangeName || "").toLowerCase();
+    const base = symbol.replace(/\.[A-Za-z]+$/, "");
+    const EX = {
+      "nasdaqgs":"NASDAQ","nasdaqcm":"NASDAQ","nasdaqgm":"NASDAQ","nasdaq":"NASDAQ","nms":"NASDAQ","nasdaqnm":"NASDAQ","nasdaqcm":"NASDAQ",
+      "nyse":"NYSE","nysearca":"AMEX","amex":"AMEX",
+      "tokyo":"TSE","tse":"TSE",
+      "taiwan":"TWSE","taipei exchange":"TPEX","taipei exchange (otc)":"TPEX",
+      "kse":"KRX","kospi":"KRX","kosdaq":"KRX","seoul":"KRX",
+      "hong kong":"HKEX","hkex":"HKEX",
+      "shanghai":"SSE","shenzhen":"SZSE",
+      "lse":"LSE","london":"LSE",
+      "euronext paris":"EURONEXT","paris":"EURONEXT","euronext":"EURONEXT","amsterdam":"EURONEXT","brussels":"EURONEXT","milan":"EURONEXT",
+      "xetra":"XETR","frankfurt":"XETR","berlin":"XETR","germany":"XETR",
+      "vienna":"VIE",
+      "stockholm":"OMX","helsinki":"OMX","omx nordic":"OMX","copenhagen":"OMX","oslo":"OSE","oslo bors":"OSE",
+      "tel aviv":"TLV"
+    };
+    let prefix = EX[ex] || "";
+    if (!prefix) {
+      if (symbol.endsWith(".T")) prefix = "TSE";
+      else if (symbol.endsWith(".TW")) prefix = "TWSE";
+      else if (symbol.endsWith(".TWO")) prefix = "TPEX";
+      else if (symbol.endsWith(".KS") || symbol.endsWith(".KQ")) prefix = "KRX";
+      else if (symbol.endsWith(".HK")) prefix = "HKEX";
+      else if (symbol.endsWith(".SS")) prefix = "SSE";
+      else if (symbol.endsWith(".SZ")) prefix = "SZSE";
+      else if (symbol.endsWith(".PA")) prefix = "EURONEXT";
+      else if (symbol.endsWith(".DE")) prefix = "XETR";
+      else if (symbol.endsWith(".L")) prefix = "LSE";
+      else if (symbol.endsWith(".VI")) prefix = "VIE";
+      else if (symbol.endsWith(".ST")) prefix = "OMX";
+      else if (symbol.endsWith(".OL")) prefix = "OSE";
+      else if (symbol.endsWith(".TA")) prefix = "TLV";
+    }
+    const tvSym = prefix ? prefix + ":" + base : symbol;
+    return "https://www.tradingview.com/chart/?symbol=" + encodeURIComponent(tvSym);
+  }
+
   function renderTable(theme, card) {
     const body = card.querySelector(".theme-body");
     const visible = theme.tickers.filter(tk => !state.search || tk.symbol.toLowerCase().includes(state.search) || (tk.name || "").toLowerCase().includes(state.search));
@@ -353,7 +583,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     rows.forEach(({ tk, mm, rets }) => {
       const loading = state.details.get(tk.symbol) === null;
       html += `<tr>
-        <td class="sym">${tk.symbol}</td>
+        <td class="sym"><a class="tvl" href="${tvLink(mm, tk.symbol)}" target="_blank" rel="noopener" title="Open TradingView chart">${tk.symbol}</a></td>
         <td class="name" title="${tk.name || ""}">${tk.name || ""}</td>
         <td class="price">${Number.isFinite(mm.currentPrice) ? fmtNum(mm.currentPrice, mm.currentPrice < 10 ? 2 : mm.currentPrice < 1000 ? 1 : 0) : "<span class='muted'>—</span>"}${mm.currency ? `<span class="ccy">${mm.currency}</span>` : ""}</td>
         <td>${Number.isFinite(rets.d1) ? fmtPct(rets.d1) : (state.quotesDone ? fmtPct(null) : '<span class="loading-cell">…</span>')}</td>

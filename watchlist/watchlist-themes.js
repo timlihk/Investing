@@ -16,13 +16,10 @@ window.WATCHLIST_THEMES = [
       { symbol: "LSCC", name: "Lattice" },
       { symbol: "MRVL", name: "Marvell" },
       { symbol: "QCOM", name: "Qualcomm" },
-      { symbol: "SMTC", name: "Semtech" },
       { symbol: "SOXX", name: "iShares Semiconductor ETF" },
       { symbol: "STM", name: "STMicroelectronics" },
-      { symbol: "TSEM", name: "Tower Semi" },
       { symbol: "TSM", name: "TSMC 台积电" },
       { symbol: "UMC", name: "UMC" },
-      { symbol: "VSH", name: "Vishay" },
     ]
   },
   {
@@ -32,7 +29,6 @@ window.WATCHLIST_THEMES = [
     tickers: [
       { symbol: "000660.KS", name: "SK hynix 海力士" },
       { symbol: "005930.KS", name: "Samsung Electronics 三星电子" },
-      { symbol: "011070.KS", name: "LG Innotek" },
       { symbol: "032580.KS", name: "Fidelix" },
       { symbol: "080220.KS", name: "Jeju Semiconductor 济州半导体" },
       { symbol: "285A.T", name: "Kioxia 铠侠" },
@@ -49,9 +45,7 @@ window.WATCHLIST_THEMES = [
     tagline: "Wafer tools, test, bonding, substrates materials — pick-and-shovel layer.",
     tickers: [
       { symbol: "025560.KS", name: "Mirae 未来" },
-      { symbol: "3105.TWO", name: "WIN Semiconductors 稳懋" },
       { symbol: "4187.T", name: "Osaka Organic Chemicals 大阪有机化学" },
-      { symbol: "6136.T", name: "OSG" },
       { symbol: "6146.T", name: "DISCO" },
       { symbol: "6863.T", name: "Nireco" },
       { symbol: "8027.TWO", name: "E&R Engineering" },
@@ -66,7 +60,6 @@ window.WATCHLIST_THEMES = [
       { symbol: "KLAC", name: "KLA" },
       { symbol: "LRCX", name: "Lam Research" },
       { symbol: "TER", name: "Teradyne" },
-      { symbol: "WOLF", name: "Wolfspeed" },
     ]
   },
   {
@@ -77,6 +70,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "002436.SZ", name: "Xingsen Tech 兴森科技" },
       { symbol: "002916.SZ", name: "Shennan Circuits 深南电路" },
       { symbol: "009150.KS", name: "Samsung Electro-Mechanics 三星电机" },
+      { symbol: "011070.KS", name: "LG Innotek" },
       { symbol: "011790.KS", name: "SKC (Absolics glass)" },
       { symbol: "2327.TW", name: "Yageo 国巨" },
       { symbol: "2802.T", name: "Ajinomoto 味之素 (ABF film)" },
@@ -110,6 +104,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "DELL", name: "Dell" },
       { symbol: "DOCN", name: "DigitalOcean" },
       { symbol: "FSLY", name: "Fastly" },
+      { symbol: "GOOG", name: "Alphabet" },
       { symbol: "IREN", name: "IREN" },
       { symbol: "NBIS", name: "Nebius" },
       { symbol: "RXT", name: "Rackspace" },
@@ -122,6 +117,7 @@ window.WATCHLIST_THEMES = [
     name: "AI Photonics & Optical 光通信",
     tagline: "Optical interconnect, silicon photonics, transceivers, epiwafers.",
     tickers: [
+      { symbol: "3105.TWO", name: "WIN Semiconductors 稳懋" },
       { symbol: "4991.TWO", name: "GCS Holdings" },
       { symbol: "5802.T", name: "Sumitomo Electric" },
       { symbol: "6442.TW", name: "EZconn" },
@@ -143,6 +139,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "SIVE.ST", name: "Sivers Semiconductors" },
       { symbol: "SMTC", name: "Semtech" },
       { symbol: "SOI.PA", name: "Soitec" },
+      { symbol: "TSEM", name: "Tower Semi" },
       { symbol: "VIAV", name: "Viavi" },
     ]
   },
@@ -237,6 +234,7 @@ window.WATCHLIST_THEMES = [
     tagline: "Consumer, biotech, mobility, proxies — everything else being tracked.",
     tickers: [
       { symbol: "031330.KS", name: "SAMT" },
+      { symbol: "6136.T", name: "OSG" },
       { symbol: "8021.TW", name: "Topoint Technology 高侨" },
       { symbol: "ABVX", name: "Abivax (ADR)" },
       { symbol: "ACN", name: "Accenture" },
@@ -256,6 +254,8 @@ window.WATCHLIST_THEMES = [
       { symbol: "ROKU", name: "Roku" },
       { symbol: "SKM", name: "SK Telecom" },
       { symbol: "TTMI", name: "TTM Technologies" },
+      { symbol: "VSH", name: "Vishay" },
+      { symbol: "WOLF", name: "Wolfspeed" },
     ]
   },
 ];
