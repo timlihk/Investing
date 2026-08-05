@@ -80,6 +80,9 @@ async function getDetailPayload(url) {
   const period1 = new Date(period2);
   period1.setUTCDate(period1.getUTCDate() - rangeDays);
 
+  // Yahoo rejects day-suffixed ranges above ~2y; use the named range for 5y.
+  const rangeParam = rangeDays >= 1500 ? "5y" : `${rangeDays}d`;
+
   const session = await createYahooSession();
   const [summaryResponse, chartResponse] = await Promise.all([
     yahooJsonFetch(
@@ -90,7 +93,7 @@ async function getDetailPayload(url) {
     ),
     yahooJsonFetch(
       `/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1d&range=${encodeURIComponent(
-        `${rangeDays}d`
+        rangeParam
       )}&events=div,splits`,
       session
     )
