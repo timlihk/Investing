@@ -234,6 +234,7 @@ window.WATCHLIST_THEMES = [
     tagline: "Consumer, biotech, mobility, proxies — everything else being tracked.",
     tickers: [
       { symbol: "031330.KS", name: "SAMT" },
+      { symbol: "2059.TW", name: "King Slide Works (川湖科技)" },
       { symbol: "6136.T", name: "OSG" },
       { symbol: "8021.TW", name: "Topoint Technology 高侨" },
       { symbol: "ABVX", name: "Abivax (ADR)" },
