@@ -235,6 +235,7 @@ window.WATCHLIST_THEMES = [
     tickers: [
       { symbol: "031330.KS", name: "SAMT" },
       { symbol: "2059.TW", name: "King Slide Works (川湖科技)" },
+      { symbol: "3605.TW", name: "ACES Electronics (宏致電子)" },
       { symbol: "6136.T", name: "OSG" },
       { symbol: "8021.TW", name: "Topoint Technology 高侨" },
       { symbol: "ABVX", name: "Abivax (ADR)" },
