@@ -242,6 +242,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "ACN", name: "Accenture" },
       { symbol: "ALK", name: "Alaska Air" },
       { symbol: "AMC", name: "AMC Entertainment" },
+      { symbol: "APPS", name: "Digital Turbine" },
       { symbol: "AUR", name: "Aurora Innovation" },
       { symbol: "BROS", name: "Dutch Bros" },
       { symbol: "CAVA", name: "Cava Group" },
