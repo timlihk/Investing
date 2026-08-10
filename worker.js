@@ -220,14 +220,17 @@ function buildQuotesFromYahooChart(chartResult) {
   const close = quoteBlock.close || [];
   const volume = quoteBlock.volume || [];
 
-  return timestamps.map((timestamp, index) => ({
-    date: new Date(timestamp * 1000),
-    open: toFiniteNumber(open[index] ?? close[index]),
-    high: toFiniteNumber(high[index] ?? close[index]),
-    low: toFiniteNumber(low[index] ?? close[index]),
-    close: toFiniteNumber(close[index]),
-    volume: toFiniteNumber(volume[index]) || 0
-  }));
+  // Drop null/zero closes (common for incomplete same-day KRX bars and bad .KS maps of KOSDAQ names).
+  return timestamps
+    .map((timestamp, index) => ({
+      date: new Date(timestamp * 1000),
+      open: toFiniteNumber(open[index] ?? close[index]),
+      high: toFiniteNumber(high[index] ?? close[index]),
+      low: toFiniteNumber(low[index] ?? close[index]),
+      close: toFiniteNumber(close[index]),
+      volume: toFiniteNumber(volume[index]) || 0
+    }))
+    .filter((bar) => Number.isFinite(bar.close) && bar.close > 0);
 }
 
 function parseSymbols(raw) {
@@ -251,13 +254,39 @@ function clampNumber(raw, min, max, fallback) {
 
 function normalizeQuotePayload(quote, rates) {
   const currency = unwrapYahooValue(quote.currency) || unwrapYahooValue(quote.financialCurrency) || null;
-  const currentPrice =
+  const currentPrice = toFiniteNumber(
     unwrapYahooValue(quote.regularMarketPrice) ??
-    unwrapYahooValue(quote.postMarketPrice) ??
-    unwrapYahooValue(quote.preMarketPrice) ??
-    unwrapYahooValue(quote.currentPrice) ??
-    null;
-  const marketCap = toFiniteNumber(unwrapYahooValue(quote.marketCap));
+      unwrapYahooValue(quote.postMarketPrice) ??
+      unwrapYahooValue(quote.preMarketPrice) ??
+      unwrapYahooValue(quote.currentPrice) ??
+      null
+  );
+  let marketCap = toFiniteNumber(unwrapYahooValue(quote.marketCap));
+  if (!Number.isFinite(marketCap) || marketCap <= 0) {
+    const shares =
+      toFiniteNumber(unwrapYahooValue(quote.sharesOutstanding)) ??
+      toFiniteNumber(unwrapYahooValue(quote.impliedSharesOutstanding));
+    if (Number.isFinite(shares) && shares > 0 && Number.isFinite(currentPrice) && currentPrice > 0) {
+      marketCap = shares * currentPrice;
+    } else {
+      marketCap = null;
+    }
+  }
+
+  const epsTtm = toFiniteNumber(unwrapYahooValue(quote.epsTrailingTwelveMonths));
+  const epsFwd = toFiniteNumber(unwrapYahooValue(quote.epsForward));
+  let trailingPE = toFiniteNumber(unwrapYahooValue(quote.trailingPE));
+  if (!Number.isFinite(trailingPE) || trailingPE <= 0) {
+    trailingPE =
+      Number.isFinite(epsTtm) && epsTtm > 0 && Number.isFinite(currentPrice)
+        ? currentPrice / epsTtm
+        : null;
+  }
+  let forwardPE = toFiniteNumber(unwrapYahooValue(quote.forwardPE));
+  if (!Number.isFinite(forwardPE) || forwardPE <= 0) {
+    forwardPE =
+      Number.isFinite(epsFwd) && epsFwd > 0 && Number.isFinite(currentPrice) ? currentPrice / epsFwd : null;
+  }
 
   return {
     symbol: unwrapYahooValue(quote.symbol) || unwrapYahooValue(quote.shortName) || null,
@@ -270,20 +299,12 @@ function normalizeQuotePayload(quote, rates) {
       currency,
       exchangeName: unwrapYahooValue(quote.fullExchangeName) || unwrapYahooValue(quote.exchange) || null,
       marketState: unwrapYahooValue(quote.marketState) || null,
-      currentPrice: toFiniteNumber(currentPrice),
+      currentPrice,
       marketCap: marketCap,
       marketCapUsd: toUsd(marketCap, currency, rates),
-      trailingPE: toFiniteNumber(
-        unwrapYahooValue(quote.trailingPE) ??
-          (unwrapYahooValue(quote.epsTrailingTwelveMonths) && currentPrice
-            ? currentPrice / unwrapYahooValue(quote.epsTrailingTwelveMonths)
-            : null)
-      ),
-      forwardPE: toFiniteNumber(
-        unwrapYahooValue(quote.forwardPE) ??
-          (unwrapYahooValue(quote.epsForward) && currentPrice ? currentPrice / unwrapYahooValue(quote.epsForward) : null)
-      ),
-      priceToBook: toFiniteNumber(unwrapYahooValue(quote.priceToBook)),
+      trailingPE,
+      forwardPE,
+      priceToBook: positiveOrNull(unwrapYahooValue(quote.priceToBook)),
       regularMarketChange: toFiniteNumber(unwrapYahooValue(quote.regularMarketChange)),
       regularMarketChangePercent: toFiniteNumber(unwrapYahooValue(quote.regularMarketChangePercent))
     }
@@ -295,19 +316,32 @@ function normalizeSummaryPayload(summary, rates) {
   const detail = summary?.summaryDetail || {};
   const statistics = summary?.defaultKeyStatistics || {};
   const financial = summary?.financialData || {};
-  const marketCap = toFiniteNumber(unwrapYahooValue(price.marketCap));
+  const currency = unwrapYahooValue(price.currency) || unwrapYahooValue(price.financialCurrency) || null;
+  const currentPrice = toFiniteNumber(unwrapYahooValue(price.regularMarketPrice));
+  let marketCap = toFiniteNumber(unwrapYahooValue(price.marketCap));
+  // Small-cap KOSDAQ names often omit marketCap; reconstruct from shares * last.
+  if (!Number.isFinite(marketCap) || marketCap <= 0) {
+    const shares =
+      toFiniteNumber(unwrapYahooValue(statistics.sharesOutstanding)) ??
+      toFiniteNumber(unwrapYahooValue(statistics.impliedSharesOutstanding));
+    if (Number.isFinite(shares) && shares > 0 && Number.isFinite(currentPrice) && currentPrice > 0) {
+      marketCap = shares * currentPrice;
+    } else {
+      marketCap = null;
+    }
+  }
 
   return {
     marketMetrics: {
-      currency: unwrapYahooValue(price.currency) || unwrapYahooValue(price.financialCurrency) || null,
-      currentPrice: toFiniteNumber(unwrapYahooValue(price.regularMarketPrice)),
+      currency,
+      currentPrice,
       marketCap: marketCap,
-      marketCapUsd: toUsd(marketCap, unwrapYahooValue(price.currency) || unwrapYahooValue(price.financialCurrency), rates),
+      marketCapUsd: toUsd(marketCap, currency, rates),
       exchangeName: unwrapYahooValue(price.fullExchangeName) || unwrapYahooValue(price.exchangeName) || null,
-      enterpriseValue: toFiniteNumber(unwrapYahooValue(statistics.enterpriseValue)),
-      trailingPE: toFiniteNumber(unwrapYahooValue(detail.trailingPE)),
-      forwardPE: toFiniteNumber(unwrapYahooValue(detail.forwardPE)),
-      priceToBook: toFiniteNumber(unwrapYahooValue(statistics.priceToBook)),
+      enterpriseValue: positiveOrNull(unwrapYahooValue(statistics.enterpriseValue)),
+      trailingPE: positiveOrNull(unwrapYahooValue(detail.trailingPE)),
+      forwardPE: positiveOrNull(unwrapYahooValue(detail.forwardPE)),
+      priceToBook: positiveOrNull(unwrapYahooValue(statistics.priceToBook)),
       enterpriseToEbitda: toFiniteNumber(unwrapYahooValue(statistics.enterpriseToEbitda)),
       enterpriseToRevenue: toFiniteNumber(unwrapYahooValue(statistics.enterpriseToRevenue)),
       totalCash: toFiniteNumber(unwrapYahooValue(financial.totalCash)),
@@ -320,9 +354,15 @@ function normalizeSummaryPayload(summary, rates) {
   };
 }
 
+/** Treat non-positive Yahoo ratios as missing (0 PE / 0 EV is almost always a null payload). */
+function positiveOrNull(value) {
+  const n = toFiniteNumber(unwrapYahooValue(value));
+  return Number.isFinite(n) && n > 0 ? n : null;
+}
+
 function buildChartMetrics(quotes) {
   const cleanQuotes = quotes
-    .filter((quote) => quote?.date && Number.isFinite(quote.close))
+    .filter((quote) => quote?.date && Number.isFinite(quote.close) && quote.close > 0)
     .map((quote) => ({
       date: new Date(quote.date),
       open: toFiniteNumber(quote.open ?? quote.close),

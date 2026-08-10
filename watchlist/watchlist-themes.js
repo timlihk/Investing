@@ -29,9 +29,9 @@ window.WATCHLIST_THEMES = [
     tickers: [
       { symbol: "000660.KS", name: "SK hynix 海力士" },
       { symbol: "005930.KS", name: "Samsung Electronics 三星电子" },
-      { symbol: "031330.KS", name: "SAMT" },
-      { symbol: "032580.KS", name: "Fidelix" },
-      { symbol: "080220.KS", name: "Jeju Semiconductor 济州半导体" },
+      { symbol: "031330.KQ", name: "SAMT" },
+      { symbol: "032580.KQ", name: "Fidelix" },
+      { symbol: "080220.KQ", name: "Jeju Semiconductor 济州半导体" },
       { symbol: "2337.TW", name: "Macronix 旺宏" },
       { symbol: "285A.T", name: "Kioxia 铠侠" },
       { symbol: "MU", name: "Micron 美光" },

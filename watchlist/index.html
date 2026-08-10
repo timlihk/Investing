@@ -467,16 +467,33 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     const series = state.details.get(symbol);
     const mm = state.quotes.get(symbol) || {};
     if (!Array.isArray(series) || series.length === 0) return null;
-    const closes = series.map(p => Number(p.value)).filter(Number.isFinite);
-    if (closes.length === 0) return null;
+    // Drop non-positive closes (Yahoo sometimes emits 0 for incomplete session bars).
+    const points = series
+      .map(p => ({ time: p.time, value: Number(p.value) }))
+      .filter(p => Number.isFinite(p.value) && p.value > 0);
+    if (points.length === 0) return null;
+    const closes = points.map(p => p.value);
     const latest = closes[closes.length - 1];
     const ret = (base) => (Number.isFinite(base) && base > 0) ? ((latest / base - 1) * 100) : null;
     const out = {};
-    out.d1 = Number.isFinite(mm.regularMarketChangePercent) ? mm.regularMarketChangePercent : null;
+    // Prefer quote change%; if Yahoo sent a fraction (|x|<0.25 and price move exists), scale to percent.
+    if (Number.isFinite(mm.regularMarketChangePercent)) {
+      const raw = mm.regularMarketChangePercent;
+      const px = mm.currentPrice;
+      const chg = mm.regularMarketChange;
+      const fromPx = (Number.isFinite(px) && px > 0 && Number.isFinite(chg)) ? (chg / px) * 100 : null;
+      if (Number.isFinite(fromPx) && Math.abs(raw) > 0 && Math.abs(raw) < 0.25 && Math.abs(raw * 100 - fromPx) < Math.abs(raw - fromPx)) {
+        out.d1 = raw * 100;
+      } else {
+        out.d1 = raw;
+      }
+    } else {
+      out.d1 = null;
+    }
     for (const p of PERIODS) {
       if (p.sessions === null) {
-        const year = new Date(series[series.length - 1].time + "T00:00:00Z").getUTCFullYear();
-        const firstIdx = series.findIndex(pt => new Date(pt.time + "T00:00:00Z").getUTCFullYear() === year);
+        const year = new Date(points[points.length - 1].time + "T00:00:00Z").getUTCFullYear();
+        const firstIdx = points.findIndex(pt => new Date(pt.time + "T00:00:00Z").getUTCFullYear() === year);
         out[p.key] = firstIdx >= 0 ? ret(closes[firstIdx]) : null;
       } else {
         const idx = closes.length - 1 - p.sessions;

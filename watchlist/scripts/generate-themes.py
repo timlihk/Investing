@@ -25,7 +25,13 @@ VAULT_DEFAULT = "/lzcsys/data/home/timlihk/Obsidian Vault/03-Areas/Investments"
 REPO_DEFAULT = "/lzcsys/data/home/timlihk/Code/Investing"
 
 # Yahoo symbol corrections for known watchlist mistakes (source-of-truth fix).
-ALIASES = {"5243.TWO": "5243.TW"}
+# KOSDAQ names must use .KQ — .KS returns a broken/stale series (wrong price, ~17 bars, 0 close).
+ALIASES = {
+    "5243.TWO": "5243.TW",
+    "031330.KS": "031330.KQ",  # SAMT
+    "032580.KS": "032580.KQ",  # Fidelix
+    "080220.KS": "080220.KQ",  # Jeju Semiconductor
+}
 
 
 def canon(ticker):
@@ -54,8 +60,8 @@ ZH_NAMES = {
  "3481.TW":"Innolux 群创","002916.SZ":"Shennan Circuits 深南电路","002436.SZ":"Xingsen Tech 兴森科技",
  "600183.SS":"Shengyi Tech 生益科技","4991.TWO":"GCS Holdings","6869.HK":"YOFC 长飞光纤",
  "000660.KS":"SK hynix 海力士","005930.KS":"Samsung Electronics 三星电子","285A.T":"Kioxia 铠侠",
- "011070.KS":"LG Innotek","032580.KS":"Fidelix","080220.KS":"Jeju Semiconductor 济州半导体",
- "031330.KS":"SAMT","025560.KS":"Mirae 未来","042700.KS":"Hanmi Semiconductor",
+ "011070.KS":"LG Innotek","032580.KQ":"Fidelix","080220.KQ":"Jeju Semiconductor 济州半导体",
+ "031330.KQ":"SAMT","025560.KS":"Mirae 未来","042700.KS":"Hanmi Semiconductor",
  "6146.T":"DISCO","6315.T":"TOWA","6857.T":"Advantest 爱德万","8035.T":"Tokyo Electron 东京电子",
  "6136.T":"OSG","6863.T":"Nireco","4187.T":"Osaka Organic Chemicals 大阪有机化学",
  "8027.TWO":"E&R Engineering","3105.TWO":"WIN Semiconductors 稳懋","6787.T":"Meiko Electronics 名幸电子",
@@ -92,7 +98,7 @@ ZH_NAMES = {
  "2059.TW":"King Slide 川湖科技","3605.TW":"ACES 宏致電子","APPS":"Digital Turbine",
  "3858.HK":"Jiaxin 佳鑫国际 (钨)","EQR.AX":"EQ Resources (钨)","ALM":"Almonty (钨)",
  "6136.T":"OSG オーエスジー","8021.TW":"Topoint 高侨","TTMI":"TTM Technologies",
- "VSH":"Vishay","WOLF":"Wolfspeed","031330.KS":"SAMT",
+ "VSH":"Vishay","WOLF":"Wolfspeed","031330.KQ":"SAMT",
 }
 
 # Explicit theme membership (curated; rebalanced 2026-08-10).
@@ -103,7 +109,7 @@ ZH_NAMES = {
 #  - 8021.TW Topoint / TTMI: PCB tools/boards -> substrates-packaging (pcb tag must not dump to other)
 #  - WOLF: SiC devices -> energy-materials (power semi), not other
 #  - VSH: passives/discretes -> substrates-packaging
-#  - 031330.KS SAMT: Samsung memory distributor -> memory-storage
+#  - 031330.KQ SAMT / 032580.KQ Fidelix / 080220.KQ Jeju: KOSDAQ (.KQ not .KS) -> memory-storage
 #  - 3858.HK / EQR.AX / ALM: tungsten pure-plays -> critical-metals
 #  - SMTC/TSEM/NOK: photonics; 011070.KS: substrates; 3105.TWO: photonics
 #  - NKTR/ABVX/DHR/OSCR/CNC: biotech-healthcare (life sciences + managed care)
@@ -113,7 +119,7 @@ ZH_NAMES = {
 #  - SKM/DXYZ: residual AI-equity financial proxies (not operating software/infra)
 MANUAL = {
  "ai-compute": ["AMD","INTC","ARM","QCOM","TSM","GFS","UMC","STM","MRVL","LSCC","SOXX","ALAB"],
- "memory-storage": ["000660.KS","005930.KS","MU","285A.T","032580.KS","080220.KS","WDC","SNDK","STX","SIMO","2337.TW","031330.KS"],
+ "memory-storage": ["000660.KS","005930.KS","MU","285A.T","032580.KQ","080220.KQ","WDC","SNDK","STX","SIMO","2337.TW","031330.KQ"],
  "semi-equipment": ["AMAT","LRCX","KLAC","TER","ACMR","AEHR","6146.T","8027.TWO","025560.KS","BESI.AS","ENTG","4187.T","6863.T","AXTI","ICHR","FORM","KEYS"],
  "substrates-packaging": ["4062.T","3037.TW","8046.TW","3189.TW","009150.KS","ATS.VI","2802.T","5706.T","5214.T","011790.KS","3481.TW","002916.SZ","002436.SZ","600183.SS","AMKR","ASX","2327.TW","011070.KS","8021.TW","TTMI","VSH"],
  "ai-infra": ["VRT","DELL","2317.TW","2382.TW","2383.TW","2301.TW","6412.TW","CORZ","IREN","CRWV","NBIS","APLD","DOCN","FSLY","DDOG","RXT","VICR","GOOG","2059.TW","3605.TW"],
