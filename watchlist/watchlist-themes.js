@@ -6,18 +6,17 @@ window.WATCHLIST_THEMES = [
   {
     id: "ai-compute",
     name: "AI Compute & Silicon 半导体核心",
-    tagline: "CPUs, GPUs, foundries, FPGAs, interconnect silicon — the compute core of the AI stack.",
+    tagline: "CPUs, GPUs, IP, foundries, FPGAs — dies that run models or fabricate them.",
     tickers: [
-      { symbol: "ALAB", name: "Astera Labs" },
       { symbol: "AMD", name: "AMD" },
       { symbol: "ARM", name: "Arm Holdings" },
       { symbol: "GFS", name: "GlobalFoundries" },
       { symbol: "INTC", name: "Intel" },
       { symbol: "LSCC", name: "Lattice" },
-      { symbol: "MRVL", name: "Marvell" },
       { symbol: "QCOM", name: "Qualcomm" },
       { symbol: "SOXX", name: "iShares Semiconductor ETF" },
       { symbol: "STM", name: "STMicroelectronics" },
+      { symbol: "TSEM", name: "Tower Semi" },
       { symbol: "TSM", name: "TSMC 台积电" },
       { symbol: "UMC", name: "UMC" },
     ]
@@ -44,7 +43,7 @@ window.WATCHLIST_THEMES = [
   {
     id: "semi-equipment",
     name: "Semi Equipment & Materials 设备材料",
-    tagline: "Wafer tools, test, bonding, specialty materials — pick-and-shovel layer.",
+    tagline: "Wafer tools, test, bonding, specialty process materials — pick-and-shovel.",
     tickers: [
       { symbol: "025560.KS", name: "Mirae 未来" },
       { symbol: "4187.T", name: "Osaka Organic Chemicals 大阪有机化学" },
@@ -68,7 +67,7 @@ window.WATCHLIST_THEMES = [
   {
     id: "substrates-packaging",
     name: "Substrates & Packaging 载板封装",
-    tagline: "ABF/IC substrate makers, film & foil chokepoints, OSAT packaging, MLCC, PCB.",
+    tagline: "ABF/IC substrates, OSAT, PCB, passives, electronic glass cloth.",
     tickers: [
       { symbol: "002436.SZ", name: "Xingsen Tech 兴森科技" },
       { symbol: "002916.SZ", name: "Shennan Circuits 深南电路" },
@@ -78,6 +77,8 @@ window.WATCHLIST_THEMES = [
       { symbol: "2327.TW", name: "Yageo 国巨" },
       { symbol: "2802.T", name: "Ajinomoto 味之素 (ABF film)" },
       { symbol: "3037.TW", name: "Unimicron 欣兴电子" },
+      { symbol: "3104.T", name: "Fujibo 富士紡" },
+      { symbol: "3110.T", name: "Nitto Boseki 日东纺" },
       { symbol: "3189.TW", name: "Kinsus 景硕" },
       { symbol: "3481.TW", name: "Innolux 群创" },
       { symbol: "4062.T", name: "Ibiden 揖斐电" },
@@ -94,9 +95,47 @@ window.WATCHLIST_THEMES = [
     ]
   },
   {
+    id: "connectivity",
+    name: "AI Connectivity 互联芯片",
+    tagline: "PCIe/CXL retimers, SerDes, Ethernet ASICs, RF/connectivity silicon.",
+    tickers: [
+      { symbol: "ALAB", name: "Astera Labs" },
+      { symbol: "AVGO", name: "Broadcom" },
+      { symbol: "CRDO", name: "Credo" },
+      { symbol: "MRVL", name: "Marvell" },
+      { symbol: "MTSI", name: "MACOM" },
+      { symbol: "MXL", name: "MaxLinear" },
+      { symbol: "SMTC", name: "Semtech" },
+    ]
+  },
+  {
+    id: "optics",
+    name: "AI Optics & Photonics 光通信",
+    tagline: "Lasers, optical transceivers, fiber, epiwafers, optical networking systems.",
+    tickers: [
+      { symbol: "3105.TWO", name: "WIN Semiconductors 稳懋" },
+      { symbol: "4991.TWO", name: "GCS Holdings" },
+      { symbol: "5802.T", name: "Sumitomo Electric" },
+      { symbol: "6442.TW", name: "EZconn" },
+      { symbol: "6777.T", name: "Santec" },
+      { symbol: "6869.HK", name: "YOFC 长飞光纤" },
+      { symbol: "AAOI", name: "AAOI" },
+      { symbol: "CIEN", name: "Ciena" },
+      { symbol: "COHR", name: "Coherent" },
+      { symbol: "IQE.L", name: "IQE plc" },
+      { symbol: "LITE", name: "Lumentum" },
+      { symbol: "LWLG", name: "Lightwave Logic" },
+      { symbol: "NOK", name: "Nokia 诺基亚" },
+      { symbol: "OPTX", name: "Syntec Optics" },
+      { symbol: "SIVE.ST", name: "Sivers Semiconductors" },
+      { symbol: "SOI.PA", name: "Soitec" },
+      { symbol: "VIAV", name: "Viavi" },
+    ]
+  },
+  {
     id: "ai-infra",
     name: "AI Infrastructure 算力基建",
-    tagline: "Servers, power & cooling, data-center builders, AI clouds, server structure.",
+    tagline: "Servers, power & cooling, DC builders, AI clouds, cloud software, server structure.",
     tickers: [
       { symbol: "2059.TW", name: "King Slide 川湖科技" },
       { symbol: "2301.TW", name: "Lite-On 光宝科技" },
@@ -118,37 +157,6 @@ window.WATCHLIST_THEMES = [
       { symbol: "RXT", name: "Rackspace" },
       { symbol: "VICR", name: "Vicor" },
       { symbol: "VRT", name: "Vertiv" },
-    ]
-  },
-  {
-    id: "photonics",
-    name: "AI Photonics & Optical 光通信",
-    tagline: "Optical interconnect, silicon photonics, transceivers, epiwafers.",
-    tickers: [
-      { symbol: "3105.TWO", name: "WIN Semiconductors 稳懋" },
-      { symbol: "4991.TWO", name: "GCS Holdings" },
-      { symbol: "5802.T", name: "Sumitomo Electric" },
-      { symbol: "6442.TW", name: "EZconn" },
-      { symbol: "6503.T", name: "Mitsubishi Electric" },
-      { symbol: "6777.T", name: "Santec" },
-      { symbol: "6869.HK", name: "YOFC 长飞光纤" },
-      { symbol: "AAOI", name: "AAOI" },
-      { symbol: "AVGO", name: "Broadcom" },
-      { symbol: "CIEN", name: "Ciena" },
-      { symbol: "COHR", name: "Coherent" },
-      { symbol: "CRDO", name: "Credo" },
-      { symbol: "IQE.L", name: "IQE plc" },
-      { symbol: "LITE", name: "Lumentum" },
-      { symbol: "LWLG", name: "Lightwave Logic" },
-      { symbol: "MTSI", name: "MACOM" },
-      { symbol: "MXL", name: "MaxLinear" },
-      { symbol: "NOK", name: "Nokia 诺基亚" },
-      { symbol: "OPTX", name: "Syntec Optics" },
-      { symbol: "SIVE.ST", name: "Sivers Semiconductors" },
-      { symbol: "SMTC", name: "Semtech" },
-      { symbol: "SOI.PA", name: "Soitec" },
-      { symbol: "TSEM", name: "Tower Semi" },
-      { symbol: "VIAV", name: "Viavi" },
     ]
   },
   {
@@ -221,11 +229,10 @@ window.WATCHLIST_THEMES = [
   {
     id: "energy-materials",
     name: "Energy & Materials 能源材料",
-    tagline: "Energy storage, solar, SiC/power, grid infrastructure, industrial materials.",
+    tagline: "Energy storage, solar, SiC/power, grid infrastructure, industrial.",
     tickers: [
-      { symbol: "3104.T", name: "Fujibo 富士紡" },
-      { symbol: "3110.T", name: "Nitto Boseki 日东纺" },
       { symbol: "6136.T", name: "OSG オーエスジー" },
+      { symbol: "6503.T", name: "Mitsubishi Electric" },
       { symbol: "AGX", name: "Argan" },
       { symbol: "BE", name: "Bloom Energy" },
       { symbol: "CLF", name: "Cleveland-Cliffs" },
@@ -253,23 +260,37 @@ window.WATCHLIST_THEMES = [
     ]
   },
   {
-    id: "biotech-healthcare",
-    name: "Biotech & Healthcare 生科医疗",
-    tagline: "Clinical biopharma, life-science tools, managed care / health insurance.",
+    id: "biotech",
+    name: "Biotech & Life Sciences 生科",
+    tagline: "Clinical biopharma pipelines and life-science tools / diagnostics.",
     tickers: [
       { symbol: "ABVX", name: "Abivax (ADR)" },
-      { symbol: "CNC", name: "Centene" },
       { symbol: "DHR", name: "Danaher" },
       { symbol: "NKTR", name: "Nektar" },
+    ]
+  },
+  {
+    id: "healthcare-services",
+    name: "Healthcare Services 医疗服务",
+    tagline: "Managed care, health insurance — payers, not drug R&D.",
+    tickers: [
+      { symbol: "CNC", name: "Centene" },
       { symbol: "OSCR", name: "Oscar Health" },
+    ]
+  },
+  {
+    id: "it-services",
+    name: "IT Services 信息技术服务",
+    tagline: "Systems integration and consulting — services revenue, not product software.",
+    tickers: [
+      { symbol: "ACN", name: "Accenture" },
     ]
   },
   {
     id: "software-apps",
     name: "Software & Apps 软件应用",
-    tagline: "App platforms, ad-tech, IT services — software revenue, not infra silicon.",
+    tagline: "App platforms, ad-tech, consumer software — not IT consulting or infra SaaS.",
     tickers: [
-      { symbol: "ACN", name: "Accenture" },
       { symbol: "APPS", name: "Digital Turbine" },
       { symbol: "ROKU", name: "Roku" },
     ]
@@ -287,7 +308,7 @@ window.WATCHLIST_THEMES = [
   {
     id: "consumer",
     name: "Consumer 消费",
-    tagline: "Restaurants, entertainment, airlines — discretionary consumer residual.",
+    tagline: "Restaurants, entertainment, airlines — discretionary residual.",
     tickers: [
       { symbol: "ALK", name: "Alaska Air" },
       { symbol: "AMC", name: "AMC Entertainment" },
@@ -298,7 +319,7 @@ window.WATCHLIST_THEMES = [
   {
     id: "other",
     name: "Watchlist Other 其他",
-    tagline: "True residuals — AI equity financial proxies without a core operating theme.",
+    tagline: "True residuals — AI equity financial proxies without an operating theme.",
     tickers: [
       { symbol: "DXYZ", name: "Destiny Tech100" },
       { symbol: "SKM", name: "SK Telecom" },

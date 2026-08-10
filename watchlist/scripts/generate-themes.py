@@ -101,106 +101,187 @@ ZH_NAMES = {
  "VSH":"Vishay","WOLF":"Wolfspeed","031330.KQ":"SAMT",
 }
 
-# Explicit theme membership (curated; rebalanced 2026-08-10).
-# Principles: theme = where the company's CORE revenue/thesis sits, not every tag.
-# Multi-bucket is OK for real dual theses (e.g. CORZ crypto+AI infra, Starlink suppliers).
-#  - GOOG: hyperscaler + TPU -> ai-infra ONLY (not other)
-#  - 2059.TW King Slide / 3605.TW ACES: AI server structure/connectors -> ai-infra
-#  - 8021.TW Topoint / TTMI: PCB tools/boards -> substrates-packaging (pcb tag must not dump to other)
-#  - WOLF: SiC devices -> energy-materials (power semi), not other
-#  - VSH: passives/discretes -> substrates-packaging
-#  - 031330.KQ SAMT / 032580.KQ Fidelix / 080220.KQ Jeju: KOSDAQ (.KQ not .KS) -> memory-storage
-#  - 3858.HK / EQR.AX / ALM: tungsten pure-plays -> critical-metals
-#  - SMTC/TSEM/NOK: photonics; 011070.KS: substrates; 3105.TWO: photonics
-#  - NKTR/ABVX/DHR/OSCR/CNC: biotech-healthcare (life sciences + managed care)
-#  - APPS/ACN/ROKU: software-apps (ad-tech, IT services, streaming platform)
-#  - RIVN/AUR/CCXI: mobility-robotics (EV, AV, humanoid)
-#  - CAVA/BROS/AMC/ALK: consumer (restaurants, entertainment, airlines)
-#  - SKM/DXYZ: residual AI-equity financial proxies (not operating software/infra)
+# Explicit theme membership (curated; first-principles rebalance 2026-08-10).
+# Principle: theme = CORE revenue / primary investment thesis — not every tag.
+# Multi-bucket only for real dual theses (CORZ crypto+AI DC, Starlink suppliers, rare-earth dual defense).
+#
+# Stack order (silicon → system → end markets):
+#  compute → memory → equipment → packaging → connectivity → optics → AI infra
+#  then defense / starlink / crypto / energy / critical metals
+#  then biotech / healthcare-services / IT services / software / mobility / consumer / other
+#
+# Key rebuckets:
+#  - ALAB/CRDO/AVGO/MRVL/MXL/MTSI/SMTC: electrical/RF interconnect silicon → connectivity (not compute/optics)
+#  - SIVE/LITE/COHR/AAOI/CIEN/IQE/SOI/VIAV/…: lasers, fiber, epi, optical systems → optics
+#  - TSEM specialty foundry → ai-compute; 6503.T industrial/power conglomerate → energy-materials
+#  - 3104.T/3110.T electronic glass cloth → substrates-packaging (not energy)
+#  - ACN → it-services; OSCR/CNC → healthcare-services; NKTR/ABVX/DHR → biotech
+#  - APPS/ROKU → software-apps; SKM/DXYZ stay other (financial AI proxies)
 MANUAL = {
- "ai-compute": ["AMD","INTC","ARM","QCOM","TSM","GFS","UMC","STM","MRVL","LSCC","SOXX","ALAB"],
- "memory-storage": ["000660.KS","005930.KS","MU","285A.T","032580.KQ","080220.KQ","WDC","SNDK","STX","SIMO","2337.TW","031330.KQ"],
- "semi-equipment": ["AMAT","LRCX","KLAC","TER","ACMR","AEHR","6146.T","8027.TWO","025560.KS","BESI.AS","ENTG","4187.T","6863.T","AXTI","ICHR","FORM","KEYS"],
- "substrates-packaging": ["4062.T","3037.TW","8046.TW","3189.TW","009150.KS","ATS.VI","2802.T","5706.T","5214.T","011790.KS","3481.TW","002916.SZ","002436.SZ","600183.SS","AMKR","ASX","2327.TW","011070.KS","8021.TW","TTMI","VSH"],
- "ai-infra": ["VRT","DELL","2317.TW","2382.TW","2383.TW","2301.TW","6412.TW","CORZ","IREN","CRWV","NBIS","APLD","DOCN","FSLY","DDOG","RXT","VICR","GOOG","2059.TW","3605.TW"],
- "photonics": ["CRDO","MTSI","AVGO","LITE","COHR","AAOI","CIEN","SMTC","TSEM","6503.T","6777.T","5802.T","4991.TWO","6442.TW","6869.HK","SIVE.ST","SOI.PA","IQE.L","MXL","LWLG","OPTX","VIAV","3105.TWO","NOK"],
- "defense": ["NEU","012450.KS","103140.KS","LHX","NOC","7013.T","HXL","ATI","CRS","HWM","TDY","MRCY","HO.PA","CW","KRMN","MP","LMT","RTX","GD","KOG.OL","AVAV","KTOS","ONDS","RCAT","UMAC","NXSN.TA","PL","SATL","USAR","UUUU"],
- "starlink": ["5243.TW","2301.TW","6787.T","300433.SZ","2313.TW","6412.TW","2392.TW","6146.T","8027.TWO"],
- "crypto-miners": ["MARA","RIOT","CIFR","WULF","CORZ","IREN","GLXY"],
- "energy-materials": ["AGX","TE","FLNC","SEI","FPS","BE","ENLT","CLF","3104.T","3110.T","WOLF","6136.T"],
- "critical-metals": ["3858.HK","EQR.AX","ALM","VNP.TO","MP","USAR","UUUU","NEU"],
- "biotech-healthcare": ["NKTR","ABVX","DHR","OSCR","CNC"],
- "software-apps": ["APPS","ACN","ROKU"],
- "mobility-robotics": ["RIVN","AUR","CCXI"],
- "consumer": ["CAVA","BROS","AMC","ALK"],
- # True residual only: financial/AI equity proxies without operating core in other themes
- "other": ["SKM","DXYZ"],
+  # Logic/IP/foundry — dies that run models or fabricate them
+  "ai-compute": [
+    "AMD", "INTC", "ARM", "QCOM", "TSM", "GFS", "UMC", "STM", "LSCC", "SOXX", "TSEM",
+  ],
+  # Memory bits + controllers + HDD/NAND pure-plays
+  "memory-storage": [
+    "000660.KS", "005930.KS", "MU", "285A.T", "032580.KQ", "080220.KQ",
+    "WDC", "SNDK", "STX", "SIMO", "2337.TW", "031330.KQ",
+  ],
+  # Wafer fab tools, test, process materials
+  "semi-equipment": [
+    "AMAT", "LRCX", "KLAC", "TER", "ACMR", "AEHR", "6146.T", "8027.TWO", "025560.KS",
+    "BESI.AS", "ENTG", "4187.T", "6863.T", "AXTI", "ICHR", "FORM", "KEYS",
+  ],
+  # ABF/IC substrates, OSAT, PCB, passives, electronic glass cloth
+  "substrates-packaging": [
+    "4062.T", "3037.TW", "8046.TW", "3189.TW", "009150.KS", "ATS.VI", "2802.T",
+    "5706.T", "5214.T", "011790.KS", "3481.TW", "002916.SZ", "002436.SZ", "600183.SS",
+    "AMKR", "ASX", "2327.TW", "011070.KS", "8021.TW", "TTMI", "VSH",
+    "3104.T", "3110.T",
+  ],
+  # Electrical / RF interconnect silicon (PCIe/CXL/SerDes/Ethernet/RF front-end chips)
+  "connectivity": [
+    "ALAB", "CRDO", "AVGO", "MRVL", "MXL", "MTSI", "SMTC",
+  ],
+  # Optical: lasers, transceivers, fiber, epiwafers, optical networking systems
+  "optics": [
+    "LITE", "COHR", "AAOI", "CIEN", "SIVE.ST", "SOI.PA", "IQE.L", "LWLG", "OPTX", "VIAV",
+    "6777.T", "5802.T", "4991.TWO", "6442.TW", "6869.HK", "3105.TWO", "NOK",
+  ],
+  # Servers, power/cooling, DC builders, AI clouds, cloud software, server structure/connectors
+  "ai-infra": [
+    "VRT", "DELL", "2317.TW", "2382.TW", "2383.TW", "2301.TW", "6412.TW",
+    "CORZ", "IREN", "CRWV", "NBIS", "APLD", "DOCN", "FSLY", "DDOG", "RXT",
+    "VICR", "GOOG", "2059.TW", "3605.TW",
+  ],
+  "defense": [
+    "NEU", "012450.KS", "103140.KS", "LHX", "NOC", "7013.T", "HXL", "ATI", "CRS", "HWM",
+    "TDY", "MRCY", "HO.PA", "CW", "KRMN", "MP", "LMT", "RTX", "GD", "KOG.OL",
+    "AVAV", "KTOS", "ONDS", "RCAT", "UMAC", "NXSN.TA", "PL", "SATL", "USAR", "UUUU",
+  ],
+  "starlink": [
+    "5243.TW", "2301.TW", "6787.T", "300433.SZ", "2313.TW", "6412.TW", "2392.TW",
+    "6146.T", "8027.TWO",
+  ],
+  "crypto-miners": ["MARA", "RIOT", "CIFR", "WULF", "CORZ", "IREN", "GLXY"],
+  # Grid/storage/solar/SiC power + industrial tools (not electronic glass — that is packaging)
+  "energy-materials": [
+    "AGX", "TE", "FLNC", "SEI", "FPS", "BE", "ENLT", "CLF", "WOLF", "6136.T", "6503.T",
+  ],
+  "critical-metals": ["3858.HK", "EQR.AX", "ALM", "VNP.TO", "MP", "USAR", "UUUU", "NEU"],
+  # Drug developers + life-science tools (DHR sells tools, not insurance)
+  "biotech": ["NKTR", "ABVX", "DHR"],
+  # Payers / managed care — services, not R&D pipeline
+  "healthcare-services": ["OSCR", "CNC"],
+  # Systems integration / consulting
+  "it-services": ["ACN"],
+  # App platforms / ad-tech / consumer software (not IT consulting, not infra SaaS)
+  "software-apps": ["APPS", "ROKU"],
+  "mobility-robotics": ["RIVN", "AUR", "CCXI"],
+  "consumer": ["CAVA", "BROS", "AMC", "ALK"],
+  # Financial AI proxies without an operating software/infra core
+  "other": ["SKM", "DXYZ"],
 }
 
 TAG_MAP = {
- "memory":"memory-storage","dram":"memory-storage","nand":"memory-storage","storage":"memory-storage",
- "nand-controller":"memory-storage","ai-storage":"memory-storage",
- "semiconductor":"ai-compute","cpu":"ai-compute","gpu":"ai-compute","fpga":"ai-compute","foundry":"ai-compute",
- "equipment":"semi-equipment","test-equipment":"semi-equipment","deposition":"semi-equipment","etch":"semi-equipment",
- "inspection":"semi-equipment","hybrid-bonding":"semi-equipment","wafer-cleaning":"semi-equipment",
- "GaAs-substrates":"semi-equipment","photoresist":"semi-equipment","testing":"semi-equipment",
- "SiC":"energy-materials","discrete":"substrates-packaging","analog":"photonics",
- "packaging":"substrates-packaging","substrates":"substrates-packaging","MLCC":"substrates-packaging",
- "pcb":"substrates-packaging","electronics":"substrates-packaging","components":"substrates-packaging",
- "connectors":"ai-infra","server-rails":"ai-infra",
- "ai-infra":"ai-infra","ai-infrastructure":"ai-infra","servers":"ai-infra","power":"ai-infra",
- "cooling":"ai-infra","liquid-cooling":"ai-infra","software-infrastructure":"ai-infra",
- "photonics":"photonics","optical":"photonics","connectivity":"photonics","networking":"photonics",
- "communication-equipment":"photonics","optics":"photonics","duv-inspection":"semi-equipment",
- "defense":"defense","drones":"defense",
- "starlink":"starlink",
- "crypto":"crypto-miners","mining":"crypto-miners","data-center":"ai-infra",
- "energy":"energy-materials","solar":"energy-materials","batteries":"energy-materials","grid":"energy-materials",
- "critical-minerals":"critical-metals","tungsten":"critical-metals","gallium":"critical-metals",
- "rare-earths":"critical-metals","steel":"energy-materials","materials":"energy-materials",
- "industrial":"energy-materials","industrials":"energy-materials","cutting-tools":"energy-materials",
- "infrastructure":"energy-materials",
- # Biotech / healthcare
- "biotech":"biotech-healthcare","pharma":"biotech-healthcare","healthcare":"biotech-healthcare",
- "insurance":"biotech-healthcare","life-sciences":"biotech-healthcare","diagnostics":"biotech-healthcare",
- # Software / apps / digital platforms
- "software":"software-apps","advertising":"software-apps","it-services":"software-apps",
- "consulting":"software-apps","streaming":"software-apps","app":"software-apps","saas":"software-apps",
- "ad-tech":"software-apps",
- # Mobility / robotics / physical AI
- "ev":"mobility-robotics","automotive":"mobility-robotics","robotics":"mobility-robotics",
- "humanoid-robotics":"mobility-robotics","spac":"mobility-robotics","physical-ai":"mobility-robotics",
- "autonomous":"mobility-robotics","mobility":"mobility-robotics",
- # Consumer
- "restaurants":"consumer","consumer":"consumer","entertainment":"consumer",
- "airlines":"consumer","travel":"consumer",
- "big-tech":"ai-infra","tech":"other",
- "short-candidate":"other","AI-proxy":"other","pre-IPO":"other","closed-end-fund":"other",
- "japan":"other","taiwan":"other","korea":"other","europe":"other","france":"other","uk":"other","sweden":"other",
- "israel":"other","canada":"other","china":"other","us":"other","value":"other","speculative":"other",
- "activist":"other","small-cap":"other","mid-cap":"other","large-cap":"other","micro-cap":"other",
- "etf":"ai-compute","on-device-ai":"memory-storage",
- "distribution":"memory-storage","samsung":"memory-storage",
- "telecommunications":"other",
+  "memory": "memory-storage", "dram": "memory-storage", "nand": "memory-storage",
+  "storage": "memory-storage", "nand-controller": "memory-storage", "ai-storage": "memory-storage",
+  "semiconductor": "ai-compute", "cpu": "ai-compute", "gpu": "ai-compute",
+  "fpga": "ai-compute", "foundry": "ai-compute",
+  "equipment": "semi-equipment", "test-equipment": "semi-equipment",
+  "deposition": "semi-equipment", "etch": "semi-equipment", "inspection": "semi-equipment",
+  "hybrid-bonding": "semi-equipment", "wafer-cleaning": "semi-equipment",
+  "GaAs-substrates": "semi-equipment", "photoresist": "semi-equipment", "testing": "semi-equipment",
+  "duv-inspection": "semi-equipment",
+  "SiC": "energy-materials", "discrete": "substrates-packaging",
+  "packaging": "substrates-packaging", "substrates": "substrates-packaging",
+  "MLCC": "substrates-packaging", "pcb": "substrates-packaging",
+  "electronics": "substrates-packaging", "components": "substrates-packaging",
+  "connectors": "ai-infra", "server-rails": "ai-infra",
+  "ai-infra": "ai-infra", "ai-infrastructure": "ai-infra", "servers": "ai-infra",
+  "power": "ai-infra", "cooling": "ai-infra", "liquid-cooling": "ai-infra",
+  "software-infrastructure": "ai-infra", "data-center": "ai-infra",
+  # Connectivity vs optics (first principles split)
+  "connectivity": "connectivity", "networking": "connectivity", "serdes": "connectivity",
+  "interconnect": "connectivity", "analog": "connectivity",
+  "photonics": "optics", "optical": "optics", "optics": "optics",
+  "communication-equipment": "optics",
+  "defense": "defense", "drones": "defense",
+  "starlink": "starlink",
+  "crypto": "crypto-miners", "mining": "crypto-miners",
+  "energy": "energy-materials", "solar": "energy-materials",
+  "batteries": "energy-materials", "grid": "energy-materials",
+  "steel": "energy-materials", "materials": "energy-materials",
+  "industrial": "energy-materials", "industrials": "energy-materials",
+  "cutting-tools": "energy-materials", "infrastructure": "energy-materials",
+  "critical-minerals": "critical-metals", "tungsten": "critical-metals",
+  "gallium": "critical-metals", "rare-earths": "critical-metals",
+  # Biotech vs healthcare services
+  "biotech": "biotech", "pharma": "biotech", "life-sciences": "biotech",
+  "diagnostics": "biotech",
+  "healthcare": "healthcare-services", "insurance": "healthcare-services",
+  "managed-care": "healthcare-services",
+  # IT services vs software apps
+  "it-services": "it-services", "consulting": "it-services",
+  "software": "software-apps", "advertising": "software-apps", "streaming": "software-apps",
+  "app": "software-apps", "saas": "software-apps", "ad-tech": "software-apps",
+  "ev": "mobility-robotics", "automotive": "mobility-robotics",
+  "robotics": "mobility-robotics", "humanoid-robotics": "mobility-robotics",
+  "spac": "mobility-robotics", "physical-ai": "mobility-robotics",
+  "autonomous": "mobility-robotics", "mobility": "mobility-robotics",
+  "restaurants": "consumer", "consumer": "consumer", "entertainment": "consumer",
+  "airlines": "consumer", "travel": "consumer",
+  "big-tech": "ai-infra", "tech": "other",
+  "short-candidate": "other", "AI-proxy": "other", "pre-IPO": "other",
+  "closed-end-fund": "other", "telecommunications": "other",
+  "japan": "other", "taiwan": "other", "korea": "other", "europe": "other",
+  "france": "other", "uk": "other", "sweden": "other", "israel": "other",
+  "canada": "other", "china": "other", "us": "other", "value": "other",
+  "speculative": "other", "activist": "other",
+  "small-cap": "other", "mid-cap": "other", "large-cap": "other", "micro-cap": "other",
+  "etf": "ai-compute", "on-device-ai": "memory-storage",
+  "distribution": "memory-storage", "samsung": "memory-storage",
 }
 
 THEMES = [
- {"id":"ai-compute","name":"AI Compute & Silicon 半导体核心","tagline":"CPUs, GPUs, foundries, FPGAs, interconnect silicon — the compute core of the AI stack."},
- {"id":"memory-storage","name":"Memory & Storage 存储","tagline":"HBM/DRAM/NAND makers, controllers, HDD — the AI memory supercycle."},
- {"id":"semi-equipment","name":"Semi Equipment & Materials 设备材料","tagline":"Wafer tools, test, bonding, specialty materials — pick-and-shovel layer."},
- {"id":"substrates-packaging","name":"Substrates & Packaging 载板封装","tagline":"ABF/IC substrate makers, film & foil chokepoints, OSAT packaging, MLCC, PCB."},
- {"id":"ai-infra","name":"AI Infrastructure 算力基建","tagline":"Servers, power & cooling, data-center builders, AI clouds, server structure."},
- {"id":"photonics","name":"AI Photonics & Optical 光通信","tagline":"Optical interconnect, silicon photonics, transceivers, epiwafers."},
- {"id":"defense","name":"Defense & Drones 国防无人机","tagline":"Western munitions chokepoints, primes, loitering munitions, ISR."},
- {"id":"starlink","name":"Starlink Supply Chain 星链","tagline":"Satellite direct suppliers — PCB, power, connectors, glass, tools."},
- {"id":"crypto-miners","name":"Crypto & AI Miners 矿企","tagline":"Bitcoin miners pivoting to AI data centers, crypto capital markets."},
- {"id":"energy-materials","name":"Energy & Materials 能源材料","tagline":"Energy storage, solar, SiC/power, grid infrastructure, industrial materials."},
- {"id":"critical-metals","name":"Critical Metals 关键金属","tagline":"Tungsten, rare earths, gallium — defense/export-control supply decoupling."},
- {"id":"biotech-healthcare","name":"Biotech & Healthcare 生科医疗","tagline":"Clinical biopharma, life-science tools, managed care / health insurance."},
- {"id":"software-apps","name":"Software & Apps 软件应用","tagline":"App platforms, ad-tech, IT services — software revenue, not infra silicon."},
- {"id":"mobility-robotics","name":"Mobility & Robotics 出行机器人","tagline":"EV, autonomous driving, humanoid robotics SPACs."},
- {"id":"consumer","name":"Consumer 消费","tagline":"Restaurants, entertainment, airlines — discretionary consumer residual."},
- {"id":"other","name":"Watchlist Other 其他","tagline":"True residuals — AI equity financial proxies without a core operating theme."},
+  {"id": "ai-compute", "name": "AI Compute & Silicon 半导体核心",
+   "tagline": "CPUs, GPUs, IP, foundries, FPGAs — dies that run models or fabricate them."},
+  {"id": "memory-storage", "name": "Memory & Storage 存储",
+   "tagline": "HBM/DRAM/NAND makers, controllers, HDD — the AI memory supercycle."},
+  {"id": "semi-equipment", "name": "Semi Equipment & Materials 设备材料",
+   "tagline": "Wafer tools, test, bonding, specialty process materials — pick-and-shovel."},
+  {"id": "substrates-packaging", "name": "Substrates & Packaging 载板封装",
+   "tagline": "ABF/IC substrates, OSAT, PCB, passives, electronic glass cloth."},
+  {"id": "connectivity", "name": "AI Connectivity 互联芯片",
+   "tagline": "PCIe/CXL retimers, SerDes, Ethernet ASICs, RF/connectivity silicon."},
+  {"id": "optics", "name": "AI Optics & Photonics 光通信",
+   "tagline": "Lasers, optical transceivers, fiber, epiwafers, optical networking systems."},
+  {"id": "ai-infra", "name": "AI Infrastructure 算力基建",
+   "tagline": "Servers, power & cooling, DC builders, AI clouds, cloud software, server structure."},
+  {"id": "defense", "name": "Defense & Drones 国防无人机",
+   "tagline": "Western munitions chokepoints, primes, loitering munitions, ISR."},
+  {"id": "starlink", "name": "Starlink Supply Chain 星链",
+   "tagline": "Satellite direct suppliers — PCB, power, connectors, glass, tools."},
+  {"id": "crypto-miners", "name": "Crypto & AI Miners 矿企",
+   "tagline": "Bitcoin miners pivoting to AI data centers, crypto capital markets."},
+  {"id": "energy-materials", "name": "Energy & Materials 能源材料",
+   "tagline": "Energy storage, solar, SiC/power, grid infrastructure, industrial."},
+  {"id": "critical-metals", "name": "Critical Metals 关键金属",
+   "tagline": "Tungsten, rare earths, gallium — defense/export-control supply decoupling."},
+  {"id": "biotech", "name": "Biotech & Life Sciences 生科",
+   "tagline": "Clinical biopharma pipelines and life-science tools / diagnostics."},
+  {"id": "healthcare-services", "name": "Healthcare Services 医疗服务",
+   "tagline": "Managed care, health insurance — payers, not drug R&D."},
+  {"id": "it-services", "name": "IT Services 信息技术服务",
+   "tagline": "Systems integration and consulting — services revenue, not product software."},
+  {"id": "software-apps", "name": "Software & Apps 软件应用",
+   "tagline": "App platforms, ad-tech, consumer software — not IT consulting or infra SaaS."},
+  {"id": "mobility-robotics", "name": "Mobility & Robotics 出行机器人",
+   "tagline": "EV, autonomous driving, humanoid robotics SPACs."},
+  {"id": "consumer", "name": "Consumer 消费",
+   "tagline": "Restaurants, entertainment, airlines — discretionary residual."},
+  {"id": "other", "name": "Watchlist Other 其他",
+   "tagline": "True residuals — AI equity financial proxies without an operating theme."},
 ]
 
 
