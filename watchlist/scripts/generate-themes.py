@@ -130,7 +130,7 @@ MANUAL = {
   # Wafer fab tools, test, process materials
   "semi-equipment": [
     "AMAT", "LRCX", "KLAC", "TER", "ACMR", "AEHR", "6146.T", "8027.TWO", "025560.KS",
-    "BESI.AS", "ENTG", "4187.T", "6863.T", "AXTI", "ICHR", "FORM", "KEYS",
+    "BESI.AS", "ENTG", "4187.T", "6863.T", "AXTI", "ICHR", "FORM", "KEYS", "688146.SS",
   ],
   # ABF/IC substrates, OSAT, PCB, passives, electronic glass cloth
   "substrates-packaging": [

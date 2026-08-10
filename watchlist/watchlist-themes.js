@@ -49,6 +49,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "4187.T", name: "Osaka Organic Chemicals 大阪有机化学" },
       { symbol: "6146.T", name: "DISCO" },
       { symbol: "6863.T", name: "Nireco" },
+      { symbol: "688146.SS", name: "中船特气 PERIC Special Gases" },
       { symbol: "8027.TWO", name: "E&R Engineering" },
       { symbol: "ACMR", name: "ACM Research" },
       { symbol: "AEHR", name: "Aehr Test" },
