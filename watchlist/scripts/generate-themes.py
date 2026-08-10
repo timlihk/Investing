@@ -179,6 +179,13 @@ MANUAL = {
   "software-apps": ["APPS", "ROKU"],
   "mobility-robotics": ["RIVN", "AUR", "CCXI"],
   "consumer": ["CAVA", "BROS", "AMC", "ALK"],
+  # Global listed airport operators — regulated/grant-based traffic infrastructure
+  "airports": [
+    "AENA.MC", "ADP.PA", "FRA.DE", "FLU.VI", "FHZN.SW", "SEA.MI", "TAVHL.IS",
+    "AOT.BK", "600009.SS", "600004.SS", "000089.SZ", "600897.SS",
+    "694.HK", "357.HK", "9706.T", "AIA.AX", "ACV.VN",
+    "ASR", "OMAB", "PAC", "GMRINFRA.NS",
+  ],
   # Financial AI proxies without an operating software/infra core
   "other": ["SKM", "DXYZ"],
 }
@@ -231,6 +238,7 @@ TAG_MAP = {
   "autonomous": "mobility-robotics", "mobility": "mobility-robotics",
   "restaurants": "consumer", "consumer": "consumer", "entertainment": "consumer",
   "airlines": "consumer", "travel": "consumer",
+  "airports": "airports",
   "big-tech": "ai-infra", "tech": "other",
   "short-candidate": "other", "AI-proxy": "other", "pre-IPO": "other",
   "closed-end-fund": "other", "telecommunications": "other",
@@ -280,6 +288,8 @@ THEMES = [
    "tagline": "EV, autonomous driving, humanoid robotics SPACs."},
   {"id": "consumer", "name": "Consumer 消费",
    "tagline": "Restaurants, entertainment, airlines — discretionary residual."},
+  {"id": "airports", "name": "Airports 机场",
+   "tagline": "Global listed airport operators — regulated traffic infrastructure with duty-free & terminal upside."},
   {"id": "other", "name": "Watchlist Other 其他",
    "tagline": "True residuals — AI equity financial proxies without an operating theme."},
 ]

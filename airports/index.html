@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Airports 全球机场运营商 · Global Listed Airport Operators</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#080b12;color:#c9d1d9;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 24px 80px}
+a{color:#58a6ff;text-decoration:none}
+a:hover{text-decoration:underline}
+.top-bar{display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:#0d1117;border-bottom:1px solid #21262d;height:48px;position:sticky;top:0;z-index:50}
+.top-bar h1{font-size:16px;font-weight:700;color:#f0f6fc;white-space:nowrap}
+.top-bar .crumbs{font-size:12px;color:#8b949e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+h2{font-size:22px;font-weight:700;color:#f0f6fc;margin:44px 0 6px}
+h2 .zh{color:#8b949e;font-size:14px;font-weight:500;margin-left:8px}
+.sub{color:#8b949e;font-size:13px;margin-bottom:18px}
+.hero{background:linear-gradient(135deg,#0d1117 0%,#10182b 55%,#0b1a33 100%);border:1px solid #21262d;border-radius:12px;padding:26px 28px;margin-bottom:26px}
+.hero h2{font-size:30px;margin:0 0 6px}
+.hero .tagline{color:#8b949e;font-size:15px;margin-bottom:20px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px 14px}
+.stat .v{font-size:20px;font-weight:700;color:#f0f6fc}
+.stat .l{font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
+.pos{color:#3fb950}.neg{color:#f85149}.warn{color:#d29922}.info{color:#58a6ff}
+.card{background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.card h3{font-size:16px;font-weight:700;color:#f0f6fc;margin-bottom:4px}
+.card h3 .t{color:#3fb950;font-size:12px;font-weight:600;letter-spacing:.05em;margin-left:8px}
+.card .name{color:#8b949e;font-size:12.5px;margin-bottom:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{color:#8b949e;font-weight:600;text-align:right;padding:8px 8px;border-bottom:1px solid #30363d;cursor:pointer;user-select:none;white-space:nowrap;font-size:11.5px;text-transform:uppercase;letter-spacing:.03em}
+th:first-child,td:first-child{text-align:left}
+th:hover{color:#f0f6fc}
+td{padding:8px;border-bottom:1px solid #21262d;text-align:right;white-space:nowrap}
+td.name{text-align:left;font-weight:600;color:#f0f6fc}
+td.t{text-align:left;color:#8b949e;max-width:280px;white-space:normal;font-size:12px}
+tr:hover td{background:#161b2240}
+tr.row-hl td{background:#12263a55}
+.chart{margin-top:14px;height:320px}
+.chart iframe{width:100%;height:100%;border:1px solid #21262d;border-radius:8px;display:block}
+.flex{display:flex;gap:16px;flex-wrap:wrap}
+.flex>.col{flex:1 1 340px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:12.5px;margin:10px 0}
+.kv .k{color:#8b949e}
+.kv .v{color:#f0f6fc;text-align:right;font-variant-numeric:tabular-nums}
+.deep{margin-bottom:22px}
+.deep h3{font-size:18px;color:#f0f6fc;margin:30px 0 2px}
+.deep .meta{color:#8b949e;font-size:12.5px;margin-bottom:10px}
+.pill{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:20px;margin-left:8px;vertical-align:middle;text-transform:uppercase}
+.pill.top{background:#1a3f2233;color:#3fb950;border:1px solid #23863666}
+.pill.watch{background:#3a2d1433;color:#d29922;border:1px solid #9e6a0333}
+.pill.dodge{background:#3d1d1d33;color:#f85149;border:1px solid #f8514940}
+.quote{background:#0b0f18;border-left:3px solid #1f6feb;padding:10px 14px;border-radius:0 8px 8px 0;color:#bdc6cf;font-size:13px;margin:10px 0}
+footer{color:#484f58;font-size:12px;margin-top:44px;border-top:1px solid #21262d;padding-top:16px}
+footer a{color:#58a6ff}
+@media (max-width:760px){.top-bar .crumbs{display:none}.wrap{padding:16px 12px}}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <h1>Airports 全球机场运营商</h1>
+  <div class="crumbs">research.mangrove-hk.org · Watchlist theme · data: Bloomberg 2026-08-07</div>
+</div>
+
+<div class="wrap">
+
+<div class="hero">
+  <h2 style="margin:0 0 6px">Airports 机场</h2>
+  <div class="tagline">21 家全球上市机场运营商 · 15 个国家/地区 · 从西班牙到越南的流量生意(regulated traffic infrastructure with duty-free &amp; retail upside)</div>
+  <div class="stat-grid">
+    <div class="stat"><div class="v">21</div><div class="l">运营商</div></div>
+    <div class="stat"><div class="v">~$145B</div><div class="l">合计市值(估算)</div></div>
+    <div class="stat"><div class="v">AOT +56%</div><div class="l">1Y 最佳(泰国)</div></div>
+    <div class="stat"><div class="v">357 HK −48%</div><div class="l">1Y 最差(海南美兰)</div></div>
+    <div class="stat"><div class="v">OMAB 5.2%</div><div class="l">股息率最高(墨西哥)</div></div>
+    <div class="stat"><div class="v">TAV +58%</div><div class="l">共识上行空间最大</div></div>
+  </div>
+</div>
+
+<h2 id="universe">全景一览 <span class="zh">Universe (2026-08-07 收盘, 彭博)</span></h2>
+<div class="sub">价格/市值/估值为 2026-08-07 彭博收盘 · 远期 P/E = 现价 ÷ 彭博共识 FY1/FY2 EPS · 墨西哥三家和 TAV 的 P/E 用美元口径估算(见注脚) · 点击表头排序</div>
+<div class="card" style="overflow-x:auto">
+<table id="tbl">
+<thead><tr>
+<th data-k="name">公司</th><th data-k="tkr">代码</th><th data-k="region">地区</th><th data-k="px">价格</th><th data-k="mcap">市值</th><th data-k="pe1">P/E FY1</th><th data-k="pe2">P/E FY2</th><th data-k="yld">股息率</th><th data-k="ytd">YTD</th><th data-k="yr">1Y</th><th data-k="rec">评级</th><th data-k="up">目标价上行</th>
+</tr></thead>
+<tbody></tbody>
+</table>
+</div>
+
+<h2>区域地图 <span class="zh">Thematic map</span></h2>
+<div class="flex">
+<div class="col card">
+<h3>欧洲 <span class="t">REGULATED QUALITY</span></h3>
+<div class="name">Aena / Groupe ADP / Fraport / Flughafen Wien / Zürich / SEA Milan / TAV</div>
+<p style="font-size:13px">欧洲机场多为监管收费模式：西班牙(ICA)、法国(经济监管)、奥地利三年期协议、苏黎世五年定价窗口。现金流稳定、股息 3–4.5%，但流量增长低个位数。例外是 <b>TAV</b>——土耳其/哈萨克/沙特特许经营组合，ADP 持股 49%，共识目标价 +58%。</p>
+</div>
+<div class="col card">
+<h3>中国 &amp; 香港 <span class="t">DERATING / CONTRARIAN</span></h3>
+<div class="name">上海机场 / 白云 / 深圳 / 厦门 / 首都机场 H / 美兰 H</div>
+<p style="font-size:13px">A 股四大机场 2026 年普遍下跌(上海 −27%)：国内流量疲软 + 航空性收费下调担忧。股息率 2–3.5%，估值 16–25x。港股的<b>首都机场</b>(大兴分流结构性衰退)与<b>美兰</b>(亏损,但 +33% 1M 反弹,P/B 0.55x)是纯逆向。</p>
+</div>
+<div class="col card">
+<h3>新兴市场增长 <span class="t">TRAFFIC COMPOUNDERS</span></h3>
+<div class="name">AOT / Japan Airport Terminal / ACV / GMR</div>
+<p style="font-size:13px">亚洲流量增长引擎：泰国 AOT(1Y +56%, FY2 EPS +51%)、日本空港(羽田垄断 + 免税)、越南 ACV(龙城新机场获批后 FY2 利润下滑)、印度 GMR(德里/海德拉巴, FY2 EPS ₹1.41)。共同主题：国际旅客 + 免税零售 + 容量扩张。</p>
+</div>
+<div class="col card">
+<h3>墨西哥 <span class="t">HIGH YIELD / TARIFF RISK</span></h3>
+<div class="name">ASR / OMA / GAP</div>
+<p style="font-size:13px">三家墨西哥特许经营商接近 5% 股息率(FY2 P/E 11–14x)。2026–31 五年收费机制重设 + 美国关税/近岸外包是双重变量。ASR(坎昆度假流量)共识空间 +22% 最大，OMA(蒙特雷工业走廊)1Y 唯一正收益。</p>
+</div>
+</div>
+
+<h2 id="dives">重点深挖 <span class="zh">Deep dives</span></h2>
+<div class="sub">以下为公司级快照 —— 点开图表看 1Y 日线(10/20/50/200 SMA)。完整公司与估值数据见上表。</div>
+
+<!-- ============ AENA ============ -->
+<div class="card deep">
+<h3>Aena S.M.E.<span class="pill top">全球最大</span></h3>
+<div class="meta">AENA.MC (AENA SM) · 西班牙马德里 · €40.3B 市值 · 27 位分析师 · 评级 3.67</div>
+<div class="kv">
+<div class="k">价格 / 股息率</div><div class="v">€26.74 / 4.5%</div>
+<div class="k">P/E FY1 → FY2</div><div class="v">17.2x → 16.5x</div>
+<div class="k">共识 EPS FY1 / FY2</div><div class="v">€1.55 / €1.62</div>
+<div class="k">EBITDA FY1 / FY2</div><div class="v">€4.06B / €4.25B</div>
+<div class="k">YTD / 1Y</div><div class="v">+12.3% / +9.0%</div>
+<div class="k">共识目标价</div><div class="v">€27.32 (+2%)</div>
+</div>
+<div class="quote">全球客运量第一大机场运营商：西班牙 21 座机场(马德里/巴塞罗那) + 伦敦卢顿 + 巴西 2 座。2026 年 6 月完成 10:1 拆股。监管收费模式 + 免税零售带来稳定自由现金流；估值已是欧洲机场之最，上行空间有限，适合收股息。</div>
+<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=AENA.MC&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+</div>
+
+<!-- ============ ADP ============ -->
+<div class="card deep">
+<h3>Groupe ADP<span class="pill watch">巴黎 + 全球特许权</span></h3>
+<div class="meta">ADP.PA (ADP FP) · 法国 · ~€11B 市值 · 18 位分析师 · 评级 3.39</div>
+<div class="kv">
+<div class="k">价格 / 股息率</div><div class="v">€115.0 / 3.4%</div>
+<div class="k">P/E FY1 → FY2</div><div class="v">18.9x → 16.4x</div>
+<div class="k">共识 EPS FY1 / FY2</div><div class="v">€6.08 / €7.01 (+15%)</div>
+<div class="k">EBITDA FY1 / FY2</div><div class="v">€2.29B / €2.48B</div>
+<div class="k">YTD / 1Y</div><div class="v">+4.0% / +1.7%</div>
+<div class="k">共识目标价</div><div class="v">€123.5 (+7%)</div>
+</div>
+<div class="quote">法国政府持股 ~51% 的巴黎机场集团(CDG/Orly)，同时是 <b>TAV 的 49% 大股东</b>——土耳其/中亚/沙特机场组合的间接敞口。FY2 EPS 预期 +15%，巴黎奥运会后流量正常化 + 塔台/免税改革释放盈利。公司治理友好度高于 Aena(更积极的回购/分红记录)。</div>
+<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=ADP.PA&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+</div>
+
+<!-- ============ FRA ============ -->
+<div class="card deep">
+<h3>Fraport AG<span class="pill dodge">高杠杆</span></h3>
+<div class="meta">FRA.DE (FRA GR) · 德国 · €6.2B 市值 · 23 位分析师 · 评级 3.65</div>
+<div class="kv">
+<div class="k">价格 / 股息率</div><div class="v">€67.05 / 1.6%</div>
+<div class="k">P/E FY1 → FY2</div><div class="v">19.7x → 18.8x</div>
+<div class="k">共识 EPS FY1 / FY2</div><div class="v">€3.40 / €3.57</div>
+<div class="k">EBITDA FY1 / FY2</div><div class="v">€1.46B / €1.59B</div>
+<div class="k">YTD / 1Y</div><div class="v">−4.1% / −9.8%</div>
+<div class="k">共识目标价</div><div class="v">€77.5 (+16%)</div>
+</div>
+<div class="quote">法兰克福枢纽 + 全球 30 座机场特许权。集团口径净债务/EBITDA ≈ 9.2x——并购与德国 3 号航站楼资本开支压力下的典型"过山车"资产负债表(Fraport Greece 等减值历史)。近期 4 周 EPS 下修 −0.11，欧元区经济疲软拖累；高杠杆使它在三大欧洲机场中弹性最大、也最脆。</div>
+<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=FRA.DE&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+</div>
+
+<!-- ============ TAV ============ -->
+<div class="card deep">
+<h3>TAV Airports<span class="pill top">共识上行 +58%</span></h3>
+<div class="meta">TAVHL.IS (TAVHL TI) · 土耳其 · ~$2.4B 市值 · 16 位分析师 · 评级 4.88(买入)</div>
+<div class="kv">
+<div class="k">价格(TRY)</div><div class="v">₺273.5</div>
+<div class="k">共识目标价</div><div class="v">₺433.6 (+58%)</div>
+<div class="k">EBITDA FY1 / FY2(EUR)</div><div class="v">€585M / €666M</div>
+<div class="k">净利 FY1 / FY2(EUR)</div><div class="v">€121M / €189M</div>
+<div class="k">YTD / 1Y</div><div class="v">−8.3% / +5.0%</div>
+<div class="k">大股东</div><div class="v">Groupe ADP ~49%</div>
+</div>
+<div class="quote">土系国际机场特许经营商：阿拉木图(哈萨克 25 年)、安塔利亚/安卡拉/伊兹密尔(土耳其)、麦地那、格鲁吉亚等 15 座机场，并竞标沙特/印度新特许权。ADP 重度持股提供治理背书。这是名单里共识上行空间最大的一家——阿拉木图流量超预期 + 新特许权落地是双催化剂。</div>
+<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=TAVHL.IS&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+</div>
+
+<!-- ============ AOT ============ -->
+<div class="card deep">
+<h3>Airports of Thailand<span class="pill top">1Y +56%</span></h3>
+<div class="meta">AOT.BK (AOT TB) · 泰国 · THB 904B(~$25B) · 28 位分析师 · 评级 4.07</div>
+<div class="kv">
+<div class="k">价格 / 股息率</div><div class="v">฿63.25 / 1.3%</div>
+<div class="k">P/E FY1 → FY2</div><div class="v">46.6x → 30.9x</div>
+<div class="k">共识 EPS FY1 / FY2(THB)</div><div class="v">฿1.36 / ฿2.05 (+51%)</div>
+<div class="k">EBITDA FY1 / FY2</div><div class="v">฿38.7B / ฿51.5B</div>
+<div class="k">YTD / 1Y</div><div class="v">+19.3% / +56.2%</div>
+<div class="k">共识目标价</div><div class="v">฿65.3 (+3%)</div>
+</div>
+<div class="quote">泰国六座国际机场(素万那普/廊曼/普吉/清迈)。国际旅客恢复 + 航司运力回流带动 FY2 EPS +51%，是全名单最有"戴维斯双击"感的标的；但 46x TTM P/E 已计入大量乐观，FY2 P/E 仍近 31x。免税/商业面积扩张 + 卫星厅投运是亮点。</div>
+<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=AOT.BK&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+</div>
+
+<!-- ============ 9706 ============ -->
+<div class="card deep">
+<h3>Japan Airport Terminal<span class="pill top">羽田垄断</span></h3>
+<div class="meta">9706.T (9706 JT) · 日本东京 · ¥540B(~$3.6B) · 8 位分析师 · 评级 3.88</div>
+<div class="kv">
+<div class="k">价格 / 股息率</div><div class="v">¥5,801 / 1.6%</div>
+<div class="k">P/E FY1 → FY2</div><div class="v">20.4x → 20.1x</div>
+<div class="k">共识 EPS FY1 / FY2(JPY)</div><div class="v">¥284.3 / ¥289.3</div>
+<div class="k">EBITDA FY1 / FY2</div><div class="v">¥79.2B / ¥81.6B</div>
+<div class="k">YTD / 1Y / RSI</div><div class="v">+32.3% / +21.7% / 66</div>
+<div class="k">共识目标价</div><div class="v">¥6,006 (+3.5%)</div>
+</div>
+<div class="quote">羽田机场全部客运航站楼(T1/T2 国内 + T3 国际)的专属运营商，免税店与餐饮租金随入境游客数走。FY26 入境游客创纪录 + 日元弱势 → 国际线零售高增。RSI 66 显示短期超买，但结构独占 + 酒店(JFLA)与机场外零售扩张仍支撑 20x 估值。</div>
+<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=9706.T&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+</div>
+
+<!-- ============ 600009 ============ -->
+<div class="card deep">
+<h3>上海机场 <span class="pill watch">中国逆向</span></h3>
+<div class="meta">600009.SS (600009 CH) · 上海 · ~$8.3B · 16 位分析师 · 评级 3.94</div>
+<div class="kv">
+<div class="k">价格 / 股息率</div><div class="v">¥23.92 / 2.3%</div>
+<div class="k">P/E FY1 → FY2</div><div class="v">22.3x → 19.2x</div>
+<div class="k">共识 EPS FY1 / FY2(CNY)</div><div class="v">¥1.07 / ¥1.24</div>
+<div class="k">EBITDA FY1 / FY2</div><div class="v">¥6.22B / ¥6.90B</div>
+<div class="k">YTD / 1Y</div><div class="v">−27.0% / −25.9%</div>
+<div class="k">共识目标价</div><div class="v">¥26.23 (+10%)</div>
+</div>
+<div class="quote">虹桥 + 浦东双场。国内消费疲软 + 航空性收费下调预期 + 免税新政冲击(2025 起口岸免税额度调整)是三大压制；但国际线客座率恢复 + 上海枢纽地位 + 2.3% 股息提供底线。中国四家机场中估值最"白马"也最贵——厦门/深圳更便宜。</div>
+<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=600009.SS&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+</div>
+
+<!-- ============ ACV ============ -->
+<div class="card deep">
+<h3>ACV 越南机场集团<span class="pill watch">龙城新机场</span></h3>
+<div class="meta">ACV.VN (ACV VN) · 越南 · ~$5.9B · 9 位分析师 · 评级 3.89</div>
+<div class="kv">
+<div class="k">价格(VND)</div><div class="v">₫42,300</div>
+<div class="k">P/E FY1 → FY2</div><div class="v">12.4x → 17.1x</div>
+<div class="k">共识 EPS FY1 / FY2(千 VND)</div><div class="v">₫3.42 / ₫2.48 (FY2 −28%)</div>
+<div class="k">YTD / 1Y</div><div class="v">−13.5% / −37.0%</div>
+<div class="k">共识目标价</div><div class="v">₫45,300 (+7%)</div>
+</div>
+<div class="quote">越南 21 座机场垄断运营商。隆城国际机场(Long Thanh)一期投运带来巨额折旧/利息——共识预测 FY2 净利下滑 ~28%，这也是 1Y −37% 的直接原因。基建重周期买点逻辑：折旧高峰过后 FX/利润弹性 + 越南旅客复合增长。P/B 与 P/E(FY1)均为区域最低档。</div>
+<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=ACV.VN&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+</div>
+
+<!-- ============ GMR ============ -->
+<div class="card deep">
+<h3>GMR Airports<span class="pill dodge">贵但高增</span></h3>
+<div class="meta">GMRINFRA.NS (GMRAIRPO IN) · 印度 · ~$13.2B · 7 位分析师 · 评级 4.71</div>
+<div class="kv">
+<div class="k">价格(INR)</div><div class="v">₹106.5</div>
+<div class="k">P/E FY1 → FY2</div><div class="v">163x → 75.6x</div>
+<div class="k">共识 EPS FY1 / FY2(INR)</div><div class="v">₹0.66 / ₹1.41</div>
+<div class="k">EBITDA FY1 / FY2</div><div class="v">₹66.3B / ₹80.5B</div>
+<div class="k">YTD / 1Y</div><div class="v">+2.1% / +17.5%</div>
+<div class="k">净债务/EBITDA</div><div class="v">6.76x</div>
+</div>
+<div class="quote">印度最大民营机场平台：德里(IND)、海德拉巴、果阿 (MOPA)。FY2 净利预期 15.5B 卢比 → EPS +115%，EBITDA 增量 140 亿卢比；但 76x FY2 P/E + 6.8x 净杠杆说明"增长已入价"。ADP 亦持股，印度流量 2 位数增长是长期叙事，容错空间小。</div>
+<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=GMRINFRA.NS&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+</div>
+
+<!-- ============ MEXICO TRIO ============ -->
+<div class="card deep">
+<h3>墨西哥三家 · ASR / OMA / GAP<span class="pill top">高股息</span></h3>
+<div class="meta">ASR · OMAB · PAC (ADR) · 墨西哥 · 合计 ~$25B · 评级 3.89 / 4.20 / 4.11</div>
+<div class="kv">
+<div class="k">P/E FY2 (美元口径)</div><div class="v">ASR ≈11x · OMA ≈12.6x · GAP ≈14.2x</div>
+<div class="k">股息率</div><div class="v">4.9% / 5.2% / 5.2%</div>
+<div class="k">共识目标价上行</div><div class="v">+22% / +11% / +17%</div>
+<div class="k">YTD</div><div class="v">−14.4% / +1.5% / −15.5%</div>
+<div class="k">持仓主题</div><div class="v">坎昆与加勒比度假 · 蒙特雷-近岸工业走廊 · 蒂华纳/太平洋海岸</div>
+</div>
+<div class="quote">三家墨西哥特许经营商(通行在 2048–2063)是名单里股息与估值最"价值"的组合：~5% 股息率 + FY2 11–14x，2026–31 五年收费重设(新 CPI 机制)落地前市场压估值。关税/移民政策是共同尾部风险；ASR 的度假流量与 OMA 的蒙特雷制造走廊与美国经济最相关。</div>
+<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=ASR&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+</div>
+
+<h2>速览 (其余公司) <span class="zh">Quick takes</span></h2>
+<div class="flex">
+<div class="col card">
+<h3>Flughafen Wien <span>FLU.VI</span></h3>
+<div class="name">维也纳 + 马耳他 + 瓦尔纳 · 4 位分析师 · 评级 3.5</div>
+<p style="font-size:13px">奥地利经济偏弱 + 东欧流量增长有限；收费三年协议锁定，股息 3.2%。P/E 22.7x(FY1) 不便宜，亮点是接近完全私人控股下的小而美财务：净现金 + 高派息率。</p>
+</div>
+<div class="col card">
+<h3>Flughafen Zürich <span>FHZN.SW</span></h3>
+<div class="name">苏黎世 + 巴西 Florianópolis · 19 位分析师 · 评级 3.74</div>
+<p style="font-size:13px">瑞士法郎强势 + 2026 收费重置压低 FY2 EPS(10.38 → 9.84, −5%)；股价 1Y 持平。工程质量标杆 + 3.2% 股息，防御属性强,弹性弱。共识 P/E 24x 是全列表最高档之一。</p>
+</div>
+<div class="col card">
+<h3>SEA Milan <span>SEA.MI</span></h3>
+<div class="name">米兰 Linate + Malpensa · ⚠️ 数据缺口</div>
+<p style="font-size:13px">本次盘点确认：彭博终端无 SEA IM 数据流(refdata/streaming 均无)、Yahoo/Google Finance 亦查无此票——暂无价格与共识可展示。米兰两大机场 2026 世博会(Expo)后流量受益逻辑仍在，但需接入本地意大利数据源再评估。已计入 watchlist 待补。</p>
+</div>
+<div class="col card">
+<h3>首都机场 694.HK <span>⚠️ 结构性</span></h3>
+<div class="name">北京 · 8 位分析师 · 评级 3.75 · 目标价 HK$1.94</div>
+<p style="font-size:13px">大兴机场分流使北京双场竞争中首都机场承压，1Y −44%。FY2 EPS 仅 HK$0.057 → P/E ~30x，绝对估值不便宜——只有在大兴分流见顶 + 商业面积重谈时才有修复逻辑。</p>
+</div>
+<div class="col card">
+<h3>美兰机场 357.HK <span>⚡ 1M +33%</span></h3>
+<div class="name">海口 · 4 位分析师 · 评级 4.0 · P/B 0.55x</div>
+<p style="font-size:13px">FY1 亏损(共识 EPS −¥0.21)但 FY2 转正(¥0.015)；+33% 单月反弹后 RSI 68。海南自贸港免税 + 资产折价(0.55x P/B)是纯逆向赌注，波动极大，仓位需小。</p>
+</div>
+<div class="col card">
+<h3>深圳机场 000089.SZ</h3>
+<div class="name">深圳 T3 · 9 位分析师 · 评级 3.67 · 目标价 ¥8.00</div>
+<p style="font-size:13px">中国四家中估值最低的枢纽(FY1 16.2x + 3.5% 股息率)，三跑道扩建/航空城规划提供中期催化。共识上行 +22%，是"要买中国机场就买便宜的"首选。</p>
+</div>
+<div class="col card">
+<h3>白云机场 600004.SS</h3>
+<div class="name">广州 · 9 位分析师 · 评级 3.11(列表最低)</div>
+<p style="font-size:13px">T3 投产抬高折旧 + 国内流量疲软，评级年内下修；FY1 P/E ~25x 仍偏贵。免税口岸位置好但承接力弱于上海。观察 T3 产能爬坡,暂不优先。</p>
+</div>
+<div class="col card">
+<h3>厦门空港 600897.SS</h3>
+<div class="name">厦门高崎 · 仅有 1 位分析师(评级 3.0)</div>
+<p style="font-size:13px">最小中国机场(市值 ~$0.9B)，几乎无卖方覆盖——数据真空既是风险也常是预期差来源。1Y 微跌 −0.6%，股息率无数据。观察性持仓。</p>
+</div>
+<div class="col card">
+<h3>Auckland Int'l <span>AIA.AX</span></h3>
+<div class="name">奥克兰 · 11 位分析师 · 评级 2.82(列表最低)</div>
+<p style="font-size:13px">新西兰机场 PKX 定价机制 + 35% P/E 早已透支；共识目标价 NZ$8.69 甚至低于现价 8.90——全列表唯一"共识看跌"的标的。澳新跨境旅客不差，但价格不便宜。</p>
+</div>
+</div>
+
+<footer>
+<p>数据来源: Bloomberg Terminal (2026-08-07 收盘/共识) · P/E FY1/FY2 = 现价 ÷ 彭博 BEST_EPS · 市值约为彭博 CUR_MKT_CAP(部分按当日汇率换算 USD) · 墨西哥三家 FY2 P/E 及 TAV P/E 为以本币共识 EPS × 汇率折算的估算值(ADR 比例未逐家核对,仅作量级参考) · 股息率为彭博估计股息率 (EQY_DVD_YLD_EST)。
+数据缺口声明: SEA Milan (彭博无数据流 + 免费数据源无法确认, 已标注⚠️) · Xiamen (仅 1 位分析师, 无目标价) · ACV 股息率为 0 (资本开支周期)。
+关联: <a href="../watchlist/">Watchlist 主页</a> · <a href="../index.html">Research Hub</a> · 完整名单同步于 Obsidian Watchlist (tags: airports)。</p>
+</footer>
+</div>
+
+<script>
+const rows = [
+["Aena S.M.E.","AENA.MC","EU · 西班牙","€26.74","€40.3B","17.2x","16.5x","4.5%","+12.3%","+9.0%","3.67 ↔","+2%"],
+["Groupe ADP","ADP.PA","EU · 法国","€115.0","€11.1B","18.9x","16.4x","3.4%","+4.0%","+1.7%","3.39 ↔","+7%"],
+["Fraport AG","FRA.DE","EU · 德国","€67.05","€6.2B","19.7x","18.8x","1.6%","−4.1%","−9.8%","3.65 ↔","+16%"],
+["Flughafen Wien","FLU.VI","EU · 奥地利","€51.60","€4.3B","22.7x","21.8x","3.2%","−7.5%","−1.5%","3.50 ↔","+6%"],
+["Flughafen Zürich","FHZN.SW","EU · 瑞士","CHF 235.8","CHF 7.2B","22.7x","24.0x","3.2%","−6.4%","−0.3%","3.74 ↔","+7%"],
+["TAV Airports","TAVHL.IS","EU · 土耳其","₺273.5","~$2.4B","~19.6x*","~12.4x*","2.9%","−8.3%","+5.0%","4.88 买","+58%"],
+["SEA Milan","SEA.MI","EU · 意大利","⚠️ 无数据","—","—","—","—","—","—","—","—"],
+["Airports of Thailand","AOT.BK","亚洲 · 泰国","฿63.25","THB 904B","46.6x","30.9x","1.3%","+19.3%","+56.2%","4.07 买","+3%"],
+["Shanghai Int'l Airport","600009.SS","中国 A","¥23.92","¥59.4B","22.3x","19.2x","2.3%","−27.0%","−25.9%","3.94 买","+10%"],
+["Guangzhou Baiyun","600004.SS","中国 A","¥7.66","¥20.0B","25.5x","—","1.8%","−19.0%","−18.5%","3.11 ↔","+11%"],
+["Shenzhen Airport","000089.SZ","中国 A","¥6.56","¥13.4B","16.2x","17.0x","3.5%","−6.2%","−9.4%","3.67 ↔","+22%"],
+["Xiamen Airport","600897.SS","中国 A","¥14.77","¥6.3B","~12x","—","—","−14.1%","−0.6%","3.00(1人)","—"],
+["Beijing Capital Int'l","694.HK","中国 H","HK$1.70","HK$7.8B","130x","29.8x","0%","−38.4%","−43.9%","3.75 ↔","+14%"],
+["Hainan Meilan","357.HK","中国 H","HK$5.52","HK$2.5B","亏损","368x","0%","−48.5%","−48.3%","4.00 买","—"],
+["Japan Airport Terminal","9706.T","日本","¥5,801","¥540B","20.4x","20.1x","1.6%","+32.3%","+21.7%","3.88 买","+4%"],
+["Auckland Int'l","AIA.AX","澳新 · NZ","NZ$8.90","NZ$15.1B","49.4x","47.6x","1.5%","+6.8%","+17.6%","2.82 卖","−2%"],
+["ACV (Vietnam)","ACV.VN","东南亚 · 越南","₫42,300","~$5.9B","12.4x","17.1x","0%","−13.5%","−37.0%","3.89 买","+7%"],
+["ASUR","ASR","美洲 · 墨西哥","$276.68","$8.3B","~11x*","—","4.9%","−14.4%","−11.2%","3.89 买","+22%"],
+["OMA","OMAB","美洲 · 墨西哥","$110.44","$5.4B","~12.6x*","—","5.2%","+1.5%","+1.4%","4.20 买","+11%"],
+["GAP","PAC","美洲 · 墨西哥","$222.70","$11.3B","~14.2x*","—","5.2%","−15.5%","−8.0%","4.11 买","+17%"],
+["GMR Airports","GMRINFRA.NS","南亚 · 印度","₹106.5","~$13.2B","163x","75.6x","0%","+2.1%","+17.5%","4.71 买","+13%"],
+];
+const cls = v => v.startsWith("+") ? "pos" : v.startsWith("−") ? "neg" : "";
+const tbody = document.querySelector("#tbl tbody");
+const k2i = {name:0,tkr:1,region:2,px:3,mcap:4,pe1:5,pe2:6,yld:7,ytd:8,yr:9,rec:10,up:11};
+let sortKey = "name", desc = false;
+function render(){
+  const data = [...rows].sort((a,b)=>{
+    const i = k2i[sortKey], A = a[i], B = b[i];
+    const an = parseFloat(String(A).replace(/[^\d.\-]/g,"")); const bn = parseFloat(String(B).replace(/[^\d.\-]/g,""));
+    let cmp = (isNaN(an)||isNaN(bn)) ? String(A).localeCompare(String(B)) : an - bn;
+    return desc ? -cmp : cmp;
+  });
+  tbody.innerHTML = data.map(r=>`<tr><td class="name">${r[0]}</td><td>${r[1]}</td><td class="t">${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td><td>${r[6]}</td><td>${r[7]}</td><td class="${cls(r[8])}">${r[8]}</td><td class="${cls(r[9])}">${r[9]}</td><td>${r[10]}</td><td class="${cls(r[11])}">${r[11]}</td></tr>`).join("");
+}
+document.querySelectorAll("#tbl th").forEach(th=>{
+  th.onclick = ()=>{ const k = th.dataset.k; if(k===sortKey){desc=!desc} else {sortKey=k;desc=false} render(); };
+});
+render();
+</script>
+</body>
+</html>
