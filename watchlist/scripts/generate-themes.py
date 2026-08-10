@@ -106,6 +106,11 @@ ZH_NAMES = {
 #  - 031330.KS SAMT: Samsung memory distributor -> memory-storage
 #  - 3858.HK / EQR.AX / ALM: tungsten pure-plays -> critical-metals
 #  - SMTC/TSEM/NOK: photonics; 011070.KS: substrates; 3105.TWO: photonics
+#  - NKTR/ABVX/DHR/OSCR/CNC: biotech-healthcare (life sciences + managed care)
+#  - APPS/ACN/ROKU: software-apps (ad-tech, IT services, streaming platform)
+#  - RIVN/AUR/CCXI: mobility-robotics (EV, AV, humanoid)
+#  - CAVA/BROS/AMC/ALK: consumer (restaurants, entertainment, airlines)
+#  - SKM/DXYZ: residual AI-equity financial proxies (not operating software/infra)
 MANUAL = {
  "ai-compute": ["AMD","INTC","ARM","QCOM","TSM","GFS","UMC","STM","MRVL","LSCC","SOXX","ALAB"],
  "memory-storage": ["000660.KS","005930.KS","MU","285A.T","032580.KS","080220.KS","WDC","SNDK","STX","SIMO","2337.TW","031330.KS"],
@@ -118,8 +123,12 @@ MANUAL = {
  "crypto-miners": ["MARA","RIOT","CIFR","WULF","CORZ","IREN","GLXY"],
  "energy-materials": ["AGX","TE","FLNC","SEI","FPS","BE","ENLT","CLF","3104.T","3110.T","WOLF","6136.T"],
  "critical-metals": ["3858.HK","EQR.AX","ALM","VNP.TO","MP","USAR","UUUU","NEU"],
- # Keep ONLY true residual: consumer, biotech/healthcare, mobility, financial proxies, shorts
- "other": ["ROKU","AMC","ALK","CAVA","BROS","RIVN","OSCR","DHR","NKTR","ABVX","CCXI","SKM","DXYZ","AUR","CNC","ACN","APPS"],
+ "biotech-healthcare": ["NKTR","ABVX","DHR","OSCR","CNC"],
+ "software-apps": ["APPS","ACN","ROKU"],
+ "mobility-robotics": ["RIVN","AUR","CCXI"],
+ "consumer": ["CAVA","BROS","AMC","ALK"],
+ # True residual only: financial/AI equity proxies without operating core in other themes
+ "other": ["SKM","DXYZ"],
 }
 
 TAG_MAP = {
@@ -145,17 +154,28 @@ TAG_MAP = {
  "rare-earths":"critical-metals","steel":"energy-materials","materials":"energy-materials",
  "industrial":"energy-materials","industrials":"energy-materials","cutting-tools":"energy-materials",
  "infrastructure":"energy-materials",
- "biotech":"other","pharma":"other","healthcare":"other","insurance":"other","life-sciences":"other",
- "diagnostics":"other","restaurants":"other","consumer":"other","entertainment":"other",
- "streaming":"other","airlines":"other","travel":"other","advertising":"other","software":"other",
- "ev":"other","automotive":"other","robotics":"other","humanoid-robotics":"other","spac":"other",
- "big-tech":"ai-infra","tech":"other","it-services":"other","consulting":"other",
+ # Biotech / healthcare
+ "biotech":"biotech-healthcare","pharma":"biotech-healthcare","healthcare":"biotech-healthcare",
+ "insurance":"biotech-healthcare","life-sciences":"biotech-healthcare","diagnostics":"biotech-healthcare",
+ # Software / apps / digital platforms
+ "software":"software-apps","advertising":"software-apps","it-services":"software-apps",
+ "consulting":"software-apps","streaming":"software-apps","app":"software-apps","saas":"software-apps",
+ "ad-tech":"software-apps",
+ # Mobility / robotics / physical AI
+ "ev":"mobility-robotics","automotive":"mobility-robotics","robotics":"mobility-robotics",
+ "humanoid-robotics":"mobility-robotics","spac":"mobility-robotics","physical-ai":"mobility-robotics",
+ "autonomous":"mobility-robotics","mobility":"mobility-robotics",
+ # Consumer
+ "restaurants":"consumer","consumer":"consumer","entertainment":"consumer",
+ "airlines":"consumer","travel":"consumer",
+ "big-tech":"ai-infra","tech":"other",
  "short-candidate":"other","AI-proxy":"other","pre-IPO":"other","closed-end-fund":"other",
  "japan":"other","taiwan":"other","korea":"other","europe":"other","france":"other","uk":"other","sweden":"other",
  "israel":"other","canada":"other","china":"other","us":"other","value":"other","speculative":"other",
  "activist":"other","small-cap":"other","mid-cap":"other","large-cap":"other","micro-cap":"other",
- "etf":"ai-compute","physical-ai":"other","on-device-ai":"memory-storage",
+ "etf":"ai-compute","on-device-ai":"memory-storage",
  "distribution":"memory-storage","samsung":"memory-storage",
+ "telecommunications":"other",
 }
 
 THEMES = [
@@ -170,7 +190,11 @@ THEMES = [
  {"id":"crypto-miners","name":"Crypto & AI Miners 矿企","tagline":"Bitcoin miners pivoting to AI data centers, crypto capital markets."},
  {"id":"energy-materials","name":"Energy & Materials 能源材料","tagline":"Energy storage, solar, SiC/power, grid infrastructure, industrial materials."},
  {"id":"critical-metals","name":"Critical Metals 关键金属","tagline":"Tungsten, rare earths, gallium — defense/export-control supply decoupling."},
- {"id":"other","name":"Watchlist Other 其他","tagline":"Consumer, biotech, mobility, financial proxies — residual names being tracked."},
+ {"id":"biotech-healthcare","name":"Biotech & Healthcare 生科医疗","tagline":"Clinical biopharma, life-science tools, managed care / health insurance."},
+ {"id":"software-apps","name":"Software & Apps 软件应用","tagline":"App platforms, ad-tech, IT services — software revenue, not infra silicon."},
+ {"id":"mobility-robotics","name":"Mobility & Robotics 出行机器人","tagline":"EV, autonomous driving, humanoid robotics SPACs."},
+ {"id":"consumer","name":"Consumer 消费","tagline":"Restaurants, entertainment, airlines — discretionary consumer residual."},
+ {"id":"other","name":"Watchlist Other 其他","tagline":"True residuals — AI equity financial proxies without a core operating theme."},
 ]
 
 

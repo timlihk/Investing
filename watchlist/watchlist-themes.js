@@ -253,26 +253,54 @@ window.WATCHLIST_THEMES = [
     ]
   },
   {
-    id: "other",
-    name: "Watchlist Other 其他",
-    tagline: "Consumer, biotech, mobility, financial proxies — residual names being tracked.",
+    id: "biotech-healthcare",
+    name: "Biotech & Healthcare 生科医疗",
+    tagline: "Clinical biopharma, life-science tools, managed care / health insurance.",
     tickers: [
       { symbol: "ABVX", name: "Abivax (ADR)" },
-      { symbol: "ACN", name: "Accenture" },
-      { symbol: "ALK", name: "Alaska Air" },
-      { symbol: "AMC", name: "AMC Entertainment" },
-      { symbol: "APPS", name: "Digital Turbine" },
-      { symbol: "AUR", name: "Aurora Innovation" },
-      { symbol: "BROS", name: "Dutch Bros" },
-      { symbol: "CAVA", name: "Cava Group" },
-      { symbol: "CCXI", name: "Churchill Capital XI / Agility Robotics" },
       { symbol: "CNC", name: "Centene" },
       { symbol: "DHR", name: "Danaher" },
-      { symbol: "DXYZ", name: "Destiny Tech100" },
       { symbol: "NKTR", name: "Nektar" },
       { symbol: "OSCR", name: "Oscar Health" },
-      { symbol: "RIVN", name: "Rivian" },
+    ]
+  },
+  {
+    id: "software-apps",
+    name: "Software & Apps 软件应用",
+    tagline: "App platforms, ad-tech, IT services — software revenue, not infra silicon.",
+    tickers: [
+      { symbol: "ACN", name: "Accenture" },
+      { symbol: "APPS", name: "Digital Turbine" },
       { symbol: "ROKU", name: "Roku" },
+    ]
+  },
+  {
+    id: "mobility-robotics",
+    name: "Mobility & Robotics 出行机器人",
+    tagline: "EV, autonomous driving, humanoid robotics SPACs.",
+    tickers: [
+      { symbol: "AUR", name: "Aurora Innovation" },
+      { symbol: "CCXI", name: "Churchill Capital XI / Agility Robotics" },
+      { symbol: "RIVN", name: "Rivian" },
+    ]
+  },
+  {
+    id: "consumer",
+    name: "Consumer 消费",
+    tagline: "Restaurants, entertainment, airlines — discretionary consumer residual.",
+    tickers: [
+      { symbol: "ALK", name: "Alaska Air" },
+      { symbol: "AMC", name: "AMC Entertainment" },
+      { symbol: "BROS", name: "Dutch Bros" },
+      { symbol: "CAVA", name: "Cava Group" },
+    ]
+  },
+  {
+    id: "other",
+    name: "Watchlist Other 其他",
+    tagline: "True residuals — AI equity financial proxies without a core operating theme.",
+    tickers: [
+      { symbol: "DXYZ", name: "Destiny Tech100" },
       { symbol: "SKM", name: "SK Telecom" },
     ]
   },
