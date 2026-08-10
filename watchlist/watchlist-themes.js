@@ -6,7 +6,7 @@ window.WATCHLIST_THEMES = [
   {
     id: "ai-compute",
     name: "AI Compute & Silicon 半导体核心",
-    tagline: "CPUs, GPUs, foundries, FPGAs, analog — the compute core of the AI stack.",
+    tagline: "CPUs, GPUs, foundries, FPGAs, interconnect silicon — the compute core of the AI stack.",
     tickers: [
       { symbol: "ALAB", name: "Astera Labs" },
       { symbol: "AMD", name: "AMD" },
@@ -29,9 +29,10 @@ window.WATCHLIST_THEMES = [
     tickers: [
       { symbol: "000660.KS", name: "SK hynix 海力士" },
       { symbol: "005930.KS", name: "Samsung Electronics 三星电子" },
+      { symbol: "031330.KS", name: "SAMT" },
       { symbol: "032580.KS", name: "Fidelix" },
       { symbol: "080220.KS", name: "Jeju Semiconductor 济州半导体" },
-      { symbol: "2337.TW", name: "Macronix International" },
+      { symbol: "2337.TW", name: "Macronix 旺宏" },
       { symbol: "285A.T", name: "Kioxia 铠侠" },
       { symbol: "MU", name: "Micron 美光" },
       { symbol: "SIMO", name: "Silicon Motion" },
@@ -43,7 +44,7 @@ window.WATCHLIST_THEMES = [
   {
     id: "semi-equipment",
     name: "Semi Equipment & Materials 设备材料",
-    tagline: "Wafer tools, test, bonding, substrates materials — pick-and-shovel layer.",
+    tagline: "Wafer tools, test, bonding, specialty materials — pick-and-shovel layer.",
     tickers: [
       { symbol: "025560.KS", name: "Mirae 未来" },
       { symbol: "4187.T", name: "Osaka Organic Chemicals 大阪有机化学" },
@@ -67,7 +68,7 @@ window.WATCHLIST_THEMES = [
   {
     id: "substrates-packaging",
     name: "Substrates & Packaging 载板封装",
-    tagline: "ABF/IC substrate makers, film & foil chokepoints, OSAT packaging, MLCC.",
+    tagline: "ABF/IC substrate makers, film & foil chokepoints, OSAT packaging, MLCC, PCB.",
     tickers: [
       { symbol: "002436.SZ", name: "Xingsen Tech 兴森科技" },
       { symbol: "002916.SZ", name: "Shennan Circuits 深南电路" },
@@ -83,21 +84,26 @@ window.WATCHLIST_THEMES = [
       { symbol: "5214.T", name: "Nippon Electric Glass 日本电气硝子" },
       { symbol: "5706.T", name: "Mitsui Kinzoku 三井金属" },
       { symbol: "600183.SS", name: "Shengyi Tech 生益科技" },
+      { symbol: "8021.TW", name: "Topoint 高侨" },
       { symbol: "8046.TW", name: "Nan Ya PCB 南亚电路板" },
       { symbol: "AMKR", name: "Amkor" },
       { symbol: "ASX", name: "ASE Technology" },
       { symbol: "ATS.VI", name: "AT&S" },
+      { symbol: "TTMI", name: "TTM Technologies" },
+      { symbol: "VSH", name: "Vishay" },
     ]
   },
   {
     id: "ai-infra",
     name: "AI Infrastructure 算力基建",
-    tagline: "Servers, power & cooling, data-center builders, AI clouds.",
+    tagline: "Servers, power & cooling, data-center builders, AI clouds, server structure.",
     tickers: [
+      { symbol: "2059.TW", name: "King Slide 川湖科技" },
       { symbol: "2301.TW", name: "Lite-On 光宝科技" },
       { symbol: "2317.TW", name: "Hon Hai 鸿海" },
       { symbol: "2382.TW", name: "Quanta 广达" },
       { symbol: "2383.TW", name: "EMC 台光电子" },
+      { symbol: "3605.TW", name: "ACES 宏致電子" },
       { symbol: "6412.TW", name: "Chicony Power 群光电能" },
       { symbol: "APLD", name: "Applied Digital" },
       { symbol: "CORZ", name: "Core Scientific" },
@@ -215,10 +221,11 @@ window.WATCHLIST_THEMES = [
   {
     id: "energy-materials",
     name: "Energy & Materials 能源材料",
-    tagline: "Energy storage, solar, power infrastructure, rare earths, steel.",
+    tagline: "Energy storage, solar, SiC/power, grid infrastructure, industrial materials.",
     tickers: [
       { symbol: "3104.T", name: "Fujibo 富士紡" },
       { symbol: "3110.T", name: "Nitto Boseki 日东纺" },
+      { symbol: "6136.T", name: "OSG オーエスジー" },
       { symbol: "AGX", name: "Argan" },
       { symbol: "BE", name: "Bloom Energy" },
       { symbol: "CLF", name: "Cleveland-Cliffs" },
@@ -227,19 +234,29 @@ window.WATCHLIST_THEMES = [
       { symbol: "FPS", name: "Frontier Power Solutions" },
       { symbol: "SEI", name: "Solaris Energy" },
       { symbol: "TE", name: "T1 Energy" },
+      { symbol: "WOLF", name: "Wolfspeed" },
+    ]
+  },
+  {
+    id: "critical-metals",
+    name: "Critical Metals 关键金属",
+    tagline: "Tungsten, rare earths, gallium — defense/export-control supply decoupling.",
+    tickers: [
+      { symbol: "3858.HK", name: "Jiaxin 佳鑫国际 (钨)" },
+      { symbol: "ALM", name: "Almonty (钨)" },
+      { symbol: "EQR.AX", name: "EQ Resources (钨)" },
+      { symbol: "MP", name: "MP Materials" },
+      { symbol: "NEU", name: "NewMarket (AMPAC)" },
+      { symbol: "USAR", name: "USA Rare Earth" },
+      { symbol: "UUUU", name: "Energy Fuels" },
       { symbol: "VNP.TO", name: "5N Plus" },
     ]
   },
   {
     id: "other",
     name: "Watchlist Other 其他",
-    tagline: "Consumer, biotech, mobility, proxies — everything else being tracked.",
+    tagline: "Consumer, biotech, mobility, financial proxies — residual names being tracked.",
     tickers: [
-      { symbol: "031330.KS", name: "SAMT" },
-      { symbol: "2059.TW", name: "King Slide Works (川湖科技)" },
-      { symbol: "3605.TW", name: "ACES Electronics (宏致電子)" },
-      { symbol: "6136.T", name: "OSG" },
-      { symbol: "8021.TW", name: "Topoint Technology 高侨" },
       { symbol: "ABVX", name: "Abivax (ADR)" },
       { symbol: "ACN", name: "Accenture" },
       { symbol: "ALK", name: "Alaska Air" },
@@ -252,15 +269,11 @@ window.WATCHLIST_THEMES = [
       { symbol: "CNC", name: "Centene" },
       { symbol: "DHR", name: "Danaher" },
       { symbol: "DXYZ", name: "Destiny Tech100" },
-      { symbol: "GOOG", name: "Alphabet" },
       { symbol: "NKTR", name: "Nektar" },
       { symbol: "OSCR", name: "Oscar Health" },
       { symbol: "RIVN", name: "Rivian" },
       { symbol: "ROKU", name: "Roku" },
       { symbol: "SKM", name: "SK Telecom" },
-      { symbol: "TTMI", name: "TTM Technologies" },
-      { symbol: "VSH", name: "Vishay" },
-      { symbol: "WOLF", name: "Wolfspeed" },
     ]
   },
 ];

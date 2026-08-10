@@ -88,67 +88,89 @@ ZH_NAMES = {
  "HO.PA":"Thales","CW":"Curtiss-Wright","KRMN":"Karman","MP":"MP Materials","LMT":"Lockheed","RTX":"RTX","GD":"GD",
  "KOG.OL":"Kongsberg","6503.T":"Mitsubishi Electric","6777.T":"Santec","5802.T":"Sumitomo Electric","6442.TW":"EZconn",
  "ACN":"Accenture",
+ "KEYS":"Keysight Technologies","COHR":"Coherent","2337.TW":"Macronix 旺宏",
+ "2059.TW":"King Slide 川湖科技","3605.TW":"ACES 宏致電子","APPS":"Digital Turbine",
+ "3858.HK":"Jiaxin 佳鑫国际 (钨)","EQR.AX":"EQ Resources (钨)","ALM":"Almonty (钨)",
+ "6136.T":"OSG オーエスジー","8021.TW":"Topoint 高侨","TTMI":"TTM Technologies",
+ "VSH":"Vishay","WOLF":"Wolfspeed","031330.KS":"SAMT",
 }
 
-# Explicit theme membership (curated, first-principles pass 2026-08-05).
-# Principles: theme = where the company's core revenue/thesis sits, not every tag.
-#  - SMTC Semtech: analog connectivity silicon -> photonics only (not compute core)
-#  - TSEM Tower: SiPh specialty foundry -> photonics only
-#  - VSH Vishay: discrete/passives -> other (not AI compute)
-#  - WOLF Wolfspeed: SiC device maker -> other (not equipment)
-#  - 011070.KS LG Innotek: FC-BGA substrates + MLCC -> substrates-packaging (not memory)
-#  - 3105.TWO WIN Semi: GaAs epiwafer foundry -> photonics (consistent w/ IQE/SOI)
-#  - 6136.T OSG: industrial cutting tools -> other (not semi equipment)
-#  - GOOG: hyperscaler + TPU -> ai-infra (not other)
-#  - NOK: AI networking/optical -> photonics
+# Explicit theme membership (curated; rebalanced 2026-08-10).
+# Principles: theme = where the company's CORE revenue/thesis sits, not every tag.
+# Multi-bucket is OK for real dual theses (e.g. CORZ crypto+AI infra, Starlink suppliers).
+#  - GOOG: hyperscaler + TPU -> ai-infra ONLY (not other)
+#  - 2059.TW King Slide / 3605.TW ACES: AI server structure/connectors -> ai-infra
+#  - 8021.TW Topoint / TTMI: PCB tools/boards -> substrates-packaging (pcb tag must not dump to other)
+#  - WOLF: SiC devices -> energy-materials (power semi), not other
+#  - VSH: passives/discretes -> substrates-packaging
+#  - 031330.KS SAMT: Samsung memory distributor -> memory-storage
+#  - 3858.HK / EQR.AX / ALM: tungsten pure-plays -> critical-metals
+#  - SMTC/TSEM/NOK: photonics; 011070.KS: substrates; 3105.TWO: photonics
 MANUAL = {
- "ai-compute": ["AMD","INTC","ARM","QCOM","TSM","GFS","UMC","STM","MRVL","LSCC","SOXX"],
- "memory-storage": ["000660.KS","005930.KS","MU","285A.T","032580.KS","080220.KS","WDC","SNDK","STX","SIMO"],
- "semi-equipment": ["AMAT","LRCX","KLAC","TER","ACMR","AEHR","6146.T","8027.TWO","025560.KS","BESI.AS","ENTG","4187.T","6863.T","AXTI","ICHR","FORM"],
- "substrates-packaging": ["4062.T","3037.TW","8046.TW","3189.TW","009150.KS","ATS.VI","2802.T","5706.T","5214.T","011790.KS","3481.TW","002916.SZ","002436.SZ","600183.SS","AMKR","ASX","2327.TW","011070.KS"],
- "ai-infra": ["VRT","DELL","2317.TW","2382.TW","2383.TW","2301.TW","6412.TW","CORZ","IREN","CRWV","NBIS","APLD","DOCN","FSLY","DDOG","RXT","VICR","GOOG"],
+ "ai-compute": ["AMD","INTC","ARM","QCOM","TSM","GFS","UMC","STM","MRVL","LSCC","SOXX","ALAB"],
+ "memory-storage": ["000660.KS","005930.KS","MU","285A.T","032580.KS","080220.KS","WDC","SNDK","STX","SIMO","2337.TW","031330.KS"],
+ "semi-equipment": ["AMAT","LRCX","KLAC","TER","ACMR","AEHR","6146.T","8027.TWO","025560.KS","BESI.AS","ENTG","4187.T","6863.T","AXTI","ICHR","FORM","KEYS"],
+ "substrates-packaging": ["4062.T","3037.TW","8046.TW","3189.TW","009150.KS","ATS.VI","2802.T","5706.T","5214.T","011790.KS","3481.TW","002916.SZ","002436.SZ","600183.SS","AMKR","ASX","2327.TW","011070.KS","8021.TW","TTMI","VSH"],
+ "ai-infra": ["VRT","DELL","2317.TW","2382.TW","2383.TW","2301.TW","6412.TW","CORZ","IREN","CRWV","NBIS","APLD","DOCN","FSLY","DDOG","RXT","VICR","GOOG","2059.TW","3605.TW"],
  "photonics": ["CRDO","MTSI","AVGO","LITE","COHR","AAOI","CIEN","SMTC","TSEM","6503.T","6777.T","5802.T","4991.TWO","6442.TW","6869.HK","SIVE.ST","SOI.PA","IQE.L","MXL","LWLG","OPTX","VIAV","3105.TWO","NOK"],
  "defense": ["NEU","012450.KS","103140.KS","LHX","NOC","7013.T","HXL","ATI","CRS","HWM","TDY","MRCY","HO.PA","CW","KRMN","MP","LMT","RTX","GD","KOG.OL","AVAV","KTOS","ONDS","RCAT","UMAC","NXSN.TA","PL","SATL","USAR","UUUU"],
  "starlink": ["5243.TW","2301.TW","6787.T","300433.SZ","2313.TW","6412.TW","2392.TW","6146.T","8027.TWO"],
  "crypto-miners": ["MARA","RIOT","CIFR","WULF","CORZ","IREN","GLXY"],
- "energy-materials": ["AGX","TE","FLNC","SEI","FPS","BE","VNP.TO","ENLT","CLF","3104.T","3110.T"],
- "other": ["GOOG","ROKU","AMC","ALK","CAVA","BROS","RIVN","OSCR","DHR","NKTR","ABVX","CCXI","8021.TW","TTMI","SKM","DXYZ","031330.KS","AUR","CNC","ACN","VSH","WOLF","6136.T"],
+ "energy-materials": ["AGX","TE","FLNC","SEI","FPS","BE","ENLT","CLF","3104.T","3110.T","WOLF","6136.T"],
+ "critical-metals": ["3858.HK","EQR.AX","ALM","VNP.TO","MP","USAR","UUUU","NEU"],
+ # Keep ONLY true residual: consumer, biotech/healthcare, mobility, financial proxies, shorts
+ "other": ["ROKU","AMC","ALK","CAVA","BROS","RIVN","OSCR","DHR","NKTR","ABVX","CCXI","SKM","DXYZ","AUR","CNC","ACN","APPS"],
 }
 
 TAG_MAP = {
  "memory":"memory-storage","dram":"memory-storage","nand":"memory-storage","storage":"memory-storage",
+ "nand-controller":"memory-storage","ai-storage":"memory-storage",
  "semiconductor":"ai-compute","cpu":"ai-compute","gpu":"ai-compute","fpga":"ai-compute","foundry":"ai-compute",
  "equipment":"semi-equipment","test-equipment":"semi-equipment","deposition":"semi-equipment","etch":"semi-equipment",
- "inspection":"semi-equipment","hybrid-bonding":"semi-equipment","wafer-cleaning":"semi-equipment","SiC":"other",
- "GaAs-substrates":"semi-equipment","photoresist":"semi-equipment","discrete":"other","analog":"other",
+ "inspection":"semi-equipment","hybrid-bonding":"semi-equipment","wafer-cleaning":"semi-equipment",
+ "GaAs-substrates":"semi-equipment","photoresist":"semi-equipment","testing":"semi-equipment",
+ "SiC":"energy-materials","discrete":"substrates-packaging","analog":"photonics",
  "packaging":"substrates-packaging","substrates":"substrates-packaging","MLCC":"substrates-packaging",
- "ai-infra":"ai-infra","servers":"ai-infra","power":"ai-infra","cooling":"ai-infra","liquid-cooling":"ai-infra",
- "photonics":"photonics","optical":"photonics","connectivity":"photonics","networking":"photonics","communication-equipment":"photonics",
+ "pcb":"substrates-packaging","electronics":"substrates-packaging","components":"substrates-packaging",
+ "connectors":"ai-infra","server-rails":"ai-infra",
+ "ai-infra":"ai-infra","ai-infrastructure":"ai-infra","servers":"ai-infra","power":"ai-infra",
+ "cooling":"ai-infra","liquid-cooling":"ai-infra","software-infrastructure":"ai-infra",
+ "photonics":"photonics","optical":"photonics","connectivity":"photonics","networking":"photonics",
+ "communication-equipment":"photonics","optics":"photonics","duv-inspection":"semi-equipment",
  "defense":"defense","drones":"defense",
  "starlink":"starlink",
  "crypto":"crypto-miners","mining":"crypto-miners","data-center":"ai-infra",
  "energy":"energy-materials","solar":"energy-materials","batteries":"energy-materials","grid":"energy-materials",
- "critical-minerals":"energy-materials","gallium":"energy-materials","steel":"energy-materials","materials":"energy-materials","industrial":"energy-materials",
+ "critical-minerals":"critical-metals","tungsten":"critical-metals","gallium":"critical-metals",
+ "rare-earths":"critical-metals","steel":"energy-materials","materials":"energy-materials",
+ "industrial":"energy-materials","industrials":"energy-materials","cutting-tools":"energy-materials",
+ "infrastructure":"energy-materials",
  "biotech":"other","pharma":"other","healthcare":"other","insurance":"other","life-sciences":"other",
- "restaurants":"other","consumer":"other","entertainment":"other","streaming":"other","airlines":"other","travel":"other",
- "ev":"other","automotive":"other","robotics":"other","humanoid-robotics":"other","spac":"other","big-tech":"other",
- "tech":"other","it-services":"other","software-infrastructure":"other","pcb":"other","electronics":"other",
+ "diagnostics":"other","restaurants":"other","consumer":"other","entertainment":"other",
+ "streaming":"other","airlines":"other","travel":"other","advertising":"other","software":"other",
+ "ev":"other","automotive":"other","robotics":"other","humanoid-robotics":"other","spac":"other",
+ "big-tech":"ai-infra","tech":"other","it-services":"other","consulting":"other",
+ "short-candidate":"other","AI-proxy":"other","pre-IPO":"other","closed-end-fund":"other",
  "japan":"other","taiwan":"other","korea":"other","europe":"other","france":"other","uk":"other","sweden":"other",
- "israel":"other","canada":"other","china":"other","us":"other","value":"other","speculative":"other","activist":"other",
+ "israel":"other","canada":"other","china":"other","us":"other","value":"other","speculative":"other",
+ "activist":"other","small-cap":"other","mid-cap":"other","large-cap":"other","micro-cap":"other",
+ "etf":"ai-compute","physical-ai":"other","on-device-ai":"memory-storage",
+ "distribution":"memory-storage","samsung":"memory-storage",
 }
 
 THEMES = [
- {"id":"ai-compute","name":"AI Compute & Silicon 半导体核心","tagline":"CPUs, GPUs, foundries, FPGAs, analog — the compute core of the AI stack."},
+ {"id":"ai-compute","name":"AI Compute & Silicon 半导体核心","tagline":"CPUs, GPUs, foundries, FPGAs, interconnect silicon — the compute core of the AI stack."},
  {"id":"memory-storage","name":"Memory & Storage 存储","tagline":"HBM/DRAM/NAND makers, controllers, HDD — the AI memory supercycle."},
- {"id":"semi-equipment","name":"Semi Equipment & Materials 设备材料","tagline":"Wafer tools, test, bonding, substrates materials — pick-and-shovel layer."},
- {"id":"substrates-packaging","name":"Substrates & Packaging 载板封装","tagline":"ABF/IC substrate makers, film & foil chokepoints, OSAT packaging, MLCC."},
- {"id":"ai-infra","name":"AI Infrastructure 算力基建","tagline":"Servers, power & cooling, data-center builders, AI clouds."},
+ {"id":"semi-equipment","name":"Semi Equipment & Materials 设备材料","tagline":"Wafer tools, test, bonding, specialty materials — pick-and-shovel layer."},
+ {"id":"substrates-packaging","name":"Substrates & Packaging 载板封装","tagline":"ABF/IC substrate makers, film & foil chokepoints, OSAT packaging, MLCC, PCB."},
+ {"id":"ai-infra","name":"AI Infrastructure 算力基建","tagline":"Servers, power & cooling, data-center builders, AI clouds, server structure."},
  {"id":"photonics","name":"AI Photonics & Optical 光通信","tagline":"Optical interconnect, silicon photonics, transceivers, epiwafers."},
  {"id":"defense","name":"Defense & Drones 国防无人机","tagline":"Western munitions chokepoints, primes, loitering munitions, ISR."},
  {"id":"starlink","name":"Starlink Supply Chain 星链","tagline":"Satellite direct suppliers — PCB, power, connectors, glass, tools."},
  {"id":"crypto-miners","name":"Crypto & AI Miners 矿企","tagline":"Bitcoin miners pivoting to AI data centers, crypto capital markets."},
- {"id":"energy-materials","name":"Energy & Materials 能源材料","tagline":"Energy storage, solar, power infrastructure, rare earths, steel."},
- {"id":"other","name":"Watchlist Other 其他","tagline":"Consumer, biotech, mobility, proxies — everything else being tracked."},
+ {"id":"energy-materials","name":"Energy & Materials 能源材料","tagline":"Energy storage, solar, SiC/power, grid infrastructure, industrial materials."},
+ {"id":"critical-metals","name":"Critical Metals 关键金属","tagline":"Tungsten, rare earths, gallium — defense/export-control supply decoupling."},
+ {"id":"other","name":"Watchlist Other 其他","tagline":"Consumer, biotech, mobility, financial proxies — residual names being tracked."},
 ]
 
 
