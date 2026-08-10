@@ -61,7 +61,16 @@ SEEKERS                       Boeing (inside BA) — gates allied PAC-3 output  
 | `scripts/generate-tsv.mjs` | `node scripts/generate-tsv.mjs` regenerates both TSVs |
 | `reports/` | Per-company notes for the BUY list |
 
-Dashboard views: **Chokepoint Dashboard** (`dib-dashboard.html`) · **Value Chain Layers** (`supply-chain-map.html`) · **Economics Scatter** (`chokepoint-economics.html`).
+Dashboard views:
+
+| Tab | File | What it is |
+|-----|------|------------|
+| **Chokepoint Dashboard** | `dib-dashboard.html` | 68-name scored book by layer |
+| **Intelligent Mass** | `intelligent-mass.html` | Anduril-letter theme: autonomy + software + capacity vs bottlenecks; public expressions (LHX, RTX, KTOS, AVAV, PLTR) |
+| **Value Chain Layers** | `supply-chain-map.html` | Visual layer map |
+| **Economics Scatter** | `chokepoint-economics.html` | Chokepoint score vs price |
+
+Deep-link the theme tab: `https://research.mangrove-hk.org/defense-industrial-base/?tab=mass`
 
 ## Kill conditions
 

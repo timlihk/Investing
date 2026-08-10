@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intelligent Mass — The New Arsenal</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#080b12;color:#c9d1d9;font-size:13px;padding:0 0 72px;line-height:1.55}
+a{color:#58a6ff;text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1280px;margin:0 auto;padding:22px 18px}
+.head{border-bottom:1px solid #21262d;padding-bottom:16px;margin-bottom:18px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#a78bfa;font-weight:600;margin-bottom:8px}
+.head h1{font-size:22px;color:#f0f6fc;font-weight:700;letter-spacing:-.02em}
+.head .sub{color:#8b949e;margin-top:8px;line-height:1.65;max-width:980px}
+.asof{color:#484f58;font-size:11px;margin-top:10px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.pill{display:inline-flex;padding:5px 10px;border-radius:999px;background:#161b22;border:1px solid #21262d;color:#8b949e;font-size:11px}
+.pill b{color:#e6edf3;font-weight:600}
+
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+.card{background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:14px 16px}
+.card h3{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#58a6ff;margin-bottom:8px;font-weight:600}
+.card h3.purple{color:#a78bfa}
+.card h3.amber{color:#d29922}
+.card h3.green{color:#3fb950}
+.card p{color:#8b949e;line-height:1.65;font-size:12.5px}
+.card b{color:#e6edf3;font-weight:600}
+.card ul{margin:8px 0 0 16px;color:#8b949e;font-size:12.5px}
+.card li{margin:4px 0}
+
+.section{margin:28px 0 12px}
+.section h2{font-size:15px;color:#f0f6fc;font-weight:700;margin-bottom:6px}
+.section .hint{color:#6e7681;font-size:12px;margin-bottom:12px;max-width:900px}
+
+.stack{display:grid;gap:8px;margin:14px 0}
+.layer-row{display:grid;grid-template-columns:180px 1fr 160px;gap:12px;align-items:start;background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px 14px}
+.layer-row .ln{font-weight:700;color:#f0f6fc;font-size:12.5px}
+.layer-row .lt{font-size:10px;color:#6e7681;margin-top:3px;text-transform:uppercase;letter-spacing:.06em}
+.layer-row .ld{color:#8b949e;font-size:12px;line-height:1.55}
+.layer-row .le{font-size:11px;color:#9aa4b2;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;line-height:1.45}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.05em;padding:2px 6px;border-radius:3px;margin-bottom:4px}
+.t-bottleneck{background:#f8514918;color:#f85149;border:1px solid #f8514944}
+.t-platform{background:#58a6ff18;color:#58a6ff;border:1px solid #58a6ff44}
+.t-software{background:#a78bfa18;color:#a78bfa;border:1px solid #a78bfa44}
+.t-infra{background:#d2992218;color:#d29922;border:1px solid #d2992244}
+.t-capacity{background:#3fb95018;color:#3fb950;border:1px solid #3fb95044}
+
+table{width:100%;border-collapse:collapse;background:#0d1117;border:1px solid #21262d;border-radius:9px;overflow:hidden;margin-top:8px}
+th{background:#161b22;color:#8b949e;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;padding:8px 10px;text-align:left;border-bottom:1px solid #21262d}
+th.num,td.num{text-align:right}
+td{padding:10px;border-bottom:1px solid #161b22;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover{background:#161b2288}
+.tk{font-family:ui-monospace,Menlo,monospace;color:#e6edf3;font-weight:600;font-size:12px}
+.nm{color:#8b949e;font-size:11px;margin-top:2px}
+.one{color:#9aa4b2;font-size:12px;line-height:1.5;max-width:420px}
+.pos{color:#3fb950}.neg{color:#f85149}.flat{color:#8b949e}
+.mono{font-family:ui-monospace,Menlo,monospace}
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.04em}
+.b-core{background:#3fb95022;color:#3fb950;border:1px solid #3fb95055}
+.b-theme{background:#58a6ff22;color:#58a6ff;border:1px solid #58a6ff55}
+.b-watch{background:#d2992222;color:#d29922;border:1px solid #d2992255}
+.b-rich{background:#f8514922;color:#f85149;border:1px solid #f8514955}
+.b-priv{background:#a371f722;color:#a371f7;border:1px solid #a371f755}
+
+.impl{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.impl .card h3{font-size:12px;letter-spacing:.04em;text-transform:none;color:#e6edf3}
+.impl .card .n{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:6px;background:#1f6feb33;color:#79c0ff;font-size:11px;font-weight:700;margin-right:8px}
+
+.quote{margin:18px 0;padding:16px 18px;background:#0d1117;border:1px solid #21262d;border-left:3px solid #a78bfa;border-radius:6px;color:#9aa4b2;font-size:13px;line-height:1.7}
+.quote b{color:#e6edf3}
+
+.note{margin-top:28px;padding:14px 16px;background:#0d1117;border:1px solid #21262d;border-left:3px solid #58a6ff;border-radius:6px;color:#8b949e;line-height:1.7;font-size:12px}
+.note b{color:#e6edf3}
+.cross{margin-top:14px;padding:12px 14px;background:#161b22;border:1px solid #30363d;border-radius:8px;font-size:12px;color:#8b949e}
+.cross a{font-weight:600}
+
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+.kpi .card{text-align:left}
+.kpi .v{font-size:20px;font-weight:700;color:#f0f6fc;font-family:ui-monospace,Menlo,monospace;margin:4px 0}
+.kpi .l{font-size:11px;color:#6e7681}
+
+@media (max-width:980px){
+  .grid3,.grid2,.impl,.kpi{grid-template-columns:1fr}
+  .layer-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="head">
+  <div class="eyebrow">Thematic long · Defence · Autonomy + Intelligent Mass + Capacity</div>
+  <h1>The New Arsenal — Intelligent, Networked Mass</h1>
+  <div class="sub">
+    Framework adapted from Anduril CEO Brian Schimpf’s investor letter (released with the Series H).
+    The market already knows the world is rearming. The better question is
+    <b style="color:#e6edf3">where value accrues</b> as militaries change <b style="color:#e6edf3">what they buy and how they fight</b>
+    — finished platforms, the software connecting them, munitions capacity, or the scarce components that make mass possible.
+  </div>
+  <div class="pills">
+    <span class="pill">Source: Anduril Series H · May 2026</span>
+    <span class="pill"><b>$5B</b> raise @ <b>$61B</b> valuation</span>
+    <span class="pill">2025 rev <b>$2.2B</b> (~2×)</span>
+    <span class="pill">Lead: Thrive + a16z</span>
+    <span class="pill">Public expressions: LHX · RTX · KTOS · AVAV · PLTR</span>
+  </div>
+  <div class="asof">Market data: Bloomberg ~2026-08-09 · Theme synthesis: Inflection Economy (2026-08-07) + Anduril letter · Not investment advice</div>
+</div>
+
+<div class="kpi">
+  <div class="card"><div class="l">Anduril valuation</div><div class="v">$61B</div><div class="l">~28× 2025 sales (software-like)</div></div>
+  <div class="card"><div class="l">Anduril 2025 revenue</div><div class="v">$2.2B</div><div class="l">More than doubled YoY</div></div>
+  <div class="card"><div class="l">LHX Missile Solutions</div><div class="v">$1B</div><div class="l">DoW convertible preferred; IPO H2’26?</div></div>
+  <div class="card"><div class="l">Link to DIB book</div><div class="v">68</div><div class="l">Munitions chokepoint names on sibling tab</div></div>
+</div>
+
+<div class="grid3">
+  <div class="card">
+    <h3>Inflection 1 — AI + autonomy</h3>
+    <p>Advantage shifts from a few <b>exquisite platforms</b> toward <b>distributed, software-defined systems</b>. Fewer people control more platforms; cheap long-range strike holds high-value assets at risk deep behind the front.</p>
+  </div>
+  <div class="card">
+    <h3>Inflection 2 — Industrial reality</h3>
+    <p>Great-power competition exposed that the West cannot <b>replenish munitions and equipment at wartime speed</b>. Production capacity becomes part of the weapon system — factories, qualified suppliers, test infrastructure, software update cadence.</p>
+  </div>
+  <div class="card">
+    <h3>Inflection 3 — Procurement + capital</h3>
+    <p>Reform and industrial policy direct capital toward <b>scalable production</b>, scarce components, and the software layer that connects the battlefield. Startups can win programs of record; primes still set demand and bear much of the capex.</p>
+  </div>
+</div>
+
+<div class="quote">
+  Schimpf’s label: <b>“intelligent, networked mass.”</b>
+  High-end platforms do not disappear (subs, stealth aircraft, satellites, missile defence).
+  They operate alongside large numbers of cheaper sensors, drones, decoys, EW systems and effectors that must be
+  <b>manufactured quickly, coordinated through software, and replaced when lost</b>.
+  The moat may not be the weapon itself — it may be the ability to build the next thousand.
+</div>
+
+<!-- VALUE STACK -->
+<div class="section">
+  <h2>Where value may accrue — the stack</h2>
+  <div class="hint">Read bottom-up for bottlenecks (hardest to expand); top layers get the headlines and often the richest valuations.</div>
+  <div class="stack">
+    <div class="layer-row">
+      <div>
+        <span class="tag t-platform">Platforms</span>
+        <div class="ln">Autonomous air / UAS / CCA</div>
+        <div class="lt">Visible · competitive</div>
+      </div>
+      <div class="ld">Lower-cost unmanned combat aircraft, attritable drones, loitering munitions. Strategy closest to Anduril’s “mass” thesis in public markets: <b>KTOS</b> (Valkyrie / jet drones), <b>AVAV</b> (drones + BlueHalo stack). High thematic purity, often <b>valuation- and FCF-dependent</b>.</div>
+      <div class="le">KTOS · AVAV<br>Anduril (private)</div>
+    </div>
+    <div class="layer-row">
+      <div>
+        <span class="tag t-software">Software</span>
+        <div class="ln">C2 / data / Lattice layer</div>
+        <div class="lt">Still up for grabs</div>
+      </div>
+      <div class="ld">Operating layer that fuses sensors, platforms and effectors under degraded comms. <b>Palantir</b> = neutral integrator. Anduril <b>Lattice</b> = hardware-linked vertical. AVAV mission software + prime proprietary C2 + government open architectures all compete. Category is valuable; structure is unsettled.</div>
+      <div class="le">PLTR · Lattice (priv)<br>AVAV · primes C2</div>
+    </div>
+    <div class="layer-row">
+      <div>
+        <span class="tag t-infra">Infrastructure</span>
+        <div class="ln">Counter-UAS</div>
+        <div class="lt">Recurring defence infra</div>
+      </div>
+      <div class="ld">Cheap attack drones create an economic problem for defenders. Solution is layered: RF/radar detect, EW, directed energy, kinetic intercept, software choosing the cheapest kill. Looks less like a niche weapon and more like <b>base / ship / site infrastructure</b>.</div>
+      <div class="le">AVAV · RTX · LMT<br>specialists</div>
+    </div>
+    <div class="layer-row">
+      <div>
+        <span class="tag t-capacity">Capacity</span>
+        <div class="ln">Missiles & interceptors</div>
+        <div class="lt">Backlog + factory cycles</div>
+      </div>
+      <div class="ld">Tomahawk / AMRAAM / Standard Missile / PAC-3 / THAAD type production ramps. <b>RTX</b> and <b>LMT</b> carry multi-year industrial programs. Less “pure defence-tech,” often better risk-adjusted than a single-program autonomy name.</div>
+      <div class="le">RTX · LMT · NOC<br>GD</div>
+    </div>
+    <div class="layer-row">
+      <div>
+        <span class="tag t-bottleneck">Bottleneck</span>
+        <div class="ln">Propulsion · energetics · SRM</div>
+        <div class="lt">Hardest to replicate</div>
+      </div>
+      <div class="ld">Solid rocket motors, oxidisers, seekers, qualified electronics. Platforms can be prototyped; <b>motors and energetics cannot be wished into existence</b>. <b>LHX Missile Solutions</b> (Aerojet Rocketdyne) + $1B DoW convertible preferred and planned MSL IPO is the cleanest public “propulsion capacity” expression. See sibling <a href="dib-dashboard.html">Chokepoint Dashboard</a> for NEU/AMPAC, NOC SRM, JP titanium, etc.</div>
+      <div class="le">LHX · NOC · NEU<br>012450 KS · 7013 JP</div>
+    </div>
+    <div class="layer-row">
+      <div>
+        <span class="tag t-bottleneck">Picks & shovels</span>
+        <div class="ln">Sensors · edge · RF · GaN</div>
+        <div class="lt">Often better economics</div>
+      </div>
+      <div class="ld">Every autonomous node needs sensing, secure comms, actuation, power. Fragmented but qualification-locked — same “receives the capex” logic as the munitions book. Overlap with DIB guidance / components layers.</div>
+      <div class="le">LHX · TDY · MRCY<br>MTSI · QRVO · …</div>
+    </div>
+  </div>
+</div>
+
+<!-- SIX IMPLICATIONS -->
+<div class="section">
+  <h2>Six investment implications</h2>
+  <div class="hint">From the Schimpf letter via Inflection Economy synthesis — use as a diligence checklist, not a buy list.</div>
+  <div class="impl">
+    <div class="card">
+      <h3><span class="n">1</span>Bottlenecks may beat platforms</h3>
+      <p>More competition at the finished-system layer; concentration at propulsion, seekers, energetics, qualified electronics. <b>Ask:</b> who must every new autonomous design buy from?</p>
+    </div>
+    <div class="card">
+      <h3><span class="n">2</span>Theme can be right and still overvalued</h3>
+      <p>Anduril proves the category. Intelligent mass still needs <b>physical mass</b> — factories, inventory, fixed-price risk. Public names can trade like software while cash flow looks industrial.</p>
+    </div>
+    <div class="card">
+      <h3><span class="n">3</span>Software layer unsettled</h3>
+      <p>Lattice vs Palantir vs prime C2 vs open architectures. Neutrality (PLTR) vs vertical integration (Anduril) is the structural fight — not “will software matter.”</p>
+    </div>
+    <div class="card">
+      <h3><span class="n">4</span>Counter-drone → infrastructure</h3>
+      <p>If sites need continuous protection, budgets look more like <b>recurring defence infrastructure</b> than one-off weapons buys. Architecture winners > single interceptor vendors.</p>
+    </div>
+    <div class="card">
+      <h3><span class="n">5</span>Undersea autonomy</h3>
+      <p>Deep-sea / undersea mass is a stated next domain in Schimpf’s framing. Public pure-plays are scarce — underwrite carefully; do not force-fit ticker lists.</p>
+    </div>
+    <div class="card">
+      <h3><span class="n">6</span>Sensors & edge as better risk/reward</h3>
+      <p>Often lower story risk than CCA headlines, higher qualification moats than generic electronics. Cross-read with munitions chokepoint scores on the main DIB tab.</p>
+    </div>
+  </div>
+</div>
+
+<!-- COMPANY TABLE -->
+<div class="section">
+  <h2>Public expressions (snapshot)</h2>
+  <div class="hint">Bloomberg fields ~2026-08-09. Role / stance are analyst framing for this theme, not formal ratings. YTD is price return.</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Ticker</th>
+        <th>Layer</th>
+        <th>Role in thesis</th>
+        <th class="num">Price</th>
+        <th class="num">Mkt cap</th>
+        <th class="num">YTD</th>
+        <th class="num">Fwd P/E</th>
+        <th class="num">EV/EBITDA</th>
+        <th class="num">FCF yld</th>
+        <th>Stance</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <h3 class="amber">Valuation tension (defence-tech)</h3>
+    <p><b>KTOS</b> and <b>AVAV</b> align tightly with “affordable autonomous mass,” but trade at high forward multiples with <b>negative FCF yields</b> in this snapshot — exactly the software-multiple-on-industrial-cash-flow risk the letter implies for Anduril itself (~28× sales).</p>
+    <ul>
+      <li>KTOS: ~65× fwd PE · ~48× EV/EBITDA · FCF yld ≈ −1.2% · YTD ≈ −20%</li>
+      <li>AVAV: ~57× fwd PE · ~30× EV/EBITDA · FCF yld ≈ −1.6% · YTD ≈ −23%</li>
+      <li>PLTR: ~88× fwd PE · ~65× EV/EBITDA · FCF yld ≈ +0.8% · software economics better, still rich</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3 class="green">Capacity / bottleneck side (cleaner cash)</h3>
+    <p><b>LHX</b> and <b>RTX</b> express motors, interceptors, radar and production lines. Lower story purity, higher cash conversion in this tape — and 2026 YTD price action rewarded them over pure autonomy names.</p>
+    <ul>
+      <li>LHX: ~23× fwd PE · ~14× EV/EBITDA · FCF yld ≈ +5.2% · YTD ≈ −2%</li>
+      <li>RTX: ~30× fwd PE · ~21× EV/EBITDA · FCF yld ≈ +3.8% · YTD ≈ +22%</li>
+      <li>LMT: still the exquisite-platform + interceptor franchise · YTD ≈ +22%</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <h2>How this tab relates to the munitions chokepoint book</h2>
+  <div class="cross">
+    <b style="color:#e6edf3">Same industrial war, two cuts.</b>
+    The <a href="dib-dashboard.html">Chokepoint Dashboard</a> answers: <i>where does the Western munitions chain physically narrow?</i>
+    This tab answers: <i>how does AI + autonomy rewrite what gets bought, and which public layers capture that rewrite?</i>
+    Intelligent mass <b>increases</b> demand for motors, energetics, seekers and interceptors — it does not make the chokepoint map obsolete.
+    Use both: theme for “why demand grows and how systems change”; chokepoints for “who must get paid when volume actually scales.”
+  </div>
+</div>
+
+<div class="grid3">
+  <div class="card">
+    <h3 class="purple">Anduril (private reference)</h3>
+    <p>Series H $5B @ $61B (May 2026). Platforms + sensors + defensive systems + factories; <b>Lattice</b> as the connective tissue. Best used as a <b>framework company</b>, not a public comp set member. IPO chatter exists; treat valuation as venture-priced optionality on industrial execution.</p>
+  </div>
+  <div class="card">
+    <h3 class="amber">Kill / invalidate conditions</h3>
+    <p>Procurement reverts to multi-decade exquisite-only cycles; autonomy programs stay demo-scale; fixed-price losses cascade through defence-tech; MSL IPO / capacity expansions slip while multiples stay software-rich; software layer commoditises under forced open standards with no pricing power.</p>
+  </div>
+  <div class="card">
+    <h3 class="green">Working checklist</h3>
+    <p>Program of record vs prototype · unit economics at scale · capex before revenue · contract type (fixed vs cost-plus) · FCF inflection date · qualification lead times for any “bottleneck” claim · whether counter-UAS is architecture or project revenue.</p>
+  </div>
+</div>
+
+<div class="note">
+  <b>Provenance.</b> Anduril funding and revenue figures from company / press (Series H announcement, May 2026).
+  Public-market multiples and YTD from <b>Bloomberg</b> (~2026-08-09). Theme structure synthesised from Schimpf’s letter and secondary research write-ups (incl. Inflection Economy, 2026-08-07).
+  Layer roles and stances are <b>analyst framing for research navigation</b>, not recommendations.
+  For scored munitions chokepoints and 68-name universe see sibling tabs and <span class="mono">value-chain.md</span>.
+  Not investment advice.
+</div>
+
+</div>
+
+<script>
+const ROWS = [
+  { t:"LHX US", n:"L3Harris", layer:"Bottleneck / capacity", role:"Missile Solutions (Aerojet) propulsion + munitions capacity; $1B DoW preferred; potential MSL IPO. Best public pure-ish motor/capacity expression.", px:286.67, mcap:"$53B", ytd:-2.35, pe:22.8, ev:14.2, fcf:5.2, stance:"core", badge:"CORE" },
+  { t:"RTX US", n:"RTX (Raytheon)", layer:"Capacity / sensors", role:"Tomahawk, AMRAAM, Standard Missile, radar & interceptor industrial base. Commercial aero dilutes purity; better risk-adjusted than single-program autonomy.", px:223.03, mcap:"$301B", ytd:21.61, pe:30.3, ev:20.9, fcf:3.8, stance:"core", badge:"CORE" },
+  { t:"LMT US", n:"Lockheed Martin", layer:"Platforms + interceptors", role:"Exquisite platforms still required; PAC-3 / THAAD-type capacity ramps. Capex-heavy expansion can pressure FCF even with backlog.", px:587.95, mcap:"$136B", ytd:21.56, pe:18.7, ev:13.0, fcf:null, stance:"theme", badge:"THEME" },
+  { t:"NOC US", n:"Northrop Grumman", layer:"SRM + systems", role:"Other half of US SRM duopoly in DIB book; systems house bearing capacity capex. Cross-link to chokepoint scores.", px:571.58, mcap:"$81B", ytd:0.24, pe:19.5, ev:14.4, fcf:null, stance:"core", badge:"CORE" },
+  { t:"KTOS US", n:"Kratos", layer:"Affordable mass air", role:"Closest listed analogue to Anduril’s attritable / lower-cost unmanned jet thesis (Valkyrie, Firejet, propulsion/hypersonics). Capex ahead of volume.", px:60.77, mcap:"$11B", ytd:-19.94, pe:65.3, ev:48.4, fcf:-1.2, stance:"watch", badge:"WATCH" },
+  { t:"AVAV US", n:"AeroVironment", layer:"UAS + cUAS stack", role:"Broadest public stack: drones, loitering munitions, counter-UAS, EW, sensing, mission software (BlueHalo). Must prove organic growth, margins, architecture vs projects.", px:186.73, mcap:"$9B", ytd:-22.80, pe:57.4, ev:30.0, fcf:-1.6, stance:"watch", badge:"WATCH" },
+  { t:"PLTR US", n:"Palantir", layer:"Software / data", role:"Neutral defence data + targeting software. Validates software value; competes with Lattice-style vertical stacks. Evidence of opportunity, not automatic long from this theme alone.", px:172.01, mcap:"$413B", ytd:-3.23, pe:88.3, ev:65.2, fcf:0.8, stance:"rich", badge:"RICH" },
+  { t:"GD US", n:"General Dynamics", layer:"Platforms / undersea adj.", role:"Broader prime; partial adjacency to undersea and munitions via segments. Not a pure intelligent-mass expression.", px:392.05, mcap:"$106B", ytd:16.45, pe:22.4, ev:15.6, fcf:null, stance:"theme", badge:"THEME" },
+  { t:"Anduril", n:"Anduril Industries", layer:"Full stack (private)", role:"Reference architecture: mass platforms + Lattice + factories. $61B / $2.2B sales. Not listed — framework, not a tradable line.", px:null, mcap:"$61B val", ytd:null, pe:null, ev:null, fcf:null, stance:"priv", badge:"PRIVATE" },
+];
+
+const fmtPct = v => v==null ? "—" : `<span class="${v>0.5?'pos':v<-0.5?'neg':'flat'}">${v>0?'+':''}${v.toFixed(1)}%</span>`;
+const fmtN = (v, d=1) => v==null || Number.isNaN(v) ? "—" : Number(v).toFixed(d);
+const badgeClass = s => ({core:"b-core",theme:"b-theme",watch:"b-watch",rich:"b-rich",priv:"b-priv"}[s]||"b-theme");
+
+document.getElementById("tbody").innerHTML = ROWS.map(r => `
+  <tr>
+    <td><div class="tk">${r.t}</div><div class="nm">${r.n}</div></td>
+    <td style="color:#8b949e;font-size:11.5px">${r.layer}</td>
+    <td><div class="one">${r.role}</div></td>
+    <td class="num mono">${r.px==null?"—":r.px.toFixed(2)}</td>
+    <td class="num mono">${r.mcap}</td>
+    <td class="num">${fmtPct(r.ytd)}</td>
+    <td class="num mono">${fmtN(r.pe)}</td>
+    <td class="num mono">${fmtN(r.ev)}</td>
+    <td class="num mono">${r.fcf==null?"—":fmtN(r.fcf)+"%"}</td>
+    <td><span class="badge ${badgeClass(r.stance)}">${r.badge}</span></td>
+  </tr>
+`).join("");
+</script>
+</body>
+</html>
