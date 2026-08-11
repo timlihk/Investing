@@ -24,6 +24,7 @@ h2 .zh{color:#8b949e;font-size:14px;font-weight:500;margin-left:8px}
 .stat .v{font-size:20px;font-weight:700;color:#f0f6fc}
 .stat .l{font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
 .pos{color:#3fb950}.neg{color:#f85149}.warn{color:#d29922}.info{color:#58a6ff}
+ .live{font-size:10px;color:#58a6ff;vertical-align:super}
 .card{background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:18px 20px;margin-bottom:16px}
 .card h3{font-size:16px;font-weight:700;color:#f0f6fc;margin-bottom:4px}
 .card h3 .t{color:#3fb950;font-size:12px;font-weight:600;letter-spacing:.05em;margin-left:8px}
@@ -79,7 +80,7 @@ footer a{color:#58a6ff}
 </div>
 
 <h2 id="universe">全景一览 <span class="zh">Universe (2026-08-07 收盘, 彭博)</span></h2>
-<div class="sub">价格/市值/估值为 2026-08-07 彭博收盘 · 远期 P/E = 现价 ÷ 彭博共识 FY1/FY2 EPS · 墨西哥三家和 TAV 的 P/E 用美元口径估算(见注脚) · 点击表头排序</div>
+<div class="sub">快照价格/市值/估值为 2026-08-07 彭博收盘 · 带 ⚡ 标记的价格为实时 Yahoo 行情 · 远期 P/E = 现价 ÷ 彭博共识 FY1/FY2 EPS · 墨西哥三家和 TAV 的 P/E 用美元口径估算(见注脚) · 点击表头排序</div>
 <div class="card" style="overflow-x:auto">
 <table id="tbl">
 <thead><tr>
@@ -355,6 +356,13 @@ const rows = [
 ["GMR Airports","GMRINFRA.NS","南亚 · 印度","₹106.5","~$13.2B","163x","75.6x","0%","+2.1%","+17.5%","4.71 买","+13%"],
 ];
 const cls = v => v.startsWith("+") ? "pos" : v.startsWith("−") ? "neg" : "";
+const LIVE = new Map();
+const livePx = r => {
+  const v = LIVE.get(r[1]);
+  if (v == null) return r[3];
+  const cur = (r[3].match(/[^\d.,\s-]+/) || [""])[0];
+  return cur + v.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+};
 const tbody = document.querySelector("#tbl tbody");
 const k2i = {name:0,tkr:1,region:2,px:3,mcap:4,pe1:5,pe2:6,yld:7,ytd:8,yr:9,rec:10,up:11};
 let sortKey = "name", desc = false;
@@ -365,12 +373,27 @@ function render(){
     let cmp = (isNaN(an)||isNaN(bn)) ? String(A).localeCompare(String(B)) : an - bn;
     return desc ? -cmp : cmp;
   });
-  tbody.innerHTML = data.map(r=>`<tr><td class="name">${r[0]}</td><td>${r[1]}</td><td class="t">${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td><td>${r[6]}</td><td>${r[7]}</td><td class="${cls(r[8])}">${r[8]}</td><td class="${cls(r[9])}">${r[9]}</td><td>${r[10]}</td><td class="${cls(r[11])}">${r[11]}</td></tr>`).join("");
+  tbody.innerHTML = data.map(r=>`<tr><td class="name">${r[0]}</td><td>${r[1]}</td><td class="t">${r[2]}</td><td>${LIVE.has(r[1]) ? livePx(r) + ` <span class="live" title="实时行情 (Yahoo) · 快照 ${r[3]}">⚡</span>` : r[3]}</td><td>${r[4]}</td><td>${r[5]}</td><td>${r[6]}</td><td>${r[7]}</td><td class="${cls(r[8])}">${r[8]}</td><td class="${cls(r[9])}">${r[9]}</td><td>${r[10]}</td><td class="${cls(r[11])}">${r[11]}</td></tr>`).join("");
 }
 document.querySelectorAll("#tbl th").forEach(th=>{
   th.onclick = ()=>{ const k = th.dataset.k; if(k===sortKey){desc=!desc} else {sortKey=k;desc=false} render(); };
 });
 render();
+(async function liveQuotes(){
+  try {
+    const symbols = rows.map(r=>r[1]).join(",");
+    const res = await fetch(`/api/market/quotes?symbols=${encodeURIComponent(symbols)}`);
+    const payload = await res.json();
+    if (!payload || !Array.isArray(payload.results)) return;
+    for (const q of payload.results) {
+      const m = q && q.marketMetrics;
+      if (q && q.symbol && m && Number.isFinite(m.currentPrice) && m.currentPrice > 0) {
+        LIVE.set(q.symbol, m.currentPrice);
+      }
+    }
+    if (LIVE.size) render();
+  } catch (e) { /* keep snapshot */ }
+})();
 </script>
 </body>
 </html>
