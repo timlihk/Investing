@@ -180,11 +180,13 @@ MANUAL = {
   "mobility-robotics": ["RIVN", "AUR", "CCXI"],
   "consumer": ["CAVA", "BROS", "AMC", "ALK"],
   # Global listed airport operators — regulated/grant-based traffic infrastructure
+  # Yahoo-valid symbols only: HK needs leading zeros (0357/0694), GMR = GMRAIRPORT.NS.
+  # Dropped 2026-08-11: ACV.VN (Vietnam), SEA.MI (Milan) — no Yahoo quote data.
   "airports": [
-    "AENA.MC", "ADP.PA", "FRA.DE", "FLU.VI", "FHZN.SW", "SEA.MI", "TAVHL.IS",
+    "AENA.MC", "ADP.PA", "FRA.DE", "FLU.VI", "FHZN.SW", "TAVHL.IS",
     "AOT.BK", "600009.SS", "600004.SS", "000089.SZ", "600897.SS",
-    "694.HK", "357.HK", "9706.T", "AIA.AX", "ACV.VN",
-    "ASR", "OMAB", "PAC", "GMRINFRA.NS",
+    "0694.HK", "0357.HK", "9706.T", "AIA.AX",
+    "ASR", "OMAB", "PAC", "GMRAIRPORT.NS",
   ],
   # Financial AI proxies without an operating software/infra core
   "other": ["SKM", "DXYZ"],
