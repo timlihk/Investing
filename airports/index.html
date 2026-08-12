@@ -38,8 +38,12 @@ td.name{text-align:left;font-weight:600;color:#f0f6fc}
 td.t{text-align:left;color:#8b949e;max-width:280px;white-space:normal;font-size:12px}
 tr:hover td{background:#161b2240}
 tr.row-hl td{background:#12263a55}
-.chart{margin-top:14px;height:320px}
-.chart iframe{width:100%;height:100%;border:1px solid #21262d;border-radius:8px;display:block}
+.chart{margin-top:14px;height:340px;position:relative;border:1px solid #21262d;border-radius:8px;background:#0a0e16;overflow:hidden}
+.chart svg{width:100%;height:100%;display:block}
+.chart-msg{color:#8b949e;font-size:12px;position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center}
+.chart .legend{position:absolute;top:10px;left:14px;right:14px;font-size:10.5px;color:#8b949e;display:flex;flex-wrap:wrap;gap:10px;z-index:2;pointer-events:none}
+.chart .legend b{font-weight:600;color:#f0f6fc}
+.chart .legend .sw{display:inline-block;width:10px;height:2px;vertical-align:middle;margin-right:3px;border-radius:1px}
 .flex{display:flex;gap:16px;flex-wrap:wrap}
 .flex>.col{flex:1 1 340px}
 .kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:12.5px;margin:10px 0}
@@ -61,7 +65,7 @@ footer a{color:#58a6ff}
 <body>
 <div class="top-bar">
   <h1>Airports 全球机场运营商</h1>
-  <div class="crumbs">research.mangrove-hk.org · Watchlist theme · data: Bloomberg 2026-08-07</div>
+  <div class="crumbs">research.mangrove-hk.org · Watchlist theme · data: Bloomberg 2026-08-07 · charts: Yahoo via /api/market</div>
 </div>
 
 <div class="wrap">
@@ -115,7 +119,7 @@ footer a{color:#58a6ff}
 </div>
 
 <h2 id="dives">重点深挖 <span class="zh">Deep dives</span></h2>
-<div class="sub">以下为公司级快照 —— 点开图表看 1Y 日线(10/20/50/200 SMA)。完整公司与估值数据见上表。</div>
+<div class="sub">以下为公司级快照 —— 图表为 1Y 日线 + 10/20/50/200 SMA，数据来自 Yahoo Finance(经本站 worker 代理)。完整公司与估值数据见上表。</div>
 
 <!-- ============ AENA ============ -->
 <div class="card deep">
@@ -130,7 +134,7 @@ footer a{color:#58a6ff}
 <div class="k">共识目标价</div><div class="v">€27.32 (+2%)</div>
 </div>
 <div class="quote">全球客运量第一大机场运营商：西班牙 21 座机场(马德里/巴塞罗那) + 伦敦卢顿 + 巴西 2 座。2026 年 6 月完成 10:1 拆股。监管收费模式 + 免税零售带来稳定自由现金流；估值已是欧洲机场之最，上行空间有限，适合收股息。</div>
-<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=AENA.MC&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+<div class="chart" data-sym="AENA.MC"><div class="chart-msg">加载中…</div></div>
 </div>
 
 <!-- ============ ADP ============ -->
@@ -146,7 +150,7 @@ footer a{color:#58a6ff}
 <div class="k">共识目标价</div><div class="v">€123.5 (+7%)</div>
 </div>
 <div class="quote">法国政府持股 ~51% 的巴黎机场集团(CDG/Orly)，同时是 <b>TAV 的 49% 大股东</b>——土耳其/中亚/沙特机场组合的间接敞口。FY2 EPS 预期 +15%，巴黎奥运会后流量正常化 + 塔台/免税改革释放盈利。公司治理友好度高于 Aena(更积极的回购/分红记录)。</div>
-<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=ADP.PA&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+<div class="chart" data-sym="ADP.PA"><div class="chart-msg">加载中…</div></div>
 </div>
 
 <!-- ============ FRA ============ -->
@@ -162,7 +166,7 @@ footer a{color:#58a6ff}
 <div class="k">共识目标价</div><div class="v">€77.5 (+16%)</div>
 </div>
 <div class="quote">法兰克福枢纽 + 全球 30 座机场特许权。集团口径净债务/EBITDA ≈ 9.2x——并购与德国 3 号航站楼资本开支压力下的典型"过山车"资产负债表(Fraport Greece 等减值历史)。近期 4 周 EPS 下修 −0.11，欧元区经济疲软拖累；高杠杆使它在三大欧洲机场中弹性最大、也最脆。</div>
-<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=FRA.DE&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+<div class="chart" data-sym="FRA.DE"><div class="chart-msg">加载中…</div></div>
 </div>
 
 <!-- ============ TAV ============ -->
@@ -178,7 +182,7 @@ footer a{color:#58a6ff}
 <div class="k">大股东</div><div class="v">Groupe ADP ~49%</div>
 </div>
 <div class="quote">土系国际机场特许经营商：阿拉木图(哈萨克 25 年)、安塔利亚/安卡拉/伊兹密尔(土耳其)、麦地那、格鲁吉亚等 15 座机场，并竞标沙特/印度新特许权。ADP 重度持股提供治理背书。这是名单里共识上行空间最大的一家——阿拉木图流量超预期 + 新特许权落地是双催化剂。</div>
-<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=TAVHL.IS&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+<div class="chart" data-sym="TAVHL.IS"><div class="chart-msg">加载中…</div></div>
 </div>
 
 <!-- ============ AOT ============ -->
@@ -194,7 +198,7 @@ footer a{color:#58a6ff}
 <div class="k">共识目标价</div><div class="v">฿65.3 (+3%)</div>
 </div>
 <div class="quote">泰国六座国际机场(素万那普/廊曼/普吉/清迈)。国际旅客恢复 + 航司运力回流带动 FY2 EPS +51%，是全名单最有"戴维斯双击"感的标的；但 46x TTM P/E 已计入大量乐观，FY2 P/E 仍近 31x。免税/商业面积扩张 + 卫星厅投运是亮点。</div>
-<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=AOT.BK&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+<div class="chart" data-sym="AOT.BK"><div class="chart-msg">加载中…</div></div>
 </div>
 
 <!-- ============ 9706 ============ -->
@@ -210,7 +214,7 @@ footer a{color:#58a6ff}
 <div class="k">共识目标价</div><div class="v">¥6,006 (+3.5%)</div>
 </div>
 <div class="quote">羽田机场全部客运航站楼(T1/T2 国内 + T3 国际)的专属运营商，免税店与餐饮租金随入境游客数走。FY26 入境游客创纪录 + 日元弱势 → 国际线零售高增。RSI 66 显示短期超买，但结构独占 + 酒店(JFLA)与机场外零售扩张仍支撑 20x 估值。</div>
-<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=9706.T&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+<div class="chart" data-sym="9706.T"><div class="chart-msg">加载中…</div></div>
 </div>
 
 <!-- ============ 600009 ============ -->
@@ -226,7 +230,7 @@ footer a{color:#58a6ff}
 <div class="k">共识目标价</div><div class="v">¥26.23 (+10%)</div>
 </div>
 <div class="quote">虹桥 + 浦东双场。国内消费疲软 + 航空性收费下调预期 + 免税新政冲击(2025 起口岸免税额度调整)是三大压制；但国际线客座率恢复 + 上海枢纽地位 + 2.3% 股息提供底线。中国四家机场中估值最"白马"也最贵——厦门/深圳更便宜。</div>
-<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=600009.SS&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+<div class="chart" data-sym="600009.SS"><div class="chart-msg">加载中…</div></div>
 </div>
 
 <!-- ============ ACV ============ -->
@@ -241,13 +245,13 @@ footer a{color:#58a6ff}
 <div class="k">共识目标价</div><div class="v">₫45,300 (+7%)</div>
 </div>
 <div class="quote">越南 21 座机场垄断运营商。隆城国际机场(Long Thanh)一期投运带来巨额折旧/利息——共识预测 FY2 净利下滑 ~28%，这也是 1Y −37% 的直接原因。基建重周期买点逻辑：折旧高峰过后 FX/利润弹性 + 越南旅客复合增长。P/B 与 P/E(FY1)均为区域最低档。</div>
-<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=ACV.VN&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+<div class="chart" data-sym="ACV.VN" data-note="Yahoo Finance 暂无 ACV 越南代码行情流"><div class="chart-msg">加载中…</div></div>
 </div>
 
 <!-- ============ GMR ============ -->
 <div class="card deep">
 <h3>GMR Airports<span class="pill dodge">贵但高增</span></h3>
-<div class="meta">GMRINFRA.NS (GMRAIRPO IN) · 印度 · ~$13.2B · 7 位分析师 · 评级 4.71</div>
+<div class="meta">GMRAIRPORT.NS (ex-GMRINFRA) · 印度 · ~$13.2B · 7 位分析师 · 评级 4.71</div>
 <div class="kv">
 <div class="k">价格(INR)</div><div class="v">₹106.5</div>
 <div class="k">P/E FY1 → FY2</div><div class="v">163x → 75.6x</div>
@@ -257,7 +261,7 @@ footer a{color:#58a6ff}
 <div class="k">净债务/EBITDA</div><div class="v">6.76x</div>
 </div>
 <div class="quote">印度最大民营机场平台：德里(IND)、海德拉巴、果阿 (MOPA)。FY2 净利预期 15.5B 卢比 → EPS +115%，EBITDA 增量 140 亿卢比；但 76x FY2 P/E + 6.8x 净杠杆说明"增长已入价"。ADP 亦持股，印度流量 2 位数增长是长期叙事，容错空间小。</div>
-<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=GMRINFRA.NS&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+<div class="chart" data-sym="GMRAIRPORT.NS"><div class="chart-msg">加载中…</div></div>
 </div>
 
 <!-- ============ MEXICO TRIO ============ -->
@@ -272,7 +276,7 @@ footer a{color:#58a6ff}
 <div class="k">持仓主题</div><div class="v">坎昆与加勒比度假 · 蒙特雷-近岸工业走廊 · 蒂华纳/太平洋海岸</div>
 </div>
 <div class="quote">三家墨西哥特许经营商(通行在 2048–2063)是名单里股息与估值最"价值"的组合：~5% 股息率 + FY2 11–14x，2026–31 五年收费重设(新 CPI 机制)落地前市场压估值。关税/移民政策是共同尾部风险；ASR 的度假流量与 OMA 的蒙特雷制造走廊与美国经济最相关。</div>
-<div class="chart"><iframe src="https://s.tradingview.com/widgetembed/?symbol=ASR&interval=D&theme=dark&style=1&studies=%5B%22MA10%40tv-basicstudies%22%2C%22MA20%40tv-basicstudies%22%2C%22MA50%40tv-basicstudies%22%2C%22MA200%40tv-basicstudies%22%5D" loading="lazy"></iframe></div>
+<div class="chart" data-sym="ASR"><div class="chart-msg">加载中…</div></div>
 </div>
 
 <h2>速览 (其余公司) <span class="zh">Quick takes</span></h2>
@@ -326,7 +330,8 @@ footer a{color:#58a6ff}
 
 <footer>
 <p>数据来源: Bloomberg Terminal (2026-08-07 收盘/共识) · P/E FY1/FY2 = 现价 ÷ 彭博 BEST_EPS · 市值约为彭博 CUR_MKT_CAP(部分按当日汇率换算 USD) · 墨西哥三家 FY2 P/E 及 TAV P/E 为以本币共识 EPS × 汇率折算的估算值(ADR 比例未逐家核对,仅作量级参考) · 股息率为彭博估计股息率 (EQY_DVD_YLD_EST)。
-数据缺口声明: SEA Milan (彭博无数据流 + 免费数据源无法确认, 已标注⚠️) · Xiamen (仅 1 位分析师, 无目标价) · ACV 股息率为 0 (资本开支周期)。
+数据缺口声明: SEA Milan (彭博无数据流 + 免费数据源无法确认, 已标注⚠️) · Xiamen (仅 1 位分析师, 无目标价) · ACV 股息率为 0 (资本开支周期) · ACV 图表: Yahoo 无越南代码 · GMR 图表用 Yahoo <code>GMRAIRPORT.NS</code>。
+图表: 1Y 日线 + SMA10/20/50/200 via worker <code>/api/market/detail</code>（Yahoo delayed）。
 关联: <a href="../watchlist/">Watchlist 主页</a> · <a href="../index.html">Research Hub</a> · 完整名单同步于 Obsidian Watchlist (tags: airports)。</p>
 </footer>
 </div>
@@ -353,14 +358,26 @@ const rows = [
 ["ASUR","ASR","美洲 · 墨西哥","$276.68","$8.3B","~11x*","—","4.9%","−14.4%","−11.2%","3.89 买","+22%"],
 ["OMA","OMAB","美洲 · 墨西哥","$110.44","$5.4B","~12.6x*","—","5.2%","+1.5%","+1.4%","4.20 买","+11%"],
 ["GAP","PAC","美洲 · 墨西哥","$222.70","$11.3B","~14.2x*","—","5.2%","−15.5%","−8.0%","4.11 买","+17%"],
-["GMR Airports","GMRINFRA.NS","南亚 · 印度","₹106.5","~$13.2B","163x","75.6x","0%","+2.1%","+17.5%","4.71 买","+13%"],
+["GMR Airports","GMRAIRPORT.NS","南亚 · 印度","₹106.5","~$13.2B","163x","75.6x","0%","+2.1%","+17.5%","4.71 买","+13%"],
 ];
-const cls = v => v.startsWith("+") ? "pos" : v.startsWith("−") ? "neg" : "";
-const LIVE = new Map();
+
+// Yahoo Finance symbol aliases (table/display ticker → Yahoo)
+const YF_MAP = {
+  "GMRINFRA.NS": "GMRAIRPORT.NS",
+  "ACV.VN": null, // not on Yahoo
+  "SEA.MI": null,
+};
+function yfSymbol(sym){
+  if (Object.prototype.hasOwnProperty.call(YF_MAP, sym)) return YF_MAP[sym];
+  return sym;
+}
+
+const cls = v => String(v).startsWith("+") ? "pos" : String(v).startsWith("−") || String(v).startsWith("-") ? "neg" : "";
+const LIVE = new Map(); // keyed by display ticker (row[1])
 const livePx = r => {
   const v = LIVE.get(r[1]);
   if (v == null) return r[3];
-  const cur = (r[3].match(/[^\d.,\s-]+/) || [""])[0];
+  const cur = (String(r[3]).match(/[^\d.,\s+-]+/) || [""])[0];
   return cur + v.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2});
 };
 const tbody = document.querySelector("#tbl tbody");
@@ -379,21 +396,131 @@ document.querySelectorAll("#tbl th").forEach(th=>{
   th.onclick = ()=>{ const k = th.dataset.k; if(k===sortKey){desc=!desc} else {sortKey=k;desc=false} render(); };
 });
 render();
+
 (async function liveQuotes(){
   try {
-    const symbols = rows.map(r=>r[1]).join(",");
-    const res = await fetch(`/api/market/quotes?symbols=${encodeURIComponent(symbols)}`);
-    const payload = await res.json();
-    if (!payload || !Array.isArray(payload.results)) return;
-    for (const q of payload.results) {
-      const m = q && q.marketMetrics;
-      if (q && q.symbol && m && Number.isFinite(m.currentPrice) && m.currentPrice > 0) {
-        LIVE.set(q.symbol, m.currentPrice);
+    // batch quotes; map display → yahoo and back
+    const display = rows.map(r=>r[1]).filter(t => yfSymbol(t));
+    const yahoo = display.map(yfSymbol).filter(Boolean);
+    // reverse map yahoo → display (first wins)
+    const back = new Map();
+    for (const d of display) {
+      const y = yfSymbol(d);
+      if (y && !back.has(y)) back.set(y, d);
+    }
+    // Yahoo multi-quote is flaky with huge batches — split
+    const batches = [];
+    for (let i=0; i<yahoo.length; i+=12) batches.push(yahoo.slice(i, i+12));
+    for (const batch of batches) {
+      const res = await fetch(`/api/market/quotes?symbols=${encodeURIComponent(batch.join(","))}`);
+      if (!res.ok) continue;
+      const payload = await res.json();
+      if (!payload || !Array.isArray(payload.results)) continue;
+      for (const q of payload.results) {
+        const m = q && q.marketMetrics;
+        if (!q || !q.symbol || !m || !Number.isFinite(m.currentPrice) || m.currentPrice <= 0) continue;
+        const disp = back.get(q.symbol) || q.symbol;
+        LIVE.set(disp, m.currentPrice);
       }
     }
     if (LIVE.size) render();
   } catch (e) { /* keep snapshot */ }
 })();
+
+// ---- charts: Yahoo 1Y daily + SMA via worker /api/market/detail ----
+function sma(vals, n){
+  const out = new Array(vals.length).fill(null);
+  let sum = 0;
+  for (let i=0;i<vals.length;i++){
+    sum += vals[i];
+    if (i>=n) sum -= vals[i-n];
+    if (i>=n-1) out[i] = sum/n;
+  }
+  return out;
+}
+function pathFromSeries(pts, X, Y){
+  // correct SVG path: restart with M after nulls (SMA warm-up)
+  let d = "", pen = false;
+  for (let i=0;i<pts.length;i++){
+    const v = pts[i];
+    if (v == null || !Number.isFinite(v)) { pen = false; continue; }
+    d += (pen ? "L" : "M") + X(i).toFixed(2) + "," + Y(v).toFixed(2);
+    pen = true;
+  }
+  return d;
+}
+function setChartMsg(el, text){
+  el.innerHTML = `<div class="chart-msg">${text}</div>`;
+}
+async function drawChart(el, displaySym){
+  const note = el.dataset.note || "";
+  const yf = yfSymbol(displaySym);
+  if (yf == null){
+    setChartMsg(el, note || `无 Yahoo 行情代码 · ${displaySym}`);
+    return;
+  }
+  setChartMsg(el, "加载中…");
+  try {
+    const res = await fetch(`/api/market/detail?symbol=${encodeURIComponent(yf)}&rangeDays=365`);
+    const p = await res.json().catch(()=>({}));
+    if (!res.ok){
+      setChartMsg(el, note || `图表失败 (${res.status}) · ${displaySym}`);
+      return;
+    }
+    const series = (p && p.marketMetrics && p.marketMetrics.chartSeries) || [];
+    const closes = series.map(pt => Number(pt && pt.value)).filter(Number.isFinite);
+    if (closes.length < 30){
+      setChartMsg(el, note || `无足够历史数据 · ${displaySym}`);
+      return;
+    }
+    const W = 960, H = 320, padL = 12, padR = 12, padT = 36, padB = 18;
+    const V = closes.length;
+    const min = Math.min(...closes), max = Math.max(...closes), span = (max - min) || 1;
+    const X = i => padL + i * (W - padL - padR) / Math.max(1, V - 1);
+    const Y = v => padT + (1 - (v - min) / span) * (H - padT - padB);
+    const last = closes[closes.length - 1];
+    const first = closes[0];
+    const up = last >= first;
+    const chg = ((last / first) - 1) * 100;
+    const layers = [
+      [closes, up ? "#3fb950" : "#f85149", 2.0],
+      [sma(closes, 10), "#58a6ff", 1.25],
+      [sma(closes, 20), "#d29922", 1.2],
+      [sma(closes, 50), "#bc8cff", 1.15],
+      [sma(closes, 200), "#8b949e", 1.1],
+    ];
+    const paths = layers.map(([pts, color, w]) => {
+      const d = pathFromSeries(pts, X, Y);
+      return d ? `<path d="${d}" fill="none" stroke="${color}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>` : "";
+    }).join("");
+    const grid = [0.25, 0.5, 0.75].map(f => {
+      const y = padT + (1 - f) * (H - padT - padB);
+      return `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#21262d" stroke-width="1"/>`;
+    }).join("");
+    const fmt = n => n >= 1000 ? n.toLocaleString("en-US", {maximumFractionDigits: 0}) : n.toLocaleString("en-US", {maximumFractionDigits: 2});
+    el.innerHTML = `
+      <div class="legend">
+        <b>${displaySym}${yf !== displaySym ? ` <span style="color:#8b949e;font-weight:500">(${yf})</span>` : ""}</b>
+        <span style="color:${up ? "#3fb950" : "#f85149"}">${up ? "▲" : "▼"} ${fmt(last)} (${chg >= 0 ? "+" : ""}${chg.toFixed(1)}% 1Y)</span>
+        <span><i class="sw" style="background:#58a6ff"></i>SMA10</span>
+        <span><i class="sw" style="background:#d29922"></i>SMA20</span>
+        <span><i class="sw" style="background:#bc8cff"></i>SMA50</span>
+        <span><i class="sw" style="background:#8b949e"></i>SMA200</span>
+      </div>
+      <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="${displaySym} 1Y chart">${grid}${paths}</svg>`;
+  } catch (e) {
+    setChartMsg(el, note || `图表加载失败 · ${displaySym}`);
+  }
+}
+document.querySelectorAll(".chart[data-sym]").forEach(el=>{
+  const io = new IntersectionObserver((entries)=>{
+    if (entries.some(e=>e.isIntersecting)){
+      drawChart(el, el.dataset.sym);
+      io.disconnect();
+    }
+  }, {rootMargin:"400px"});
+  io.observe(el);
+});
 </script>
 </body>
 </html>
