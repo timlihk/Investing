@@ -265,9 +265,11 @@ window.WATCHLIST_THEMES = [
     name: "Biotech & Life Sciences 生科",
     tagline: "Clinical biopharma pipelines and life-science tools / diagnostics.",
     tickers: [
+      { symbol: "1548.HK", name: "GenScript Biotech 金斯瑞" },
       { symbol: "ABVX", name: "Abivax (ADR)" },
       { symbol: "DHR", name: "Danaher" },
       { symbol: "NKTR", name: "Nektar" },
+      { symbol: "TWST", name: "Twist Bioscience" },
     ]
   },
   {
@@ -348,8 +350,20 @@ window.WATCHLIST_THEMES = [
     name: "Watchlist Other 其他",
     tagline: "True residuals — AI equity financial proxies without an operating theme.",
     tickers: [
+      { symbol: "1876.HK", name: "Budweiser APAC 百威亚太" },
+      { symbol: "2015.HK", name: "Li Auto 理想汽车" },
+      { symbol: "2097.HK", name: "Mixue 蜜雪冰城" },
+      { symbol: "3931.HK", name: "CALB 中创新航" },
+      { symbol: "601127.SS", name: "赛力斯" },
+      { symbol: "601888.SS", name: "中国中免" },
+      { symbol: "605499.SS", name: "东鹏饮料" },
+      { symbol: "9633.HK", name: "Nongfu Spring 农夫山泉" },
+      { symbol: "9992.HK", name: "Pop Mart 泡泡玛特" },
+      { symbol: "CHA", name: "Chagee 霸王茶姬" },
       { symbol: "DXYZ", name: "Destiny Tech100" },
       { symbol: "SKM", name: "SK Telecom" },
+      { symbol: "TME", name: "Tencent Music 腾讯音乐" },
+      { symbol: "WB", name: "Weibo Corp 微博" },
     ]
   },
 ];
