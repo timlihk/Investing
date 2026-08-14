@@ -67,10 +67,11 @@ Dashboard views:
 |-----|------|------------|
 | **Chokepoint Dashboard** | `dib-dashboard.html` | 68-name scored book by layer |
 | **Intelligent Mass** | `intelligent-mass.html` | Anduril-letter theme: autonomy + software + capacity vs bottlenecks; public expressions (LHX, RTX, KTOS, AVAV, PLTR) |
+| **Drone Stack** | `drone-theme.html` | Coffee House 7-layer drone book (C-UAS → platforms → batteries → components → ISR → comms/factories → autonomy SW), re-priced Aug 2026 |
 | **Value Chain Layers** | `supply-chain-map.html` | Visual layer map |
 | **Economics Scatter** | `chokepoint-economics.html` | Chokepoint score vs price |
 
-Deep-link the theme tab: `https://research.mangrove-hk.org/defense-industrial-base/?tab=mass`
+Deep-link theme tabs: `?tab=mass` · `?tab=drone`
 
 ## Kill conditions
 
