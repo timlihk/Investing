@@ -25,10 +25,11 @@ iframe{flex:1;border:none;width:100%}
   <div class="tabs">
     <div class="tab active" onclick="switchTab('dashboard',this)"><span class="icon">&#9638;</span>Chokepoint Dashboard</div>
     <div class="tab" onclick="switchTab('mass',this)"><span class="icon">&#9881;</span>Intelligent Mass</div>
+    <div class="tab" onclick="switchTab('drone',this)"><span class="icon">&#9992;</span>Drone Stack</div>
     <div class="tab" onclick="switchTab('layers',this)"><span class="icon">&#9776;</span>Value Chain Layers</div>
     <div class="tab" onclick="switchTab('economics',this)"><span class="icon">&#9701;</span>Economics Scatter</div>
   </div>
-  <div class="info">68 companies &middot; 8 layers &middot; + Intelligent Mass theme &middot; US / JP / KR / EU</div>
+  <div class="info">68 companies &middot; 8 layers &middot; Intelligent Mass + Drone Stack &middot; US / JP / KR / EU</div>
 </div>
 <iframe id="view" src="dib-dashboard.html" title="Defense Industrial Base dashboard"></iframe>
 <script>
@@ -38,12 +39,13 @@ function switchTab(view, el){
   const pages = {
     dashboard: 'dib-dashboard.html',
     mass: 'intelligent-mass.html',
+    drone: 'drone-theme.html',
     layers: 'supply-chain-map.html',
     economics: 'chokepoint-economics.html'
   };
   document.getElementById('view').src = pages[view] || pages.dashboard;
 }
-// Deep-link: ?tab=mass | layers | economics | dashboard
+// Deep-link: ?tab=mass | drone | layers | economics | dashboard
 (function(){
   const q = new URLSearchParams(location.search).get('tab');
   if (!q) return;

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drone Stack — 7-Layer Supply Chain</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#080b12;color:#c9d1d9;font-size:13px;padding:0 0 72px;line-height:1.55}
+a{color:#58a6ff;text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1280px;margin:0 auto;padding:22px 18px}
+.head{border-bottom:1px solid #21262d;padding-bottom:16px;margin-bottom:18px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#f0883e;font-weight:600;margin-bottom:8px}
+.head h1{font-size:22px;color:#f0f6fc;font-weight:700;letter-spacing:-.02em}
+.head .sub{color:#8b949e;margin-top:8px;line-height:1.65;max-width:980px}
+.asof{color:#484f58;font-size:11px;margin-top:10px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.pill{display:inline-flex;padding:5px 10px;border-radius:999px;background:#161b22;border:1px solid #21262d;color:#8b949e;font-size:11px}
+.pill b{color:#e6edf3;font-weight:600}
+
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+.card{background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:14px 16px}
+.card h3{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#58a6ff;margin-bottom:8px;font-weight:600}
+.card h3.orange{color:#f0883e}
+.card h3.amber{color:#d29922}
+.card h3.green{color:#3fb950}
+.card h3.purple{color:#a78bfa}
+.card p{color:#8b949e;line-height:1.65;font-size:12.5px}
+.card b{color:#e6edf3;font-weight:600}
+.card ul{margin:8px 0 0 16px;color:#8b949e;font-size:12.5px}
+.card li{margin:4px 0}
+
+.section{margin:28px 0 12px}
+.section h2{font-size:15px;color:#f0f6fc;font-weight:700;margin-bottom:6px}
+.section .hint{color:#6e7681;font-size:12px;margin-bottom:12px;max-width:980px}
+
+.stack{display:grid;gap:8px;margin:14px 0}
+.layer-row{display:grid;grid-template-columns:200px 1fr 170px;gap:12px;align-items:start;background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px 14px}
+.layer-row .ln{font-weight:700;color:#f0f6fc;font-size:12.5px}
+.layer-row .lt{font-size:10px;color:#6e7681;margin-top:3px;text-transform:uppercase;letter-spacing:.06em}
+.layer-row .ld{color:#8b949e;font-size:12px;line-height:1.55}
+.layer-row .le{font-size:11px;color:#9aa4b2;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;line-height:1.45}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.05em;padding:2px 6px;border-radius:3px;margin-bottom:4px}
+.t-cuas{background:#f8514918;color:#f85149;border:1px solid #f8514944}
+.t-plat{background:#58a6ff18;color:#58a6ff;border:1px solid #58a6ff44}
+.t-batt{background:#3fb95018;color:#3fb950;border:1px solid #3fb95044}
+.t-comp{background:#d2992218;color:#d29922;border:1px solid #d2992244}
+.t-isr{background:#a78bfa18;color:#a78bfa;border:1px solid #a78bfa44}
+.t-fill{background:#8b949e18;color:#8b949e;border:1px solid #8b949e44}
+.t-soft{background:#f0883e18;color:#f0883e;border:1px solid #f0883e44}
+
+table{width:100%;border-collapse:collapse;background:#0d1117;border:1px solid #21262d;border-radius:9px;overflow:hidden;margin-top:8px}
+th{background:#161b22;color:#8b949e;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;padding:8px 10px;text-align:left;border-bottom:1px solid #21262d}
+th.num,td.num{text-align:right}
+td{padding:10px;border-bottom:1px solid #161b22;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover{background:#161b2288}
+.tk{font-family:ui-monospace,Menlo,monospace;color:#e6edf3;font-weight:600;font-size:12px}
+.nm{color:#8b949e;font-size:11px;margin-top:2px}
+.one{color:#9aa4b2;font-size:12px;line-height:1.5;max-width:420px}
+.pos{color:#3fb950}.neg{color:#f85149}.flat{color:#8b949e}
+.mono{font-family:ui-monospace,Menlo,monospace}
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.04em}
+.b-core{background:#3fb95022;color:#3fb950;border:1px solid #3fb95055}
+.b-theme{background:#58a6ff22;color:#58a6ff;border:1px solid #58a6ff55}
+.b-watch{background:#d2992222;color:#d29922;border:1px solid #d2992255}
+.b-rich{background:#f8514922;color:#f85149;border:1px solid #f8514955}
+.b-priv{background:#a371f722;color:#a371f7;border:1px solid #a371f755}
+
+.impl{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.impl .card h3{font-size:12px;letter-spacing:.04em;text-transform:none;color:#e6edf3}
+.impl .card .n{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:6px;background:#f0883e33;color:#f0883e;font-size:11px;font-weight:700;margin-right:8px}
+
+.quote{margin:18px 0;padding:16px 18px;background:#0d1117;border:1px solid #21262d;border-left:3px solid #f0883e;border-radius:6px;color:#9aa4b2;font-size:13px;line-height:1.7}
+.quote b{color:#e6edf3}
+
+.note{margin-top:28px;padding:14px 16px;background:#0d1117;border:1px solid #21262d;border-left:3px solid #58a6ff;border-radius:6px;color:#8b949e;line-height:1.7;font-size:12px}
+.note b{color:#e6edf3}
+.cross{margin-top:14px;padding:12px 14px;background:#161b22;border:1px solid #30363d;border-radius:8px;font-size:12px;color:#8b949e}
+.cross a{font-weight:600}
+
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+.kpi .card{text-align:left}
+.kpi .v{font-size:20px;font-weight:700;color:#f0f6fc;font-family:ui-monospace,Menlo,monospace;margin:4px 0}
+.kpi .l{font-size:11px;color:#6e7681}
+
+.chart-wrap{background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:12px 14px 8px}
+.chart-wrap .legend{display:flex;flex-wrap:wrap;gap:10px 14px;margin:8px 0 4px;font-size:11px;color:#8b949e}
+.chart-wrap .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+svg.rel{width:100%;height:auto;display:block}
+
+@media (max-width:980px){
+  .grid3,.grid2,.impl,.kpi{grid-template-columns:1fr}
+  .layer-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="head">
+  <div class="eyebrow">Thematic long · Defence · Attritable drones + C-UAS + domestic stack</div>
+  <h1>Drone Stack — The Weapon of This Decade</h1>
+  <div class="sub">
+    Framework taken from <a href="https://x.com/CoffeeStocksGuy/status/2029203893754761671" target="_blank" rel="noopener">Coffee House Stocks (@CoffeeStocksGuy), 4 Mar 2026</a>.
+    The March note mapped drones as a <b style="color:#e6edf3">seven-layer industrial stack</b> and priced a $45B → $400B TAM.
+    Five months later the tape has already sorted the book: <b style="color:#e6edf3">UMAC / AMPX / PL held or ran</b>;
+    <b style="color:#e6edf3">AVAV / KTOS / DRO de-rated hard from the March peak</b>.
+    The question now is not “are drones real” — it is <b style="color:#e6edf3">which layer still has unpriced execution</b>.
+  </div>
+  <div class="pills">
+    <span class="pill">Source: <b>@CoffeeStocksGuy</b> · 4 Mar 2026</span>
+    <span class="pill">Oppenheimer TAM <b>$45B → $400B</b></span>
+    <span class="pill">DoD FY26 autonomy <b>$13.4B</b> · C-UAS <b>$3.1B</b></span>
+    <span class="pill">C-UAS TAM <b>$2.7B → $34B</b> by 2035</span>
+    <span class="pill">Watchlist theme: Defense &amp; Drones</span>
+  </div>
+  <div class="asof">Market data: Bloomberg 2026-08-14 · FX AUDUSD 0.7072 · ILS 2.9512/USD · 1Y relative chart: Yahoo weekly closes · Not investment advice</div>
+</div>
+
+<div class="kpi">
+  <div class="card"><div class="l">Public book (this page)</div><div class="v">$47B</div><div class="l">9 listed names, USD mcap</div></div>
+  <div class="card"><div class="l">March → Aug tape</div><div class="v">Split</div><div class="l">UMAC +166% mcap · AVAV −46% · DRO −49%</div></div>
+  <div class="card"><div class="l">Street sales 1FY</div><div class="v">$530M</div><div class="l">ONDS consensus — was $170-180M guide in March</div></div>
+  <div class="card"><div class="l">Shield AI (private)</div><div class="v">$5.3B</div><div class="l">Mar 2025 Series F · Hivemind · IPO watch</div></div>
+</div>
+
+<div class="grid3">
+  <div class="card">
+    <h3 class="orange">Cost asymmetry</h3>
+    <p>A Shahed-136 is <b>$20–38k</b>; a Patriot interceptor is <b>&gt;$3M</b>. A $500 FPV can kill an $82.5M F-35. Ukraine’s Spider’s Web: $234k of drones vs ~$7B of Russian bombers. The defender’s intercept economics are broken unless C-UAS is cheap, layered, and recurring.</p>
+  </div>
+  <div class="card">
+    <h3>The $400B framing</h3>
+    <p>Oppenheimer (27 Feb 2026) called drones the fastest physical-AI pocket. Grand View: $83.8B (2025) → $182.5B (2033). Warfare subsector $75.8B by 2035. Anti-drone $2.7B → $34B (28.8% CAGR). Lower-skies (C-UAS + tactical UAS + UGS) grows at <b>2× the broader defence market</b>.</p>
+  </div>
+  <div class="card">
+    <h3 class="amber">What the tape already did</h3>
+    <p>March priced the Iran-war “years of demand into months” story at peak multiples. AVAV $17.7B → <b>$9.6B</b>. DRO $2.5B → <b>$1.3B</b>. UMAC $511M → <b>$1.36B</b>. Thesis intact; <b>entry prices are not March prices</b>.</p>
+  </div>
+</div>
+
+<div class="quote">
+  Coffee House: <b>“The country that can mass-produce cheap attritable drones and simultaneously build layered counter-drone defences will define the next era of military superiority.”</b>
+  That is the same industrial-war point as the sibling <a href="intelligent-mass.html">Intelligent Mass</a> tab — this page is the <b>drone-specific, company-by-company cut</b> of that stack.
+</div>
+
+<!-- 7 LAYERS -->
+<div class="section">
+  <h2>The 7-layer supply chain</h2>
+  <div class="hint">Layers 1–5 and 7 are Coffee House’s original map. Layer 6 was never named in the post (a reply asked; no answer). We fill it as comms / spectrum / private production capacity — flagged as interpolation, not source.</div>
+  <div class="stack">
+    <div class="layer-row">
+      <div>
+        <span class="tag t-cuas">Layer 1</span>
+        <div class="ln">Counter-drone (C-UAS)</div>
+        <div class="lt">Most direct Iran-conflict bid</div>
+      </div>
+      <div class="ld"><b>Ondas (ONDS)</b> — Iron Drone Raider (net interceptor) + Sentrycs Cyber-over-RF (takeover, not jam) + World View ISR. Street now prints <b>$530M 1FY sales</b> vs $51M TTM — that is a 10× ramp the market is already paying 22× trailing sales for. <b>DroneShield (DRO.AX)</b> is the cleanest listed C-UAS pure-play (DroneSentry / DroneGun / RfPatrol). FY25 A$217M / first profit, but 4-week sales revisions are <b>−A$67M / −A$99.5M</b> and the stock has halved from the March $2.5B print.</div>
+      <div class="le">ONDS · DRO.AX<br>AVAV BlueHalo</div>
+    </div>
+    <div class="layer-row">
+      <div>
+        <span class="tag t-plat">Layer 2</span>
+        <div class="ln">Manufacturers + CCA</div>
+        <div class="lt">Visible · already owned</div>
+      </div>
+      <div class="ld"><b>AeroVironment (AVAV)</b> — Switchblade 300/600 consumable munitions (razor/blade). TTM sales now <b>$1.98B</b>; 1FY street $2.19B. Best downside floor in the original note, and the market treated it that way by cutting it from $17.7B to $9.6B. <b>Red Cat (RCAT)</b> — Black Widow / FANG, Blue UAS, FCC Chinese-drone ban as the regulatory moat. Execution still the risk (Q3’25 miss). <b>Kratos (KTOS)</b> — XQ-58A Valkyrie loyal wingman + hypersonics ($400M → $700M path in the March note). Closest listed CCA analogue; still 78× 1FY EPS.</div>
+      <div class="le">AVAV · RCAT · KTOS<br>Anduril / Neros / PDW</div>
+    </div>
+    <div class="layer-row">
+      <div>
+        <span class="tag t-batt">Layer 3</span>
+        <div class="ln">Batteries (silicon anode)</div>
+        <div class="lt">Binding constraint</div>
+      </div>
+      <div class="ld"><b>Amprius (AMPX)</b> — 520 Wh/kg silicon-anode cells (≈2× graphite), 80% charge in ~6 min, NDAA path (DoD battery China/Russia ban from Jan 2028). Customers cited: AVAV, L3Harris, Teledyne FLIR, Airbus AALTO. TTM $73M → street $141M / $212M. One of the few names that is <b>up YTD (+51%)</b> after the March note. Physics moat is real; production scale is the kill condition.</div>
+      <div class="le">AMPX</div>
+    </div>
+    <div class="layer-row">
+      <div>
+        <span class="tag t-comp">Layer 4</span>
+        <div class="ln">Components (motors / FC / cameras)</div>
+        <div class="lt">Highest beta · call option</div>
+      </div>
+      <div class="ld"><b>Unusual Machines (UMAC)</b> — NDAA-compliant motors, Aura camera/VTX, Brave FC/ESC, FANG with RCAT. March mcap $511M → <b>$1.36B</b> (+166%). Street 1FY sales $56M on $11M TTM — still a story stock (38× trailing sales). This is the name the original note called “highest asymmetry, highest risk.” The asymmetry compressed. Domestic motor cost-parity vs T-Motor is still the proof point.</div>
+      <div class="le">UMAC · RCAT FANG</div>
+    </div>
+    <div class="layer-row">
+      <div>
+        <span class="tag t-isr">Layer 5</span>
+        <div class="ln">ISR / satellite imagery</div>
+        <div class="lt">Strategic layer, not tactical</div>
+      </div>
+      <div class="ld"><b>Planet Labs (PL)</b> — 200+ Dove/Pelican birds, daily global revisit, $435M / $569M street sales, $735M backlog in the March note. Drones are tactical; satellites cue them. Not on the Obsidian watchlist until this wiring. Also <b>NextVision (NXSN.TA)</b> — micro-stabilized drone cameras, already on the defense watchlist; 2026 guide $315M, street now $356M / $492M, 60% operating margin. The profitable optics pick in a book of loss-makers.</div>
+      <div class="le">PL · NXSN.TA</div>
+    </div>
+    <div class="layer-row">
+      <div>
+        <span class="tag t-fill">Layer 6 · interpolated</span>
+        <div class="ln">Comms, spectrum, private factories</div>
+        <div class="lt">Blank in the source post</div>
+      </div>
+      <div class="ld">Coffee House never defined Layer 6. Working fill: <b>licensed spectrum + private production</b>. FCC-24-91 5 GHz drone band (RCAT catalyst). Private builders that actually win Phase I/II Gauntlet — <b>Neros, PDW, Powerus, Teal, Firestorm</b> — plus ONDS Drone Factory 01 (100k/yr, Huntsville). If Neros/PDW IPO, they absorb the scarcity premium currently sitting in RCAT/UMAC/ONDS.</div>
+      <div class="le">Neros · PDW · Powerus<br>FCC 5 GHz · Factory 01</div>
+    </div>
+    <div class="layer-row">
+      <div>
+        <span class="tag t-soft">Layer 7</span>
+        <div class="ln">Autonomy software</div>
+        <div class="lt">GPS-denied brain</div>
+      </div>
+      <div class="ld"><b>Shield AI (private)</b> — Hivemind on F-16 / MQ-20 / drones in comms-denied airspace. $5.3B post $240M Series F (Mar 2025); L3Harris, Hanwha, a16z. Public expressions: <b>PLTR</b> (neutral C2) and AVAV mission software. Same “software layer still up for grabs” fight as Intelligent Mass / Lattice.</div>
+      <div class="le">Shield AI (priv)<br>PLTR · AVAV SW</div>
+    </div>
+  </div>
+</div>
+
+<!-- RELATIVE CHART -->
+<div class="section">
+  <h2>1-year relative performance (base 100, weekly)</h2>
+  <div class="hint">Yahoo weekly closes from 11 Aug 2025. NXSN omitted — TASE series has an unadjusted corporate action that makes a 1Y index meaningless (Bloomberg YTD −2.4% is the real number).</div>
+  <div class="chart-wrap">
+    <svg class="rel" viewBox="0 0 800 280" role="img" aria-label="One-year relative performance of drone-stack names">
+      <rect x="0" y="0" width="800" height="280" fill="#0d1117"/>
+      <g stroke="#21262d" stroke-width="1">
+        <line x1="48" y1="16" x2="48" y2="244"/>
+        <line x1="48" y1="244" x2="784" y2="244"/>
+        <line x1="48" y1="180.4" x2="784" y2="180.4" stroke-dasharray="3 4"/>
+        <line x1="48" y1="116.8" x2="784" y2="116.8" stroke-dasharray="3 4"/>
+        <line x1="48" y1="53.2" x2="784" y2="53.2" stroke-dasharray="3 4"/>
+      </g>
+      <text x="40" y="248" fill="#6e7681" font-size="10" text-anchor="end">40</text>
+      <text x="40" y="184" fill="#6e7681" font-size="10" text-anchor="end">140</text>
+      <text x="40" y="120" fill="#6e7681" font-size="10" text-anchor="end">240</text>
+      <text x="40" y="56" fill="#6e7681" font-size="10" text-anchor="end">340</text>
+      <text x="48" y="262" fill="#6e7681" font-size="10">Aug 25</text>
+      <text x="270" y="262" fill="#6e7681" font-size="10">Dec 25</text>
+      <text x="492" y="262" fill="#6e7681" font-size="10">Mar 26</text>
+      <text x="714" y="262" fill="#6e7681" font-size="10">Jul 26</text>
+      <path d="M48.0,202.3 L61.9,210.3 L75.8,214.7 L89.7,218.9 L103.5,216.1 L117.4,215.9 L131.3,207.9 L145.2,177.3 L159.1,166.6 L173.0,194.4 L186.9,195.7 L200.8,206.3 L214.6,215.9 L228.5,229.9 L242.4,239.5 L256.3,235.4 L270.2,236.6 L284.1,233.8 L298.0,222.8 L311.8,214.8 L325.7,214.2 L339.6,203.4 L353.5,197.4 L367.4,196.3 L381.3,214.3 L395.2,220.9 L409.1,218.9 L422.9,215.9 L436.8,209.6 L450.7,202.6 L464.6,201.0 L478.5,201.3 L492.4,205.5 L506.3,204.8 L520.2,212.0 L534.0,209.8 L547.9,208.1 L561.8,209.8 L575.7,209.5 L589.6,215.1 L603.5,218.9 L617.4,213.2 L631.2,221.6 L645.1,220.0 L659.0,223.5 L672.9,230.7 L686.8,228.6 L700.7,230.5 L714.6,232.9 L728.5,234.4 L742.3,239.9 L756.2,232.2 L770.1,235.7 L784.0,235.7" fill="none" stroke="#f85149" stroke-width="1.6"/>
+      <path d="M48.0,202.3 L61.9,204.0 L75.8,203.6 L89.7,207.6 L103.5,203.2 L117.4,193.9 L131.3,188.0 L145.2,168.9 L159.1,164.3 L173.0,175.2 L186.9,167.9 L200.8,170.2 L214.6,180.6 L228.5,190.6 L242.4,195.5 L256.3,193.7 L270.2,194.0 L284.1,204.2 L298.0,203.2 L311.8,200.1 L325.7,199.8 L339.6,171.4 L353.5,164.2 L367.4,186.3 L381.3,194.0 L395.2,199.5 L409.1,203.0 L422.9,197.6 L436.8,200.8 L450.7,206.6 L464.6,212.6 L478.5,215.0 L492.4,218.5 L506.3,218.5 L520.2,219.7 L534.0,216.6 L547.9,215.4 L561.8,218.3 L575.7,222.7 L589.6,225.3 L603.5,221.1 L617.4,212.5 L631.2,218.1 L645.1,222.1 L659.0,222.3 L672.9,230.6 L686.8,216.8 L700.7,228.8 L714.6,229.5 L728.5,227.5 L742.3,227.6 L756.2,217.9 L770.1,217.2 L784.0,217.2" fill="none" stroke="#8b949e" stroke-width="1.6"/>
+      <path d="M48.0,202.3 L61.9,203.9 L75.8,204.7 L89.7,205.7 L103.5,201.6 L117.4,190.8 L131.3,185.6 L145.2,176.3 L159.1,177.8 L173.0,188.5 L186.9,181.0 L200.8,181.5 L214.6,193.5 L228.5,198.5 L242.4,201.7 L256.3,195.1 L270.2,194.8 L284.1,195.3 L298.0,195.8 L311.8,193.6 L325.7,192.1 L339.6,159.9 L353.5,143.9 L367.4,163.0 L381.3,169.9 L395.2,178.0 L409.1,183.0 L422.9,176.4 L436.8,185.7 L450.7,184.9 L464.6,184.4 L478.5,187.1 L492.4,199.0 L506.3,203.4 L520.2,200.5 L534.0,199.9 L547.9,209.0 L561.8,208.3 L575.7,212.2 L589.6,217.6 L603.5,213.8 L617.4,206.4 L631.2,211.6 L645.1,212.3 L659.0,215.7 L672.9,222.2 L686.8,214.6 L700.7,221.3 L714.6,223.3 L728.5,222.1 L742.3,222.8 L756.2,209.5 L770.1,207.6 L784.0,207.6" fill="none" stroke="#d2a8ff" stroke-width="1.6"/>
+      <path d="M48.0,202.3 L61.9,191.5 L75.8,198.2 L89.7,201.4 L103.5,182.5 L117.4,186.6 L131.3,189.0 L145.2,168.0 L159.1,166.3 L173.0,176.8 L186.9,181.3 L200.8,180.6 L214.6,195.6 L228.5,211.8 L242.4,217.9 L256.3,209.8 L270.2,205.2 L284.1,205.1 L298.0,205.0 L311.8,203.1 L325.7,196.5 L339.6,177.1 L353.5,162.1 L367.4,143.8 L381.3,163.4 L395.2,170.0 L409.1,179.6 L422.9,171.2 L436.8,177.5 L450.7,149.2 L464.6,145.4 L478.5,165.3 L492.4,169.6 L506.3,167.7 L520.2,172.0 L534.0,169.3 L547.9,176.4 L561.8,180.7 L575.7,187.3 L589.6,194.0 L603.5,194.6 L617.4,155.7 L631.2,169.6 L645.1,181.1 L659.0,179.1 L672.9,195.6 L686.8,186.7 L700.7,199.0 L714.6,208.1 L728.5,208.1 L742.3,209.0 L756.2,196.1 L770.1,188.4 L784.0,188.4" fill="none" stroke="#79c0ff" stroke-width="1.6"/>
+      <path d="M48.0,202.3 L61.9,201.7 L75.8,202.4 L89.7,202.3 L103.5,193.0 L117.4,160.2 L131.3,167.7 L145.2,151.4 L159.1,158.7 L173.0,159.5 L186.9,150.0 L200.8,139.2 L214.6,151.5 L228.5,164.5 L242.4,175.2 L256.3,164.2 L270.2,156.5 L284.1,167.9 L298.0,182.0 L311.8,191.8 L325.7,187.5 L339.6,180.8 L353.5,167.1 L367.4,165.6 L381.3,154.1 L395.2,155.9 L409.1,176.4 L422.9,180.5 L436.8,169.6 L450.7,119.0 L464.6,104.3 L478.5,102.1 L492.4,120.9 L506.3,121.9 L520.2,110.9 L534.0,97.8 L547.9,79.9 L561.8,78.0 L575.7,115.6 L589.6,114.3 L603.5,121.7 L617.4,83.3 L631.2,88.6 L645.1,119.1 L659.0,120.4 L672.9,149.9 L686.8,154.6 L700.7,162.3 L714.6,174.7 L728.5,183.0 L742.3,179.8 L756.2,159.4 L770.1,158.6 L784.0,158.6" fill="none" stroke="#3fb950" stroke-width="1.8"/>
+      <path d="M48.0,202.3 L61.9,191.8 L75.8,169.0 L89.7,172.8 L103.5,157.3 L117.4,154.7 L131.3,139.0 L145.2,101.6 L159.1,113.1 L173.0,139.9 L186.9,142.4 L200.8,159.3 L214.6,169.8 L228.5,147.0 L242.4,154.4 L256.3,135.0 L270.2,115.6 L284.1,120.9 L298.0,113.1 L311.8,125.4 L325.7,83.1 L339.6,38.7 L353.5,64.1 L367.4,64.0 L381.3,94.1 L395.2,105.2 L409.1,111.6 L422.9,99.6 L436.8,98.8 L450.7,102.9 L464.6,97.4 L478.5,99.1 L492.4,120.1 L506.3,106.8 L520.2,114.6 L534.0,100.1 L547.9,90.9 L561.8,94.8 L575.7,115.7 L589.6,89.8 L603.5,115.7 L617.4,46.5 L631.2,92.9 L645.1,111.2 L659.0,112.2 L672.9,136.2 L686.8,143.2 L700.7,145.7 L714.6,157.9 L728.5,136.7 L742.3,141.9 L756.2,114.9 L770.1,118.2 L784.0,118.2" fill="none" stroke="#58a6ff" stroke-width="1.8"/>
+      <path d="M48.0,202.3 L61.9,194.5 L75.8,204.1 L89.7,204.3 L103.5,198.2 L117.4,181.3 L131.3,182.6 L145.2,160.0 L159.1,179.6 L173.0,186.3 L186.9,183.0 L200.8,169.2 L214.6,197.6 L228.5,205.7 L242.4,215.3 L256.3,209.6 L270.2,197.1 L284.1,201.3 L298.0,202.4 L311.8,187.1 L325.7,178.3 L339.6,174.4 L353.5,146.2 L367.4,157.9 L381.3,176.4 L395.2,183.5 L409.1,189.0 L422.9,179.1 L436.8,177.7 L450.7,159.5 L464.6,133.9 L478.5,169.8 L492.4,189.9 L506.3,178.1 L520.2,177.4 L534.0,174.9 L547.9,171.2 L561.8,174.2 L575.7,179.2 L589.6,161.2 L603.5,157.4 L617.4,59.9 L631.2,92.9 L645.1,107.7 L659.0,104.1 L672.9,142.3 L686.8,122.9 L700.7,144.2 L714.6,156.4 L728.5,140.6 L742.3,128.9 L756.2,96.8 L770.1,89.4 L784.0,89.4" fill="none" stroke="#f0883e" stroke-width="2"/>
+      <path d="M48.0,202.3 L61.9,202.1 L75.8,199.3 L89.7,204.6 L103.5,173.8 L117.4,161.2 L131.3,150.9 L145.2,121.5 L159.1,127.2 L173.0,142.3 L186.9,137.6 L200.8,139.1 L214.6,145.1 L228.5,158.5 L242.4,160.8 L256.3,153.8 L270.2,145.5 L284.1,93.7 L298.0,84.8 L311.8,83.1 L325.7,73.1 L339.6,51.3 L353.5,-6.1 L367.4,11.3 L381.3,29.9 L395.2,55.6 L409.1,54.1 L422.9,40.1 L436.8,37.8 L450.7,27.0 L464.6,31.7 L478.5,-54.0 L492.4,-25.8 L506.3,-73.4 L520.2,-61.9 L534.0,-98.0 L547.9,-69.2 L561.8,-83.1 L575.7,-103.3 L589.6,-127.8 L603.5,-153.6 L617.4,-218.0 L631.2,-38.7 L645.1,-28.6 L659.0,-0.9 L672.9,10.1 L686.8,-30.8 L700.7,19.7 L714.6,53.6 L728.5,72.6 L742.3,72.5 L756.2,39.8 L770.1,32.0 L784.0,32.0" fill="none" stroke="#a78bfa" stroke-width="2"/>
+    </svg>
+    <div class="legend">
+      <span><i class="sw" style="background:#a78bfa"></i>PL 365</span>
+      <span><i class="sw" style="background:#f0883e"></i>UMAC 276</span>
+      <span><i class="sw" style="background:#58a6ff"></i>ONDS 231</span>
+      <span><i class="sw" style="background:#3fb950"></i>AMPX 168</span>
+      <span><i class="sw" style="background:#79c0ff"></i>RCAT 122</span>
+      <span><i class="sw" style="background:#d2a8ff"></i>KTOS 92</span>
+      <span><i class="sw" style="background:#8b949e"></i>AVAV 77</span>
+      <span><i class="sw" style="background:#f85149"></i>DRO 48</span>
+    </div>
+  </div>
+</div>
+
+<!-- TABLE -->
+<div class="section">
+  <h2>Public expressions (Bloomberg 2026-08-14)</h2>
+  <div class="hint">Mcap in USD (DRO converted at AUDUSD 0.7072; NXSN at ILS 2.9512). Forward sales / EPS are Bloomberg 1FY consensus. Stance is research navigation, not a rating. March-note mcap in parentheses where it moved.</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Ticker</th>
+        <th>Layer</th>
+        <th>Role / what changed since March</th>
+        <th class="num">Price</th>
+        <th class="num">Mkt cap</th>
+        <th class="num">YTD</th>
+        <th class="num">TTM sales</th>
+        <th class="num">1FY sales</th>
+        <th class="num">TTM P/S</th>
+        <th class="num">1FY P/E</th>
+        <th class="num">Cons. PT</th>
+        <th>Stance</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Allocation framework (source) vs what we would actually hold</h2>
+  <div class="hint">Coffee House’s March buckets, restated against August prices and estimate momentum.</div>
+  <div class="impl">
+    <div class="card">
+      <h3><span class="n">1</span>Core — AVAV + KTOS</h3>
+      <p>Still the right floor names. Both already did the de-rate the March note warned about (AVAV −46% mcap, KTOS −24%). Street sales still growing (AVAV $2.19B / KTOS $1.78B). Multiples remain rich on EPS (57× / 78×) because earnings have not caught sales. Use as theme ballast, not a new high-beta bid.</p>
+    </div>
+    <div class="card">
+      <h3><span class="n">2</span>C-UAS — ONDS + DRO</h3>
+      <p>ONDS is now a <b>ramp story the street already believes</b> ($530M 1FY vs $51M TTM). 1FY EPS +$0.39 flipping to 2FY −$0.24 is not a clean PE — ignore the 23× and watch bookings vs $530M. DRO is the opposite: profitable, pipeline was A$2.3B, but <b>estimate momentum is negative</b> and the stock has already paid for that. Prefer architecture (detect + defeat + C2) over a single effector.</p>
+    </div>
+    <div class="card">
+      <h3><span class="n">3</span>Moat — AMPX</h3>
+      <p>Original “most attractive risk/reward” call is the one that worked (+51% YTD, street sales $141M / $212M, 4-wk sales +$8M). NDAA 2028 forced-buyer still ahead. Scale and margin path remain the kill. This is the layer Intelligent Mass would call “picks and shovels with physics.”</p>
+    </div>
+    <div class="card">
+      <h3><span class="n">4</span>High-beta — RCAT + UMAC</h3>
+      <p>Regulatory moat (FCC Covered List / T-Motor OFAC) is intact. UMAC already repriced from option to story stock ($1.36B on $11M TTM). RCAT is cheaper on the 1Y tape but still 17× trailing / 10× 1FY sales with negative EPS. Size as if manufacturing can fail.</p>
+    </div>
+    <div class="card">
+      <h3><span class="n">5</span>Data / sensors — PL + NXSN</h3>
+      <p>PL is the strategic ISR anchor (lossy, 24× sales). NXSN is the <b>only profitable, high-margin</b> name in the public drone book (60% EBIT, 40× trailing, street $356M). Cameras ride every airframe. Add both to the live watchlist theme with this wiring.</p>
+    </div>
+    <div class="card">
+      <h3><span class="n">6</span>IPO watch — Shield AI</h3>
+      <p>Not investable. Hivemind-as-Android is the software endgame the public book cannot buy cleanly (PLTR is the expensive proxy). Watch the S-1. An IPO would also re-rate how much scarcity premium AVAV software and PLTR “defence AI” can keep.</p>
+    </div>
+  </div>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <h3 class="amber">March note vs August tape</h3>
+    <p>Coffee House published into the Iran-strike tape (Operation Epic Fury / Roaring Lion). Five months on:</p>
+    <ul>
+      <li><b>UMAC</b> $0.51B → $1.36B — the call option paid; asymmetry is now thinner</li>
+      <li><b>AMPX</b> $1.52B → $1.74B — only US name up YTD in the original list</li>
+      <li><b>ONDS</b> $4.50B → $5.08B — mcap held; street sales exploded to $530M</li>
+      <li><b>AVAV</b> $17.7B → $9.6B · <b>KTOS</b> $15.5B → $11.8B — autonomy de-rate</li>
+      <li><b>DRO</b> $2.51B → $1.28B — profitable C-UAS cut in half</li>
+      <li><b>PL</b> $8.99B → $8.82B · <b>RCAT</b> $1.75B → $1.56B — roughly flat</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3 class="green">How this tab sits on the hub</h3>
+    <p>Wired three places so the theme is not trapped in one app:</p>
+    <ul>
+      <li><b>This page</b> — DIB tab <span class="mono">?tab=drone</span> and a homepage card</li>
+      <li><a href="intelligent-mass.html">Intelligent Mass</a> — Anduril / Schimpf stack (platforms, Lattice, motors). Broader than drones.</li>
+      <li><a href="../watchlist/">Watchlist → Defense &amp; Drones</a> — live Yahoo prices for the listed names (AMPX, DRO.AX, PL added with this wiring)</li>
+    </ul>
+    <p style="margin-top:8px">Obsidian theme note: <span class="mono">US Drone Dominance.md</span> (updated 2026-08-14).</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>How this tab relates to Intelligent Mass + munitions chokepoints</h2>
+  <div class="cross">
+    <b style="color:#e6edf3">Three cuts of the same war.</b>
+    <a href="dib-dashboard.html">Chokepoint Dashboard</a> asks where motors, energetics and seekers physically narrow.
+    <a href="intelligent-mass.html">Intelligent Mass</a> asks how AI + autonomy rewrite what gets bought.
+    <b>This tab</b> asks which <i>public drone-stack securities</i> express that rewrite, layer by layer.
+    Cheap attack drones <b>increase</b> demand for C-UAS, batteries, NDAA components <i>and</i> for SRM / interceptors on the munitions book. They do not retire the chokepoint map.
+  </div>
+</div>
+
+<div class="grid3">
+  <div class="card">
+    <h3 class="purple">Private reference set</h3>
+    <p><b>Shield AI</b> $5.3B (Hivemind). <b>Anduril</b> $61B / $2.2B sales (Lattice + mass). <b>Neros</b> $120M+ (Blue UAS Archer). <b>PDW</b> $200M+ incl. $35M from ONDS (Army C100). If the private cohort IPOs, public scarcity proxies (RCAT / UMAC / ONDS) lose the “only way to buy US drones” bid.</p>
+  </div>
+  <div class="card">
+    <h3 class="amber">Kill / invalidate</h3>
+    <p>FCC / NDAA China-drone rules reversed · ONDS $530M street collapses back toward $50M · AMPX misses NDAA 2028 qualification · UMAC never reaches Chinese motor cost-parity · DRO pipeline does not convert (revisions already warning) · Neros/PDW IPO absorbs the premium · exquisite-only procurement returns.</p>
+  </div>
+  <div class="card">
+    <h3 class="green">Working checklist</h3>
+    <p>Bookings vs street sales (ONDS $530M, RCAT $151M, UMAC $56M) · DRO 4-wk revisions · AMPX Fremont / NDAA line · UMAC US motor plant · Phase II Gauntlet winners · Shield AI S-1 · Switchblade reorder cadence · NXSN margin hold at $315M+ guide.</p>
+  </div>
+</div>
+
+<div class="note">
+  <b>Provenance.</b> Layer map, TAM figures, product names and March market-cap prints from
+  <a href="https://x.com/CoffeeStocksGuy/status/2029203893754761671">@CoffeeStocksGuy, 4 Mar 2026</a>
+  (1.1M views). August prices, YTD, TTM financials, consensus sales/EPS/PT from <b>Bloomberg</b> (2026-08-14).
+  1Y relative chart from <b>Yahoo Finance</b> weekly closes (no Bloomberg historical pull this session).
+  Layer 6 is an analyst fill — the source post skipped it.
+  Stances are <b>research navigation</b>, not recommendations.
+  Cross-read <a href="intelligent-mass.html">Intelligent Mass</a> and the Obsidian note <span class="mono">US Drone Dominance</span>.
+  Not investment advice.
+</div>
+
+</div>
+
+<script>
+const ROWS = [
+  { t:"ONDS US", n:"Ondas", layer:"L1 C-UAS", role:"Sentrycs + Iron Drone + Factory 01. Street 1FY sales $530M vs $51M TTM (was $170-180M guide in March). 1FY EPS +$0.39 / 2FY −$0.24 — do not use the 23× PE. Mar mcap $4.5B.", px:8.91, mcap:"$5.08B", ytd:-8.71, ttm:"$51M", fy:"$530M", ps:22.3, pe:22.6, pt:19.06, stance:"watch", badge:"WATCH" },
+  { t:"DRO AU", n:"DroneShield", layer:"L1 C-UAS", role:"Pure-play C-UAS. FY25 A$217M / first profit. 4-wk sales revisions −A$67M / −A$99M. Mar mcap $2.51B → $1.28B. Cons PT A$2.13 is only +8%.", px:1.96, mcap:"$1.28B", ytd:-36.36, ttm:"A$217M", fy:"A$261M", ps:8.3, pe:150.8, pt:2.13, stance:"theme", badge:"THEME" },
+  { t:"AVAV US", n:"AeroVironment", layer:"L2 Loitering + UAS", role:"Switchblade consumable munitions + BlueHalo. Best floor name; already de-rated 46% from the March $17.7B print. 21 analysts, PT $226.", px:189.43, mcap:"$9.59B", ytd:-21.69, ttm:"$1.98B", fy:"$2.19B", ps:4.7, pe:57.4, pt:226.42, stance:"core", badge:"CORE" },
+  { t:"RCAT US", n:"Red Cat", layer:"L2 Blue UAS / FPV", role:"Black Widow + FANG. FCC Chinese-drone ban is the moat; Q3’25 miss is the scar. Street $151M / $218M, still loss-making. Mar $1.75B.", px:10.23, mcap:"$1.56B", ytd:29.00, ttm:"$41M", fy:"$151M", ps:17.3, pe:null, pt:18.43, stance:"watch", badge:"WATCH" },
+  { t:"KTOS US", n:"Kratos", layer:"L2 CCA / hypersonics", role:"Valkyrie loyal wingman + hypersonics ramp. 23 analysts, PT $100. Mar $15.5B → $11.8B. Still 78× 1FY EPS.", px:62.79, mcap:"$11.79B", ytd:-17.28, ttm:"$1.35B", fy:"$1.78B", ps:7.3, pe:78.3, pt:99.83, stance:"core", badge:"CORE" },
+  { t:"AMPX US", n:"Amprius", layer:"L3 Batteries", role:"520 Wh/kg silicon anode; NDAA 2028 forced buyer. Only original-list US name up YTD. Street $141M / $212M, 4-wk sales +$8M.", px:11.94, mcap:"$1.74B", ytd:51.33, ttm:"$73M", fy:"$141M", ps:14.8, pe:null, pt:23.70, stance:"theme", badge:"THEME" },
+  { t:"UMAC US", n:"Unusual Machines", layer:"L4 Components", role:"Domestic motors / FC / cameras. Mar $511M → $1.36B. Street $56M / $103M on $11M TTM. Asymmetry compressed; plant execution is the remaining option.", px:27.24, mcap:"$1.36B", ytd:113.81, ttm:"$11M", fy:"$56M", ps:37.7, pe:null, pt:39.57, stance:"watch", badge:"WATCH" },
+  { t:"PL US", n:"Planet Labs", layer:"L5 ISR satellites", role:"Daily EO constellation + Pelican/NVIDIA edge. Street $435M / $569M, still loss-making. Newly added to the live watchlist with this page.", px:24.75, mcap:"$8.82B", ytd:25.51, ttm:"$308M", fy:"$435M", ps:23.6, pe:null, pt:42.11, stance:"theme", badge:"THEME" },
+  { t:"NXSN IT", n:"NextVision", layer:"L5 Sensors", role:"Micro-stabilized drone cameras (TASE). Only high-margin profitable name (60% EBIT). Street $356M / $492M. Price in agorot (204.80 ILS).", px:204.80, mcap:"$6.42B", ytd:-2.43, ttm:"$168M", fy:"$356M", ps:24.2, pe:33.3, pt:391.25, stance:"theme", badge:"THEME" },
+  { t:"Shield AI", n:"Shield AI", layer:"L7 Autonomy SW", role:"Hivemind GPS-denied stack. $5.3B Series F (Mar 2025). Not listed — framework + IPO watch, not a line you can buy.", px:null, mcap:"$5.3B val", ytd:null, ttm:"—", fy:"—", ps:null, pe:null, pt:null, stance:"priv", badge:"PRIVATE" },
+];
+
+const fmtPct = v => v==null ? "—" : `<span class="${v>0.5?'pos':v<-0.5?'neg':'flat'}">${v>0?'+':''}${v.toFixed(1)}%</span>`;
+const fmtN = (v, d=1) => v==null || Number.isNaN(v) ? "—" : Number(v).toFixed(d);
+const badgeClass = s => ({core:"b-core",theme:"b-theme",watch:"b-watch",rich:"b-rich",priv:"b-priv"}[s]||"b-theme");
+
+document.getElementById("tbody").innerHTML = ROWS.map(r => `
+  <tr>
+    <td><div class="tk">${r.t}</div><div class="nm">${r.n}</div></td>
+    <td style="color:#8b949e;font-size:11.5px">${r.layer}</td>
+    <td><div class="one">${r.role}</div></td>
+    <td class="num mono">${r.px==null?"—":r.px.toFixed(2)}</td>
+    <td class="num mono">${r.mcap}</td>
+    <td class="num">${fmtPct(r.ytd)}</td>
+    <td class="num mono">${r.ttm}</td>
+    <td class="num mono">${r.fy}</td>
+    <td class="num mono">${r.ps==null?"—":fmtN(r.ps)}</td>
+    <td class="num mono">${r.pe==null?"—":fmtN(r.pe)}</td>
+    <td class="num mono">${r.pt==null?"—":fmtN(r.pt,2)}</td>
+    <td><span class="badge ${badgeClass(r.stance)}">${r.badge}</span></td>
+  </tr>
+`).join("");
+</script>
+</body>
+</html>
