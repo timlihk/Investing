@@ -13,8 +13,10 @@ window.WATCHLIST_THEMES = [
       { symbol: "ARM", name: "Arm Holdings" },
       { symbol: "GFS", name: "GlobalFoundries" },
       { symbol: "INTC", name: "Intel" },
+      { symbol: "JBL", name: "Jabil Inc." },
       { symbol: "LSCC", name: "Lattice" },
       { symbol: "QCOM", name: "Qualcomm" },
+      { symbol: "SMCI", name: "Super Micro Computer" },
       { symbol: "SOXX", name: "iShares Semiconductor ETF" },
       { symbol: "STM", name: "STMicroelectronics" },
       { symbol: "TSEM", name: "Tower Semi" },
@@ -325,6 +327,7 @@ window.WATCHLIST_THEMES = [
     tagline: "App platforms, ad-tech, consumer software — not IT consulting or infra SaaS.",
     tickers: [
       { symbol: "APPS", name: "Digital Turbine" },
+      { symbol: "RDDT", name: "Reddit Inc." },
       { symbol: "ROKU", name: "Roku" },
     ]
   },
