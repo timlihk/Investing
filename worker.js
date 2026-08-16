@@ -1,5 +1,6 @@
 const QUOTE_MAX_SYMBOLS = 60;
 const MARKET_CACHE_CONTROL = "public, max-age=60, s-maxage=300";
+const FRESH_MARKET_CACHE_CONTROL = "no-store, max-age=0, must-revalidate";
 const DEFAULT_CHART_RANGE_DAYS = 365;
 const YAHOO_UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
@@ -68,22 +69,25 @@ export default {
 };
 
 async function handleMarketApi(url) {
+  const fresh = url.pathname.endsWith("/fresh");
+  const cacheControl = fresh ? FRESH_MARKET_CACHE_CONTROL : MARKET_CACHE_CONTROL;
   try {
-    if (url.pathname === "/api/market/quotes") {
-      return jsonResponse(await getQuotePayload(url));
+    if (url.pathname === "/api/market/quotes" || url.pathname === "/api/market/quotes/fresh") {
+      return jsonResponse(await getQuotePayload(url), {}, cacheControl);
     }
 
-    if (url.pathname === "/api/market/detail") {
-      return jsonResponse(await getDetailPayload(url));
+    if (url.pathname === "/api/market/detail" || url.pathname === "/api/market/detail/fresh") {
+      return jsonResponse(await getDetailPayload(url), {}, cacheControl);
     }
 
-    return jsonResponse({ error: "Not found" }, { status: 404 });
+    return jsonResponse({ error: "Not found" }, { status: 404 }, cacheControl);
   } catch (error) {
     return jsonResponse(
       {
         error: error instanceof Error ? error.message : "Unknown market-data error"
       },
-      { status: 500 }
+      { status: 500 },
+      cacheControl
     );
   }
 }
@@ -102,7 +106,7 @@ async function getQuotePayload(url) {
   const quotes = response?.quoteResponse?.result || [];
   const rates = await getFxRates();
   const results = quotes.map((quote) => normalizeQuotePayload(quote, rates));
-  return { results };
+  return { fetchedAt: new Date().toISOString(), results };
 }
 
 async function getDetailPayload(url) {
@@ -142,10 +146,13 @@ async function getDetailPayload(url) {
   const chartMetrics = buildChartMetrics(quotes);
   const summaryMetrics = normalizeSummaryPayload(summary, rates);
   const quoteMetrics = normalizeQuotePayload(summary?.price || {}, rates);
+  const latestBarAt = quotes.at(-1)?.date?.toISOString() || null;
 
   return {
     symbol,
-    updatedAt: new Date().toISOString(),
+    fetchedAt: new Date().toISOString(),
+    quoteUpdatedAt: quoteMetrics.updatedAt,
+    latestBarAt,
     marketMetrics: {
       ...quoteMetrics.marketMetrics,
       ...summaryMetrics.marketMetrics,
@@ -472,7 +479,11 @@ function unwrapYahooValue(value) {
 }
 
 function toIsoString(value) {
-  const date = value ? new Date(value) : null;
+  const numericValue = Number(value);
+  const normalizedValue = Number.isFinite(numericValue) && numericValue > 0 && numericValue < 1e12
+    ? numericValue * 1000
+    : value;
+  const date = value ? new Date(normalizedValue) : null;
   return date && Number.isFinite(date.getTime()) ? date.toISOString() : null;
 }
 
@@ -504,10 +515,13 @@ async function handleCompanyProxy(url, request) {
   }
 }
 
-function jsonResponse(payload, init = {}) {
+function jsonResponse(payload, init = {}, cacheControl = MARKET_CACHE_CONTROL) {
   const headers = new Headers(init.headers || {});
   headers.set("content-type", "application/json; charset=utf-8");
-  headers.set("cache-control", MARKET_CACHE_CONTROL);
+  headers.set("cache-control", cacheControl);
+  if (cacheControl === FRESH_MARKET_CACHE_CONTROL) {
+    headers.set("CDN-Cache-Control", "no-store");
+  }
 
   return new Response(JSON.stringify(payload), {
     ...init,
