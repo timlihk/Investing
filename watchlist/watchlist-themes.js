@@ -234,6 +234,7 @@ window.WATCHLIST_THEMES = [
     name: "Energy & Materials 能源材料",
     tagline: "Energy storage, solar, SiC/power, grid infrastructure, industrial.",
     tickers: [
+      { symbol: "3931.HK", name: "CALB 中创新航" },
       { symbol: "6136.T", name: "OSG オーエスジー" },
       { symbol: "6503.T", name: "Mitsubishi Electric" },
       { symbol: "AGX", name: "Argan" },
@@ -285,6 +286,27 @@ window.WATCHLIST_THEMES = [
     ]
   },
   {
+    id: "financials",
+    name: "Financials 金融",
+    tagline: "Banks, custody and asset servicing, insurers, annuities, and payment platforms.",
+    tickers: [
+      { symbol: "JXN", name: "Jackson Financial" },
+      { symbol: "PAYS", name: "Paysign, Inc." },
+      { symbol: "SHB-A.ST", name: "Svenska Handelsbanken A" },
+      { symbol: "STT", name: "State Street / 道富" },
+    ]
+  },
+  {
+    id: "communications-media",
+    name: "Communications & Media 通信媒体",
+    tagline: "Telecom operators, social platforms, and digital media businesses.",
+    tickers: [
+      { symbol: "SKM", name: "SK Telecom" },
+      { symbol: "TME", name: "Tencent Music 腾讯音乐" },
+      { symbol: "WB", name: "Weibo Corp 微博" },
+    ]
+  },
+  {
     id: "it-services",
     name: "IT Services 信息技术服务",
     tagline: "Systems integration and consulting — services revenue, not product software.",
@@ -306,6 +328,8 @@ window.WATCHLIST_THEMES = [
     name: "Mobility & Robotics 出行机器人",
     tagline: "EV, autonomous driving, humanoid robotics SPACs.",
     tickers: [
+      { symbol: "2015.HK", name: "Li Auto 理想汽车" },
+      { symbol: "601127.SS", name: "赛力斯" },
       { symbol: "AUR", name: "Aurora Innovation" },
       { symbol: "CCXI", name: "Churchill Capital XI / Agility Robotics" },
       { symbol: "RIVN", name: "Rivian" },
@@ -316,10 +340,25 @@ window.WATCHLIST_THEMES = [
     name: "Consumer 消费",
     tagline: "Restaurants, entertainment, airlines — discretionary residual.",
     tickers: [
+      { symbol: "1876.HK", name: "Budweiser APAC 百威亚太" },
+      { symbol: "2097.HK", name: "Mixue 蜜雪冰城" },
+      { symbol: "601888.SS", name: "中国中免" },
+      { symbol: "605499.SS", name: "东鹏饮料" },
+      { symbol: "9633.HK", name: "Nongfu Spring 农夫山泉" },
+      { symbol: "9992.HK", name: "Pop Mart 泡泡玛特" },
       { symbol: "ALK", name: "Alaska Air" },
       { symbol: "AMC", name: "AMC Entertainment" },
       { symbol: "BROS", name: "Dutch Bros" },
       { symbol: "CAVA", name: "Cava Group" },
+      { symbol: "CHA", name: "Chagee 霸王茶姬" },
+    ]
+  },
+  {
+    id: "commerce-logistics",
+    name: "Commerce & Logistics 商贸物流",
+    tagline: "Marketplace, fulfilment, and logistics-platform economics.",
+    tickers: [
+      { symbol: "GCT", name: "GigaCloud Technology / 大健云仓" },
     ]
   },
   {
@@ -349,28 +388,11 @@ window.WATCHLIST_THEMES = [
     ]
   },
   {
-    id: "other",
-    name: "Watchlist Other 其他",
-    tagline: "True residuals — AI equity financial proxies without an operating theme.",
+    id: "investment-vehicles",
+    name: "Investment Vehicles 投资工具",
+    tagline: "Closed-end funds and other pooled exposure vehicles valued against NAV.",
     tickers: [
-      { symbol: "1876.HK", name: "Budweiser APAC 百威亚太" },
-      { symbol: "2015.HK", name: "Li Auto 理想汽车" },
-      { symbol: "2097.HK", name: "Mixue 蜜雪冰城" },
-      { symbol: "3931.HK", name: "CALB 中创新航" },
-      { symbol: "601127.SS", name: "赛力斯" },
-      { symbol: "601888.SS", name: "中国中免" },
-      { symbol: "605499.SS", name: "东鹏饮料" },
-      { symbol: "9633.HK", name: "Nongfu Spring 农夫山泉" },
-      { symbol: "9992.HK", name: "Pop Mart 泡泡玛特" },
-      { symbol: "CHA", name: "Chagee 霸王茶姬" },
       { symbol: "DXYZ", name: "Destiny Tech100" },
-      { symbol: "GCT", name: "GigaCloud Technology / 大健云仓" },
-      { symbol: "PAYS", name: "Paysign, Inc." },
-      { symbol: "SHB-A.ST", name: "Svenska Handelsbanken A" },
-      { symbol: "SKM", name: "SK Telecom" },
-      { symbol: "STT", name: "State Street / 道富" },
-      { symbol: "TME", name: "Tencent Music 腾讯音乐" },
-      { symbol: "WB", name: "Weibo Corp 微博" },
     ]
   },
 ];

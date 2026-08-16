@@ -11,8 +11,9 @@ Output:
 Usage:
   python3 watchlist/scripts/generate-themes.py [--vault PATH] [--repo PATH]
 
-Every ticker from every source list must land in at least one theme.
-Unknown tag combos fall into the "other" theme; nothing is dropped.
+Every ticker from every source list must land in at least one substantive theme.
+Unknown tag combinations are reported in "other" and fail generation so that
+new names cannot silently remain unallocated.
 """
 import argparse
 import collections
@@ -95,6 +96,7 @@ ZH_NAMES = {
  "HO.PA":"Thales","CW":"Curtiss-Wright","KRMN":"Karman","MP":"MP Materials","LMT":"Lockheed","RTX":"RTX","GD":"GD",
  "KOG.OL":"Kongsberg","6503.T":"Mitsubishi Electric","6777.T":"Santec","5802.T":"Sumitomo Electric","6442.TW":"EZconn",
  "ACN":"Accenture",
+ "JXN":"Jackson Financial",
  "KEYS":"Keysight Technologies","COHR":"Coherent","2337.TW":"Macronix 旺宏",
  "2059.TW":"King Slide 川湖科技","3605.TW":"ACES 宏致電子","APPS":"Digital Turbine",
  "3858.HK":"Jiaxin 佳鑫国际 (钨)","EQR.AX":"EQ Resources (钨)","ALM":"Almonty (钨)",
@@ -169,18 +171,28 @@ MANUAL = {
   # Grid/storage/solar/SiC power + industrial tools (not electronic glass — that is packaging)
   "energy-materials": [
     "AGX", "TE", "FLNC", "SEI", "FPS", "BE", "ENLT", "CLF", "WOLF", "6136.T", "6503.T",
+    "3931.HK",
   ],
   "critical-metals": ["3858.HK", "EQR.AX", "ALM", "VNP.TO", "MP", "USAR", "UUUU", "NEU"],
   # Drug developers + life-science tools (DHR sells tools, not insurance)
-  "biotech": ["NKTR", "ABVX", "DHR"],
+  "biotech": ["NKTR", "ABVX", "DHR", "ETON"],
   # Payers / managed care — services, not R&D pipeline
   "healthcare-services": ["OSCR", "CNC"],
+  # Banks, custody/asset servicing, insurers and payment platforms
+  "financials": ["SHB-A.ST", "STT", "JXN", "PAYS"],
+  # Operating telecom and digital-media platforms that were previously residuals
+  "communications-media": ["SKM", "WB", "TME"],
   # Systems integration / consulting
   "it-services": ["ACN"],
   # App platforms / ad-tech / consumer software (not IT consulting, not infra SaaS)
   "software-apps": ["APPS", "ROKU"],
-  "mobility-robotics": ["RIVN", "AUR", "CCXI"],
-  "consumer": ["CAVA", "BROS", "AMC", "ALK"],
+  "mobility-robotics": ["RIVN", "AUR", "CCXI", "601127.SS", "2015.HK"],
+  "consumer": [
+    "CAVA", "BROS", "AMC", "ALK", "1876.HK", "601888.SS", "605499.SS",
+    "9633.HK", "2097.HK", "9992.HK", "CHA",
+  ],
+  # Marketplace / fulfilment economics rather than a generic regional residual
+  "commerce-logistics": ["GCT"],
   # Global listed airport operators — regulated/grant-based traffic infrastructure
   # Yahoo-valid symbols only: HK needs leading zeros (0357/0694), GMR = GMRAIRPORT.NS.
   # Dropped 2026-08-11: ACV.VN (Vietnam), SEA.MI (Milan) — no Yahoo quote data.
@@ -190,8 +202,10 @@ MANUAL = {
     "0694.HK", "0357.HK", "9706.T", "AIA.AX",
     "ASR", "OMAB", "PAC", "GMRAIRPORT.NS",
   ],
-  # Financial AI proxies without an operating software/infra core
-  "other": ["SKM", "DXYZ"],
+  # Pooled and marked-to-NAV exposure vehicles
+  "investment-vehicles": ["DXYZ"],
+  # Must remain empty. The generator fails closed if a source ticker lands here.
+  "other": [],
 }
 
 TAG_MAP = {
@@ -232,6 +246,12 @@ TAG_MAP = {
   "diagnostics": "biotech",
   "healthcare": "healthcare-services", "insurance": "healthcare-services",
   "managed-care": "healthcare-services",
+  "banks": "financials", "custody": "financials", "asset-management": "financials",
+  "financials": "financials", "annuities": "financials", "payments": "financials",
+  "telecommunications": "communications-media", "social-media": "communications-media",
+  "music": "communications-media",
+  "ecommerce": "commerce-logistics", "b2b": "commerce-logistics",
+  "closed-end-fund": "investment-vehicles", "pre-IPO": "investment-vehicles",
   # IT services vs software apps
   "it-services": "it-services", "consulting": "it-services",
   "software": "software-apps", "advertising": "software-apps", "streaming": "software-apps",
@@ -284,6 +304,10 @@ THEMES = [
    "tagline": "Clinical biopharma pipelines and life-science tools / diagnostics."},
   {"id": "healthcare-services", "name": "Healthcare Services 医疗服务",
    "tagline": "Managed care, health insurance — payers, not drug R&D."},
+  {"id": "financials", "name": "Financials 金融",
+   "tagline": "Banks, custody and asset servicing, insurers, annuities, and payment platforms."},
+  {"id": "communications-media", "name": "Communications & Media 通信媒体",
+   "tagline": "Telecom operators, social platforms, and digital media businesses."},
   {"id": "it-services", "name": "IT Services 信息技术服务",
    "tagline": "Systems integration and consulting — services revenue, not product software."},
   {"id": "software-apps", "name": "Software & Apps 软件应用",
@@ -292,10 +316,14 @@ THEMES = [
    "tagline": "EV, autonomous driving, humanoid robotics SPACs."},
   {"id": "consumer", "name": "Consumer 消费",
    "tagline": "Restaurants, entertainment, airlines — discretionary residual."},
+  {"id": "commerce-logistics", "name": "Commerce & Logistics 商贸物流",
+   "tagline": "Marketplace, fulfilment, and logistics-platform economics."},
   {"id": "airports", "name": "Airports 机场",
    "tagline": "Global listed airport operators — regulated traffic infrastructure with duty-free & terminal upside."},
+  {"id": "investment-vehicles", "name": "Investment Vehicles 投资工具",
+   "tagline": "Closed-end funds and other pooled exposure vehicles valued against NAV."},
   {"id": "other", "name": "Watchlist Other 其他",
-   "tagline": "True residuals — AI equity financial proxies without an operating theme."},
+   "tagline": "Unallocated names requiring explicit review; this bucket should remain empty."},
 ]
 
 
@@ -349,10 +377,20 @@ def main():
                 seen.add(r[0])
                 theme_tickers["other"].append(r[0])
 
+    source_symbols = {r[0] for r in watch}
+    source_symbols.update(r[0] for rows in screens.values() for r in rows)
+    unallocated = sorted(source_symbols.intersection(theme_tickers.get("other", [])))
+    if unallocated:
+        print("UNALLOCATED SOURCE TICKERS:", ", ".join(unallocated), file=sys.stderr)
+        print("Assign each ticker in MANUAL or add a semantic TAG_MAP rule.", file=sys.stderr)
+        sys.exit(1)
+
     # 3. emit js
     out = []
     for th in THEMES:
         tickers = theme_tickers.get(th["id"], [])
+        if not tickers:
+            continue
         out.append({
             "id": th["id"], "name": th["name"], "tagline": th["tagline"],
             "tickers": [{"symbol": t, "name": ZH_NAMES.get(t, name_of.get(t, t))}
