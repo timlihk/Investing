@@ -85,7 +85,7 @@ ZH_NAMES = {
  "WDC":"Western Digital","SNDK":"SanDisk","KLAC":"KLA","AMAT":"Applied Materials","LRCX":"Lam Research",
  "INTC":"Intel","AMD":"AMD","ARM":"Arm Holdings","MRVL":"Marvell","CRDO":"Credo","MTSI":"MACOM",
  "AVGO":"Broadcom","COHR":"Coherent","AAOI":"AAOI","CIEN":"Ciena","SMTC":"Semtech","MXL":"MaxLinear",
- "NOK":"Nokia 诺基亚","VRT":"Vertiv","DELL":"Dell","MU":"Micron 美光","AMKR":"Amkor","AEHR":"Aehr Test",
+ "NOK":"Nokia 诺基亚","LPK.DE":"LPKF Laser & Electronics","VRT":"Vertiv","DELL":"Dell","MU":"Micron 美光","AMKR":"Amkor","AEHR":"Aehr Test",
  "TSM":"TSMC 台积电","BESI.AS":"BESI","AXTI":"AXT","WOLF":"Wolfspeed","FLNC":"Fluence","ACMR":"ACM Research",
  "AGX":"Argan","SEI":"Solaris Energy","CLF":"Cleveland-Cliffs","GOOG":"Alphabet","STX":"Seagate",
  "SIMO":"Silicon Motion","FORM":"FormFactor","0522.HK":"ASMPT","8110.TW":"Walton Advanced",
@@ -149,7 +149,7 @@ MANUAL = {
   # Optical: lasers, transceivers, fiber, epiwafers, optical networking systems
   "optics": [
     "LITE", "COHR", "AAOI", "CIEN", "SIVE.ST", "SOI.PA", "IQE.L", "LWLG", "OPTX", "VIAV",
-    "6777.T", "5802.T", "4991.TWO", "6442.TW", "6869.HK", "3105.TWO", "NOK",
+    "6777.T", "5802.T", "4991.TWO", "6442.TW", "6869.HK", "3105.TWO", "NOK", "LPK.DE",
   ],
   # Servers, power/cooling, DC builders, AI clouds, cloud software, server structure/connectors
   "ai-infra": [

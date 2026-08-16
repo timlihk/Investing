@@ -125,6 +125,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "COHR", name: "Coherent" },
       { symbol: "IQE.L", name: "IQE plc" },
       { symbol: "LITE", name: "Lumentum" },
+      { symbol: "LPK.DE", name: "LPKF Laser & Electronics" },
       { symbol: "LWLG", name: "Lightwave Logic" },
       { symbol: "NOK", name: "Nokia 诺基亚" },
       { symbol: "OPTX", name: "Syntec Optics" },
