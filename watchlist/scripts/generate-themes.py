@@ -221,6 +221,7 @@ TAG_MAP = {
   "SiC": "energy-materials", "discrete": "substrates-packaging",
   "packaging": "substrates-packaging", "substrates": "substrates-packaging",
   "MLCC": "substrates-packaging", "pcb": "substrates-packaging",
+  "ccl": "substrates-packaging",
   "electronics": "substrates-packaging", "components": "substrates-packaging",
   "connectors": "ai-infra", "server-rails": "ai-infra",
   "ai-infra": "ai-infra", "ai-infrastructure": "ai-infra", "servers": "ai-infra",
