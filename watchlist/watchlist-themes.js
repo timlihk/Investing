@@ -347,9 +347,6 @@ window.WATCHLIST_THEMES = [
       { symbol: "605499.SS", name: "东鹏饮料" },
       { symbol: "9633.HK", name: "Nongfu Spring 农夫山泉" },
       { symbol: "9992.HK", name: "Pop Mart 泡泡玛特" },
-      { symbol: "ALK", name: "Alaska Air" },
-      { symbol: "AMC", name: "AMC Entertainment" },
-      { symbol: "BROS", name: "Dutch Bros" },
       { symbol: "CAVA", name: "Cava Group" },
       { symbol: "CHA", name: "Chagee 霸王茶姬" },
     ]

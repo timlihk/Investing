@@ -77,9 +77,9 @@ ZH_NAMES = {
  "ENLT":"Enlight","PL":"Planet Labs","AUR":"Aurora Innovation","CNC":"Centene","USAR":"USA Rare Earth",
  "UUUU":"Energy Fuels","BE":"Bloom Energy","QCOM":"Qualcomm","CCXI":"Churchill Capital XI / Agility Robotics",
  "SKM":"SK Telecom","DXYZ":"Destiny Tech100","OSCR":"Oscar Health","DHR":"Danaher","NKTR":"Nektar",
- "ABVX":"Abivax (ADR)","RXT":"Rackspace","AMC":"AMC Entertainment","ALK":"Alaska Air","MARA":"MARA Holdings",
+ "ABVX":"Abivax (ADR)","RXT":"Rackspace","MARA":"MARA Holdings",
  "CIFR":"Cipher Mining","RIOT":"Riot Platforms","WULF":"TeraWulf","IREN":"IREN","CORZ":"Core Scientific",
- "CAVA":"Cava Group","BROS":"Dutch Bros","RIVN":"Rivian","ROKU":"Roku","VIAV":"Viavi","TTMI":"TTM Technologies",
+ "CAVA":"Cava Group","RIVN":"Rivian","ROKU":"Roku","VIAV":"Viavi","TTMI":"TTM Technologies",
  "LSCC":"Lattice","VSH":"Vishay","ENTG":"Entegris","TSEM":"Tower Semi","GFS":"GlobalFoundries","UMC":"UMC",
  "ALAB":"Astera Labs","TER":"Teradyne","STM":"STMicroelectronics","LITE":"Lumentum","ASX":"ASE Technology",
  "WDC":"Western Digital","SNDK":"SanDisk","KLAC":"KLA","AMAT":"Applied Materials","LRCX":"Lam Research",
@@ -188,7 +188,7 @@ MANUAL = {
   "software-apps": ["APPS", "ROKU"],
   "mobility-robotics": ["RIVN", "AUR", "CCXI", "601127.SS", "2015.HK"],
   "consumer": [
-    "CAVA", "BROS", "AMC", "ALK", "1876.HK", "601888.SS", "605499.SS",
+    "CAVA", "1876.HK", "601888.SS", "605499.SS",
     "9633.HK", "2097.HK", "9992.HK", "CHA",
   ],
   # Marketplace / fulfilment economics rather than a generic regional residual
