@@ -270,6 +270,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "1548.HK", name: "GenScript Biotech 金斯瑞" },
       { symbol: "ABVX", name: "Abivax (ADR)" },
       { symbol: "DHR", name: "Danaher" },
+      { symbol: "ETON", name: "Eton Pharmaceuticals" },
       { symbol: "NKTR", name: "Nektar" },
       { symbol: "TWST", name: "Twist Bioscience" },
     ]
@@ -363,8 +364,11 @@ window.WATCHLIST_THEMES = [
       { symbol: "9992.HK", name: "Pop Mart 泡泡玛特" },
       { symbol: "CHA", name: "Chagee 霸王茶姬" },
       { symbol: "DXYZ", name: "Destiny Tech100" },
-      { symbol: "SHBA.ST", name: "Svenska Handelsbanken A" },
+      { symbol: "GCT", name: "GigaCloud Technology / 大健云仓" },
+      { symbol: "PAYS", name: "Paysign, Inc." },
+      { symbol: "SHB-A.ST", name: "Svenska Handelsbanken A" },
       { symbol: "SKM", name: "SK Telecom" },
+      { symbol: "STT", name: "State Street / 道富" },
       { symbol: "TME", name: "Tencent Music 腾讯音乐" },
       { symbol: "WB", name: "Weibo Corp 微博" },
     ]
