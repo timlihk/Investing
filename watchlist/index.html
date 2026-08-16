@@ -64,9 +64,35 @@ h1{margin:6px 0 0;font-size:clamp(32px,5vw,52px);line-height:1;letter-spacing:-.
 .hm-legend{display:flex;align-items:center;gap:8px;margin-top:12px;color:var(--muted);font-size:11px;flex-wrap:wrap}
 .hm-bar{width:120px;height:8px;border-radius:4px;background:linear-gradient(90deg,#f87171 0%,#3a3f4a 50%,#34d399 100%)}
 .hm-note{margin-left:auto}
-/* ---- tradingview links ---- */
-a.tvl{color:var(--accent);text-decoration:none;border-bottom:1px dotted rgba(125,211,252,.45)}
-a.tvl:hover{color:#fff;border-bottom-color:#fff}
+/* ---- native Yahoo chart view ---- */
+.chart-link{
+  appearance:none;border:0;border-bottom:1px dotted rgba(125,211,252,.45);padding:0;cursor:pointer;
+  color:var(--accent);background:transparent;font:inherit;font-weight:600;
+}
+.chart-link:hover,.chart-link:focus-visible{color:#fff;border-bottom-color:#fff;outline:none}
+.modal-open{overflow:hidden}
+.chart-modal{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:24px}
+.chart-modal[hidden]{display:none}
+.chart-backdrop{position:absolute;inset:0;border:0;background:rgba(2,6,12,.78);backdrop-filter:blur(9px);cursor:default}
+.chart-panel{
+  position:relative;width:min(1180px,100%);max-height:calc(100vh - 48px);overflow:auto;
+  border:1px solid rgba(125,211,252,.2);border-radius:22px;background:#0d1624;box-shadow:0 36px 120px rgba(0,0,0,.65);
+}
+.chart-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:18px 20px 14px;border-bottom:1px solid var(--line)}
+.chart-title-wrap{min-width:0}.chart-title{margin:0;font-size:22px;letter-spacing:-.02em}.chart-name{margin:4px 0 0;color:var(--muted);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chart-quote{display:flex;align-items:baseline;gap:9px;margin-top:10px;font-variant-numeric:tabular-nums}.chart-price{font-size:21px;font-weight:650}.chart-change{font-size:13px;font-weight:600}
+.chart-close{width:36px;height:36px;padding:0;border-radius:50%;font-size:20px;line-height:1}
+.chart-tools{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 20px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.025)}
+.chart-ranges{display:flex;gap:4px;padding:3px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.035)}
+.chart-ranges button{appearance:none;border:0;border-radius:7px;padding:6px 10px;background:transparent;color:var(--muted);font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.chart-ranges button.active{background:rgba(125,211,252,.16);color:var(--accent)}
+.chart-links{display:flex;gap:8px}.chart-links a{color:var(--muted);font-size:12px;text-decoration:none;padding:6px 9px;border:1px solid var(--line);border-radius:8px}.chart-links a:hover{color:var(--text);border-color:rgba(125,211,252,.4)}
+.chart-stage{position:relative;height:min(62vh,590px);min-height:420px;margin:14px 14px 0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#0a111d}
+.chart-canvas{width:100%;height:100%}
+.chart-status{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:13px;background:rgba(10,17,29,.82)}
+.chart-status[hidden]{display:none}
+.chart-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:11px 20px 16px;color:var(--muted);font-size:11px}
+.chart-legend{display:flex;gap:12px;flex-wrap:wrap}.chart-legend span{display:inline-flex;align-items:center;gap:5px}.chart-legend i{width:13px;height:2px;border-radius:2px;display:inline-block}
 #search{
   flex:1;min-width:220px;font:inherit;font-size:14px;color:var(--text);
   background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:10px;
@@ -128,6 +154,10 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
 @media (max-width:720px){
   .theme-stats{width:100%}
   h1{font-size:34px}
+  .chart-modal{padding:0;place-items:stretch}
+  .chart-panel{width:100%;max-height:100vh;border-radius:0;border-left:0;border-right:0}
+  .chart-head{padding:15px 16px 12px}.chart-tools{padding:10px 16px}.chart-links{width:100%}
+  .chart-stage{height:58vh;min-height:360px;margin:10px 8px 0}.chart-foot{padding:10px 14px 16px}
 }
 </style>
 </head>
@@ -137,7 +167,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     <div>
       <p class="eyebrow">Tim Li Research Hub</p>
       <h1>Watchlist</h1>
-      <p class="sub">Theme-grouped watchlists with live prices and multi-period performance. Click a theme to expand — each row pulls 5 years of daily closes from the free Yahoo Finance API via the Cloudflare worker (zero Bloomberg quota).</p>
+      <p class="sub">Theme-grouped watchlists with live prices and multi-period performance. Expand a theme, then click any ticker for a native 5-year Yahoo Finance candlestick chart with volume and moving averages.</p>
     </div>
   </header>
 
@@ -173,12 +203,45 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     Prices: delayed Yahoo Finance quotes via <code>/api/market/quotes</code> + <code>/api/market/detail</code>.
     Market cap: converted to US$ billions via free FX rates (open.er-api.com).
     Returns: 1D from quote change, others computed from daily closes (1W = 5 sessions, 1M = 21, 3M = 63, 6M = 126, 1Y = 252, 5Y = earliest available).
-    Tickers link to TradingView charts (free account). Heatmap tiles: size = theme market cap, color = avg return for the selected period.
+    Click a ticker for a native Yahoo Finance candlestick chart; Yahoo and TradingView remain available as external links. Heatmap tiles: size = theme market cap, color = avg return for the selected period.
     Sources may be missing for newly listed or illiquid names. Edit tickers in <code>watchlist/watchlist-themes.js</code>.
   </footer>
 </div>
 
+<div class="chart-modal" id="chart-modal" role="dialog" aria-modal="true" aria-labelledby="chart-title" hidden>
+  <button class="chart-backdrop" type="button" data-chart-close aria-label="Close chart"></button>
+  <section class="chart-panel">
+    <div class="chart-head">
+      <div class="chart-title-wrap">
+        <h2 class="chart-title" id="chart-title">Chart</h2>
+        <p class="chart-name" id="chart-name"></p>
+        <div class="chart-quote"><span class="chart-price" id="chart-price">—</span><span class="chart-change" id="chart-change"></span></div>
+      </div>
+      <button class="btn chart-close" type="button" data-chart-close aria-label="Close chart">×</button>
+    </div>
+    <div class="chart-tools">
+      <div class="chart-ranges" id="chart-ranges" aria-label="Chart range"></div>
+      <div class="chart-links">
+        <a id="chart-yahoo-link" target="_blank" rel="noopener">Yahoo</a>
+        <a id="chart-tv-link" target="_blank" rel="noopener">TradingView</a>
+      </div>
+    </div>
+    <div class="chart-stage" id="chart-stage">
+      <div class="chart-canvas" id="chart-canvas"></div>
+      <div class="chart-status" id="chart-status">Loading Yahoo Finance candles…</div>
+    </div>
+    <div class="chart-foot">
+      <span>Daily OHLCV from Yahoo Finance via the site worker.</span>
+      <div class="chart-legend">
+        <span><i style="background:#f59e0b"></i>SMA 10</span><span><i style="background:#a78bfa"></i>SMA 20</span>
+        <span><i style="background:#38bdf8"></i>SMA 50</span><span><i style="background:#a3e635"></i>SMA 200</span>
+      </div>
+    </div>
+  </section>
+</div>
+
 <script src="./watchlist-themes.js"></script>
+<script src="https://unpkg.com/lightweight-charts@4.2.3/dist/lightweight-charts.standalone.production.js"></script>
 <script>
 (function () {
   const themes = window.WATCHLIST_THEMES || [];
@@ -193,10 +256,17 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     { key: "y5",  label: "5Y",  sessions: 1258}
   ];
   const HM_PERIODS = [{ key: "d1", label: "1D" }, ...PERIODS];
+  const CHART_RANGES = [
+    { key: "m1", label: "1M", sessions: 22 },
+    { key: "m3", label: "3M", sessions: 66 },
+    { key: "m6", label: "6M", sessions: 132 },
+    { key: "y1", label: "1Y", sessions: 264 },
+    { key: "y5", label: "5Y", sessions: null }
+  ];
 
   const state = {
     quotes: new Map(),        // symbol -> marketMetrics
-    details: new Map(),       // symbol -> {closes, series}
+    details: new Map(),       // symbol -> {series, candles, volume}
     detailInflight: new Map(),// symbol -> Promise
     expanded: new Set(),
     search: "",
@@ -212,6 +282,22 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     expandAll: document.getElementById("expand-all"),
     refresh: document.getElementById("refresh")
   };
+
+  const chartEl = {
+    modal: document.getElementById("chart-modal"),
+    title: document.getElementById("chart-title"),
+    name: document.getElementById("chart-name"),
+    price: document.getElementById("chart-price"),
+    change: document.getElementById("chart-change"),
+    ranges: document.getElementById("chart-ranges"),
+    canvas: document.getElementById("chart-canvas"),
+    status: document.getElementById("chart-status"),
+    yahoo: document.getElementById("chart-yahoo-link"),
+    tradingView: document.getElementById("chart-tv-link")
+  };
+  const chartView = { symbol: null, name: null, range: "y1", trigger: null };
+  let detailChart = null;
+  let detailChartResizeObserver = null;
 
   const heatmap = {
     period: "d1",
@@ -233,6 +319,20 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
   });
   el.refresh.addEventListener("click", () => { el.refresh.disabled = true; loadQuotes().finally(() => { el.refresh.disabled = false; }); });
   el.search.addEventListener("input", () => { state.search = el.search.value.trim().toLowerCase(); render(); });
+  el.themes.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-chart-symbol]");
+    if (!button) return;
+    openChart(button.dataset.chartSymbol, button.dataset.chartName || button.dataset.chartSymbol, button);
+  });
+  chartEl.modal.querySelectorAll("[data-chart-close]").forEach(button => button.addEventListener("click", closeChart));
+  document.addEventListener("keydown", event => { if (event.key === "Escape" && !chartEl.modal.hidden) closeChart(); });
+  chartEl.ranges.innerHTML = CHART_RANGES.map(range => `<button type="button" data-chart-range="${range.key}">${range.label}</button>`).join("");
+  chartEl.ranges.addEventListener("click", event => {
+    const button = event.target.closest("button[data-chart-range]");
+    if (!button || !chartView.symbol) return;
+    chartView.range = button.dataset.chartRange;
+    renderChart();
+  });
 
   // ---- heatmap wiring ----
   heatmap.periods.innerHTML = HM_PERIODS.map(p => `<button data-p="${p.key}">${p.label}</button>`).join("");
@@ -258,7 +358,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
   }
   function loadedDetailCount() {
     let n = 0;
-    state.details.forEach(v => { if (Array.isArray(v)) n++; });
+    state.details.forEach(v => { if (v && Array.isArray(v.series)) n++; });
     return n;
   }
   function themeReturn(theme, period) {
@@ -405,17 +505,40 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
   }
 
   async function fetchDetail(symbol) {
+    const cached = detailPayload(symbol);
+    if (cached) return cached;
     if (state.detailInflight.has(symbol)) return state.detailInflight.get(symbol);
     const promise = (async () => {
       const res = await fetch(`/api/market/detail?symbol=${encodeURIComponent(symbol)}&rangeDays=1825`);
       if (!res.ok) throw new Error(`detail ${res.status}`);
       const payload = await res.json();
       const mm = payload.marketMetrics || {};
-      state.details.set(symbol, mm.chartSeries || []);
+      const detail = {
+        series: Array.isArray(mm.chartSeries) ? mm.chartSeries : [],
+        candles: Array.isArray(mm.chartCandleSeries) ? mm.chartCandleSeries : [],
+        volume: Array.isArray(mm.chartVolumeSeries) ? mm.chartVolumeSeries : []
+      };
+      state.details.set(symbol, detail);
+      return detail;
     })();
     state.detailInflight.set(symbol, promise);
-    try { await promise; } finally { state.detailInflight.delete(symbol); }
-    return promise;
+    try {
+      return await promise;
+    } catch (error) {
+      state.details.delete(symbol);
+      throw error;
+    } finally {
+      state.detailInflight.delete(symbol);
+    }
+  }
+
+  function detailPayload(symbol) {
+    const detail = state.details.get(symbol);
+    return detail && Array.isArray(detail.series) ? detail : null;
+  }
+
+  function detailSeries(symbol) {
+    return detailPayload(symbol)?.series || [];
   }
 
   function render() {
@@ -464,7 +587,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
   }
 
   function computeReturns(symbol) {
-    const series = state.details.get(symbol);
+    const series = detailSeries(symbol);
     const mm = state.quotes.get(symbol) || {};
     if (!Array.isArray(series) || series.length === 0) return null;
     // Drop non-positive closes (Yahoo sometimes emits 0 for incomplete session bars).
@@ -504,7 +627,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
   }
 
   function sparkSVG(symbol) {
-    const series = state.details.get(symbol);
+    const series = detailSeries(symbol);
     if (!Array.isArray(series) || series.length < 2) return "";
     const vals = series.slice(-40).map(p => Number(p.value)).filter(Number.isFinite);
     if (vals.length < 2) return "";
@@ -517,6 +640,11 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
 
   function fmtPct(v) { return v === null || !Number.isFinite(v) ? "<span class='ret na'>—</span>" : `<span class="ret ${v >= 0 ? "up" : "dn"}">${v >= 0 ? "+" : ""}${v.toFixed(2)}%</span>`; }
   function fmtNum(v, digits = 0) { return Number.isFinite(v) ? v.toLocaleString(undefined, { maximumFractionDigits: digits }) : "—"; }
+  function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, character => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
+    })[character]);
+  }
   function fmtCapUsd(v) {
     if (!Number.isFinite(v)) return "—";
     const b = v / 1e9;
@@ -562,6 +690,203 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     return "https://www.tradingview.com/chart/?symbol=" + encodeURIComponent(tvSym);
   }
 
+  async function openChart(symbol, name, trigger) {
+    chartView.symbol = symbol;
+    chartView.name = name;
+    chartView.trigger = trigger;
+    chartEl.title.textContent = symbol;
+    chartEl.name.textContent = name || symbol;
+    chartEl.yahoo.href = `https://finance.yahoo.com/quote/${encodeURIComponent(symbol)}`;
+    chartEl.tradingView.href = tvLink(state.quotes.get(symbol) || {}, symbol);
+    updateChartHeader();
+    chartEl.modal.hidden = false;
+    document.body.classList.add("modal-open");
+    chartEl.modal.querySelector(".chart-close")?.focus();
+    chartEl.status.hidden = false;
+    chartEl.status.textContent = "Loading Yahoo Finance candles…";
+    chartEl.canvas.innerHTML = "";
+    destroyDetailChart();
+    setActiveChartRange();
+
+    const requestedSymbol = symbol;
+    try {
+      await fetchDetail(symbol);
+      if (!chartEl.modal.hidden && chartView.symbol === requestedSymbol) renderChart();
+    } catch (error) {
+      console.warn("chart detail failed", symbol, error);
+      if (!chartEl.modal.hidden && chartView.symbol === requestedSymbol) {
+        chartEl.status.hidden = false;
+        chartEl.status.textContent = "Yahoo chart data is unavailable for this ticker. Try the external Yahoo link.";
+      }
+    }
+  }
+
+  function closeChart() {
+    if (chartEl.modal.hidden) return;
+    chartEl.modal.hidden = true;
+    document.body.classList.remove("modal-open");
+    destroyDetailChart();
+    chartEl.canvas.innerHTML = "";
+    const trigger = chartView.trigger;
+    chartView.symbol = null;
+    chartView.name = null;
+    chartView.trigger = null;
+    trigger?.focus();
+  }
+
+  function updateChartHeader() {
+    const mm = state.quotes.get(chartView.symbol) || {};
+    const price = mm.currentPrice;
+    chartEl.price.textContent = Number.isFinite(price)
+      ? `${fmtNum(price, price < 10 ? 2 : price < 1000 ? 1 : 0)}${mm.currency ? ` ${mm.currency}` : ""}`
+      : "—";
+    const change = mm.regularMarketChangePercent;
+    chartEl.change.textContent = Number.isFinite(change) ? `${change >= 0 ? "+" : ""}${change.toFixed(2)}%` : "";
+    chartEl.change.className = `chart-change ${Number.isFinite(change) ? (change >= 0 ? "up" : "dn") : ""}`;
+  }
+
+  function setActiveChartRange() {
+    chartEl.ranges.querySelectorAll("button[data-chart-range]").forEach(button => {
+      button.classList.toggle("active", button.dataset.chartRange === chartView.range);
+    });
+  }
+
+  function renderChart() {
+    setActiveChartRange();
+    const detail = detailPayload(chartView.symbol);
+    if (!detail || !detail.series.length) {
+      chartEl.status.hidden = false;
+      chartEl.status.textContent = "No Yahoo chart history is available for this ticker.";
+      return;
+    }
+
+    const selectedRange = CHART_RANGES.find(range => range.key === chartView.range) || CHART_RANGES[3];
+    const visibleSeries = selectedRange.sessions ? detail.series.slice(-selectedRange.sessions) : detail.series.slice();
+    const startTime = visibleSeries[0]?.time;
+    const candles = detail.candles.length ? detail.candles : detail.series.map(point => ({
+      time: point.time, open: point.value, high: point.value, low: point.value, close: point.value
+    }));
+    const visibleCandles = startTime ? candles.filter(point => point.time >= startTime) : candles;
+    const visibleVolume = startTime ? detail.volume.filter(point => point.time >= startTime) : detail.volume;
+
+    destroyDetailChart();
+    chartEl.canvas.innerHTML = "";
+    chartEl.status.hidden = true;
+    if (!window.LightweightCharts || typeof window.LightweightCharts.createChart !== "function") {
+      renderSvgFallbackChart(visibleSeries);
+      return;
+    }
+
+    const LightweightCharts = window.LightweightCharts;
+    detailChart = LightweightCharts.createChart(chartEl.canvas, {
+      width: chartEl.canvas.clientWidth || 1040,
+      height: chartEl.canvas.clientHeight || 520,
+      layout: {
+        background: { color: "#0a111d" },
+        textColor: "#96a3ba",
+        fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
+      },
+      grid: {
+        vertLines: { color: "rgba(255,255,255,.045)" },
+        horzLines: { color: "rgba(255,255,255,.045)" }
+      },
+      rightPriceScale: {
+        borderColor: "#27364c",
+        scaleMargins: { top: 0.08, bottom: 0.28 }
+      },
+      timeScale: {
+        borderColor: "#27364c",
+        timeVisible: true,
+        rightOffset: 3,
+        minBarSpacing: 0.35
+      },
+      crosshair: {
+        vertLine: { color: "#64748b", labelBackgroundColor: "#172033" },
+        horzLine: { color: "#64748b", labelBackgroundColor: "#172033" }
+      }
+    });
+
+    const priceSeries = detailChart.addCandlestickSeries({
+      upColor: "#34d399", downColor: "#f87171",
+      borderUpColor: "#34d399", borderDownColor: "#f87171",
+      wickUpColor: "#34d399", wickDownColor: "#f87171",
+      priceLineVisible: false, lastValueVisible: true
+    });
+    priceSeries.setData(visibleCandles);
+
+    if (visibleVolume.length) {
+      const volumeSeries = detailChart.addHistogramSeries({
+        priceFormat: { type: "volume" }, priceScaleId: "", priceLineVisible: false, lastValueVisible: false
+      });
+      volumeSeries.priceScale().applyOptions({ scaleMargins: { top: 0.75, bottom: 0.02 } });
+      volumeSeries.setData(visibleVolume);
+    }
+
+    addSmaSeries(detailChart, detail.series, 10, "#f59e0b", startTime);
+    addSmaSeries(detailChart, detail.series, 20, "#a78bfa", startTime);
+    addSmaSeries(detailChart, detail.series, 50, "#38bdf8", startTime);
+    addSmaSeries(detailChart, detail.series, 200, "#a3e635", startTime);
+    detailChart.timeScale().fitContent();
+
+    if (typeof ResizeObserver === "function") {
+      detailChartResizeObserver = new ResizeObserver(() => {
+        if (!detailChart) return;
+        detailChart.applyOptions({
+          width: chartEl.canvas.clientWidth || 1040,
+          height: chartEl.canvas.clientHeight || 520
+        });
+      });
+      detailChartResizeObserver.observe(chartEl.canvas);
+    }
+  }
+
+  function destroyDetailChart() {
+    if (detailChartResizeObserver) {
+      detailChartResizeObserver.disconnect();
+      detailChartResizeObserver = null;
+    }
+    if (detailChart) {
+      detailChart.remove();
+      detailChart = null;
+    }
+  }
+
+  function addSmaSeries(chart, series, period, color, startTime) {
+    const data = computeSmaSeries(series, period).filter(point => !startTime || point.time >= startTime);
+    if (!data.length) return;
+    const line = chart.addLineSeries({ color, lineWidth: 1.5, priceLineVisible: false, lastValueVisible: false });
+    line.setData(data);
+  }
+
+  function computeSmaSeries(series, period) {
+    if (!series.length || period <= 0) return [];
+    const output = [];
+    let rollingSum = 0;
+    for (let index = 0; index < series.length; index += 1) {
+      rollingSum += Number(series[index].value);
+      if (index >= period) rollingSum -= Number(series[index - period].value);
+      if (index >= period - 1) output.push({
+        time: series[index].time,
+        value: Number((rollingSum / period).toFixed(2))
+      });
+    }
+    return output;
+  }
+
+  function renderSvgFallbackChart(series) {
+    const values = series.map(point => Number(point.value)).filter(Number.isFinite);
+    if (values.length < 2) return;
+    const width = 1000, height = 500, pad = 18;
+    const min = Math.min(...values), max = Math.max(...values), span = max - min || 1;
+    const points = values.map((value, index) => {
+      const x = pad + (index / Math.max(values.length - 1, 1)) * (width - pad * 2);
+      const y = pad + (height - pad * 2) - ((value - min) / span) * (height - pad * 2);
+      return `${x.toFixed(2)},${y.toFixed(2)}`;
+    }).join(" ");
+    const stroke = values.at(-1) >= values[0] ? "#34d399" : "#f87171";
+    chartEl.canvas.innerHTML = `<svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" width="100%" height="100%" aria-label="Yahoo price chart for ${escapeHtml(chartView.symbol)}"><polyline fill="none" stroke="${stroke}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="${points}"></polyline></svg>`;
+  }
+
   function renderTable(theme, card) {
     const body = card.querySelector(".theme-body");
     const visible = theme.tickers.filter(tk => !state.search || tk.symbol.toLowerCase().includes(state.search) || (tk.name || "").toLowerCase().includes(state.search));
@@ -600,8 +925,8 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     rows.forEach(({ tk, mm, rets }) => {
       const loading = state.details.get(tk.symbol) === null;
       html += `<tr>
-        <td class="sym"><a class="tvl" href="${tvLink(mm, tk.symbol)}" target="_blank" rel="noopener" title="Open TradingView chart">${tk.symbol}</a></td>
-        <td class="name" title="${tk.name || ""}">${tk.name || ""}</td>
+        <td class="sym"><button type="button" class="chart-link" data-chart-symbol="${escapeHtml(tk.symbol)}" data-chart-name="${escapeHtml(tk.name || tk.symbol)}" title="Open Yahoo Finance chart">${escapeHtml(tk.symbol)}</button></td>
+        <td class="name" title="${escapeHtml(tk.name || "")}">${escapeHtml(tk.name || "")}</td>
         <td class="price">${Number.isFinite(mm.currentPrice) ? fmtNum(mm.currentPrice, mm.currentPrice < 10 ? 2 : mm.currentPrice < 1000 ? 1 : 0) : "<span class='muted'>—</span>"}${mm.currency ? `<span class="ccy">${mm.currency}</span>` : ""}</td>
         <td>${Number.isFinite(rets.d1) ? fmtPct(rets.d1) : (state.quotesDone ? fmtPct(null) : '<span class="loading-cell">…</span>')}</td>
         ${PERIODS.map(p => `<td>${loading ? '<span class="loading-cell">…</span>' : fmtPct(rets[p.key])}</td>`).join("")}
