@@ -70,7 +70,9 @@ ZH_NAMES = {
  "2301.TW":"Lite-On 光宝科技","2382.TW":"Quanta 广达","2317.TW":"Hon Hai 鸿海","2383.TW":"EMC 台光电子",
  "2327.TW":"Yageo 国巨","300433.SZ":"Lens Technology 蓝思科技","5243.TW":"Eson Precision 乙盛",
  "8021.TW":"Topoint Technology 高侨","3104.T":"Fujibo 富士紡","3110.T":"Nitto Boseki 日东纺",
- "SIVE.ST":"Sivers Semiconductors","SOI.PA":"Soitec","IQE.L":"IQE plc","NXSN.TA":"NextVision",
+ "SIVE.ST":"Sivers Semiconductors","SOI.PA":"Soitec","IQE.L":"IQE plc","AIXA.DE":"Aixtron",
+ "2455.TW":"VPEC 全新光電","3081.TWO":"LandMark 聯亞光電","4971.TWO":"IET-KY 英特磊",
+ "5016.T":"JX Advanced Metals","7826.T":"Furuya Metal フルヤ金属","NXSN.TA":"NextVision",
  "VNP.TO":"5N Plus","TE":"T1 Energy","FPS":"Frontier Power Solutions","GLXY":"Galaxy Digital",
  "CRWV":"CoreWeave","NBIS":"Nebius","APLD":"Applied Digital","DOCN":"DigitalOcean","FSLY":"Fastly",
  "ICHR":"Ichor Holdings","VICR":"Vicor","LWLG":"Lightwave Logic","OPTX":"Syntec Optics","SATL":"Satellogic",
@@ -115,7 +117,8 @@ ZH_NAMES = {
 #
 # Key rebuckets:
 #  - ALAB/CRDO/AVGO/MRVL/MXL/MTSI/SMTC: electrical/RF interconnect silicon → connectivity (not compute/optics)
-#  - SIVE/LITE/COHR/AAOI/CIEN/IQE/SOI/VIAV/…: lasers, fiber, epi, optical systems → optics
+#  - SIVE/LITE/COHR/AAOI/CIEN/IQE/SOI/VIAV/TW epi/Aixtron: lasers, fiber, InP epi, optical systems → optics
+#  - Dual: MTSI/TSEM stay connectivity/compute (core revenue) AND optics (InP/SiPh stack)
 #  - TSEM specialty foundry → ai-compute; 6503.T industrial/power conglomerate → energy-materials
 #  - 3104.T/3110.T electronic glass cloth → substrates-packaging (not energy)
 #  - ACN → it-services; OSCR/CNC → healthcare-services; NKTR/ABVX/DHR → biotech
@@ -134,7 +137,7 @@ MANUAL = {
   "semi-equipment": [
     "AMAT", "LRCX", "KLAC", "TER", "ACMR", "AEHR", "6146.T", "8027.TWO", "025560.KS",
     "BESI.AS", "ENTG", "4187.T", "6863.T", "AXTI", "ICHR", "FORM", "KEYS", "688146.SS",
-    "3445.T",
+    "3445.T", "AIXA.DE", "5016.T",
   ],
   # ABF/IC substrates, OSAT, PCB, passives, electronic glass cloth
   "substrates-packaging": [
@@ -147,10 +150,12 @@ MANUAL = {
   "connectivity": [
     "ALAB", "CRDO", "AVGO", "MRVL", "MXL", "MTSI", "SMTC",
   ],
-  # Optical: lasers, transceivers, fiber, epiwafers, optical networking systems
+  # Optical: lasers, transceivers, fiber, InP substrate/epi, optical networking systems
   "optics": [
     "LITE", "COHR", "AAOI", "CIEN", "SIVE.ST", "SOI.PA", "IQE.L", "LWLG", "OPTX", "VIAV",
     "6777.T", "5802.T", "4991.TWO", "6442.TW", "6869.HK", "3105.TWO", "NOK", "LPK.DE",
+    "2455.TW", "3081.TWO", "4971.TWO", "5016.T", "AXTI", "AIXA.DE",
+    "MTSI", "TSEM",
   ],
   # Servers, power/cooling, DC builders, AI clouds, cloud software, server structure/connectors
   "ai-infra": [
@@ -174,7 +179,7 @@ MANUAL = {
     "AGX", "TE", "FLNC", "SEI", "FPS", "BE", "ENLT", "CLF", "WOLF", "6136.T", "6503.T",
     "3931.HK",
   ],
-  "critical-metals": ["3858.HK", "EQR.AX", "ALM", "VNP.TO", "MP", "USAR", "UUUU", "NEU"],
+  "critical-metals": ["3858.HK", "EQR.AX", "ALM", "VNP.TO", "MP", "USAR", "UUUU", "NEU", "7826.T"],
   # Drug developers + life-science tools (DHR sells tools, not insurance)
   "biotech": ["NKTR", "ABVX", "DHR", "ETON"],
   # Payers / managed care — services, not R&D pipeline
@@ -232,7 +237,8 @@ TAG_MAP = {
   "connectivity": "connectivity", "networking": "connectivity", "serdes": "connectivity",
   "interconnect": "connectivity", "analog": "connectivity",
   "photonics": "optics", "optical": "optics", "optics": "optics",
-  "communication-equipment": "optics",
+  "communication-equipment": "optics", "inp": "optics",
+  "pgm": "critical-metals", "iridium": "critical-metals", "ruthenium": "critical-metals",
   "defense": "defense", "drones": "defense",
   "starlink": "starlink",
   "crypto": "crypto-miners", "mining": "crypto-miners",
@@ -289,7 +295,7 @@ THEMES = [
   {"id": "connectivity", "name": "AI Connectivity 互联芯片",
    "tagline": "PCIe/CXL retimers, SerDes, Ethernet ASICs, RF/connectivity silicon."},
   {"id": "optics", "name": "AI Optics & Photonics 光通信",
-   "tagline": "Lasers, optical transceivers, fiber, epiwafers, optical networking systems."},
+   "tagline": "InP substrate/epi, MOCVD, lasers, SiPh foundry, transceivers, optical networking."},
   {"id": "ai-infra", "name": "AI Infrastructure 算力基建",
    "tagline": "Servers, power & cooling, DC builders, AI clouds, cloud software, server structure."},
   {"id": "defense", "name": "Defense & Drones 国防无人机",
