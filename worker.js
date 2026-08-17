@@ -53,8 +53,16 @@ export default {
       return handleMarketApi(url);
     }
 
+    // /company (no slash) would serve the hub HTML, but the page's relative
+    // fetches (./api/companies, ./reports/...) then resolve to /api/... and 404.
+    // Force the trailing slash so the Company Research tab stays wired.
+    if (url.pathname === "/company") {
+      url.pathname = "/company/";
+      return Response.redirect(url.toString(), 308);
+    }
+
     // Company Research Hub tab: proxy /company/* -> NAS hub (port 3101 via tunnel)
-    if (url.pathname === "/company" || url.pathname.startsWith("/company/")) {
+    if (url.pathname.startsWith("/company/")) {
       return handleCompanyProxy(url, request);
     }
 

@@ -81,6 +81,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "2327.TW", name: "Yageo 国巨" },
       { symbol: "2802.T", name: "Ajinomoto 味之素 (ABF film)" },
       { symbol: "3037.TW", name: "Unimicron 欣兴电子" },
+      { symbol: "3103.T", name: "Unitika (尤尼吉可)" },
       { symbol: "3104.T", name: "Fujibo 富士紡" },
       { symbol: "3110.T", name: "Nitto Boseki 日东纺" },
       { symbol: "3189.TW", name: "Kinsus 景硕" },

@@ -140,7 +140,7 @@ MANUAL = {
     "4062.T", "3037.TW", "8046.TW", "3189.TW", "009150.KS", "ATS.VI", "2802.T",
     "5706.T", "5214.T", "011790.KS", "3481.TW", "002916.SZ", "002436.SZ", "600183.SS",
     "AMKR", "ASX", "2327.TW", "011070.KS", "8021.TW", "TTMI", "VSH",
-    "3104.T", "3110.T",
+    "3104.T", "3110.T", "3103.T",
   ],
   # Electrical / RF interconnect silicon (PCIe/CXL/SerDes/Ethernet/RF front-end chips)
   "connectivity": [
@@ -221,7 +221,7 @@ TAG_MAP = {
   "SiC": "energy-materials", "discrete": "substrates-packaging",
   "packaging": "substrates-packaging", "substrates": "substrates-packaging",
   "MLCC": "substrates-packaging", "pcb": "substrates-packaging",
-  "ccl": "substrates-packaging",
+  "ccl": "substrates-packaging", "glass-cloth": "substrates-packaging",
   "electronics": "substrates-packaging", "components": "substrates-packaging",
   "connectors": "ai-infra", "server-rails": "ai-infra",
   "ai-infra": "ai-infra", "ai-infrastructure": "ai-infra", "servers": "ai-infra",
