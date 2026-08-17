@@ -26,10 +26,11 @@ iframe{flex:1;border:none;width:100%}
     <div class="tab" onclick="switchTab('network',this)"><span class="icon">&#9678;</span>Network Map</div>
     <div class="tab" onclick="switchTab('layers',this)"><span class="icon">&#9776;</span>Layer View</div>
     <div class="tab" onclick="switchTab('economics',this)"><span class="icon">&#9701;</span>Economics Scatter</div>
+    <div class="tab" onclick="switchTab('inp',this)"><span class="icon">&#9670;</span>InP Tightness</div>
     <div class="tab" onclick="switchTab('cpo',this)"><span class="icon">&#9671;</span>CPO Map</div>
     <div class="tab" onclick="switchTab('gpu',this)"><span class="icon">&#9635;</span>GPU-HBM</div>
   </div>
-  <div class="info">146 companies &middot; grouped dashboard &middot; supply chain maps &middot; economics view &middot; architecture diagrams</div>
+  <div class="info">146 companies &middot; 17 Aug InP update &middot; grouped dashboard &middot; supply chain maps</div>
 </div>
 <iframe id="view" src="optics-dashboard.html"></iframe>
 <script>
@@ -41,6 +42,7 @@ function switchTab(view, el){
     network: 'chokepoint-map.html',
     layers: 'supply-chain-map.html',
     economics: 'chokepoint-economics-map.html',
+    inp: 'inp-tightness-2026-08-17.html',
     cpo: '../supply-chain.html',
     gpu: '../gpu-hbm-optical-interconnect.html'
   };

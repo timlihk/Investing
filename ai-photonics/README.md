@@ -11,6 +11,8 @@ See [results.tsv](results.tsv) for the full scorecard.
 The scorecard now includes `chips_status` and `chips_detail` columns from the latest official CHIPS sweep.
 The scorecard also now carries `chokepoint_score` and `chokepoint_tier`, with raw 5-question inputs stored in `chokepoint_scores.tsv` and the fixed rubric documented in [chokepoint-method.md](chokepoint-method.md).
 
+**17 Aug 2026 InP update:** 經濟日報 Q4 >10% substrate/epi hike is a channel check, not a filing. COHR/LITE/Citi independently confirm InP is the binding constraint. New page: [InP tightness note](inp-tightness-2026-08-17.html). Map now includes VPEC (2455) and Sumitomo Electric as InP nodes.
+
 Interactive map:
 - [Optics dashboard](https://timlihk.github.io/Investing/ai-photonics/optics-dashboard.html) - full repo universe grouped by segment, with Yahoo snapshot data and local 1-year charts
 - [GitHub Pages map](https://timlihk.github.io/Investing/ai-photonics/supply-chain-map.html) - curated subset, synced to the main scorecard

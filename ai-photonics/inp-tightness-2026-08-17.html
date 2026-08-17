@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InP Tightness — 17 Aug 2026</title>
+<style>
+:root {
+  --bg: #091018;
+  --card: #111827;
+  --border: #233044;
+  --text: #e6edf3;
+  --dim: #94a3b8;
+  --blue: #7dd3fc;
+  --green: #34d399;
+  --amber: #fbbf24;
+  --red: #f87171;
+  --orange: #fb923c;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(251,146,60,.10), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(125,211,252,.08), transparent 30%),
+    var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+}
+.wrap { max-width: 1180px; margin: 0 auto; padding: 28px 22px 80px; }
+.kicker { color: var(--orange); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+h1 { font-size: 32px; letter-spacing: -.03em; margin: 8px 0 10px; }
+.sub { color: var(--dim); max-width: 860px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 22px; }
+.pill { font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); color: var(--dim); background: rgba(15,23,42,.7); }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 18px 0; }
+.stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px; }
+.stat .v { font-size: 22px; font-weight: 780; }
+.stat .l { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: .08em; margin-top: 4px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; margin: 16px 0; }
+h2 { font-size: 20px; margin-bottom: 10px; }
+h3 { font-size: 15px; margin: 16px 0 8px; color: #dbeafe; }
+p, li { font-size: 14.5px; }
+ul { padding-left: 18px; }
+li { margin: 4px 0; }
+.callout { border-left: 3px solid var(--orange); padding: 10px 14px; background: rgba(251,146,60,.08); border-radius: 0 10px 10px 0; margin: 12px 0; font-size: 14.5px; }
+.callout.blue { border-left-color: var(--blue); background: rgba(125,211,252,.08); }
+.callout.red { border-left-color: var(--red); background: rgba(248,113,113,.08); }
+.callout.green { border-left-color: var(--green); background: rgba(52,211,153,.08); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0 4px; }
+th, td { border-bottom: 1px solid #1f2937; padding: 7px 8px; text-align: left; vertical-align: top; }
+th { color: var(--dim); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.ok { color: var(--green); }
+.warn { color: var(--amber); }
+.bad { color: var(--red); }
+.small { color: var(--dim); font-size: 12px; }
+.stack { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; line-height: 1.7; background: #0b1220; border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; overflow-x: auto; white-space: pre; color: #cbd5e1; }
+a { color: var(--blue); }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.links a { font-size: 13px; }
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+  h1 { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">AI Photonics · InP research update</div>
+  <h1>InP is still the binding constraint. The 10% hike is a channel check, not a new fact.</h1>
+  <p class="sub">
+    經濟日報 (17 Aug 2026) says Q4 InP substrate / epi prices will rise more than 10% — “even with money you may not get it” — and names 全新 (VPEC 2455), 聯亞 (LandMark 3081) and IET-KY (4971).
+    The tightness is independently confirmed by Coherent, Lumentum and Citi. The article is late to a tape that has already re-rated the Taiwan epi names 60–380% YTD.
+  </p>
+  <div class="meta">
+    <span class="pill">As of 17 Aug 2026</span>
+    <span class="pill">Bloomberg snapshot · TWD/32, JPY/150</span>
+    <span class="pill">Source: 經濟日報 + Citi 16 Jul + LITE/COHR prints + MOPS</span>
+    <span class="pill">Not investment advice</span>
+  </div>
+
+  <div class="grid">
+    <div class="stat"><div class="v">4th / 3rd</div><div class="l">Substrate / epi hike count (trade press)</div></div>
+    <div class="stat"><div class="v">&gt;10%</div><div class="l">Claimed Q4 hike vs prior 3–5%</div></div>
+    <div class="stat"><div class="v">30 / 20 / 11%</div><div class="l">Citi EML gap FY26–28</div></div>
+    <div class="stat"><div class="v">+379%</div><div class="l">LandMark YTD — already priced</div></div>
+  </div>
+
+  <div class="card">
+    <h2>One-sentence take</h2>
+    <p>InP wafers and the lasers grown on them remain the narrowest physical bottleneck in AI optics; the new 經濟日報 piece is a Taiwan-language amplification of a constraint LITE, COHR and Citi already described. What changed today is the claimed <b>step-up in hike size</b> (from 3–5% to &gt;10%) and the explicit naming of the three Taiwan merchant epi houses. What did <b>not</b> change is the valuation: 3081 at 84x TTM sales / 138x FY27E EPS is no longer a discovery name.</p>
+    <div class="callout">Treat the 10% figure as an industry-source channel check (記者陳昱翔 quoting 業界人士), not a posted price list. The independently verified facts sit one layer down: long-term substrate lock-ups, COHR “primary constraint,” and Citi’s three-year EML deficit.</div>
+  </div>
+
+  <div class="card">
+    <h2>Claim-by-claim review of the 經濟日報 clip</h2>
+    <table>
+      <thead><tr><th>Claim</th><th>Verdict</th><th>Independent check</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>InP substrate on a fourth consecutive hike; Q4 &gt;10%</td>
+          <td class="warn">Partial — trade press</td>
+          <td>Single 經濟日報 source (17 Aug). Consistent with Citi (16 Jul) adding another 15% LITE FY27 price, and with China Feb-2025 export licenses that Citi said pushed 6-inch wafers ~+250% to ~$5,000. No company 公告 of a 10% list-price move.</td>
+        </tr>
+        <tr>
+          <td>Epi already hiked twice; Q4 heading for a third</td>
+          <td class="warn">Partial — trade press</td>
+          <td>Same article. LandMark 1Q26 GM 54.8% (8-year high, MS 22 Apr) shows mix/pricing already happened. Pass-through of a third hike is the open question, not whether prior hikes occurred.</td>
+        </tr>
+        <tr>
+          <td>“有錢也未必買得到”</td>
+          <td class="ok">Directionally confirmed</td>
+          <td>COHR 12 Aug: InP “primary constraint”; will not sell InP lasers externally because datacom “absorbs every bit of capacity.” Citi: EML deficit 30/20/11% in 2026–28. LITE 11 Aug: “pretty big surge… found additional substrate help from AXTI.”</td>
+        </tr>
+        <tr>
+          <td>COHR / LITE signed long-term upstream contracts</td>
+          <td class="ok">Confirmed</td>
+          <td>Already in the AIOT file: LITE prepaid AXTI $87m through 2031; COHR prepaid $22.3m. LITE’s Aug print reconfirmed the AXTI add-on. 招商通信 17 Aug: LITE signed an emergency AXT substrate LTA because UHP CW supply “far behind demand.”</td>
+        </tr>
+        <tr>
+          <td>全新 adding tools; Q3 monthly revenue rising</td>
+          <td class="ok">Revenue confirmed</td>
+          <td>MOPS/財報狗: Jul-26 NT$422m, +29.5% MoM / +45% YoY, fifth consecutive monthly rise, 40-month high. Tool-add is company color via 經濟日報, not a dated capex 公告 in this pass.</td>
+        </tr>
+        <tr>
+          <td>IET US fab phase 2 started last July, finishes this year</td>
+          <td class="ok">Confirmed, slightly compressed</td>
+          <td>Company: Texas phase 2 started Jul 2025, completion late-2026 to early-2027 (MoneyDJ 27 Jul 2026; 2025 法說). Article says “今年完工.”</td>
+        </tr>
+        <tr>
+          <td>聯亞 NT$13.15bn capex + Sumitomo Electric 5-year InP substrate LTA</td>
+          <td class="ok">Confirmed</td>
+          <td>MOPS 22 Apr 2026: 5-year contract 2026–2030 with 住友電氣工業; board also approved ≤NT$13.15bn equipment (front-end epi + litho/etch) for 2027H2 demand. Q2 EPS NT$4.62, record; 2027 capacity guided 2.5× (經濟日報 12–13 Aug).</td>
+        </tr>
+        <tr>
+          <td>光進銅退 as the reason InP is “the next memory”</td>
+          <td class="warn">Overstated framing</td>
+          <td>Scale-out still has a long copper / AEC / pluggable life (CRDO, 650 Group: CPO vs pluggable crossover ~2031). InP demand is real even if copper does not “retreat.” Do not underwrite the theme as a copper-replacement binary.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="small">Source article: <a href="https://money.udn.com/money/story/5612/9695292" target="_blank" rel="noopener">money.udn.com/money/story/5612/9695292</a> · 2026-08-17 02:01 HKT</p>
+  </div>
+
+  <div class="card">
+    <h2>Stack — what actually has to scale</h2>
+    <div class="stack">indium / red phosphorus
+        → InP substrate (AXTI · JX 5016 · Sumitomo 5802)
+            → merchant epi (VPEC 2455 · LandMark 3081 · IET 4971 · IQE)
+                → EML / CW / PD die (LITE · COHR · SEI · WIN 3105)
+                    → 800G / 1.6T module or ELS / CPO engine
+                        → GPU / switch rack</div>
+    <p style="margin-top:10px">SiPh does not retire this stack. Silicon cannot emit at 1310/1550; every SiPh PIC still needs a hybrid or external InP laser. Citi (16 Jul) is explicit: InP demand climbs with AI bandwidth “regardless of how much ground silicon photonics gains for integration.”</p>
+    <div class="callout blue">If AI optical demand doubles, the first thing that breaks is <b>qualified InP wafers and the high-power CW / EML die grown on them</b> — not module assembly, not SOI, not DSP. That is unchanged from the June bottleneck note. The new information is that merchant epi in Taiwan is now being offered as the liquid expression of that tightness, after LITE/COHR already locked substrate.</div>
+  </div>
+
+  <div class="card">
+    <h2>Bloomberg snapshot · 17 Aug 2026</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th><th>Role</th><th class="num">Price</th><th class="num">Mcap</th>
+          <th class="num">TTM P/S</th><th class="num">TTM / FY27E P/E</th>
+          <th class="num">YTD</th><th class="num">1M</th><th class="num">Street TP</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>VPEC 2455 TT</td><td>Merchant III-V epi (mixed RF + optical)</td>
+          <td class="num">NT$417</td><td class="num">$2.4B</td><td class="num">20.4x</td>
+          <td class="num">101x / 78x</td><td class="num">+175%</td><td class="num">+48%</td>
+          <td class="num">NT$430 (14 rec, 4.79)</td>
+        </tr>
+        <tr>
+          <td>LandMark 3081 TT</td><td>Merchant InP/GaAs epi, SiPh mix rising</td>
+          <td class="num">NT$2,670</td><td class="num">$8.5B</td><td class="num">84.4x</td>
+          <td class="num">262x / 138x</td><td class="num">+379%</td><td class="num">+80%</td>
+          <td class="num">NT$3,134 (15 rec, 4.47)</td>
+        </tr>
+        <tr>
+          <td>IET-KY 4971 TT</td><td>MBE InP / APD-PIN epi</td>
+          <td class="num">NT$501</td><td class="num">$0.74B</td><td class="num">17.6x</td>
+          <td class="num">98x / 62x</td><td class="num">+62%</td><td class="num">+34%</td>
+          <td class="num">NT$746 (5 rec, 3.60)</td>
+        </tr>
+        <tr>
+          <td>AXTI US</td><td>InP substrate (China Tongmei)</td>
+          <td class="num">$81.64</td><td class="num">$5.4B</td><td class="num">33.5x</td>
+          <td class="num">n.m. / 94x</td><td class="num">+399%</td><td class="num">+78%</td>
+          <td class="num">$91.60 (5 rec, 4.60)</td>
+        </tr>
+        <tr>
+          <td>JX 5016 JP</td><td>Non-China InP substrate</td>
+          <td class="num">¥3,841</td><td class="num">$24.3B</td><td class="num">3.7x</td>
+          <td class="num">26x / —</td><td class="num">+96%</td><td class="num">+8%</td>
+          <td class="num">¥4,771 (13 rec)</td>
+        </tr>
+        <tr>
+          <td>SEI 5802 JP</td><td>Substrate + EML/CW, conglomerate</td>
+          <td class="num">¥2,364</td><td class="num">$50.1B</td><td class="num">1.4x</td>
+          <td class="num">18x / —</td><td class="num">+50%</td><td class="num">+5%</td>
+          <td class="num">¥3,676 (13 rec)</td>
+        </tr>
+        <tr>
+          <td>LITE US</td><td>EML / UHP CW / OCS</td>
+          <td class="num">$926</td><td class="num">$82.1B</td><td class="num">23.1x</td>
+          <td class="num">172x / —</td><td class="num">+151%</td><td class="num">+26%</td>
+          <td class="num">$1,130 (31 rec)</td>
+        </tr>
+        <tr>
+          <td>COHR US</td><td>6" InP + modules</td>
+          <td class="num">$326</td><td class="num">$63.8B</td><td class="num">8.1x</td>
+          <td class="num">85x / —</td><td class="num">+77%</td><td class="num">+17%</td>
+          <td class="num">$418 (27 rec)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="small">CUR_MKT_CAP converted at TWD 32 / JPY 150. IQE 1FY EPS not used (loss-making, P/S 5.1x, YTD +831%). 2455/3081/4971 FY27E P/E uses Bloomberg BEST_EPS 2FY. 3081 TTM sales NT$2.20bn vs mcap NT$272bn is the number that matters: the market is paying for FY28 (BEST sales NT$10.5bn, +4wk +NT$1.09bn).</p>
+  </div>
+
+  <div class="card">
+    <h2>How to read the three Taiwan epi names</h2>
+    <h3>聯亞 LandMark 3081 — the priced-for-perfection expression</h3>
+    <ul>
+      <li>TTM sales NT$2.20bn, NI NT$428m, GM 42.7%, OM 23.1%. Company-reported Q2 sales NT$1.221bn / H1 NT$2.125bn (+111% YoY). Bloomberg TTM 2.20bn is the trailing four-quarter print and lags the H1 run-rate.</li>
+      <li>Street FY27E sales NT$5.34bn / EPS 19.35; FY28E NT$10.47bn / EPS 41.70. Four-week revisions still chasing: FY27 sales +387m, FY28 +1,093m.</li>
+      <li>Even on FY28E the stock is ~64x earnings and ~26x sales. MS moved OW → EW (Mar) then held EW at TP 2,850 after 1Q (Apr) because “the stock had already discounted the good news.” Price is now 2,670 vs that 2,850 and vs consensus 3,134 — the residual is execution of the 2.5× 2027 capacity plan, not discovery.</li>
+      <li>China was 73% of 2024 sales. That is a geopolitical and customer-concentration fact, not a footnote.</li>
+    </ul>
+    <h3>全新 VPEC 2455 — current-production epi, mixed book</h3>
+    <ul>
+      <li>TTM sales NT$3.38bn, NI NT$548m, GM 36.1%, OM 19.8%. Larger and more profitable today than LandMark, cheaper on every multiple, but the book is still RF/HBT + optical, not a SiPh pure-play.</li>
+      <li>Jul monthly NT$422m is the first hard confirmation that 3Q is inflecting the way the article claims. Street FY27E EPS 5.37 (4wk −0.09) — revisions are not chasing the way they are on 3081.</li>
+      <li>Price 417 vs consensus TP 430. Fourteen analysts, 4.79 rec. The easy multiple expansion versus TP is gone.</li>
+    </ul>
+    <h3>IET-KY 4971 — smaller, cheaper, US-fab option</h3>
+    <ul>
+      <li>TTM sales NT$1.08bn, NI NT$65m, GM 35.7%. FY27E EPS 8.03 → 62x; TP 746 implies +49% if Street is right, but only five analysts and rec 3.60 (hold-ish).</li>
+      <li>3M −29% after the spring spike (it printed NT$959 in April). The US Texas phase-2 is 2026-end / 2027-start capacity, not 2026 earnings.</li>
+      <li>The APD / PIN breadcrumb to LITE and COHR is still trade-press plus company “多家知名大廠” language. Treat as mapped supplier candidate, not proven sole-source.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Substrate layer — this is still the actual choke</h2>
+    <ul>
+      <li><b>AXTI</b> — TTM sales only $88m and still TTM-unprofitable (OM −25%), but Q2 InP print was the inflection: 华泰 31 Jul said InP sales &gt;$30m, GM 45%, non-GAAP OP $11.2m, backlog &gt;$100m, YE26 quarterly InP capacity ~$60m → YE27 ~$130m. Street FY27E sales $218m (+$75m in four weeks) and FY28E $459m. The stock is a China-permit + Tongmei story wearing an InP multiple. AXTI remains the fragile choke, not a clean one.</li>
+      <li><b>JX 5016</b> — Nomura 8 Jul to Buy, TP ¥4,800, talking 7–10× InP capacity / mid-term 20× volume. JPM APAC (11 Aug, via X) said some investors want 20–30× by FY29 versus management 7–10×. A 11 Aug desk note flagged red-phosphorus / indium constraints and ~50% utilisation — treat the 20× slide as aspiration until wafers ship.</li>
+      <li><b>Sumitomo 5802</b> — Citi 2 Jul: 3.1× InP substrate capacity over FY25–29, ¥18bn. Citi 16 Jul puts SEI at ~31–60% of InP wafers depending on the exhibit, and as the only name that is both a wafer supplier and a finished EML/CW maker. LandMark’s five-year LTA is the first hard customer-side confirmation in our file. Optical is still a minority of a ¥7.5T auto/industrial conglomerate (P/E 18x, P/S 1.4x).</li>
+    </ul>
+    <div class="callout red">Share-of-market numbers for InP wafers are not internally consistent across brokers (AXT 19–70%, SEI 31–60%, JX “about 40% with SEI”). Use the qualitative fact — three names, China-license risk on one of them — and do not underwrite a precise share.</div>
+  </div>
+
+  <div class="card">
+    <h2>Sell-side that actually moved the debate</h2>
+    <table>
+      <thead><tr><th>Date</th><th>House</th><th>Type</th><th>Load-bearing point</th></tr></thead>
+      <tbody>
+        <tr><td>16 Jul 2026</td><td>Citi</td><td>研报-foreign</td><td>First full InP laser S/D model. Industry chips 279m → 1.3bn by 2028 (+66% CAGR) still leaves EML 30/20/11% short. AXTI+SEI wafer ramp is the swing factor. LITE TP $1,100, +15% extra FY27 price, EPS to $21.18. CPO not delayed.</td></tr>
+        <tr><td>31 Jul 2026</td><td>Nomura / 华泰</td><td>行业 + 点评</td><td>AXT Q2 InP “very strong”; Huatai: InP &gt;$30m, GM 45%, backlog &gt;$100m. Nomura prefers JX / SEI on China-license grounds.</td></tr>
+        <tr><td>2 Jul / 8 Jul</td><td>Citi / Nomura</td><td>研报-foreign</td><td>SEI 3.1× substrate; JX Buy, 7–10× capex, TP ¥4,800.</td></tr>
+        <tr><td>22 Apr 2026</td><td>MS / Fubon / MOPS</td><td>研报-foreign + 公告</td><td>LandMark 1Q GM 54.8%; capex to NT$13.15bn; SEI 5-yr LTA. MS EW, TP 2,850 — already a “pause” call four months ago.</td></tr>
+        <tr><td>17 Apr 2026</td><td>Goldman Sachs</td><td>研报-foreign</td><td>Optical TAM 9× to $154bn. Coverage universe includes 3081, 2455, 5016, 5802.</td></tr>
+        <tr><td>17 Aug 2026</td><td>招商通信</td><td>点评</td><td>Same-day as the UDN clip. LITE UHP CW “far behind demand” is why they signed the AXT LTA; COHR 6" InP yield better than 3"; EML backlog into 2028/29; CPO scale-out now, scale-up 27H2.</td></tr>
+        <tr><td>CN 研报 on 2455/3081/4971</td><td>AlphaEngine</td><td>研报-CN</td><td>Zero recent company notes. Same finding as other TW non-semi names: mainland brokers do not write 3081/2455/4971. Foreign + local TW (MS, Fubon, KGI) is the library.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>X · last 7 days</h2>
+    <p>Chatter is real and clustered around the UDN reprint plus the LITE/COHR quotes. Original Taiwan-handle discussion of 全新 / 聯亞 / IET is sparse. A Bitget $AXTI cluster is promo.</p>
+    <table>
+      <thead><tr><th>Date</th><th>Handle</th><th>Class</th><th>Why it matters</th><th>Link</th></tr></thead>
+      <tbody>
+        <tr><td>16 Aug</td><td>@pequityresearch</td><td>Primary reprint</td><td>The clip that started this update. 26k views.</td><td><a href="https://x.com/pequityresearch/status/2089101358100074852" target="_blank" rel="noopener">post</a></td></tr>
+        <tr><td>12 Aug</td><td>@pequityresearch / @PhotonCap</td><td>Earnings quote</td><td>COHR: InP is the primary constraint; no external laser sales.</td><td><a href="https://x.com/pequityresearch/status/2087647773612978465" target="_blank" rel="noopener">post</a></td></tr>
+        <tr><td>11 Aug</td><td>@pequityresearch</td><td>Earnings quote</td><td>LITE found additional substrate from AXTI.</td><td><a href="https://x.com/pequityresearch/status/2087296010276004283" target="_blank" rel="noopener">post</a></td></tr>
+        <tr><td>16 Aug</td><td>@Semiconsight</td><td>Analyst</td><td>AXTI license mix: &gt;50% Q2 already China-domestic; LITE/COHR deposits do not revenue until 2027.</td><td><a href="https://x.com/Semiconsight/status/2088965694947996116" target="_blank" rel="noopener">post</a></td></tr>
+        <tr><td>17 Aug</td><td>@paurooteri</td><td>JP synthesis</td><td>Adds the LandMark–SEI LTA and IET US fab to the UDN frame.</td><td><a href="https://x.com/paurooteri/status/2089155986242277467" target="_blank" rel="noopener">post</a></td></tr>
+        <tr><td>11 Aug</td><td>@pequityresearch</td><td>JPM APAC</td><td>Investors want JX InP 20–30× by FY29 vs mgmt 7–10×.</td><td><a href="https://x.com/pequityresearch/status/2087065690247254029" target="_blank" rel="noopener">post</a></td></tr>
+      </tbody>
+    </table>
+    <p class="small">Do not use: low-engagement claim that China “removed” InP export controls (contradicted by Semiconsight / LawnChairFund).</p>
+  </div>
+
+  <div class="card">
+    <h2>What would break this</h2>
+    <ol>
+      <li>Q4 hike does not stick — module makers refuse the &gt;10% and GM at 3081/2455 rolls over in 4Q/1Q prints.</li>
+      <li>AXTI US export licenses flood, or Tongmei HK listing / China-domestic mix makes Western lock-ups less scarce than the tape thinks.</li>
+      <li>SEI + JX wafers actually show up in 2027 at the high end of the 3–10× slides, and UHP CW / EML prices roll.</li>
+      <li>CPO / NPO scale-up slips past 27H2 <i>and</i> 1.6T pluggable demand cools. (CPO delay alone is not enough — pluggables still eat InP.)</li>
+      <li>LandMark 2027 capacity 2.5× misses, or China 73% mix becomes a policy problem.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>What to watch next</h2>
+    <table>
+      <thead><tr><th>Date / window</th><th>Item</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>~10 Sep 2026</td><td>TW August monthly revenue (2455 / 3081 / 4971)</td><td>Does the Jul inflection at VPEC continue? Does LandMark keep the H1 run-rate?</td></tr>
+        <tr><td>Sep 2026 ECOC</td><td>LITE / COHR / PhotonLink / ELS</td><td>Citi’s LITE catalyst window. Any change in UHP CW / EML lead times.</td></tr>
+        <tr><td>AXTI Nov Q3</td><td>First US InP license? GM into the 50s? Deposit revenue still 2027?</td><td>The fragile-choke check.</td></tr>
+        <tr><td>IET 2026 year-end</td><td>Texas phase-2 mechanical completion</td><td>Article’s “今年完工” vs company’s early-2027 language.</td></tr>
+        <tr><td>Ongoing</td><td>Indium / red-phosphorus commentary (JX utilisation)</td><td>If the Japan wafer slide is materials-constrained, 3081’s SEI LTA is more valuable, not less.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Source ledger</h2>
+    <ul>
+      <li>經濟日報 17 Aug 2026, 陳昱翔 — <a href="https://money.udn.com/money/story/5612/9695292">9695292</a></li>
+      <li>Bloomberg BDP / BEST, 17 Aug 2026: 2455/3081/4971/AXTI/IQE/5016/5802/LITE/COHR</li>
+      <li>Citi, “InP Supply Constraint Will Likely Persist,” 16 Jul 2026 (AlphaEngine 320000609918313)</li>
+      <li>招商通信周观点, 17 Aug 2026 (AlphaEngine 150001501843758)</li>
+      <li>MS LandMark notes Jan–Apr 2026; MOPS LandMark 22 Apr 2026 LTA + capex</li>
+      <li>VPEC Jul-26 monthly: statementdog / 玩股網 NT$422,106k</li>
+      <li>Grok-X 7-day sweep, 17 Aug 2026</li>
+    </ul>
+    <p class="small">本页用于研究记录，不构成投资建议。Prices are a 17 Aug 2026 Bloomberg snapshot and will move.</p>
+    <div class="links">
+      <a href="./">Optics dashboard</a>
+      <a href="./supply-chain-map.html">Layer map</a>
+      <a href="./reports/2455TW.md">VPEC note</a>
+      <a href="./reports/3081TW.md">LandMark note</a>
+      <a href="./reports/4971TW.md">IET note</a>
+      <a href="./reports/AXTI.md">AXTI note</a>
+      <a href="./reports/5802T.md">SEI note</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

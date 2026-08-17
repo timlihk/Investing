@@ -559,6 +559,7 @@ body {
     <a href="https://github.com/timlihk/Investing/blob/main/ai-photonics/chokepoint-method.md" target="_blank" rel="noreferrer">Chokepoint method</a>
     <a href="https://github.com/timlihk/Investing/blob/main/ai-photonics/README.md" target="_blank" rel="noreferrer">Research notes</a>
     <a href="https://github.com/timlihk/Investing/blob/main/ai-photonics/chips-act-status.md" target="_blank" rel="noreferrer">CHIPS status notes</a>
+    <a href="inp-tightness-2026-08-17.html">17 Aug InP tightness note</a>
   </div>
   <div class="stats" id="stats"></div>
 </div>
@@ -624,7 +625,7 @@ body {
 </div>
 
 <div class="note">
-  This is a curated map of the key interlinks, not every company in the photonics universe. It currently visualizes the highest-signal nodes from a broader 146-company scorecard. A node is tagged as a chokepoint when its systematic `chokepoint_score` is `16/25` or higher. CHIPS labels track direct U.S. CHIPS incentives awards, CHIPS R&D awards, and CHIPS-linked hub funding as of 2026-03-24; the full scorecard sweep lives in the scorecard and CHIPS notes linked above.
+  This is a curated map of the key interlinks, not every company in the photonics universe. It currently visualizes the highest-signal nodes from a broader 146-company scorecard. A node is tagged as a chokepoint when its systematic `chokepoint_score` is `16/25` or higher. CHIPS labels track direct U.S. CHIPS incentives awards, CHIPS R&D awards, and CHIPS-linked hub funding as of 2026-03-24. <b>17 Aug 2026:</b> added VPEC (2455) and Sumitomo Electric as mapped InP nodes after the 經濟日報 Q4 &gt;10% hike channel-check; see the InP tightness note. The 10% figure is trade press, not a posted price list — COHR/LITE/Citi independently confirm the constraint.
 </div>
 
 <div class="coverage-index" id="coverage-index"></div>
@@ -655,23 +656,36 @@ const nodes = [
     id: "AXTI", ticker: "AXTI", name: "AXT", chokepointScore: 20, verdict: "AVOID", market: "US / China",
     x: 90, y: 475, chokepoint: true, chain: ["inp"], report: "AXTI.md",
     role: "InP substrate bottleneck with geopolitical fragility.",
-    thesis: "AXT controls a critical InP substrate position, but the China manufacturing base makes it a fragile chokepoint rather than a clean one.",
+    thesis: "Still the fragile choke: Q2 InP inflection and LITE/COHR prepaids are real, but Tongmei + MOFCOM licenses keep this from being a clean Western lock-up. 17 Aug 經濟日報 hike is a channel check sitting on top of that.",
     upstream: ["High-purity compound materials", "Crystal growth"],
-    downstream: ["Laser makers", "InP optical components"],
-    metrics: { chokepoint: "17/25", target: "-", upside: "-", catalyst: "InP capacity expansion" },
+    downstream: ["Lumentum", "Coherent", "Taiwan merchant epi"],
+    metrics: { chokepoint: "17/25", target: "-", upside: "-", catalyst: "US license + YE26 InP capacity" },
     chipsStatus: "none",
     chipsLabel: "No direct CHIPS award found",
     chipsNote: "No company-specific Department of Commerce CHIPS incentives announcement was located for AXT through 2026-03-24.",
     chipsSources: []
   },
   {
+    id: "SEI", ticker: "5802.T", name: "Sumitomo Electric", chokepointScore: 18, verdict: "HOLD", market: "Japan",
+    x: 90, y: 545, chokepoint: true, chain: ["inp"], report: "5802T.md",
+    role: "Japan InP substrate + finished EML/CW — the only name that is both.",
+    thesis: "Citi puts SEI at the core of the wafer swing factor (3.1× substrate by FY29). LandMark’s 5-year MOPS LTA is the first hard customer-side confirmation. Still a conglomerate: optical is a minority of ¥7.5T sales.",
+    upstream: ["Japan InP crystal growth", "Indium / red phosphorus"],
+    downstream: ["LandMark", "Lumentum", "Internal EML/CW"],
+    metrics: { chokepoint: "18/25", target: "¥3,676 cons.", upside: "Conglomerate", catalyst: "3.1× substrate + LandMark LTA" },
+    chipsStatus: "na",
+    chipsLabel: "Non-U.S. / no direct CHIPS award",
+    chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
+    chipsSources: []
+  },
+  {
     id: "JX", ticker: "5016.T", name: "JX Advanced Metals", chokepointScore: 18, verdict: "HOLD", market: "Japan",
-    x: 90, y: 620, chokepoint: false, chain: ["inp"], report: "5016T.md",
+    x: 90, y: 680, chokepoint: false, chain: ["inp"], report: "5016T.md",
     role: "Non-China alternative InP substrate supplier.",
-    thesis: "The more investable strategic alternative to AXT if non-China InP sourcing becomes mandatory.",
+    thesis: "The cleaner geopolitical alternative to AXT. Nomura Buy on 7–10× InP capex; some JPM APAC investors want 20–30× by FY29. Red-phosphorus / indium constraints are the check on that slide.",
     upstream: ["Metals expertise", "InP substrate capacity"],
     downstream: ["Laser chip makers", "Optical supply chain diversification"],
-    metrics: { chokepoint: "14/25", target: "-", upside: "-", catalyst: "50% capacity expansion" },
+    metrics: { chokepoint: "14/25", target: "¥4,771 cons.", upside: "Watch", catalyst: "7–10× InP vs 20× aspiration" },
     chipsStatus: "na",
     chipsLabel: "Non-U.S. / no direct CHIPS award",
     chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
@@ -774,13 +788,26 @@ const nodes = [
     chipsSources: []
   },
   {
+    id: "VPEC", ticker: "2455.TW", name: "VPEC", chokepointScore: 19, verdict: "HOLD", market: "Taiwan",
+    x: 245, y: 500, chokepoint: true, chain: ["inp"], report: "2455TW.md",
+    role: "Taiwan merchant III-V epi already on the live optical volume ramp.",
+    thesis: "Closest current-production epi name of the three. Jul-26 monthly NT$422m (+29% MoM / +45% YoY) confirms the 經濟日報 Q3 rising-revenue claim. Book is still mixed RF + optical. Price NT$417 vs consensus TP 430 — hike already in the tape.",
+    upstream: ["InP / GaAs substrates", "MOCVD tools", "Taiwan supply base"],
+    downstream: ["Datacom laser / PD houses", "Lumentum / Coherent ecosystem"],
+    metrics: { chokepoint: "19/25", target: "NT$430 cons.", upside: "At TP", catalyst: "Aug/Sep monthly + substrate access" },
+    chipsStatus: "na",
+    chipsLabel: "Non-U.S. / no direct CHIPS award",
+    chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
+    chipsSources: []
+  },
+  {
     id: "LANDMARK", ticker: "3081.TW", name: "LandMark", chokepointScore: 17, verdict: "HOLD", market: "Taiwan",
     x: 245, y: 620, chokepoint: false, chain: ["inp"], report: "3081TW.md",
     role: "Taiwan III-V epi supplier for InP / GaAs laser and photodetector wafers.",
-    thesis: "Taiwan press now points to Coherent procurement of InP epi wafers from LandMark, which upgrades it from generic beneficiary to mapped supplier candidate.",
-    upstream: ["III-V materials", "Epi process know-how", "Taiwan supply base"],
-    downstream: ["Coherent", "Optical module ecosystem", "Datacom optics"],
-    metrics: { chokepoint: "17/25", target: "-", upside: "-", catalyst: "COHR InP epi demand + 1.6T datacom" },
+    thesis: "Real AI-photonics epi name, no longer a discovery: +379% YTD, 84x TTM sales, 138x FY27E. MOPS-confirmed SEI 5-year substrate LTA + NT$13.15bn capex + 2027 capacity 2.5×. 73% China mix in 2024 is the structural risk.",
+    upstream: ["Sumitomo Electric InP substrates", "MOCVD / e-beam", "Taiwan supply base"],
+    downstream: ["Coherent", "SiPh CW / 1.6T / 3.2T customers"],
+    metrics: { chokepoint: "17/25", target: "NT$3,134 cons.", upside: "Priced", catalyst: "Hike pass-through + 2.5× 2027 capacity" },
     chipsStatus: "na",
     chipsLabel: "Non-U.S. / no direct CHIPS award",
     chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
@@ -790,10 +817,10 @@ const nodes = [
     id: "IET", ticker: "4971.TW", name: "IntelliEPI", chokepointScore: 20, verdict: "HOLD", market: "Taiwan",
     x: 245, y: 735, chokepoint: true, chain: ["inp"], report: "4971TW.md",
     role: "Taiwan III-V epi and APD-related supplier in the InP receiver chain.",
-    thesis: "The strongest new Taiwan clue in the COHR / LITE sweep: trade press ties IntelliEPI to APD-related outsourcing from both companies.",
+    thesis: "MBE InP / APD-PIN specialist. Texas phase-2 started Jul 2025, completion late-2026/early-2027 — not 2026 earnings. Cheapest of the three on FY27E (62x) but only five analysts and a 3.60 rec. 3M still −29% after the April spike.",
     upstream: ["III-V materials", "MBE / epitaxy process", "Taiwan optical supply base"],
     downstream: ["Lumentum", "Coherent", "Receiver-side optical components"],
-    metrics: { chokepoint: "20/25", target: "-", upside: "-", catalyst: "COHR/LITE APD outsourcing" },
+    metrics: { chokepoint: "20/25", target: "NT$746 cons.", upside: "If Street right", catalyst: "Texas phase-2 + APD volume" },
     chipsStatus: "na",
     chipsLabel: "Non-U.S. / no direct CHIPS award",
     chipsNote: "No direct U.S. CHIPS incentives award identified for this mapped node as of 2026-03-24.",
@@ -1117,19 +1144,31 @@ const edges = [
 
   { from: "VNP", to: "AXTI", kind: "inp" },
   { from: "VNP", to: "JX", kind: "inp" },
+  { from: "VNP", to: "SEI", kind: "inp" },
   { from: "DOWA", to: "AXTI", kind: "inp" },
   { from: "DOWA", to: "JX", kind: "inp" },
+  { from: "DOWA", to: "SEI", kind: "inp" },
   { from: "AXTI", to: "LITE", kind: "inp" },
   { from: "AXTI", to: "SIVE", kind: "inp" },
+  { from: "AXTI", to: "VPEC", kind: "inp" },
+  { from: "AXTI", to: "LANDMARK", kind: "inp" },
+  { from: "AXTI", to: "IET", kind: "inp" },
   { from: "JX", to: "LITE", kind: "inp" },
   { from: "JX", to: "SIVE", kind: "inp" },
+  { from: "SEI", to: "LANDMARK", kind: "inp" },
+  { from: "SEI", to: "LITE", kind: "inp" },
+  { from: "SEI", to: "COHR", kind: "inp" },
   { from: "LANDMARK", to: "COHR", kind: "inp" },
+  { from: "VPEC", to: "LITE", kind: "inp" },
+  { from: "VPEC", to: "COHR", kind: "inp" },
   { from: "IET", to: "LITE", kind: "inp" },
   { from: "IET", to: "COHR", kind: "inp" },
   { from: "WIN", to: "LITE", kind: "inp" },
   { from: "WIN", to: "COHR", kind: "inp" },
   { from: "AIXTRON", to: "LITE", kind: "inp" },
   { from: "AIXTRON", to: "SIVE", kind: "inp" },
+  { from: "AIXTRON", to: "VPEC", kind: "inp" },
+  { from: "AIXTRON", to: "LANDMARK", kind: "inp" },
 
   { from: "TSEM", to: "CRDO", kind: "siph" },
   { from: "TSEM", to: "AVGO", kind: "siph" },

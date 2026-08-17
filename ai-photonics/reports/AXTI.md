@@ -38,6 +38,17 @@ AXT's moat is geological and process-based:
 ### Risks
 1. **China manufacturing concentration**: Beijing facility risk is existential. A US-China export ban or sanctions escalation could cripple the company overnight.
 2. **Unprofitable**: -15% operating margin. Growth isn't translating to profits yet.
+
+### Update 2026-08-17 — InP tightness + LITE/COHR lock-ups
+
+Bloomberg 17 Aug: $81.64, mcap $5.35bn, TTM P/S 33.5x, TTM GM 12.7%, OM −24.9%, TTM sales $88m / NI −$21m. 1M +78%, YTD +399%, 1Y +3,882%. 5 analysts, rec 4.60, BEST TP $91.60.
+
+The P&L has started to inflect even if TTM is still a loss: 华泰 31 Jul said Q2 InP sales >$30m, blended GM 45%, non-GAAP OP $11.2m, backlog >$100m, YE26 quarterly InP capacity ~$60m → YE27 ~$130m. BEST FY27E sales $218m (+$75m in 4 weeks) / EPS $0.87; FY28E sales $459m / EPS $1.92.
+
+LITE $87m prepaid through 2031 and COHR $22.3m prepaid are confirmed; LITE’s 11 Aug call said they “found additional substrate help from AXTI.” Semiconsight: >50% of Q2 revenue already China-domestic (no license), US license still the swing.
+
+The 17 Aug 經濟日報 >10% Q4 hike is consistent with Citi’s 16 Jul 15% extra LITE FY27 price and with the Feb-2025 China InP export-license shock, but it is not a new AXTI filing. Fragile-choke framing is unchanged: this is still Tongmei + MOFCOM wearing an InP multiple. Repo verdict stays AVOID on quality-of-listing grounds even though the constraint is real.
+
 3. **Extreme stock volatility**: $1.13 to $65.24 in 52 weeks. This is a speculative vehicle.
 4. **$2-3B market cap on $99M revenue**: 20-30x sales while unprofitable. The AI premium is enormous.
 5. **Capital raise dilution**: $100M equity raise dilutes existing shareholders.
