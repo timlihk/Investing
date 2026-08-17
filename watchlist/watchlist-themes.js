@@ -49,6 +49,7 @@ window.WATCHLIST_THEMES = [
     tagline: "Wafer tools, test, bonding, specialty process materials — pick-and-shovel.",
     tickers: [
       { symbol: "025560.KS", name: "Mirae 未来" },
+      { symbol: "3445.T", name: "RS Technologies" },
       { symbol: "4187.T", name: "Osaka Organic Chemicals 大阪有机化学" },
       { symbol: "6146.T", name: "DISCO" },
       { symbol: "6863.T", name: "Nireco" },
