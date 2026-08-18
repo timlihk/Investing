@@ -289,6 +289,7 @@ window.WATCHLIST_THEMES = [
     tagline: "Clinical biopharma pipelines and life-science tools / diagnostics.",
     tickers: [
       { symbol: "1548.HK", name: "GenScript Biotech 金斯瑞" },
+      { symbol: "ABCL", name: "AbCellera Biologics" },
       { symbol: "ABVX", name: "Abivax (ADR)" },
       { symbol: "DHR", name: "Danaher" },
       { symbol: "ETON", name: "Eton Pharmaceuticals" },
