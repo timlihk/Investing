@@ -254,6 +254,7 @@ window.WATCHLIST_THEMES = [
     name: "Energy & Materials 能源材料",
     tagline: "Energy storage, solar, SiC/power, grid infrastructure, industrial.",
     tickers: [
+      { symbol: "1138.HK", name: "COSCO SHIPPING Energy / 中远海能" },
       { symbol: "3931.HK", name: "CALB 中创新航" },
       { symbol: "6136.T", name: "OSG オーエスジー" },
       { symbol: "6503.T", name: "Mitsubishi Electric" },
@@ -292,6 +293,8 @@ window.WATCHLIST_THEMES = [
       { symbol: "1548.HK", name: "GenScript Biotech 金斯瑞" },
       { symbol: "ABCL", name: "AbCellera Biologics" },
       { symbol: "ABVX", name: "Abivax (ADR)" },
+      { symbol: "ACOG", name: "Alpha Cognition / 阿尔法认知" },
+      { symbol: "ALNY", name: "Alnylam Pharmaceuticals / 阿里拉姆" },
       { symbol: "DHR", name: "Danaher" },
       { symbol: "ETON", name: "Eton Pharmaceuticals" },
       { symbol: "NKTR", name: "Nektar" },
@@ -343,6 +346,7 @@ window.WATCHLIST_THEMES = [
     tickers: [
       { symbol: "APPS", name: "Digital Turbine" },
       { symbol: "RDDT", name: "Reddit Inc." },
+      { symbol: "RNG", name: "RingCentral / 铃盛" },
       { symbol: "ROKU", name: "Roku" },
     ]
   },

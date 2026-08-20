@@ -178,6 +178,8 @@ MANUAL = {
   "energy-materials": [
     "AGX", "TE", "FLNC", "SEI", "FPS", "BE", "ENLT", "CLF", "WOLF", "6136.T", "6503.T",
     "3931.HK",
+    # 1138.HK COSCO Shipping Energy — oil/LNG tanker fleet (energy transport, core revenue)
+    "1138.HK",
   ],
   "critical-metals": ["3858.HK", "EQR.AX", "ALM", "VNP.TO", "MP", "USAR", "UUUU", "NEU", "7826.T"],
   # Drug developers + life-science tools (DHR sells tools, not insurance)
