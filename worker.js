@@ -496,31 +496,43 @@ function toIsoString(value) {
 }
 
 async function handleCompanyProxy(url, request) {
-  try {
-    const rest = url.pathname === "/company" ? "/" : url.pathname.slice("/company".length);
-    const target = new URL(rest, COMPANY_HUB_ORIGIN);
-    if (url.search) target.search = url.search;
+  const rest = url.pathname === "/company" ? "/" : url.pathname.slice("/company".length);
+  const target = new URL(rest, COMPANY_HUB_ORIGIN);
+  if (url.search) target.search = url.search;
+  const idempotent = ["GET", "HEAD"].includes(request.method);
+  const attempts = idempotent ? 2 : 1;
+  let lastError = null;
 
-    const proxied = await fetch(target.toString(), {
-      method: request.method,
-      headers: request.headers,
-      body: ["GET", "HEAD"].includes(request.method) ? undefined : request.body,
-      redirect: "follow",
-    });
-
-    const response = new Response(proxied.body, proxied);
-    // Hub pages/JSON are dynamic — never cache at the edge.
-    response.headers.set("cache-control", "no-store, must-revalidate");
-    response.headers.set("CDN-Cache-Control", "no-store");
-    return response;
-  } catch (error) {
-    return jsonResponse(
-      {
-        error: error instanceof Error ? error.message : "Company hub proxy error"
-      },
-      { status: 502 }
-    );
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    try {
+      const proxied = await fetch(target.toString(), {
+        method: request.method,
+        headers: request.headers,
+        body: idempotent ? undefined : request.body,
+        redirect: "follow",
+      });
+      // The NAS tunnel occasionally drops the first request after idle with a
+      // 520; retry idempotent reads once before surfacing the error.
+      if (idempotent && proxied.status >= 500 && attempt === 0) {
+        lastError = new Error(`upstream ${proxied.status}`);
+        continue;
+      }
+      const response = new Response(proxied.body, proxied);
+      // Hub pages/JSON are dynamic — never cache at the edge.
+      response.headers.set("cache-control", "no-store, must-revalidate");
+      response.headers.set("CDN-Cache-Control", "no-store");
+      return response;
+    } catch (error) {
+      lastError = error;
+    }
   }
+
+  return jsonResponse(
+    {
+      error: lastError instanceof Error ? lastError.message : "Company hub proxy error"
+    },
+    { status: 502 }
+  );
 }
 
 function jsonResponse(payload, init = {}, cacheControl = MARKET_CACHE_CONTROL) {
