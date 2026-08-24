@@ -245,6 +245,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "GLXY", name: "Galaxy Digital" },
       { symbol: "IREN", name: "IREN" },
       { symbol: "MARA", name: "MARA Holdings" },
+      { symbol: "PURR", name: "Hyperliquid Strategies / 超流策略" },
       { symbol: "RIOT", name: "Riot Platforms" },
       { symbol: "WULF", name: "TeraWulf" },
     ]
@@ -295,6 +296,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "ABVX", name: "Abivax (ADR)" },
       { symbol: "ACOG", name: "Alpha Cognition / 阿尔法认知" },
       { symbol: "ALNY", name: "Alnylam Pharmaceuticals / 阿里拉姆" },
+      { symbol: "AMLX", name: "Amylyx Pharmaceuticals / 艾米莱克斯" },
       { symbol: "ARGX", name: "argenx SE / 阿尔金克斯" },
       { symbol: "DHR", name: "Danaher" },
       { symbol: "ETON", name: "Eton Pharmaceuticals" },
