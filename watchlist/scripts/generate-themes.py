@@ -137,7 +137,7 @@ MANUAL = {
   "semi-equipment": [
     "AMAT", "LRCX", "KLAC", "TER", "ACMR", "AEHR", "6146.T", "8027.TWO", "025560.KS",
     "BESI.AS", "ENTG", "4187.T", "6863.T", "AXTI", "ICHR", "FORM", "KEYS", "688146.SS",
-    "3445.T", "AIXA.DE", "5016.T", "2467.TW",
+    "3445.T", "AIXA.DE", "5016.T", "2467.TW", "322310.KQ",
   ],
   # ABF/IC substrates, OSAT, PCB, passives, electronic glass cloth
   "substrates-packaging": [
@@ -183,7 +183,7 @@ MANUAL = {
   ],
   "critical-metals": ["3858.HK", "EQR.AX", "ALM", "VNP.TO", "MP", "USAR", "UUUU", "NEU", "7826.T"],
   # Drug developers + life-science tools (DHR sells tools, not insurance)
-  "biotech": ["NKTR", "ABVX", "DHR", "ETON"],
+  "biotech": ["NKTR", "ABVX", "DHR", "ETON", "MRNA"],
   # Payers / managed care — services, not R&D pipeline
   "healthcare-services": ["OSCR", "CNC"],
   # Banks, custody/asset servicing, insurers and payment platforms
