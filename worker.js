@@ -81,11 +81,19 @@ async function handleMarketApi(url) {
   const cacheControl = fresh ? FRESH_MARKET_CACHE_CONTROL : MARKET_CACHE_CONTROL;
   try {
     if (url.pathname === "/api/market/quotes" || url.pathname === "/api/market/quotes/fresh") {
-      return jsonResponse(await getQuotePayload(url), {}, cacheControl);
+      const nas = await fetchNasYfinance(url);
+      if (nas) return jsonResponse(nas, {}, cacheControl);
+      const yahoo = await getQuotePayload(url);
+      yahoo.source = yahoo.source || "yahoo";
+      return jsonResponse(yahoo, {}, cacheControl);
     }
 
     if (url.pathname === "/api/market/detail" || url.pathname === "/api/market/detail/fresh") {
-      return jsonResponse(await getDetailPayload(url), {}, cacheControl);
+      const nas = await fetchNasYfinance(url);
+      if (nas) return jsonResponse(nas, {}, cacheControl);
+      const yahoo = await getDetailPayload(url);
+      yahoo.source = yahoo.source || "yahoo";
+      return jsonResponse(yahoo, {}, cacheControl);
     }
 
     return jsonResponse({ error: "Not found" }, { status: 404 }, cacheControl);
@@ -97,6 +105,29 @@ async function handleMarketApi(url) {
       { status: 500 },
       cacheControl
     );
+  }
+}
+
+async function fetchNasYfinance(url) {
+  const mappedPath = url.pathname.replace(/^\/api\/market/, "/api/yf-market");
+  const target = new URL(mappedPath, COMPANY_HUB_ORIGIN);
+  target.search = url.search;
+  try {
+    const response = await fetch(target.toString(), {
+      headers: {
+        accept: "application/json",
+        "user-agent": YAHOO_UA
+      }
+    });
+    if (!response.ok) return null;
+    const payload = await response.json();
+    if (!payload || payload.error) return null;
+    if (url.pathname.includes("/quotes") && !Array.isArray(payload.results)) return null;
+    if (url.pathname.includes("/detail") && !payload.marketMetrics) return null;
+    payload.source = payload.source || "yfinance";
+    return payload;
+  } catch (error) {
+    return null;
   }
 }
 

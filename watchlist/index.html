@@ -79,7 +79,7 @@ h1{margin:6px 0 0;font-size:clamp(32px,5vw,52px);line-height:1;letter-spacing:-.
 .hm-legend{display:flex;align-items:center;gap:8px;margin-top:12px;color:var(--muted);font-size:11px;flex-wrap:wrap}
 .hm-bar{width:120px;height:8px;border-radius:4px;background:linear-gradient(90deg,#f87171 0%,#3a3f4a 50%,#34d399 100%)}
 .hm-note{margin-left:auto}
-/* ---- native Yahoo chart view ---- */
+/* ---- native yfinance / TradingView chart view ---- */
 .chart-link{
   appearance:none;border:0;border-bottom:1px dotted rgba(125,211,252,.45);padding:0;cursor:pointer;
   color:var(--accent);background:transparent;font:inherit;font-weight:600;
@@ -105,6 +105,8 @@ h1{margin:6px 0 0;font-size:clamp(32px,5vw,52px);line-height:1;letter-spacing:-.
 .chart-links{display:flex;gap:8px}.chart-links a{color:var(--muted);font-size:12px;text-decoration:none;padding:6px 9px;border:1px solid var(--line);border-radius:8px}.chart-links a:hover{color:var(--text);border-color:rgba(125,211,252,.4)}
 .chart-stage{position:relative;height:min(62vh,590px);min-height:420px;margin:14px 14px 0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#0a111d}
 .chart-canvas{width:100%;height:100%}
+.chart-tv{position:absolute;inset:0;width:100%;height:100%}
+.chart-tv[hidden],.chart-canvas[hidden]{display:none}
 .chart-status{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:13px;background:rgba(10,17,29,.82)}
 .chart-status[hidden]{display:none}
 .chart-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:11px 20px 16px;color:var(--muted);font-size:11px}
@@ -211,7 +213,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     <div>
       <p class="eyebrow">Tim Li Research Hub</p>
       <h1>Watchlist</h1>
-      <p class="sub">Theme-grouped watchlists with live prices and multi-period performance. Switch between sortable tables and Yahoo-backed chart grids, then click any ticker for the full 5-year candlestick view.</p>
+      <p class="sub">Theme-grouped watchlists with live prices and multi-period performance. Switch between sortable tables and yfinance chart grids, then click any ticker for the full 5-year candlestick view (TradingView widget as a fallback — no Bloomberg).</p>
     </div>
   </header>
 
@@ -253,10 +255,10 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
   <div id="themes"></div>
 
   <footer>
-    Prices: delayed Yahoo Finance / yfinance quotes via <code>/api/market/quotes</code> + <code>/api/market/detail</code> (no Bloomberg). Refresh bypasses the page cache and reloads charts currently on screen.
+    Prices and candles: yfinance via the NAS market service (<code>/api/market/quotes</code> + <code>/api/market/detail</code>). Refresh bypasses cache and reloads charts currently on screen. No Bloomberg.
     Market cap: converted to US$ billions via free FX rates (open.er-api.com).
     Returns: 1D from quote change, others computed from daily closes (1W = 5 sessions, 1M = 21, 3M = 63, 6M = 126, 1Y = 252, 5Y = earliest available).
-    Charts mode offers Small overview cards or lazy-loaded Full candlestick charts with volume and moving averages. Click a ticker for ranges and detail; Yahoo and TradingView remain available as external links. Heatmap tiles: size = theme market cap, color = avg return for the selected period.
+    Charts default to Lightweight Charts fed by yfinance OHLCV. Switch a detail chart to TradingView if you want the widget; free TV embeds can be blank for some non-US venues. Heatmap tiles: size = theme market cap, color = avg return for the selected period.
     Sources may be missing for newly listed or illiquid names. Edit tickers in <code>watchlist/watchlist-themes.js</code>.
   </footer>
 </div>
@@ -276,6 +278,10 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
       </div>
     </div>
     <div class="chart-tools">
+      <div class="view-toggle" id="chart-source-toggle" aria-label="Chart source">
+        <button type="button" data-chart-source="yfinance">yfinance</button>
+        <button type="button" data-chart-source="tradingview">TradingView</button>
+      </div>
       <div class="chart-ranges" id="chart-ranges" aria-label="Chart range"></div>
       <div class="chart-links">
         <a id="chart-yahoo-link" target="_blank" rel="noopener">Yahoo</a>
@@ -284,10 +290,11 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     </div>
     <div class="chart-stage" id="chart-stage">
       <div class="chart-canvas" id="chart-canvas"></div>
-      <div class="chart-status" id="chart-status">Loading Yahoo Finance candles…</div>
+      <div class="chart-tv" id="chart-tv" hidden></div>
+      <div class="chart-status" id="chart-status">Loading yfinance candles…</div>
     </div>
     <div class="chart-foot">
-      <span id="chart-asof">Daily OHLCV from Yahoo Finance via the site worker.</span>
+      <span id="chart-asof">Daily OHLCV from yfinance. No Bloomberg.</span>
       <div class="chart-legend">
         <span><i style="background:#f59e0b"></i>SMA 10</span><span><i style="background:#a78bfa"></i>SMA 20</span>
         <span><i style="background:#38bdf8"></i>SMA 50</span><span><i style="background:#a3e635"></i>SMA 200</span>
@@ -332,6 +339,11 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     catch (error) { return "small"; }
   }
 
+  function savedChartSource() {
+    try { return localStorage.getItem("watchlist-chart-source") === "tradingview" ? "tradingview" : "yfinance"; }
+    catch (error) { return "yfinance"; }
+  }
+
   function savedFocusSymbols() {
     try {
       const parsed = JSON.parse(localStorage.getItem("watchlist-focus-symbols:v1") || "[]");
@@ -345,7 +357,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
 
   const state = {
     quotes: new Map(),        // symbol -> marketMetrics
-    quoteUpdatedAt: new Map(),// symbol -> Yahoo market timestamp
+    quoteUpdatedAt: new Map(),// symbol -> market timestamp
     details: new Map(),       // symbol -> {series, candles, volume}
     detailInflight: new Map(),// symbol -> Promise
     expanded: new Set(initialFocusMode ? [FOCUS_THEME_ID] : []),
@@ -355,6 +367,8 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     search: "",
     view: initialFocusMode ? "charts" : savedView,
     chartSize: savedChartSize(),
+    chartSource: savedChartSource(),
+    quoteSource: "yfinance",
     sort: { themeId: null, key: "y1", dir: -1 },
     quotesDone: false
   };
@@ -369,7 +383,8 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     focusLink: document.getElementById("focus-link"),
     focusCount: document.getElementById("focus-count"),
     viewToggle: document.getElementById("view-toggle"),
-    chartSizeToggle: document.getElementById("chart-size-toggle")
+    chartSizeToggle: document.getElementById("chart-size-toggle"),
+    chartSourceToggle: document.getElementById("chart-source-toggle")
   };
 
   const chartEl = {
@@ -380,6 +395,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     change: document.getElementById("chart-change"),
     ranges: document.getElementById("chart-ranges"),
     canvas: document.getElementById("chart-canvas"),
+    tv: document.getElementById("chart-tv"),
     status: document.getElementById("chart-status"),
     star: document.getElementById("chart-star"),
     asOf: document.getElementById("chart-asof"),
@@ -439,6 +455,21 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     try { localStorage.setItem("watchlist-chart-size", state.chartSize); } catch (error) { console.warn("chart size preference unavailable", error); }
     updateViewToggle();
     render();
+  });
+  updateChartSourceToggle();
+  el.chartSourceToggle.addEventListener("click", event => {
+    const button = event.target.closest("button[data-chart-source]");
+    if (!button || button.dataset.chartSource === state.chartSource) return;
+    state.chartSource = button.dataset.chartSource;
+    try { localStorage.setItem("watchlist-chart-source", state.chartSource); } catch (error) { console.warn("chart source preference unavailable", error); }
+    updateChartSourceToggle();
+    if (chartView.symbol && !chartEl.modal.hidden) {
+      if (state.chartSource === "yfinance") {
+        fetchDetail(chartView.symbol).then(() => { if (chartView.symbol) renderChart(); }).catch(() => renderChart());
+      } else {
+        renderChart();
+      }
+    }
   });
   el.themes.addEventListener("click", (event) => {
     const star = event.target.closest("button[data-focus-symbol]");
@@ -701,11 +732,21 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     return timestamps.length ? new Date(Math.max(...timestamps)).toISOString() : null;
   }
 
+  function marketSourceLabel() {
+    return state.quoteSource === "yfinance" ? "yfinance" : (state.quoteSource === "yahoo" ? "Yahoo" : state.quoteSource || "yfinance");
+  }
+
   function updateQuoteStatus() {
     const timestamp = latestQuoteTimestamp();
     el.status.innerHTML = timestamp
-      ? `Market data: <b>${formatDataTimestamp(timestamp)}</b> · Yahoo`
-      : "Yahoo market timestamp unavailable";
+      ? `Market data: <b>${formatDataTimestamp(timestamp)}</b> · ${marketSourceLabel()}`
+      : `${marketSourceLabel()} timestamp unavailable`;
+  }
+
+  function updateChartSourceToggle() {
+    el.chartSourceToggle.querySelectorAll("button[data-chart-source]").forEach(button => {
+      button.classList.toggle("active", button.dataset.chartSource === state.chartSource);
+    });
   }
 
   async function fetchJson(url, { fresh = false, attempts = 3 } = {}) {
@@ -726,12 +767,13 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
   }
 
   async function loadQuotes({ fresh = false, hydrate = true } = {}) {
-    el.status.textContent = fresh ? "Refreshing quotes from Yahoo…" : "Loading quotes…";
+    el.status.textContent = fresh ? "Refreshing quotes from yfinance…" : "Loading quotes…";
     for (let i = 0; i < allSymbols.length; i += QUOTE_BATCH) {
       const batch = allSymbols.slice(i, i + QUOTE_BATCH).join(",");
       try {
         const path = fresh ? "/api/market/quotes/fresh" : "/api/market/quotes";
         const payload = await fetchJson(`${path}?symbols=${encodeURIComponent(batch)}`, { fresh });
+        if (payload.source) state.quoteSource = payload.source;
         (payload.results || []).forEach(q => {
           state.quotes.set(q.symbol, q.marketMetrics || {});
           if (q.updatedAt) state.quoteUpdatedAt.set(q.symbol, q.updatedAt);
@@ -820,6 +862,14 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
         latestBarAt: payload.latestBarAt || null
       };
       state.details.set(symbol, detail);
+      if (payload.source) state.quoteSource = payload.source;
+      const prev = state.quotes.get(symbol) || {};
+      const merged = { ...prev };
+      ["currentPrice", "currency", "exchangeName", "marketCap", "marketCapUsd", "trailingPE", "forwardPE", "priceToBook", "regularMarketChange", "regularMarketChangePercent"].forEach(key => {
+        if (mm[key] != null) merged[key] = mm[key];
+      });
+      state.quotes.set(symbol, merged);
+      if (payload.quoteUpdatedAt) state.quoteUpdatedAt.set(symbol, payload.quoteUpdatedAt);
       return detail;
     })();
     state.detailInflight.set(symbol, promise);
@@ -1017,20 +1067,21 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     document.body.classList.add("modal-open");
     chartEl.modal.querySelector(".chart-close")?.focus();
     chartEl.status.hidden = false;
-    chartEl.status.textContent = "Loading Yahoo Finance candles…";
+    chartEl.status.textContent = state.chartSource === "tradingview" ? "Loading TradingView chart…" : "Loading yfinance candles…";
     chartEl.canvas.innerHTML = "";
+    if (chartEl.tv) chartEl.tv.innerHTML = "";
     destroyDetailChart();
     setActiveChartRange();
 
     const requestedSymbol = symbol;
     try {
-      await fetchDetail(symbol);
+      if (state.chartSource !== "tradingview") await fetchDetail(symbol);
       if (!chartEl.modal.hidden && chartView.symbol === requestedSymbol) renderChart();
     } catch (error) {
       console.warn("chart detail failed", symbol, error);
       if (!chartEl.modal.hidden && chartView.symbol === requestedSymbol) {
         chartEl.status.hidden = false;
-        chartEl.status.textContent = "Yahoo chart data is unavailable for this ticker. Try the external Yahoo link.";
+        chartEl.status.textContent = "yfinance chart data is unavailable for this ticker. Try TradingView or the external Yahoo link.";
       }
     }
   }
@@ -1041,6 +1092,8 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     document.body.classList.remove("modal-open");
     destroyDetailChart();
     chartEl.canvas.innerHTML = "";
+    if (chartEl.tv) { chartEl.tv.innerHTML = ""; chartEl.tv.hidden = true; }
+    if (chartEl.canvas) chartEl.canvas.hidden = false;
     const trigger = chartView.trigger;
     chartView.symbol = null;
     chartView.name = null;
@@ -1058,7 +1111,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     chartEl.change.textContent = Number.isFinite(change) ? `${change >= 0 ? "+" : ""}${change.toFixed(2)}%` : "";
     chartEl.change.className = `chart-change ${Number.isFinite(change) ? (change >= 0 ? "up" : "dn") : ""}`;
     const quoteAsOf = state.quoteUpdatedAt.get(chartView.symbol);
-    if (quoteAsOf) chartEl.asOf.textContent = `Yahoo quote as of ${formatDataTimestamp(quoteAsOf)}.`;
+    if (quoteAsOf) chartEl.asOf.textContent = `${marketSourceLabel()} quote as of ${formatDataTimestamp(quoteAsOf)}.`;
   }
 
   function setActiveChartRange() {
@@ -1067,18 +1120,81 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     });
   }
 
+  function tvWidgetSymbol(symbol) {
+    const href = tvLink(state.quotes.get(symbol) || {}, symbol);
+    try { return decodeURIComponent(new URL(href).searchParams.get("symbol") || symbol); }
+    catch (error) { return symbol; }
+  }
+
+  function loadTvScript() {
+    if (window.TradingView) return Promise.resolve();
+    if (loadTvScript.pending) return loadTvScript.pending;
+    loadTvScript.pending = new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://s3.tradingview.com/tv.js";
+      script.async = true;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error("TradingView widget failed to load"));
+      document.head.appendChild(script);
+    });
+    return loadTvScript.pending;
+  }
+
+  async function renderTradingViewChart() {
+    destroyDetailChart();
+    if (chartEl.canvas) chartEl.canvas.hidden = true;
+    if (chartEl.tv) {
+      chartEl.tv.hidden = false;
+      chartEl.tv.innerHTML = "";
+    }
+    chartEl.status.hidden = false;
+    chartEl.status.textContent = "Loading TradingView chart…";
+    try {
+      await loadTvScript();
+    } catch (error) {
+      chartEl.status.textContent = "TradingView widget failed to load. Switch back to yfinance.";
+      return;
+    }
+    if (chartEl.modal.hidden || state.chartSource !== "tradingview") return;
+    const widgetId = "tv-widget-" + String(chartView.symbol || "x").replace(/[^A-Za-z0-9]/g, "");
+    chartEl.tv.innerHTML = `<div id="${widgetId}" style="height:100%;width:100%"></div>`;
+    const rangeMap = { m1: "1M", m3: "3M", m6: "6M", y1: "12M", y5: "60M" };
+    new window.TradingView.widget({
+      autosize: true,
+      symbol: tvWidgetSymbol(chartView.symbol),
+      interval: "D",
+      range: rangeMap[chartView.range] || "12M",
+      timezone: "Etc/UTC",
+      theme: "dark",
+      style: "1",
+      locale: "en",
+      hide_legend: false,
+      allow_symbol_change: false,
+      container_id: widgetId,
+      backgroundColor: "#0a111d"
+    });
+    chartEl.status.hidden = true;
+    chartEl.asOf.textContent = "TradingView widget · no Bloomberg. Free embeds can be blank for some non-US venues — switch to yfinance if that happens.";
+  }
+
   function renderChart() {
     setActiveChartRange();
+    if (state.chartSource === "tradingview") {
+      renderTradingViewChart();
+      return;
+    }
+    if (chartEl.tv) { chartEl.tv.hidden = true; chartEl.tv.innerHTML = ""; }
+    if (chartEl.canvas) chartEl.canvas.hidden = false;
     const detail = detailPayload(chartView.symbol);
     if (!detail || !detail.series.length) {
       chartEl.status.hidden = false;
-      chartEl.status.textContent = "No Yahoo chart history is available for this ticker.";
+      chartEl.status.textContent = "No yfinance chart history is available for this ticker. Try TradingView.";
       return;
     }
     const barAsOf = detailAsOf(chartView.symbol);
     chartEl.asOf.textContent = barAsOf
-      ? `Daily OHLCV through ${formatDataTimestamp(barAsOf, true)} · Yahoo Finance.`
-      : "Daily OHLCV from Yahoo Finance via the site worker.";
+      ? `Daily OHLCV through ${formatDataTimestamp(barAsOf, true)} · yfinance.`
+      : "Daily OHLCV from yfinance. No Bloomberg.";
 
     const selectedRange = CHART_RANGES.find(range => range.key === chartView.range) || CHART_RANGES[3];
     const visibleSeries = selectedRange.sessions ? detail.series.slice(-selectedRange.sessions) : detail.series.slice();
@@ -1204,7 +1320,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
       return `${x.toFixed(2)},${y.toFixed(2)}`;
     }).join(" ");
     const stroke = values.at(-1) >= values[0] ? "#34d399" : "#f87171";
-    chartEl.canvas.innerHTML = `<svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" width="100%" height="100%" aria-label="Yahoo price chart for ${escapeHtml(chartView.symbol)}"><polyline fill="none" stroke="${stroke}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="${points}"></polyline></svg>`;
+    chartEl.canvas.innerHTML = `<svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" width="100%" height="100%" aria-label="yfinance price chart for ${escapeHtml(chartView.symbol)}"><polyline fill="none" stroke="${stroke}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="${points}"></polyline></svg>`;
   }
 
   function renderTable(theme, card) {
@@ -1245,9 +1361,9 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     rows.forEach(({ tk, mm, rets }) => {
       const loading = state.details.get(tk.symbol) === null;
       html += `<tr>
-        <td class="sym">${starButtonHTML(tk.symbol, "ticker-star")}<button type="button" class="chart-link" data-chart-symbol="${escapeHtml(tk.symbol)}" data-chart-name="${escapeHtml(tk.name || tk.symbol)}" title="Open Yahoo Finance chart">${escapeHtml(tk.symbol)}</button></td>
+        <td class="sym">${starButtonHTML(tk.symbol, "ticker-star")}<button type="button" class="chart-link" data-chart-symbol="${escapeHtml(tk.symbol)}" data-chart-name="${escapeHtml(tk.name || tk.symbol)}" title="Open yfinance chart">${escapeHtml(tk.symbol)}</button></td>
         <td class="name" title="${escapeHtml(tk.name || "")}">${escapeHtml(tk.name || "")}</td>
-        <td class="price" title="${state.quoteUpdatedAt.get(tk.symbol) ? `Yahoo quote as of ${escapeHtml(formatDataTimestamp(state.quoteUpdatedAt.get(tk.symbol)))}` : "Yahoo quote time unavailable"}">${Number.isFinite(mm.currentPrice) ? fmtNum(mm.currentPrice, mm.currentPrice < 10 ? 2 : mm.currentPrice < 1000 ? 1 : 0) : "<span class='muted'>—</span>"}${mm.currency ? `<span class="ccy">${mm.currency}</span>` : ""}</td>
+        <td class="price" title="${state.quoteUpdatedAt.get(tk.symbol) ? `${marketSourceLabel()} quote as of ${escapeHtml(formatDataTimestamp(state.quoteUpdatedAt.get(tk.symbol)))}` : `${marketSourceLabel()} quote time unavailable`}">${Number.isFinite(mm.currentPrice) ? fmtNum(mm.currentPrice, mm.currentPrice < 10 ? 2 : mm.currentPrice < 1000 ? 1 : 0) : "<span class='muted'>—</span>"}${mm.currency ? `<span class="ccy">${mm.currency}</span>` : ""}</td>
         <td>${Number.isFinite(rets.d1) ? fmtPct(rets.d1) : (state.quotesDone ? fmtPct(null) : '<span class="loading-cell">…</span>')}</td>
         ${PERIODS.map(p => `<td>${loading ? '<span class="loading-cell">…</span>' : fmtPct(rets[p.key])}</td>`).join("")}
         <td class="muted">${fmtCapUsd(mm.marketCapUsd)}</td>
@@ -1289,19 +1405,19 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     const change = mm.regularMarketChangePercent;
     const price = mm.currentPrice;
     const chart = miniChartSVG(tk.symbol);
-    const chartContent = chart || `<span class="mini-chart-empty ${loading ? "mini-chart-loading" : ""}">${loading ? "Loading Yahoo chart…" : "Chart unavailable"}</span>`;
+    const chartContent = chart || `<span class="mini-chart-empty ${loading ? "mini-chart-loading" : ""}">${loading ? "Loading yfinance chart…" : "Chart unavailable"}</span>`;
     const priceText = Number.isFinite(price)
       ? `${fmtNum(price, price < 10 ? 2 : price < 1000 ? 1 : 0)}${mm.currency ? ` <span class="ccy">${escapeHtml(mm.currency)}</span>` : ""}`
       : "—";
     const changeText = Number.isFinite(change) ? `${change >= 0 ? "+" : ""}${change.toFixed(2)}%` : "—";
     const asOf = detailAsOf(tk.symbol);
     return `<div class="ticker-chart-shell" data-chart-card-symbol="${escapeHtml(tk.symbol)}">
-      <button type="button" class="ticker-chart-card" data-chart-symbol="${escapeHtml(tk.symbol)}" data-chart-name="${escapeHtml(tk.name || tk.symbol)}" aria-label="Open full Yahoo chart for ${escapeHtml(tk.symbol)}">
+      <button type="button" class="ticker-chart-card" data-chart-symbol="${escapeHtml(tk.symbol)}" data-chart-name="${escapeHtml(tk.name || tk.symbol)}" aria-label="Open full yfinance chart for ${escapeHtml(tk.symbol)}">
       <span class="mini-chart-head">
         <span><span class="mini-chart-symbol">${escapeHtml(tk.symbol)}</span><span class="mini-chart-name">${escapeHtml(tk.name || "")}</span></span>
         <span class="mini-chart-quote"><span class="mini-chart-price">${priceText}</span><span class="mini-chart-change ${Number.isFinite(change) ? (change >= 0 ? "up" : "dn") : "muted"}">${changeText}</span></span>
       </span>
-      <span class="mini-chart-wrap">${chartContent}<span class="mini-chart-range">${asOf ? `through ${escapeHtml(formatDataTimestamp(asOf, true))}` : "1 year · Yahoo"}</span></span>
+      <span class="mini-chart-wrap">${chartContent}<span class="mini-chart-range">${asOf ? `through ${escapeHtml(formatDataTimestamp(asOf, true))}` : "1 year · yfinance"}</span></span>
       </button>
       ${starButtonHTML(tk.symbol)}
     </div>`;
@@ -1342,7 +1458,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
       ? `${fmtNum(price, price < 10 ? 2 : price < 1000 ? 1 : 0)}${mm.currency ? ` <span class="ccy">${escapeHtml(mm.currency)}</span>` : ""}`
       : "—";
     const changeText = Number.isFinite(change) ? `${change >= 0 ? "+" : ""}${change.toFixed(2)}%` : "—";
-    const status = detail ? "Preparing interactive chart…" : loading ? "Loading Yahoo candles…" : "Chart unavailable";
+    const status = detail ? "Preparing interactive chart…" : loading ? "Loading yfinance candles…" : "Chart unavailable";
     const asOf = detailAsOf(tk.symbol);
     return `<article class="full-chart-card" data-full-chart-symbol="${escapeHtml(tk.symbol)}">
       <header class="full-chart-head">
@@ -1353,7 +1469,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
       </header>
       <div class="full-inline-chart" data-inline-symbol="${escapeHtml(tk.symbol)}"><span class="mini-chart-empty ${loading ? "mini-chart-loading" : ""}">${status}</span></div>
       <footer class="full-chart-foot">
-        <span>1Y daily candles + volume${asOf ? ` · through ${escapeHtml(formatDataTimestamp(asOf, true))}` : ""} · Yahoo</span>
+        <span>1Y daily candles + volume${asOf ? ` · through ${escapeHtml(formatDataTimestamp(asOf, true))}` : ""} · yfinance</span>
         <span class="full-chart-legend"><span><i style="background:#f59e0b"></i>10</span><span><i style="background:#a78bfa"></i>20</span><span><i style="background:#38bdf8"></i>50</span><span><i style="background:#a3e635"></i>200</span></span>
         <button type="button" class="full-chart-detail" data-chart-symbol="${escapeHtml(tk.symbol)}" data-chart-name="${escapeHtml(tk.name || tk.symbol)}">Ranges & detail</button>
       </footer>
