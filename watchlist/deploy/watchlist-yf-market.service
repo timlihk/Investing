@@ -1,0 +1,21 @@
+[Unit]
+Description=Watchlist yfinance market API (research.mangrove-hk.org/watchlist)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/Code/Investing/watchlist/scripts
+Environment=HOST=127.0.0.1
+Environment=PORT=3102
+Environment=PYTHONUNBUFFERED=1
+Environment=PATH=%h/.local/share/mise/shims:%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=%h/.local/share/mise/installs/python/3.12/bin/python3 %h/Code/Investing/watchlist/scripts/yf_market_server.py
+Restart=always
+RestartSec=5
+TimeoutStopSec=20
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
