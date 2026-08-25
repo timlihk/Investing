@@ -253,7 +253,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
   <div id="themes"></div>
 
   <footer>
-    Prices: delayed Yahoo Finance quotes via <code>/api/market/quotes</code> + <code>/api/market/detail</code>. Refresh bypasses the page cache and reloads charts currently on screen.
+    Prices: delayed Yahoo Finance / yfinance quotes via <code>/api/market/quotes</code> + <code>/api/market/detail</code> (no Bloomberg). Refresh bypasses the page cache and reloads charts currently on screen.
     Market cap: converted to US$ billions via free FX rates (open.er-api.com).
     Returns: 1D from quote change, others computed from daily closes (1W = 5 sessions, 1M = 21, 3M = 63, 6M = 126, 1Y = 252, 5Y = earliest available).
     Charts mode offers Small overview cards or lazy-loaded Full candlestick charts with volume and moving averages. Click a ticker for ranges and detail; Yahoo and TradingView remain available as external links. Heatmap tiles: size = theme market cap, color = avg return for the selected period.
@@ -297,7 +297,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
 </div>
 
 <script src="./watchlist-themes.js"></script>
-<script src="https://unpkg.com/lightweight-charts@4.2.3/dist/lightweight-charts.standalone.production.js"></script>
+<script src="./lightweight-charts.standalone.production.js"></script>
 <script>
 (function () {
   const themes = window.WATCHLIST_THEMES || [];
@@ -708,17 +708,30 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
       : "Yahoo market timestamp unavailable";
   }
 
+  async function fetchJson(url, { fresh = false, attempts = 3 } = {}) {
+    let lastError = null;
+    for (let attempt = 0; attempt < attempts; attempt += 1) {
+      try {
+        const res = await fetch(url, fresh ? {
+          cache: "no-store", headers: { "cache-control": "no-cache" }
+        } : undefined);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return await res.json();
+      } catch (error) {
+        lastError = error;
+        if (attempt < attempts - 1) await new Promise(resolve => setTimeout(resolve, 400 * (attempt + 1)));
+      }
+    }
+    throw lastError;
+  }
+
   async function loadQuotes({ fresh = false, hydrate = true } = {}) {
     el.status.textContent = fresh ? "Refreshing quotes from Yahoo…" : "Loading quotes…";
     for (let i = 0; i < allSymbols.length; i += QUOTE_BATCH) {
       const batch = allSymbols.slice(i, i + QUOTE_BATCH).join(",");
       try {
         const path = fresh ? "/api/market/quotes/fresh" : "/api/market/quotes";
-        const res = await fetch(`${path}?symbols=${encodeURIComponent(batch)}`, fresh ? {
-          cache: "no-store", headers: { "cache-control": "no-cache" }
-        } : undefined);
-        if (!res.ok) throw new Error(`quotes ${res.status}`);
-        const payload = await res.json();
+        const payload = await fetchJson(`${path}?symbols=${encodeURIComponent(batch)}`, { fresh });
         (payload.results || []).forEach(q => {
           state.quotes.set(q.symbol, q.marketMetrics || {});
           if (q.updatedAt) state.quoteUpdatedAt.set(q.symbol, q.updatedAt);
@@ -796,11 +809,7 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
     if (state.detailInflight.has(symbol)) return state.detailInflight.get(symbol);
     const promise = (async () => {
       const path = fresh ? "/api/market/detail/fresh" : "/api/market/detail";
-      const res = await fetch(`${path}?symbol=${encodeURIComponent(symbol)}&rangeDays=1825`, fresh ? {
-        cache: "no-store", headers: { "cache-control": "no-cache" }
-      } : undefined);
-      if (!res.ok) throw new Error(`detail ${res.status}`);
-      const payload = await res.json();
+      const payload = await fetchJson(`${path}?symbol=${encodeURIComponent(symbol)}&rangeDays=1825`, { fresh });
       const mm = payload.marketMetrics || {};
       const detail = {
         series: Array.isArray(mm.chartSeries) ? mm.chartSeries : [],

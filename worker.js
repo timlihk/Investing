@@ -100,21 +100,42 @@ async function handleMarketApi(url) {
   }
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function withRetries(fn, attempts = 2) {
+  let lastError = null;
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    try {
+      return await fn(attempt);
+    } catch (error) {
+      lastError = error;
+      if (attempt < attempts - 1) {
+        await sleep(250 * (attempt + 1));
+      }
+    }
+  }
+  throw lastError;
+}
+
 async function getQuotePayload(url) {
   const symbols = parseSymbols(url.searchParams.get("symbols"));
   if (!symbols.length) {
     return { results: [] };
   }
 
-  const session = await createYahooSession();
-  const response = await yahooJsonFetch(
-    `/v7/finance/quote?symbols=${encodeURIComponent(symbols.slice(0, QUOTE_MAX_SYMBOLS).join(","))}`,
-    session
-  );
+  const response = await withRetries(async () => {
+    const session = await createYahooSession();
+    return yahooJsonFetch(
+      `/v7/finance/quote?symbols=${encodeURIComponent(symbols.slice(0, QUOTE_MAX_SYMBOLS).join(","))}`,
+      session
+    );
+  });
   const quotes = response?.quoteResponse?.result || [];
   const rates = await getFxRates();
   const results = quotes.map((quote) => normalizeQuotePayload(quote, rates));
-  return { fetchedAt: new Date().toISOString(), results };
+  return { fetchedAt: new Date().toISOString(), source: "yahoo", results };
 }
 
 async function getDetailPayload(url) {
@@ -124,33 +145,45 @@ async function getDetailPayload(url) {
   }
 
   const rangeDays = clampNumber(url.searchParams.get("rangeDays"), 30, 1825, DEFAULT_CHART_RANGE_DAYS);
-  const period2 = new Date();
-  const period1 = new Date(period2);
-  period1.setUTCDate(period1.getUTCDate() - rangeDays);
-
   // Yahoo rejects day-suffixed ranges above ~2y; use the named range for 5y.
   const rangeParam = rangeDays >= 1500 ? "5y" : `${rangeDays}d`;
 
-  const session = await createYahooSession();
-  const [summaryResponse, chartResponse] = await Promise.all([
-    yahooJsonFetch(
-      `/v10/finance/quoteSummary/${encodeURIComponent(
-        symbol
-      )}?modules=price,summaryDetail,defaultKeyStatistics,financialData`,
-      session
-    ),
-    yahooJsonFetch(
-      `/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1d&range=${encodeURIComponent(
-        rangeParam
-      )}&events=div,splits`,
-      session
-    )
-  ]);
+  let session = null;
+  try {
+    session = await createYahooSession();
+  } catch (error) {
+    session = null;
+  }
+
+  const chartPath = `/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1d&range=${encodeURIComponent(
+    rangeParam
+  )}&events=div,splits`;
+  const summaryPath = `/v10/finance/quoteSummary/${encodeURIComponent(
+    symbol
+  )}?modules=price,summaryDetail,defaultKeyStatistics,financialData`;
+
+  let chartResponse = null;
+  let summaryResponse = null;
+  if (session) {
+    const [chartResult, summaryResult] = await Promise.all([
+      yahooJsonFetch(chartPath, session).catch(() => null),
+      yahooJsonFetch(summaryPath, session).catch(() => null)
+    ]);
+    chartResponse = chartResult;
+    summaryResponse = summaryResult;
+  }
+
+  if (!chartResponse?.chart?.result?.[0]) {
+    chartResponse = await yahooChartFallback(symbol, rangeParam);
+  }
 
   const rates = await getFxRates();
   const summary = summaryResponse?.quoteSummary?.result?.[0] || {};
   const chartResult = chartResponse?.chart?.result?.[0] || {};
-  const quotes = buildQuotesFromYahooChart(chartResult);
+  const quotes = appendLiveQuoteBar(buildQuotesFromYahooChart(chartResult), summary);
+  if (!quotes.length) {
+    throw new Error(`Yahoo chart history empty for ${symbol}`);
+  }
   const chartMetrics = buildChartMetrics(quotes);
   const summaryMetrics = normalizeSummaryPayload(summary, rates);
   const quoteMetrics = normalizeQuotePayload(summary?.price || {}, rates);
@@ -159,6 +192,7 @@ async function getDetailPayload(url) {
   return {
     symbol,
     fetchedAt: new Date().toISOString(),
+    source: "yahoo",
     quoteUpdatedAt: quoteMetrics.updatedAt,
     latestBarAt,
     marketMetrics: {
@@ -170,36 +204,38 @@ async function getDetailPayload(url) {
 }
 
 async function createYahooSession() {
-  const landingResponse = await fetch("https://finance.yahoo.com/quote/AAPL", {
-    redirect: "manual",
-    headers: {
-      accept: "text/html,application/xhtml+xml,application/xml",
-      "user-agent": YAHOO_UA
+  return withRetries(async () => {
+    const landingResponse = await fetch("https://finance.yahoo.com/quote/AAPL", {
+      redirect: "manual",
+      headers: {
+        accept: "text/html,application/xhtml+xml,application/xml",
+        "user-agent": YAHOO_UA
+      }
+    });
+
+    const cookie = mergeCookieHeaders(landingResponse.headers.getSetCookie?.() || []);
+    if (!cookie) {
+      throw new Error("Yahoo session cookie was not returned");
     }
-  });
 
-  const cookie = mergeCookieHeaders(landingResponse.headers.getSetCookie?.() || []);
-  if (!cookie) {
-    throw new Error("Yahoo session cookie was not returned");
-  }
+    const crumbResponse = await fetch("https://query1.finance.yahoo.com/v1/test/getcrumb", {
+      headers: {
+        cookie,
+        "user-agent": YAHOO_UA
+      }
+    });
 
-  const crumbResponse = await fetch("https://query1.finance.yahoo.com/v1/test/getcrumb", {
-    headers: {
-      cookie,
-      "user-agent": YAHOO_UA
+    if (!crumbResponse.ok) {
+      throw new Error(`Yahoo crumb request failed with status ${crumbResponse.status}`);
     }
+
+    const crumb = (await crumbResponse.text()).trim();
+    if (!crumb) {
+      throw new Error("Yahoo crumb was empty");
+    }
+
+    return { cookie, crumb };
   });
-
-  if (!crumbResponse.ok) {
-    throw new Error(`Yahoo crumb request failed with status ${crumbResponse.status}`);
-  }
-
-  const crumb = (await crumbResponse.text()).trim();
-  if (!crumb) {
-    throw new Error("Yahoo crumb was empty");
-  }
-
-  return { cookie, crumb };
 }
 
 async function yahooJsonFetch(path, session) {
@@ -216,6 +252,20 @@ async function yahooJsonFetch(path, session) {
     throw new Error(`Yahoo request failed (${response.status}) for ${path}`);
   }
 
+  return response.json();
+}
+
+async function yahooChartFallback(symbol, rangeParam) {
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(
+    symbol
+  )}?interval=1d&range=${encodeURIComponent(rangeParam)}&events=div%2Csplits`;
+  const response = await withRetries(async () => {
+    const fetched = await fetch(url, { headers: { "user-agent": YAHOO_UA } });
+    if (!fetched.ok) {
+      throw new Error(`Yahoo chart fallback failed (${fetched.status}) for ${symbol}`);
+    }
+    return fetched;
+  });
   return response.json();
 }
 
@@ -246,6 +296,34 @@ function buildQuotesFromYahooChart(chartResult) {
       volume: toFiniteNumber(volume[index]) || 0
     }))
     .filter((bar) => Number.isFinite(bar.close) && bar.close > 0);
+}
+
+function appendLiveQuoteBar(quotes, summary) {
+  const price = summary?.price || {};
+  const last = quotes.at(-1);
+  const close = toFiniteNumber(
+    unwrapYahooValue(price.regularMarketPrice) ?? unwrapYahooValue(price.postMarketPrice)
+  );
+  const stamp = toIsoString(
+    unwrapYahooValue(price.regularMarketTime) || unwrapYahooValue(price.postMarketTime)
+  );
+  if (!last || !Number.isFinite(close) || close <= 0 || !stamp) return quotes;
+  const liveDate = new Date(stamp);
+  if (!Number.isFinite(liveDate.getTime())) return quotes;
+  const liveDay = toChartDate(liveDate);
+  const lastDay = toChartDate(last.date);
+  if (!liveDay || !lastDay || liveDay < lastDay) return quotes;
+  const open = toFiniteNumber(unwrapYahooValue(price.regularMarketOpen)) || close;
+  const high = toFiniteNumber(unwrapYahooValue(price.regularMarketDayHigh)) || Math.max(open, close);
+  const low = toFiniteNumber(unwrapYahooValue(price.regularMarketDayLow)) || Math.min(open, close);
+  const volume = toFiniteNumber(unwrapYahooValue(price.regularMarketVolume)) || 0;
+  const bar = { date: liveDate, open, high, low, close, volume };
+  if (liveDay === lastDay) {
+    quotes[quotes.length - 1] = bar;
+    return quotes;
+  }
+  quotes.push(bar);
+  return quotes;
 }
 
 function parseSymbols(raw) {
