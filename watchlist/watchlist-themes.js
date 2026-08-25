@@ -263,6 +263,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "AGX", name: "Argan" },
       { symbol: "BE", name: "Bloom Energy" },
       { symbol: "CLF", name: "Cleveland-Cliffs" },
+      { symbol: "CLMT", name: "Calumet Inc. / 卡鲁梅特" },
       { symbol: "ENLT", name: "Enlight" },
       { symbol: "FLNC", name: "Fluence" },
       { symbol: "FPS", name: "Frontier Power Solutions" },
@@ -274,12 +275,13 @@ window.WATCHLIST_THEMES = [
   {
     id: "critical-metals",
     name: "Critical Metals 关键金属",
-    tagline: "Tungsten, rare earths, gallium — defense/export-control supply decoupling.",
+    tagline: "Tungsten, rare earths, gallium, gold — critical & precious metals miners.",
     tickers: [
       { symbol: "3858.HK", name: "Jiaxin 佳鑫国际 (钨)" },
       { symbol: "7826.T", name: "Furuya Metal フルヤ金属" },
       { symbol: "ALM", name: "Almonty (钨)" },
       { symbol: "EQR.AX", name: "EQ Resources (钨)" },
+      { symbol: "MAI.TO", name: "Mining Americas 黄金" },
       { symbol: "MP", name: "MP Materials" },
       { symbol: "NEU", name: "NewMarket (AMPAC)" },
       { symbol: "USAR", name: "USA Rare Earth" },
@@ -380,6 +382,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "9992.HK", name: "Pop Mart 泡泡玛特" },
       { symbol: "CAVA", name: "Cava Group" },
       { symbol: "CHA", name: "Chagee 霸王茶姬" },
+      { symbol: "ELAL.TA", name: "El Al 以色列航空" },
     ]
   },
   {

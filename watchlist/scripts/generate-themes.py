@@ -103,7 +103,8 @@ ZH_NAMES = {
  "2059.TW":"King Slide 川湖科技","3605.TW":"ACES 宏致電子","APPS":"Digital Turbine",
  "3858.HK":"Jiaxin 佳鑫国际 (钨)","EQR.AX":"EQ Resources (钨)","ALM":"Almonty (钨)",
  "6136.T":"OSG オーエスジー","8021.TW":"Topoint 高侨","TTMI":"TTM Technologies",
- "VSH":"Vishay","WOLF":"Wolfspeed","031330.KQ":"SAMT",
+ "VSH": "Vishay", "WOLF": "Wolfspeed", "031330.KQ": "SAMT",
+ "ELAL.TA": "El Al 以色列航空", "MAI.TO": "Mining Americas 黄金",
 }
 
 # Explicit theme membership (curated; first-principles rebalance 2026-08-10).
@@ -181,7 +182,8 @@ MANUAL = {
     # 1138.HK COSCO Shipping Energy — oil/LNG tanker fleet (energy transport, core revenue)
     "1138.HK",
   ],
-  "critical-metals": ["3858.HK", "EQR.AX", "ALM", "VNP.TO", "MP", "USAR", "UUUU", "NEU", "7826.T"],
+  # Includes gold producers (MAI.TO) — precious + critical metals miners bucket
+  "critical-metals": ["3858.HK", "EQR.AX", "ALM", "VNP.TO", "MP", "USAR", "UUUU", "NEU", "7826.T", "MAI.TO"],
   # Drug developers + life-science tools (DHR sells tools, not insurance)
   "biotech": ["NKTR", "ABVX", "DHR", "ETON", "MRNA"],
   # Payers / managed care — services, not R&D pipeline
@@ -198,6 +200,7 @@ MANUAL = {
   "consumer": [
     "CAVA", "1876.HK", "601888.SS", "605499.SS",
     "9633.HK", "2097.HK", "9992.HK", "CHA",
+    "ELAL.TA",  # El Al — airline, core revenue = passenger flights
   ],
   # Marketplace / fulfilment economics rather than a generic regional residual
   "commerce-logistics": ["GCT"],
@@ -250,7 +253,7 @@ TAG_MAP = {
   "industrial": "energy-materials", "industrials": "energy-materials",
   "cutting-tools": "energy-materials", "infrastructure": "energy-materials",
   "critical-minerals": "critical-metals", "tungsten": "critical-metals",
-  "gallium": "critical-metals", "rare-earths": "critical-metals",
+  "gallium": "critical-metals", "rare-earths": "critical-metals", "gold": "critical-metals",
   # Biotech vs healthcare services
   "biotech": "biotech", "pharma": "biotech", "life-sciences": "biotech",
   "diagnostics": "biotech",
@@ -271,7 +274,7 @@ TAG_MAP = {
   "spac": "mobility-robotics", "physical-ai": "mobility-robotics",
   "autonomous": "mobility-robotics", "mobility": "mobility-robotics",
   "restaurants": "consumer", "consumer": "consumer", "entertainment": "consumer",
-  "airlines": "consumer", "travel": "consumer",
+  "airlines": "consumer", "travel": "consumer", "airline": "consumer", "aviation": "consumer",
   "airports": "airports",
   "big-tech": "ai-infra", "tech": "other",
   "short-candidate": "other", "AI-proxy": "other", "pre-IPO": "other",
@@ -309,7 +312,7 @@ THEMES = [
   {"id": "energy-materials", "name": "Energy & Materials 能源材料",
    "tagline": "Energy storage, solar, SiC/power, grid infrastructure, industrial."},
   {"id": "critical-metals", "name": "Critical Metals 关键金属",
-   "tagline": "Tungsten, rare earths, gallium — defense/export-control supply decoupling."},
+   "tagline": "Tungsten, rare earths, gallium, gold — critical & precious metals miners."},
   {"id": "biotech", "name": "Biotech & Life Sciences 生科",
    "tagline": "Clinical biopharma pipelines and life-science tools / diagnostics."},
   {"id": "healthcare-services", "name": "Healthcare Services 医疗服务",

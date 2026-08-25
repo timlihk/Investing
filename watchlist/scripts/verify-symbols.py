@@ -18,12 +18,26 @@ import json
 import re
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 
 REPO_DEFAULT = "/lzcsys/data/home/timlihk/Code/Investing"
 BASE_DEFAULT = "https://research.mangrove-hk.org"
 BATCH = 55
+
+
+def _fetch_json(req):
+    """Fetch + parse with retries. The worker intermittently 500s on uncached
+    Yahoo upstream fetches (observed 2026-08-25: same batch 200 via curl,
+    transient 500 via urllib). Retry with backoff before declaring failure."""
+    for attempt in range(4):
+        try:
+            with urllib.request.urlopen(req, timeout=40) as r:
+                return json.load(r)
+        except (urllib.error.HTTPError, urllib.error.URLError):
+            time.sleep(3 * (attempt + 1))
+    raise RuntimeError("verify worker unreachable after 4 attempts")
 
 
 def load_symbols(repo):
@@ -39,8 +53,7 @@ def check(symbols, base):
         batch = symbols[i:i + BATCH]
         url = f"{base}/api/market/quotes?symbols=" + urllib.parse.quote(",".join(batch))
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(req, timeout=40) as r:
-            data = json.load(r)
+        data = _fetch_json(req)
         got = {x["symbol"]: x["marketMetrics"].get("currentPrice") for x in data.get("results", [])}
         for s in batch:
             if s not in got or not got.get(s):
