@@ -309,6 +309,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "NKTR", name: "Nektar" },
       { symbol: "NTRA", name: "Natera / 纳特拉" },
       { symbol: "TWST", name: "Twist Bioscience" },
+      { symbol: "TXG", name: "10x Genomics" },
     ]
   },
   {
