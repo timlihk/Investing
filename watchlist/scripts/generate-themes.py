@@ -183,7 +183,8 @@ MANUAL = {
     "1138.HK",
   ],
   # Includes gold producers (MAI.TO) — precious + critical metals miners bucket
-  "critical-metals": ["3858.HK", "EQR.AX", "ALM", "VNP.TO", "MP", "USAR", "UUUU", "NEU", "7826.T", "MAI.TO"],
+  "critical-metals": ["3858.HK", "EQR.AX", "ALM", "VNP.TO", "MP", "USAR", "UUUU", "NEU", "7826.T", "MAI.TO",
+                      "LUCA.V", "PGDC.V"],
   # Drug developers + life-science tools (DHR sells tools, not insurance)
   "biotech": ["NKTR", "ABVX", "DHR", "ETON", "MRNA"],
   # Payers / managed care — services, not R&D pipeline
