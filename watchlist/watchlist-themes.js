@@ -303,6 +303,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "ALNY", name: "Alnylam Pharmaceuticals / 阿里拉姆" },
       { symbol: "AMLX", name: "Amylyx Pharmaceuticals / 艾米莱克斯" },
       { symbol: "ARGX", name: "argenx SE / 阿尔金克斯" },
+      { symbol: "BHVN", name: "Biohaven" },
       { symbol: "DHR", name: "Danaher" },
       { symbol: "ETON", name: "Eton Pharmaceuticals" },
       { symbol: "MRNA", name: "Moderna (莫德纳)" },
@@ -373,6 +374,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "LI", name: "Li Auto 理想汽车 ADR" },
       { symbol: "NIO", name: "NIO 蔚来汽车 ADR / 9866.HK" },
       { symbol: "RIVN", name: "Rivian" },
+      { symbol: "XPEV", name: "XPeng 小鹏汽车 ADR / 9868.HK" },
     ]
   },
   {
@@ -396,6 +398,7 @@ window.WATCHLIST_THEMES = [
     name: "Commerce & Logistics 商贸物流",
     tagline: "Marketplace, fulfilment, and logistics-platform economics.",
     tickers: [
+      { symbol: "3690.HK", name: "Meituan 美团" },
       { symbol: "GCT", name: "GigaCloud Technology / 大健云仓" },
     ]
   },
