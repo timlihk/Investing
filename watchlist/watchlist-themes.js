@@ -370,6 +370,8 @@ window.WATCHLIST_THEMES = [
       { symbol: "601127.SS", name: "赛力斯" },
       { symbol: "AUR", name: "Aurora Innovation" },
       { symbol: "CCXI", name: "Churchill Capital XI / Agility Robotics" },
+      { symbol: "LI", name: "Li Auto 理想汽车 ADR" },
+      { symbol: "NIO", name: "NIO 蔚来汽车 ADR / 9866.HK" },
       { symbol: "RIVN", name: "Rivian" },
     ]
   },

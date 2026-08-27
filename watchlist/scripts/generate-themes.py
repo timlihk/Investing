@@ -197,7 +197,7 @@ MANUAL = {
   "it-services": ["ACN"],
   # App platforms / ad-tech / consumer software (not IT consulting, not infra SaaS)
   "software-apps": ["APPS", "ROKU"],
-  "mobility-robotics": ["RIVN", "AUR", "CCXI", "601127.SS", "2015.HK"],
+  "mobility-robotics": ["RIVN", "AUR", "CCXI", "601127.SS", "2015.HK", "LI", "NIO"],
   "consumer": [
     "CAVA", "1876.HK", "601888.SS", "605499.SS",
     "9633.HK", "2097.HK", "9992.HK", "CHA",
