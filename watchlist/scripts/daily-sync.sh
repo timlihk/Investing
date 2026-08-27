@@ -30,5 +30,9 @@ fi
 echo "== STEP commit =="
 git add -A
 git commit -m "watchlist: daily sync $(date +%F)" >/dev/null 2>&1 || true
-git push origin main >/dev/null 2>&1 && echo "PUSHED" || echo "PUSH_FAILED"
+git push origin main >/dev/null 2>&1 && echo "PUSHED" || {
+  # 127.0.0.1:8888 proxy dies periodically — retry direct if the proxied push failed
+  env -u HTTP_PROXY -u HTTPS_PROXY -u http_proxy -u https_proxy -u ALL_PROXY -u all_proxy \
+    git push origin main >/dev/null 2>&1 && echo "PUSHED (direct)" || echo "PUSH_FAILED"
+}
 echo "SYNC_OK"
