@@ -256,6 +256,7 @@ window.WATCHLIST_THEMES = [
     name: "Energy & Materials 能源材料",
     tagline: "Energy storage, solar, SiC/power, grid infrastructure, industrial.",
     tickers: [
+      { symbol: "1133.HK", name: "Harbin Electric 哈尔滨电气" },
       { symbol: "1138.HK", name: "COSCO SHIPPING Energy / 中远海能" },
       { symbol: "3931.HK", name: "CALB 中创新航" },
       { symbol: "6136.T", name: "OSG オーエスジー" },
@@ -391,6 +392,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "9992.HK", name: "Pop Mart 泡泡玛特" },
       { symbol: "CAVA", name: "Cava Group" },
       { symbol: "CHA", name: "Chagee 霸王茶姬" },
+      { symbol: "EDU", name: "New Oriental Education 新东方" },
       { symbol: "ELAL.TA", name: "El Al 以色列航空" },
     ]
   },

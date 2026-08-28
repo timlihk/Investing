@@ -276,6 +276,7 @@ TAG_MAP = {
   "spac": "mobility-robotics", "physical-ai": "mobility-robotics",
   "autonomous": "mobility-robotics", "mobility": "mobility-robotics",
   "restaurants": "consumer", "consumer": "consumer", "entertainment": "consumer",
+  "education": "consumer", "tutoring": "consumer",
   "airlines": "consumer", "travel": "consumer", "airline": "consumer", "aviation": "consumer",
   "airports": "airports",
   "big-tech": "ai-infra", "tech": "other",
