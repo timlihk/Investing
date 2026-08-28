@@ -261,6 +261,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "6136.T", name: "OSG オーエスジー" },
       { symbol: "6503.T", name: "Mitsubishi Electric" },
       { symbol: "AGX", name: "Argan" },
+      { symbol: "BAK", name: "Braskem / 巴西石化" },
       { symbol: "BE", name: "Bloom Energy" },
       { symbol: "CLF", name: "Cleveland-Cliffs" },
       { symbol: "CLMT", name: "Calumet Inc. / 卡鲁梅特" },

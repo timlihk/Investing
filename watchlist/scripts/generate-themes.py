@@ -251,6 +251,7 @@ TAG_MAP = {
   "energy": "energy-materials", "solar": "energy-materials",
   "batteries": "energy-materials", "grid": "energy-materials",
   "steel": "energy-materials", "materials": "energy-materials",
+  "petrochemicals": "energy-materials", "chemicals": "energy-materials",
   "industrial": "energy-materials", "industrials": "energy-materials",
   "cutting-tools": "energy-materials", "infrastructure": "energy-materials",
   "critical-minerals": "critical-metals", "tungsten": "critical-metals",
