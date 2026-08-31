@@ -392,6 +392,8 @@ window.WATCHLIST_THEMES = [
       { symbol: "2097.HK", name: "Mixue 蜜雪冰城" },
       { symbol: "601888.SS", name: "中国中免" },
       { symbol: "605499.SS", name: "东鹏饮料" },
+      { symbol: "6952.T", name: "Casio 卡西欧" },
+      { symbol: "7762.T", name: "Citizen Watch 西铁城" },
       { symbol: "8050.T", name: "Seiko Group 精工集团" },
       { symbol: "9633.HK", name: "Nongfu Spring 农夫山泉" },
       { symbol: "9992.HK", name: "Pop Mart 泡泡玛特" },

@@ -105,7 +105,7 @@ ZH_NAMES = {
  "6136.T":"OSG オーエスジー","8021.TW":"Topoint 高侨","TTMI":"TTM Technologies",
  "VSH": "Vishay", "WOLF": "Wolfspeed", "031330.KQ": "SAMT",
  "ELAL.TA": "El Al 以色列航空", "MAI.TO": "Mining Americas 黄金",
- "8050.T": "Seiko Group 精工集团",
+ "8050.T": "Seiko Group 精工集团", "7762.T": "Citizen Watch 西铁城", "6952.T": "Casio 卡西欧",
 }
 
 # Explicit theme membership (curated; first-principles rebalance 2026-08-10).
@@ -204,6 +204,8 @@ MANUAL = {
     "9633.HK", "2097.HK", "9992.HK", "CHA",
     "ELAL.TA",  # El Al — airline, core revenue = passenger flights
     "8050.T",   # Seiko Group — luxury watches (Grand Seiko/Presage), core revenue
+    "7762.T",   # Citizen Watch — watches + machine tools, JP watch theme comparable
+    "6952.T",   # Casio Computer — G-Shock watches core profit, JP watch theme comparable
   ],
   # Marketplace / fulfilment economics rather than a generic regional residual
   "commerce-logistics": ["GCT"],
