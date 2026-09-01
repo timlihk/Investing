@@ -308,6 +308,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "ATAI", name: "AtaiBeckley / 礼来收购" },
       { symbol: "BHVN", name: "Biohaven" },
       { symbol: "CMPS", name: "Compass Pathways / COMP360" },
+      { symbol: "DFTX", name: "Definium Therapeutics (ex-MindMed) / LSD & DT120" },
       { symbol: "DHR", name: "Danaher" },
       { symbol: "ETON", name: "Eton Pharmaceuticals" },
       { symbol: "GHRS", name: "GH Research / 吸入 mebufotenin" },
