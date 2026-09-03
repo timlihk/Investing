@@ -97,7 +97,7 @@ tr:hover td{background:rgba(255,255,255,.03)}
     <div>
       <p class="crumb"><a href="/">Research hub</a> · Oil &amp; Gas</p>
       <h1>Oil &amp; Gas desk</h1>
-      <p class="sub">Crude, cracks, SPR, products, RINs, gas, freight, and the listed beta — Bloomberg snapshot, no auto-refresh. Hit the button when you want a new print.</p>
+      <p class="sub">Crude, cracks, SPR, Hormuz transits, CFTC positioning, RINs, gas, freight, and the listed beta — Bloomberg snapshot, no auto-refresh. Hit the button when you want a new print.</p>
     </div>
     <div class="actions">
       <button class="btn" id="refresh" type="button">Refresh from Bloomberg</button>
@@ -114,8 +114,10 @@ tr:hover td{background:rgba(255,255,255,.03)}
     Official China SPR is not on the tape; port inventories are the proxy.
     SOHO and D4/D6 are the renewable book. Freight (BDTI) flags barrels actually moving or war-risk ton-miles.
     Weekly EIA inventory <i>changes</i> are shown as kbbl, not as percentages.
+    Combined crude draw = EIA commercial crude Δ + SPR 5-day net (Gavin’s “total crude draw”).
+    Hormuz figures are Bloomberg vessel-crossing counts, not a modelled mb/d.
     <b>Units:</b> cracks and crude in $/bbl; RBOB/ULSD in ¢/gal (×0.42 → $/bbl); IEA stocks in million barrels; US EIA stocks scaled from kbbl.
-    Missing prints (Dubai, TD3C this session) stay in the grid so the next refresh can fill them.
+    API weekly is not entitled on this Bloomberg. Dubai / TD3C still missing.
   </div>
 </div>
 <script>
@@ -154,6 +156,13 @@ function derived(data){
   const cap = rowBy(data,"us_spr_cap").px;
   const rbob = rowBy(data,"rbob").px;
   const ho = rowBy(data,"ulsd").px;
+  const sprRow = rowBy(data,"us_spr");
+  const crudeChg = rowBy(data,"us_crude_chg").px;
+  const sprChg = n(sprRow.net5) ? sprRow.net5 : (n(sprRow.px)&&n(sprRow.d5) ? sprRow.px*sprRow.d5/100 : null);
+  const specL = rowBy(data,"cftc_spec_long").px;
+  const specS = rowBy(data,"cftc_spec_short").px;
+  const mmL = rowBy(data,"cftc_mm_long").px;
+  const mmS = rowBy(data,"cftc_mm_short").px;
   return {
     brentWti: n(brent)&&n(wti) ? brent-wti : null,
     wtiCurve: n(wti)&&n(wti2) ? wti-wti2 : null,
@@ -161,6 +170,10 @@ function derived(data){
     sprFill: n(spr)&&n(cap)&&cap ? 100*spr/cap : null,
     rbobBbl: n(rbob) ? rbob*0.42 : null,
     hoBbl: n(ho) ? ho*0.42 : null,
+    sprChg,
+    totalDraw: n(crudeChg)&&n(sprChg) ? crudeChg+sprChg : null,
+    specShortPct: n(specL)&&n(specS)&&(specL+specS) ? 100*specS/(specL+specS) : null,
+    mmShortPct: n(mmL)&&n(mmS)&&(mmL+mmS) ? 100*mmS/(mmL+mmS) : null,
   };
 }
 
@@ -169,10 +182,10 @@ function renderKpis(data){
   const items = [
     ["WTI", fmtPx(rowBy(data,"wti")), rowBy(data,"wti").d1, "$/bbl"],
     ["Brent", fmtPx(rowBy(data,"brent")), rowBy(data,"brent").d1, "$/bbl"],
-    ["Brent–WTI", n(d.brentWti)?d.brentWti.toFixed(2):"—", null, "$/bbl"],
+    ["Total crude draw", n(d.totalDraw)?(d.totalDraw/1000).toFixed(1)+"m":"—", null, "EIA crude+SPR kbbl"],
+    ["Hormuz crude 7d", fmtPx(rowBy(data,"hormuz_crude_7d")), rowBy(data,"hormuz_crude_7d").ytd, "vessels · YTD"],
     ["USGC 3-2-1", fmtPx(rowBy(data,"crack_usgc")), rowBy(data,"crack_usgc").ytd, "$/bbl · YTD"],
-    ["HO crack", fmtPx(rowBy(data,"crack_ho")), rowBy(data,"crack_ho").m1, "$/bbl · 1M"],
-    ["US SPR", fmtPx(rowBy(data,"us_spr")), rowBy(data,"us_spr").ytd, n(d.sprFill)?d.sprFill.toFixed(1)+"% full":"Mbbl"],
+    ["Spec short %", n(d.specShortPct)?d.specShortPct.toFixed(1)+"%":"—", null, "CFTC non-comm"],
   ];
   byId("kpis").innerHTML = items.map(([k,v,chg,sub]) => `
     <div class="kpi">
@@ -197,13 +210,22 @@ function render(data){
     const rows = (data.rows||[]).filter(r => r.section === sec.id);
     let extra = "";
     if (sec.id === "crude") {
-      extra = `<p class="blurb">Derived: WTI M1–M2 <b class="${cls(d.wtiCurve)}">${n(d.wtiCurve)?signed(d.wtiCurve,2):"—"}</b> · Brent M1–M2 <b class="${cls(d.brentCurve)}">${n(d.brentCurve)?signed(d.brentCurve,2):"—"}</b> (backwardation if positive).</p>`;
+      extra = `<p class="blurb">Derived: WTI M1–M2 <b class="${cls(d.wtiCurve)}">${n(d.wtiCurve)?signed(d.wtiCurve,2):"—"}</b> · Brent M1–M2 <b class="${cls(d.brentCurve)}">${n(d.brentCurve)?signed(d.brentCurve,2):"—"}</b> (backwardation if positive). WCS–WTI is the Canadian heavy differential (more negative = worse realization unless the name sells light at WTI−$3).</p>`;
     }
     if (sec.id === "products") {
       extra = `<p class="blurb">Implied $/bbl: RBOB <b>${n(d.rbobBbl)?d.rbobBbl.toFixed(2):"—"}</b> · ULSD <b>${n(d.hoBbl)?d.hoBbl.toFixed(2):"—"}</b>.</p>`;
     }
     if (sec.id === "spr") {
-      extra = `<p class="blurb">US SPR fill vs capacity: <b>${n(d.sprFill)?d.sprFill.toFixed(1)+"%":"—"}</b>. Pacific government crude is the Japan/Korea/Australia strategic pot — it is the non-US SPR that has been drawing hardest.</p>`;
+      extra = `<p class="blurb">US SPR fill vs capacity: <b>${n(d.sprFill)?d.sprFill.toFixed(1)+"%":"—"}</b>. SPR 5D net <b>${n(d.sprChg)?(d.sprChg/1000).toFixed(1)+"m bbl":"—"}</b>.</p>`;
+    }
+    if (sec.id === "inv") {
+      extra = `<p class="blurb">Combined crude draw (EIA commercial Δ + SPR 5D net): <b>${n(d.totalDraw)?(d.totalDraw/1000).toFixed(1)+" million bbl":"—"}</b>. API weekly is not on this Bloomberg — EIA is the official print.</p>`;
+    }
+    if (sec.id === "hormuz") {
+      extra = `<p class="blurb">Pre-war this printed tens of crude tankers per week. A 7-day crude count of <b>${fmtPx(rowBy(data,"hormuz_crude_7d"))}</b> with daily crude barrels at 0 is a shut strait, not a rounding error. YTD −99% is the level, not a one-day glitch.</p>`;
+    }
+    if (sec.id === "positioning") {
+      extra = `<p class="blurb">Spec short share <b>${n(d.specShortPct)?d.specShortPct.toFixed(1)+"%":"—"}</b> · managed-money short share <b>${n(d.mmShortPct)?d.mmShortPct.toFixed(1)+"%":"—"}</b>. Not the IG/OANDA “retail % short” Gavin quotes — that widget is not on Bloomberg.</p>`;
     }
     const body = rows.map(r => `
       <tr>
