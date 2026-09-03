@@ -145,7 +145,8 @@ MANUAL = {
   "substrates-packaging": [
     "4062.T", "3037.TW", "8046.TW", "3189.TW", "009150.KS", "ATS.VI", "2802.T",
     "5706.T", "5214.T", "011790.KS", "3481.TW", "002916.SZ", "002436.SZ", "600183.SS",
-    "AMKR", "ASX", "2327.TW", "011070.KS", "8021.TW", "TTMI", "VSH",
+    "AMKR", "ASX", "2327.TW", "011070.KS", "8021.TW", "TTMI", "VSH", "6226.TW",
+    # 6226.TW Para Light — discrete LED display/component maker (like VSH opto discretes)
     "3104.T", "3110.T", "3103.T",
   ],
   # Electrical / RF interconnect silicon (PCIe/CXL/SerDes/Ethernet/RF front-end chips)

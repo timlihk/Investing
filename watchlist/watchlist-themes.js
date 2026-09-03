@@ -96,6 +96,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "5706.T", name: "Mitsui Kinzoku 三井金属" },
       { symbol: "600183.SS", name: "Shengyi Tech 生益科技" },
       { symbol: "6213.TW", name: "ITEQ (联茂)" },
+      { symbol: "6226.TW", name: "光鼎电子 / Para Light" },
       { symbol: "6274.TWO", name: "TUC / 台耀 (Taiwan Union Technology)" },
       { symbol: "8021.TW", name: "Topoint 高侨" },
       { symbol: "8046.TW", name: "Nan Ya PCB 南亚电路板" },
