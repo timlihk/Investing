@@ -210,7 +210,7 @@ function render(data){
     const rows = (data.rows||[]).filter(r => r.section === sec.id);
     let extra = "";
     if (sec.id === "crude") {
-      extra = `<p class="blurb">Derived: WTI M1–M2 <b class="${cls(d.wtiCurve)}">${n(d.wtiCurve)?signed(d.wtiCurve,2):"—"}</b> · Brent M1–M2 <b class="${cls(d.brentCurve)}">${n(d.brentCurve)?signed(d.brentCurve,2):"—"}</b> (backwardation if positive). WCS–WTI is the Canadian heavy differential (more negative = worse realization unless the name sells light at WTI−$3).</p>`;
+      extra = `<p class="blurb">Derived: WTI M1–M2 <b class="${cls(d.wtiCurve)}">${n(d.wtiCurve)?signed(d.wtiCurve,2):"—"}</b> · Brent M1–M2 <b class="${cls(d.brentCurve)}">${n(d.brentCurve)?signed(d.brentCurve,2):"—"}</b> (backwardation if positive). WCS Hardisty is the absolute Canadian heavy print; WCS–WTI CMA is vs NYMEX WTI calendar-month average (more negative = worse realization).</p>`;
     }
     if (sec.id === "products") {
       extra = `<p class="blurb">Implied $/bbl: RBOB <b>${n(d.rbobBbl)?d.rbobBbl.toFixed(2):"—"}</b> · ULSD <b>${n(d.hoBbl)?d.hoBbl.toFixed(2):"—"}</b>.</p>`;
