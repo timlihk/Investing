@@ -106,6 +106,7 @@ ZH_NAMES = {
  "VSH": "Vishay", "WOLF": "Wolfspeed", "031330.KQ": "SAMT",
  "ELAL.TA": "El Al 以色列航空", "MAI.TO": "Mining Americas 黄金",
  "8050.T": "Seiko Group 精工集团", "7762.T": "Citizen Watch 西铁城", "6952.T": "Casio 卡西欧",
+ "BAK": "Braskem 巴西石化",
 }
 
 # Explicit theme membership (curated; first-principles rebalance 2026-08-10).
@@ -183,6 +184,8 @@ MANUAL = {
     "3931.HK",
     # 1138.HK COSCO Shipping Energy — oil/LNG tanker fleet (energy transport, core revenue)
     "1138.HK",
+    # BAK Braskem — LatAm petrochemicals / extra-judicial RE (core revenue, not country residual)
+    "BAK",
   ],
   # Includes gold producers (MAI.TO) — precious + critical metals miners bucket
   "critical-metals": ["3858.HK", "EQR.AX", "ALM", "VNP.TO", "MP", "USAR", "UUUU", "NEU", "7826.T", "MAI.TO",
