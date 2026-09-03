@@ -83,6 +83,25 @@ tr:hover td{background:rgba(255,255,255,.03)}
   font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 10px;background:rgba(255,255,255,.03)
 }
 .toc a:hover{color:var(--text);border-color:rgba(125,211,252,.4);text-decoration:none}
+.brief{
+  background:rgba(16,24,38,.92);border:1px solid var(--line);border-radius:16px;
+  padding:18px 20px 16px;margin:0 0 22px;
+}
+.brief .kicker{font-size:11px;color:var(--amber);letter-spacing:.12em;text-transform:uppercase;margin:0 0 8px}
+.brief h2{margin:0 0 10px;font-size:22px}
+.brief .lede{font-size:15.5px;line-height:1.55;margin:0 0 12px;color:var(--text)}
+.brief h3{font-size:15px;margin:16px 0 6px;color:var(--accent)}
+.brief p,.brief li{color:var(--muted);font-size:14px;line-height:1.65;margin:0 0 8px}
+.brief b{color:var(--text)}
+.brief table{margin:8px 0 12px}
+.brief th,.brief td{white-space:normal;text-align:left}
+.brief td:nth-child(2){font-family:var(--mono);color:var(--text);white-space:nowrap}
+.brief .watch{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 12px}
+.brief .watch span{
+  border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:12px;
+  color:var(--text);background:rgba(255,255,255,.03)
+}
+.brief .when{font-family:var(--mono);font-size:11px;color:var(--muted);margin:12px 0 0}
 @media (max-width:1100px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:640px){
   .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -105,6 +124,13 @@ tr:hover td{background:rgba(255,255,255,.03)}
     </div>
   </div>
   <p class="meta">as of <b id="asof">—</b> · source <b id="src">—</b> · <span id="status" class="status">loading…</span></p>
+  <div class="brief" id="brief" hidden>
+    <div class="kicker">Daily brief · 今天数字在说什么</div>
+    <h2 id="brief-headline">—</h2>
+    <div class="watch" id="brief-watch"></div>
+    <div id="brief-body"></div>
+    <p class="when">brief <b id="brief-gen">—</b> · snapshot <b id="brief-asof">—</b> · 每天早上自动写；不拉彭博</p>
+  </div>
   <nav class="toc" id="toc"></nav>
   <div class="kpis" id="kpis"></div>
   <div id="sections"></div>
@@ -124,6 +150,7 @@ tr:hover td{background:rgba(255,255,255,.03)}
 const API_GET = "/company/api/oil-gas";
 const API_POST = "/company/api/oil-gas/refresh";
 const LOCAL = "./data.json";
+const BRIEF_URLS = ["/company/data/oil-gas-brief.json", "./brief.json", "/company/oil-gas/brief.json"];
 
 function byId(id){ return document.getElementById(id); }
 function n(v){ return typeof v === "number" && isFinite(v); }
@@ -303,8 +330,31 @@ async function refresh(){
   }
 }
 
+function renderBrief(b){
+  if (!b || !b.headline) return;
+  byId("brief").hidden = false;
+  byId("brief-headline").textContent = b.headline;
+  byId("brief-gen").textContent = b.generated_at || "—";
+  byId("brief-asof").textContent = b.data_as_of || "—";
+  const watch = byId("brief-watch");
+  watch.innerHTML = (b.watch || []).map(w => `<span>${w}</span>`).join("");
+  byId("brief-body").innerHTML = b.body_html || "";
+}
+
+async function loadBrief(){
+  for (const u of BRIEF_URLS) {
+    try {
+      const res = await fetch(u, { cache: "no-store" });
+      if (!res.ok) continue;
+      const b = await res.json();
+      if (b && b.headline) { renderBrief(b); return; }
+    } catch (e) { /* try next */ }
+  }
+}
+
 byId("refresh").addEventListener("click", refresh);
 load();
+loadBrief();
 </script>
 </body>
 </html>
