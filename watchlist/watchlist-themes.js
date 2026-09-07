@@ -314,6 +314,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "ETON", name: "Eton Pharmaceuticals" },
       { symbol: "GHRS", name: "GH Research / 吸入 mebufotenin" },
       { symbol: "HELP", name: "Helus (ex-Cybin) / HLP003" },
+      { symbol: "KURA", name: "Kura Oncology / 库拉肿瘤" },
       { symbol: "MRNA", name: "Moderna (莫德纳)" },
       { symbol: "NKTR", name: "Nektar" },
       { symbol: "NTRA", name: "Natera / 纳特拉" },
@@ -366,6 +367,7 @@ window.WATCHLIST_THEMES = [
     tickers: [
       { symbol: "APPS", name: "Digital Turbine" },
       { symbol: "RDDT", name: "Reddit Inc." },
+      { symbol: "REA.AX", name: "REA Group Limited" },
       { symbol: "RNG", name: "RingCentral / 铃盛" },
       { symbol: "ROKU", name: "Roku" },
     ]
