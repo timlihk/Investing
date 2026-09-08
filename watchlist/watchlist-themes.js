@@ -35,6 +35,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "032580.KQ", name: "Fidelix" },
       { symbol: "080220.KQ", name: "Jeju Semiconductor 济州半导体" },
       { symbol: "2337.TW", name: "Macronix 旺宏" },
+      { symbol: "2737.T", name: "Tomen Devices 东棉器件" },
       { symbol: "285A.T", name: "Kioxia 铠侠" },
       { symbol: "MU", name: "Micron 美光" },
       { symbol: "SIMO", name: "Silicon Motion" },

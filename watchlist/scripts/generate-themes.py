@@ -107,6 +107,7 @@ ZH_NAMES = {
  "ELAL.TA": "El Al 以色列航空", "MAI.TO": "Mining Americas 黄金",
  "8050.T": "Seiko Group 精工集团", "7762.T": "Citizen Watch 西铁城", "6952.T": "Casio 卡西欧",
  "BAK": "Braskem 巴西石化",
+ "2737.T": "Tomen Devices 东棉器件",
 }
 
 # Explicit theme membership (curated; first-principles rebalance 2026-08-10).
@@ -134,7 +135,7 @@ MANUAL = {
   # Memory bits + controllers + HDD/NAND pure-plays
   "memory-storage": [
     "000660.KS", "005930.KS", "MU", "285A.T", "032580.KQ", "080220.KQ",
-    "WDC", "SNDK", "STX", "SIMO", "2337.TW", "031330.KQ",
+    "WDC", "SNDK", "STX", "SIMO", "2337.TW", "031330.KQ", "2737.T",
   ],
   # Wafer fab tools, test, process materials
   "semi-equipment": [
