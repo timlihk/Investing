@@ -96,9 +96,10 @@ window.WATCHLIST_THEMES = [
       { symbol: "5214.T", name: "Nippon Electric Glass 日本电气硝子" },
       { symbol: "5706.T", name: "Mitsui Kinzoku 三井金属" },
       { symbol: "600183.SS", name: "Shengyi Tech 生益科技" },
-      { symbol: "6213.TW", name: "ITEQ (联茂)" },
+      { symbol: "6213.TW", name: "联茂" },
       { symbol: "6226.TW", name: "光鼎电子 / Para Light" },
       { symbol: "6274.TWO", name: "TUC / 台耀 (Taiwan Union Technology)" },
+      { symbol: "6522.T", name: "アスタリスク" },
       { symbol: "8021.TW", name: "Topoint 高侨" },
       { symbol: "8046.TW", name: "Nan Ya PCB 南亚电路板" },
       { symbol: "AMKR", name: "Amkor" },
@@ -121,6 +122,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "MXL", name: "MaxLinear" },
       { symbol: "SILC", name: "Silicom" },
       { symbol: "SMTC", name: "Semtech" },
+      { symbol: "VISN", name: "Vistance Networks" },
     ]
   },
   {
@@ -170,6 +172,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "6412.TW", name: "Chicony Power 群光电能" },
       { symbol: "6584.TWO", name: "Nan Juen International (南俊国际 / Repon)" },
       { symbol: "APLD", name: "Applied Digital" },
+      { symbol: "BRUN", name: "Boost Run" },
       { symbol: "CORZ", name: "Core Scientific" },
       { symbol: "CRWV", name: "CoreWeave" },
       { symbol: "DDOG", name: "Datadog Inc." },
@@ -189,6 +192,7 @@ window.WATCHLIST_THEMES = [
     name: "Defense & Drones 国防无人机",
     tagline: "Munitions chokepoints, C-UAS, loitering munitions, NDAA drone stack, ISR.",
     tickers: [
+      { symbol: "000880.KS", name: "韩华集团" },
       { symbol: "012450.KS", name: "Hanwha Aerospace" },
       { symbol: "103140.KS", name: "Poongsan" },
       { symbol: "7013.T", name: "IHI" },
@@ -302,6 +306,7 @@ window.WATCHLIST_THEMES = [
     tagline: "Clinical biopharma pipelines and life-science tools / diagnostics.",
     tickers: [
       { symbol: "1548.HK", name: "GenScript Biotech 金斯瑞" },
+      { symbol: "2158.HK", name: "医渡科技" },
       { symbol: "ABCL", name: "AbCellera Biologics" },
       { symbol: "ABVX", name: "Abivax (ADR)" },
       { symbol: "ACOG", name: "Alpha Cognition / 阿尔法认知" },
@@ -339,6 +344,7 @@ window.WATCHLIST_THEMES = [
     name: "Financials 金融",
     tagline: "Banks, custody and asset servicing, insurers, annuities, and payment platforms.",
     tickers: [
+      { symbol: "2882.TW", name: "國泰金控" },
       { symbol: "JXN", name: "Jackson Financial" },
       { symbol: "PAYS", name: "Paysign, Inc." },
       { symbol: "SHB-A.ST", name: "Svenska Handelsbanken A" },
@@ -360,6 +366,7 @@ window.WATCHLIST_THEMES = [
     name: "IT Services 信息技术服务",
     tagline: "Systems integration and consulting — services revenue, not product software.",
     tickers: [
+      { symbol: "2354.T", name: "YE DIGITAL" },
       { symbol: "ACN", name: "Accenture" },
     ]
   },
@@ -382,10 +389,12 @@ window.WATCHLIST_THEMES = [
     tickers: [
       { symbol: "2015.HK", name: "Li Auto 理想汽车" },
       { symbol: "601127.SS", name: "赛力斯" },
+      { symbol: "7272.T", name: "ヤマハ発動機" },
       { symbol: "AUR", name: "Aurora Innovation" },
       { symbol: "CCXI", name: "Churchill Capital XI / Agility Robotics" },
       { symbol: "LI", name: "Li Auto 理想汽车 ADR" },
       { symbol: "NIO", name: "NIO 蔚来汽车 ADR / 9866.HK" },
+      { symbol: "P911.DE", name: "保时捷 Porsche AG(做空候选 #1)" },
       { symbol: "RIVN", name: "Rivian" },
       { symbol: "XPEV", name: "XPeng 小鹏汽车 ADR / 9868.HK" },
     ]
@@ -397,6 +406,8 @@ window.WATCHLIST_THEMES = [
     tickers: [
       { symbol: "1876.HK", name: "Budweiser APAC 百威亚太" },
       { symbol: "2097.HK", name: "Mixue 蜜雪冰城" },
+      { symbol: "4680.T", name: "ラウンドワン" },
+      { symbol: "4914.T", name: "高砂香料" },
       { symbol: "601888.SS", name: "中国中免" },
       { symbol: "605499.SS", name: "东鹏饮料" },
       { symbol: "6952.T", name: "Casio 卡西欧" },
@@ -408,7 +419,9 @@ window.WATCHLIST_THEMES = [
       { symbol: "CAVA", name: "Cava Group" },
       { symbol: "CHA", name: "Chagee 霸王茶姬" },
       { symbol: "EDU", name: "New Oriental Education 新东方" },
+      { symbol: "EDU.AX", name: "EDU Holdings" },
       { symbol: "ELAL.TA", name: "El Al 以色列航空" },
+      { symbol: "GIVN.SW", name: "奇华顿" },
     ]
   },
   {
