@@ -118,6 +118,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "MRVL", name: "Marvell" },
       { symbol: "MTSI", name: "MACOM" },
       { symbol: "MXL", name: "MaxLinear" },
+      { symbol: "SILC", name: "Silicom" },
       { symbol: "SMTC", name: "Semtech" },
     ]
   },
@@ -308,6 +309,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "ARGX", name: "argenx SE / 阿尔金克斯" },
       { symbol: "ATAI", name: "AtaiBeckley / 礼来收购" },
       { symbol: "BHVN", name: "Biohaven" },
+      { symbol: "CDNA", name: "CareDx" },
       { symbol: "CMPS", name: "Compass Pathways / COMP360" },
       { symbol: "DFTX", name: "Definium Therapeutics (ex-MindMed) / LSD & DT120" },
       { symbol: "DHR", name: "Danaher" },
@@ -397,6 +399,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "601888.SS", name: "中国中免" },
       { symbol: "605499.SS", name: "东鹏饮料" },
       { symbol: "6952.T", name: "Casio 卡西欧" },
+      { symbol: "7103.KL", name: "Spritzer 事必胜" },
       { symbol: "7762.T", name: "Citizen Watch 西铁城" },
       { symbol: "8050.T", name: "Seiko Group 精工集团" },
       { symbol: "9633.HK", name: "Nongfu Spring 农夫山泉" },

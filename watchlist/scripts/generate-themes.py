@@ -153,6 +153,7 @@ MANUAL = {
   # Electrical / RF interconnect silicon (PCIe/CXL/SerDes/Ethernet/RF front-end chips)
   "connectivity": [
     "ALAB", "CRDO", "AVGO", "MRVL", "MXL", "MTSI", "SMTC",
+    "SILC",
   ],
   # Optical: lasers, transceivers, fiber, InP substrate/epi, optical networking systems
   "optics": [
@@ -191,7 +192,7 @@ MANUAL = {
   "critical-metals": ["3858.HK", "EQR.AX", "ALM", "VNP.TO", "MP", "USAR", "UUUU", "NEU", "7826.T", "MAI.TO",
                       "LUCA.V", "PGDC.V"],
   # Drug developers + life-science tools (DHR sells tools, not insurance)
-  "biotech": ["NKTR", "ABVX", "DHR", "ETON", "MRNA"],
+  "biotech": ["NKTR", "ABVX", "DHR", "ETON", "MRNA", "CDNA"],
   # Payers / managed care — services, not R&D pipeline
   "healthcare-services": ["OSCR", "CNC"],
   # Banks, custody/asset servicing, insurers and payment platforms
@@ -206,6 +207,7 @@ MANUAL = {
   "consumer": [
     "CAVA", "1876.HK", "601888.SS", "605499.SS",
     "9633.HK", "2097.HK", "9992.HK", "CHA",
+    "7103.KL",  # Spritzer — Malaysia bottled water, core revenue = consumer beverages
     "ELAL.TA",  # El Al — airline, core revenue = passenger flights
     "8050.T",   # Seiko Group — luxury watches (Grand Seiko/Presage), core revenue
     "7762.T",   # Citizen Watch — watches + machine tools, JP watch theme comparable
