@@ -248,6 +248,7 @@ window.WATCHLIST_THEMES = [
     name: "Crypto & AI Miners 矿企",
     tagline: "Bitcoin miners pivoting to AI data centers, crypto capital markets.",
     tickers: [
+      { symbol: "1208.HK", name: "五矿资源 MMG / 铜锌矿商" },
       { symbol: "CIFR", name: "Cipher Mining" },
       { symbol: "CORZ", name: "Core Scientific" },
       { symbol: "GLXY", name: "Galaxy Digital" },
