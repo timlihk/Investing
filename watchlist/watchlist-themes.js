@@ -348,7 +348,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "2882.TW", name: "國泰金控" },
       { symbol: "JXN", name: "Jackson Financial" },
       { symbol: "PAYS", name: "Paysign, Inc." },
-      { symbol: "SHB-A.ST", name: "Svenska Handelsbanken A" },
+      { symbol: "SHB-A.ST", name: "SHB-A.ST" },
       { symbol: "STT", name: "State Street / 道富" },
     ]
   },
@@ -417,6 +417,9 @@ window.WATCHLIST_THEMES = [
       { symbol: "8050.T", name: "Seiko Group 精工集团" },
       { symbol: "9633.HK", name: "Nongfu Spring 农夫山泉" },
       { symbol: "9992.HK", name: "Pop Mart 泡泡玛特" },
+      { symbol: "ALK", name: "Alaska Air (ALK)" },
+      { symbol: "AMC", name: "AMC Entertainment (AMC)" },
+      { symbol: "BROS", name: "Dutch Bros (BROS)" },
       { symbol: "CAVA", name: "Cava Group" },
       { symbol: "CHA", name: "Chagee 霸王茶姬" },
       { symbol: "EDU", name: "New Oriental Education 新东方" },
