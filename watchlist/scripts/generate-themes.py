@@ -108,6 +108,7 @@ ZH_NAMES = {
  "8050.T": "Seiko Group 精工集团", "7762.T": "Citizen Watch 西铁城", "6952.T": "Casio 卡西欧",
  "BAK": "Braskem 巴西石化",
  "2737.T": "Tomen Devices 东棉器件",
+ "SPCX": "SpaceX 太空探索",
 }
 
 # Explicit theme membership (curated; first-principles rebalance 2026-08-10).
@@ -179,6 +180,9 @@ MANUAL = {
     "5243.TW", "2301.TW", "6787.T", "300433.SZ", "2313.TW", "6412.TW", "2392.TW",
     "6146.T", "8027.TWO",
   ],
+  # The operator itself — satellite internet + launch. Suppliers stay in starlink.
+  # SPCX ~$2T mcap would crush the supply-chain heatmap tile if merged.
+  "space": ["SPCX"],
   "crypto-miners": ["MARA", "RIOT", "CIFR", "WULF", "CORZ", "IREN", "GLXY"],
   # Grid/storage/solar/SiC power + industrial tools (not electronic glass — that is packaging)
   "energy-materials": [
@@ -258,6 +262,7 @@ TAG_MAP = {
   "pgm": "critical-metals", "iridium": "critical-metals", "ruthenium": "critical-metals",
   "defense": "defense", "drones": "defense",
   "starlink": "starlink",
+  "space": "space", "satellite": "space", "satellites": "space",
   "crypto": "crypto-miners", "mining": "crypto-miners",
   "energy": "energy-materials", "solar": "energy-materials",
   "batteries": "energy-materials", "grid": "energy-materials",
@@ -321,6 +326,8 @@ THEMES = [
    "tagline": "Munitions chokepoints, C-UAS, loitering munitions, NDAA drone stack, ISR."},
   {"id": "starlink", "name": "Starlink Supply Chain 星链",
    "tagline": "Satellite direct suppliers — PCB, power, connectors, glass, tools."},
+  {"id": "space", "name": "Space & Launch 太空航天",
+   "tagline": "The satellite internet operator and launch provider itself — anchor, not supplier."},
   {"id": "crypto-miners", "name": "Crypto & AI Miners 矿企",
    "tagline": "Bitcoin miners pivoting to AI data centers, crypto capital markets."},
   {"id": "energy-materials", "name": "Energy & Materials 能源材料",

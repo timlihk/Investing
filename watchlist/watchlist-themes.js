@@ -244,6 +244,14 @@ window.WATCHLIST_THEMES = [
     ]
   },
   {
+    id: "space",
+    name: "Space & Launch 太空航天",
+    tagline: "The satellite internet operator and launch provider itself — anchor, not supplier.",
+    tickers: [
+      { symbol: "SPCX", name: "SpaceX 太空探索" },
+    ]
+  },
+  {
     id: "crypto-miners",
     name: "Crypto & AI Miners 矿企",
     tagline: "Bitcoin miners pivoting to AI data centers, crypto capital markets.",
