@@ -287,6 +287,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "FPS", name: "Frontier Power Solutions" },
       { symbol: "SEI", name: "Solaris Energy" },
       { symbol: "TE", name: "T1 Energy" },
+      { symbol: "UIE.CO", name: "UIE Plc / United Plantations 控股" },
       { symbol: "WOLF", name: "Wolfspeed" },
     ]
   },

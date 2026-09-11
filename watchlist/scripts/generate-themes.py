@@ -192,6 +192,8 @@ MANUAL = {
     "1138.HK",
     # BAK Braskem — LatAm petrochemicals / extra-judicial RE (core revenue, not country residual)
     "BAK",
+    # UIE.CO — Copenhagen holdco of United Plantations (CPO soft-commodity producer)
+    "UIE.CO",
   ],
   # Includes gold producers (MAI.TO) — precious + critical metals miners bucket
   "critical-metals": ["3858.HK", "EQR.AX", "ALM", "VNP.TO", "MP", "USAR", "UUUU", "NEU", "7826.T", "MAI.TO",
