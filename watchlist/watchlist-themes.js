@@ -202,6 +202,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "CRS", name: "Carpenter" },
       { symbol: "CW", name: "Curtiss-Wright" },
       { symbol: "DRO.AX", name: "DroneShield" },
+      { symbol: "FEIM", name: "Frequency Electronics / 频率电子" },
       { symbol: "GD", name: "GD" },
       { symbol: "HO.PA", name: "Thales" },
       { symbol: "HWM", name: "Howmet" },
@@ -337,7 +338,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "NKTR", name: "Nektar" },
       { symbol: "NTRA", name: "Natera / 纳特拉" },
       { symbol: "TWST", name: "Twist Bioscience" },
-      { symbol: "TXG", name: "10x Genomics" },
+      { symbol: "TXG", name: "10x Genomics / 10x 基因组" },
     ]
   },
   {
