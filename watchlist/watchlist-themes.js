@@ -133,6 +133,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "2455.TW", name: "VPEC 全新光電" },
       { symbol: "3081.TWO", name: "LandMark 聯亞光電" },
       { symbol: "3105.TWO", name: "WIN Semiconductors 稳懋" },
+      { symbol: "3308.HK", name: "ZJ Innolight 中际旭创" },
       { symbol: "4971.TWO", name: "IET-KY 英特磊" },
       { symbol: "4991.TWO", name: "GCS Holdings" },
       { symbol: "5016.T", name: "JX Advanced Metals" },
