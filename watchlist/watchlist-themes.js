@@ -164,11 +164,13 @@ window.WATCHLIST_THEMES = [
     name: "AI Infrastructure 算力基建",
     tagline: "Servers, power & cooling, DC builders, AI clouds, cloud software, server structure.",
     tickers: [
+      { symbol: "0100.HK", name: "MiniMax 稀宇科技" },
       { symbol: "2059.TW", name: "King Slide 川湖科技" },
       { symbol: "2301.TW", name: "Lite-On 光宝科技" },
       { symbol: "2317.TW", name: "Hon Hai 鸿海" },
       { symbol: "2382.TW", name: "Quanta 广达" },
       { symbol: "2383.TW", name: "EMC 台光电子" },
+      { symbol: "2513.HK", name: "Z.AI 智谱 / GLM 大模型" },
       { symbol: "3605.TW", name: "ACES 宏致電子" },
       { symbol: "6412.TW", name: "Chicony Power 群光电能" },
       { symbol: "6584.TWO", name: "Nan Juen International (南俊国际 / Repon)" },
