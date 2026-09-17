@@ -1048,6 +1048,8 @@ footer code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:6px}
       else if (symbol.endsWith(".ST")) prefix = "OMX";
       else if (symbol.endsWith(".OL")) prefix = "OSE";
       else if (symbol.endsWith(".TA")) prefix = "TLV";
+      else if (symbol.endsWith(".AX")) prefix = "ASX";
+      else if (symbol.endsWith(".V")) prefix = "TSXV";
     }
     const tvSym = prefix ? prefix + ":" + base : symbol;
     return "https://www.tradingview.com/chart/?symbol=" + encodeURIComponent(tvSym);

@@ -303,6 +303,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "3858.HK", name: "Jiaxin 佳鑫国际 (钨)" },
       { symbol: "7826.T", name: "Furuya Metal フルヤ金属" },
       { symbol: "ALM", name: "Almonty (钨)" },
+      { symbol: "AUQ.AX", name: "Alara Resources" },
       { symbol: "EQR.AX", name: "EQ Resources (钨)" },
       { symbol: "LUCA.V", name: "Luca Mining Corp." },
       { symbol: "MAI.TO", name: "Mining Americas 黄金" },
