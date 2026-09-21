@@ -186,6 +186,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "IREN", name: "IREN" },
       { symbol: "NBIS", name: "Nebius" },
       { symbol: "RXT", name: "Rackspace" },
+      { symbol: "TLN", name: "Talen Energy / 泰伦能源" },
       { symbol: "VICR", name: "Vicor" },
       { symbol: "VRT", name: "Vertiv" },
     ]
@@ -301,6 +302,7 @@ window.WATCHLIST_THEMES = [
     tagline: "Tungsten, rare earths, gallium, gold — critical & precious metals miners.",
     tickers: [
       { symbol: "3858.HK", name: "Jiaxin 佳鑫国际 (钨)" },
+      { symbol: "7610.TW", name: "Lianyou Metals 联友金属" },
       { symbol: "7826.T", name: "Furuya Metal フルヤ金属" },
       { symbol: "ALM", name: "Almonty (钨)" },
       { symbol: "AUQ.AX", name: "Alara Resources" },
