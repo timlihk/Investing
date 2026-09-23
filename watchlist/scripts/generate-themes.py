@@ -172,8 +172,8 @@ MANUAL = {
   ],
   "defense": [
     "NEU", "012450.KS", "103140.KS", "LHX", "NOC", "7013.T", "HXL", "ATI", "CRS", "HWM",
-    "TDY", "MRCY", "HO.PA", "CW", "KRMN", "MP", "LMT", "RTX", "GD", "KOG.OL",
-    "AVAV", "KTOS", "ONDS", "RCAT", "UMAC", "NXSN.TA", "PL", "SATL", "USAR", "UUUU",
+    "TDY", "MRCY", "HO.PA", "CW", "KRMN", "LMT", "RTX", "GD", "KOG.OL",
+    "AVAV", "KTOS", "ONDS", "RCAT", "UMAC", "NXSN.TA", "PL", "SATL", "UUUU",
     "AMPX", "DRO.AX",
   ],
   "starlink": [

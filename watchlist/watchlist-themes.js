@@ -216,7 +216,6 @@ window.WATCHLIST_THEMES = [
       { symbol: "KTOS", name: "Kratos" },
       { symbol: "LHX", name: "L3Harris" },
       { symbol: "LMT", name: "Lockheed" },
-      { symbol: "MP", name: "MP Materials" },
       { symbol: "MRCY", name: "Mercury Systems" },
       { symbol: "NEU", name: "NewMarket (AMPAC)" },
       { symbol: "NOC", name: "Northrop" },
@@ -228,7 +227,6 @@ window.WATCHLIST_THEMES = [
       { symbol: "SATL", name: "Satellogic" },
       { symbol: "TDY", name: "Teledyne" },
       { symbol: "UMAC", name: "Unusual Machines" },
-      { symbol: "USAR", name: "USA Rare Earth" },
       { symbol: "UUUU", name: "Energy Fuels" },
     ]
   },
