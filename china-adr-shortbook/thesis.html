@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>China ADR Short Book — Company Theses</title>
+<style>
+:root{
+  --bg:#0a0f18; --panel:#101826; --panel-strong:#131d2f; --line:rgba(255,255,255,.08);
+  --text:#e8edf7; --muted:#96a3ba; --accent:#7dd3fc; --accent-2:#a78bfa;
+  --good:#34d399; --bad:#f87171; --warn:#fbbf24;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--text);
+  background:radial-gradient(circle at top left, rgba(125,211,252,.14), transparent 26%),
+    radial-gradient(circle at top right, rgba(167,139,250,.14), transparent 22%),
+    linear-gradient(180deg,#08111d 0%, var(--bg) 100%);}
+.page{max-width:1420px;margin:0 auto;padding:32px 22px 80px}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+h1{font-size:30px;margin:0 0 8px;letter-spacing:-.02em}
+h3{font-size:12.5px;margin:0 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:.16em;font-size:11px;margin:0 0 10px;font-weight:600}
+.sub{color:var(--muted);font-size:14px;max-width:1000px;line-height:1.62;margin:0 0 18px}
+.tabs{display:flex;gap:8px;margin:0 0 20px;border-bottom:1px solid var(--line);padding-bottom:0}
+.tab{padding:9px 16px;font-size:13.5px;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab.active{color:var(--text);border-bottom-color:var(--accent);font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.pill{border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted);
+  border-radius:999px;padding:5px 12px;font-size:12px}
+.pill b{color:var(--text);font-weight:600}
+.panel{background:linear-gradient(180deg,var(--panel) 0%,var(--panel-strong) 100%);
+  border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:0 18px 50px rgba(0,0,0,.28)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
+input[type=text],select{background:rgba(0,0,0,.28);border:1px solid var(--line);color:var(--text);
+  border-radius:9px;padding:8px 11px;font-size:13px;font-family:inherit;outline:none}
+input[type=text]{min-width:260px}
+input[type=text]:focus,select:focus{border-color:rgba(125,211,252,.5)}
+label.chk{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;cursor:pointer}
+.tc{border:1px solid var(--line);border-radius:12px;padding:0;margin-bottom:12px;overflow:hidden;
+  background:rgba(255,255,255,.016)}
+.tc-head{display:grid;grid-template-columns:1fr auto;gap:14px;padding:14px 16px;cursor:pointer;align-items:start}
+.tc-head:hover{background:rgba(125,211,252,.05)}
+.tk{font-weight:700;font-size:15.5px;color:var(--text)}
+.nm{color:var(--muted);font-size:12.5px;margin-left:7px;font-weight:400}
+.oneliner{color:#cbd5e1;font-size:13px;line-height:1.55;margin-top:7px;max-width:900px}
+.badges{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.sc{display:inline-block;min-width:38px;padding:3px 8px;border-radius:6px;font-weight:700;font-size:12px;text-align:center}
+.tier{font-size:10.5px;padding:2px 7px;border-radius:5px;border:1px solid var(--line);color:var(--muted)}
+.chip{font-size:10.5px;padding:2px 7px;border-radius:5px;background:rgba(255,255,255,.06);
+  color:var(--muted);border:1px solid var(--line)}
+.tc-body{display:none;padding:4px 16px 16px;border-top:1px solid var(--line)}
+.tc.open .tc-body{display:block}
+.grid2{display:grid;grid-template-columns:1.35fr 1fr;gap:14px}
+@media(max-width:1000px){.grid2{grid-template-columns:1fr}}
+ul.bear{margin:6px 0 0;padding-left:18px;font-size:13px;line-height:1.6;color:#d7dee9}
+ul.bear li{margin-bottom:5px}
+ul.risk{margin:6px 0 0;padding-left:18px;font-size:13px;line-height:1.6;color:#e7d9b8}
+.kv{display:grid;grid-template-columns:1fr auto;gap:3px 12px;font-size:12.5px;margin:0}
+.kv dt{color:var(--muted)} .kv dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
+.kv2{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:760px){.kv2{grid-template-columns:repeat(2,1fr)}}
+.stat{background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:9px;padding:9px 11px}
+.stat .l{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.stat .v{font-size:15px;font-weight:600;margin-top:3px}
+.neg{color:var(--bad)} .pos{color:var(--good)} .mut{color:var(--muted)}
+.note{color:var(--muted);font-size:12px;line-height:1.6}
+.warnbox{border-left:3px solid var(--warn);background:rgba(251,191,36,.07);padding:11px 14px;
+  border-radius:0 9px 9px 0;font-size:12.5px;color:#e4d5b0;line-height:1.6}
+.dens{font-size:10.5px;padding:2px 8px;border-radius:999px;font-weight:600}
+.d-strong{background:rgba(52,211,153,.16);color:#6ee7b7}
+.d-mixed{background:rgba(251,191,36,.16);color:#fcd34d}
+.d-sparse{background:rgba(255,255,255,.07);color:#96a3ba}
+.d-none{background:rgba(248,113,113,.14);color:#fca5a5}
+.src{font-size:11.5px;color:var(--muted)}
+.src a{font-size:11.5px}
+.small{font-size:11.5px;color:var(--muted)}
+.quote{border-left:2px solid var(--line);padding-left:11px;margin:7px 0;font-size:12.5px;color:#c7d2e0;line-height:1.55}
+.quote .m{color:var(--muted);font-size:11px}
+</style>
+</head>
+<body>
+<div class="page">
+  <p class="eyebrow">Mangrove Research · Short Book</p>
+  <h1>China ADR — company short theses</h1>
+  <p class="sub">
+    One synthesised short thesis per company, built from three independent inputs: the
+    financial and shortability screen, live X/Twitter sentiment, and sell-side research
+    pulled from AlphaEngine. Where a company has no meaningful X chatter or no analyst
+    coverage, that is stated rather than padded.
+  </p>
+  <div class="tabs">
+    <a class="tab" href="./index.html">Screen</a>
+    <a class="tab active" href="./thesis.html">Short theses</a>
+  </div>
+  <div class="pills" id="pills"></div>
+
+  <div class="panel">
+    <div class="controls">
+      <input type="text" id="q" placeholder="Search ticker, name, thesis text…">
+      <select id="sortsel">
+        <option value="conviction">Sort: conviction</option>
+        <option value="thesis">Sort: thesis strength</option>
+        <option value="score">Sort: shortability</option>
+        <option value="mcap">Sort: market cap</option>
+        <option value="aecount">Sort: sell-side coverage</option>
+      </select>
+      <label class="chk"><input type="checkbox" id="f_x"> Has X chatter</label>
+      <label class="chk"><input type="checkbox" id="f_ae"> Has sell-side coverage</label>
+      <span class="small" id="count"></span>
+    </div>
+    <p class="small" style="margin:0">Click any company to expand the full thesis, bear points, risks and sources.</p>
+  </div>
+
+  <div id="list"></div>
+
+  <div class="panel">
+    <h3>Method and sourcing</h3>
+    <p class="note">
+      Each thesis is synthesised by an agent that reads three inputs: (1) the financial screen for that
+      company — trailing margins, cash flow, multiples, short interest, liquidity and the two shortability
+      scores; (2) a live X/Twitter sweep run through the logged-in Grok subscription, which returns
+      per-ticker density, sentiment lean, source classification and post links; (3) sell-side research
+      metadata from AlphaEngine, filtered to documents that actually reference the company's ADR ticker,
+      preferring broker notes and earnings reviews over market-wide morning commentary.
+    </p>
+    <p class="note">
+      The synthesised text is a research aid, not investment advice, and not a substitute for reading the
+      filings. Analyst targets and ratings are attributed to the publishing firm and dated; they are
+      reported as data points, not endorsements.
+    </p>
+    <div class="warnbox" style="margin-top:10px">
+      <b>Coverage is uneven by design of the underlying sources.</b> Large-cap ADRs have deep analyst and
+      social coverage; micro-caps frequently have neither. Where both are absent the thesis rests on the
+      financials alone, and the card says so.
+    </div>
+  </div>
+
+  <p class="small" id="foot"></p>
+</div>
+
+<script>
+const fmt={
+  n(v,d=0){ if(v===null||v===undefined||Number.isNaN(v)) return 'n/r';
+    return Number(v).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});},
+  usd(v){ if(v===null||v===undefined) return 'n/r'; const a=Math.abs(v);
+    if(a>=1e12) return (v/1e12).toFixed(2)+'T'; if(a>=1e9) return (v/1e9).toFixed(2)+'B';
+    if(a>=1e6) return (v/1e6).toFixed(1)+'M'; if(a>=1e3) return (v/1e3).toFixed(0)+'K';
+    return v.toFixed(0);},
+  pct(v,d=1){ if(v===null||v===undefined) return 'n/r'; return (v*100).toFixed(d)+'%';},
+  x(v,d=1){ if(v===null||v===undefined||!isFinite(v)) return 'n/r'; return v.toFixed(d)+'x';},
+  cls(v){ if(v===null||v===undefined) return 'mut'; return v<0?'neg':(v>0?'pos':'mut');}
+};
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function scoreColor(s){ if(s>=70) return 'background:rgba(248,113,113,.20);color:#fca5a5';
+  if(s>=58) return 'background:rgba(251,191,36,.18);color:#fcd34d';
+  if(s>=45) return 'background:rgba(125,211,252,.16);color:#7dd3fc';
+  return 'background:rgba(255,255,255,.07);color:#96a3ba';}
+let ALL=[];
+
+function densClass(d){ d=(d||'none').toLowerCase();
+  if(d.indexOf('strong')>=0) return 'dens d-strong';
+  if(d.indexOf('mixed')>=0||d.indexOf('moderate')>=0) return 'dens d-mixed';
+  if(d.indexOf('sparse')>=0||d.indexOf('thin')>=0) return 'dens d-sparse';
+  return 'dens d-none';}
+
+function card(t){
+  const m=t.metrics||{}, ttm=m.ttm||{}, ss=t.sellside||{}, xs=t.x_sentiment||{};
+  const notable=(ss.notable||[]).map(x=>
+    `<div class="quote"><b>${esc(x.firm||'')}</b> ${esc(x.view||'')}${x.pt?` · PT ${esc(String(x.pt))}`:''}${x.date?` <span class="m">${esc(x.date)}</span>`:''}
+     ${x.note?`<br>${esc(x.note)}`:''}</div>`).join('');
+  const links=(xs.links||[]).slice(0,6).map(l=>
+    `<a href="${esc(l)}" target="_blank" rel="noopener">${esc(String(l).replace(/^https?:\/\/(www\.)?/,'').slice(0,44))}</a>`).join(' · ');
+  const bears=(t.bear_points||[]).map(b=>`<li>${esc(b)}</li>`).join('');
+  const risks=(t.risks_to_short||[]).map(b=>`<li>${esc(b)}</li>`).join('');
+  const cats=(t.catalysts||[]).map(c=>`<span class="chip">${esc(c)}</span>`).join(' ');
+  const aeN=(ss.count!=null?ss.count:0);
+
+  return `<div class="tc" data-t="${t.ticker}" data-conv="${m.conviction||0}" data-thesis="${m.score_thesis||0}"
+     data-score="${m.score_shortable||0}" data-mcap="${m.mcap_usd||0}" data-ae="${aeN}"
+     data-hasx="${t.x_chars>500?1:0}" data-hasae="${aeN>0?1:0}">
+    <div class="tc-head">
+      <div>
+        <span class="tk">${esc(t.ticker)}</span><span class="nm">${esc(t.name||'')}</span>
+        <div class="oneliner">${esc(t.one_liner||'No synthesised thesis available for this name.')}</div>
+      </div>
+      <div class="badges">
+        <span class="sc" style="${scoreColor(m.conviction||0)}">${(m.conviction||0).toFixed(0)}</span>
+        <span class="chip">conviction</span>
+        <span class="tier">${esc((m.tier||'').replace('T1 liquid','T1 liquid').replace('T2 tradable','T2 tradable').replace('T3 restricted','T3 restricted'))}</span>
+        <span class="${densClass(xs.density)}">X ${esc((xs.density||'none'))}</span>
+      </div>
+    </div>
+    <div class="tc-body">
+      <div class="kv2" style="margin:10px 0 14px">
+        <div class="stat"><div class="l">Market cap</div><div class="v">${m.mcap_usd?('USD '+fmt.usd(m.mcap_usd)):'n/r'}</div></div>
+        <div class="stat"><div class="l">ADT 30d</div><div class="v">${m.adt_usd?('USD '+fmt.usd(m.adt_usd)):'n/r'}</div></div>
+        <div class="stat"><div class="l">Short interest</div><div class="v">${m.si_ratio!=null?m.si_ratio.toFixed(1)+'%':'n/r'}</div></div>
+        <div class="stat"><div class="l">FCF margin</div><div class="v ${fmt.cls(ttm.fcfm)}">${fmt.pct(ttm.fcfm,1)}</div></div>
+      </div>
+      <div class="grid2">
+        <div>
+          <h3>Short thesis</h3>
+          <p class="note" style="font-size:13px;color:#d7dee9">${esc(t.thesis||'')}</p>
+          ${bears?`<h3 style="margin-top:14px">Bear points</h3><ul class="bear">${bears}</ul>`:''}
+          ${risks?`<h3 style="margin-top:14px">What breaks the short</h3><ul class="risk">${risks}</ul>`:''}
+          ${cats?`<h3 style="margin-top:14px">Catalysts</h3><div>${cats}</div>`:''}
+        </div>
+        <div>
+          <h3>X / Twitter sentiment <span class="${densClass(xs.density)}">${esc(xs.density||'none')}</span></h3>
+          <p class="note">${esc(xs.notes||'No X sweep result recorded for this name.')}</p>
+          ${xs.lean?`<p class="note"><b>Lean:</b> ${esc(xs.lean)}</p>`:''}
+          ${links?`<p class="src" style="margin-top:6px">${links}</p>`:''}
+
+          <h3 style="margin-top:14px">Sell-side coverage (${aeN} doc${aeN===1?'':'s'})</h3>
+          ${ss.consensus?`<p class="note">${esc(ss.consensus)}</p>`:''}
+          ${notable||'<p class="note">No company-specific sell-side documents found on AlphaEngine.</p>'}
+
+          <h3 style="margin-top:14px">Screen snapshot</h3>
+          <dl class="kv">
+            <dt>Scores (short / thesis)</dt><dd>${(m.score_shortable||0).toFixed(0)} / ${(m.score_thesis||0).toFixed(0)}</dd>
+            <dt>Revenue YoY</dt><dd class="${fmt.cls(m.rev_yoy)}">${fmt.pct(m.rev_yoy,0)}</dd>
+            <dt>OCF / FCF margin</dt><dd>${fmt.pct(ttm.ocfm,0)} / ${fmt.pct(ttm.fcfm,0)}</dd>
+            <dt>P/S ttm</dt><dd>${fmt.x(m.ps_ttm)}</dd>
+            <dt>EV/EBITDA ttm</dt><dd>${fmt.x(m.ev_ebitda_ttm)}</dd>
+            <dt>Net cash / mcap</dt><dd class="${fmt.cls(m.net_cash_pct_mcap)}">${fmt.pct(m.net_cash_pct_mcap,0)}</dd>
+            <dt>Cash runway</dt><dd>${m.runway_years!=null?m.runway_years.toFixed(1)+'y':'n/a'}</dd>
+            <dt>6m return</dt><dd class="${fmt.cls(m.ret_6m)}">${fmt.pct(m.ret_6m,0)}</dd>
+            <dt>Flags</dt><dd>${esc((m.flags||[]).join(', ')||'none')}</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function render(){
+  const q=document.getElementById('q').value.trim().toLowerCase();
+  const fx=document.getElementById('f_x').checked, fa=document.getElementById('f_ae').checked;
+  let rows=ALL.filter(t=>{
+    if(fx && !(t.x_chars>500)) return false;
+    if(fa && !((t.sellside||{}).count>0)) return false;
+    if(!q) return true;
+    const blob=((t.ticker+' '+(t.name||'')+' '+(t.one_liner||'')+' '+(t.thesis||'')+' '+
+      (t.bear_points||[]).join(' ')).toLowerCase());
+    return blob.includes(q);
+  });
+  const k=document.getElementById('sortsel').value;
+  const get={conviction:t=>(t.metrics||{}).conviction||0,
+             thesis:t=>(t.metrics||{}).score_thesis||0,
+             score:t=>(t.metrics||{}).score_shortable||0,
+             mcap:t=>(t.metrics||{}).mcap_usd||0,
+             aecount:t=>((t.sellside||{}).count)||0}[k];
+  rows.sort((a,b)=>get(b)-get(a));
+  document.getElementById('list').innerHTML=rows.map(card).join('');
+  document.getElementById('count').textContent=`${rows.length} of ${ALL.length} companies shown`;
+  document.querySelectorAll('.tc-head').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('open')));
+}
+
+fetch('./theses.json').then(r=>r.json()).then(d=>{
+  ALL=d.theses||[];
+  const withX=ALL.filter(t=>t.x_chars>500).length;
+  const withAE=ALL.filter(t=>(t.sellside||{}).count>0).length;
+  document.getElementById('pills').innerHTML=[
+    `<span class="pill"><b>${ALL.length}</b> company theses</span>`,
+    `<span class="pill"><b>${withAE}</b> with sell-side coverage</span>`,
+    `<span class="pill"><b>${withX}</b> with X chatter</span>`,
+    `<span class="pill">Sources: screen + X + AlphaEngine</span>`,
+    `<span class="pill">Generated ${d.generated||''}</span>`
+  ].join('');
+  document.getElementById('foot').textContent=
+    `Synthesised from the China ADR short-book screen, a live X/Twitter sweep via the Grok subscription, `+
+    `and AlphaEngine sell-side documents filtered to each company's ADR ticker. Generated ${d.generated||''}.`;
+  render();
+}).catch(e=>{document.getElementById('pills').innerHTML='<span class="pill">Failed to load theses.json: '+e+'</span>';});
+
+document.getElementById('q').addEventListener('input',render);
+document.getElementById('sortsel').addEventListener('change',render);
+['f_x','f_ae'].forEach(id=>document.getElementById(id).addEventListener('change',render));
+</script>
+</body>
+</html>

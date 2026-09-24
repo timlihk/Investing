@@ -56,6 +56,9 @@ tbody tr:hover{background:rgba(125,211,252,.07)}
 .sc{display:inline-block;min-width:38px;padding:2px 7px;border-radius:6px;font-weight:700;font-size:12px}
 .neg{color:var(--bad)} .pos{color:var(--good)} .mut{color:var(--muted)}
 .tier{font-size:10px;padding:1.5px 6px;border-radius:5px;border:1px solid var(--line);color:var(--muted)}
+.tabs{display:flex;gap:8px;margin:0 0 20px;border-bottom:1px solid var(--line)}
+.tab{padding:9px 16px;font-size:13.5px;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab.active{color:var(--text);border-bottom-color:var(--accent);font-weight:600}
 .scroll{max-height:72vh;overflow:auto;border:1px solid var(--line);border-radius:10px}
 #drawer{position:fixed;inset:0;background:rgba(4,8,15,.74);backdrop-filter:blur(3px);
   display:none;z-index:50;overflow:auto;padding:28px 16px}
@@ -101,6 +104,10 @@ tbody tr:hover{background:rgba(125,211,252,.07)}
     <b>Thesis</b> (is there a reason to?) — plus <b>Conviction</b>, their geometric mean.
     Click any row for full statements and charts.
   </p>
+  <div class="tabs">
+    <a class="tab active" href="./index.html">Screen</a>
+    <a class="tab" href="./thesis.html">Short theses</a>
+  </div>
   <div class="pills" id="pills"></div>
 
   <div class="panel">
