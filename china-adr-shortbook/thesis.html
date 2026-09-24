@@ -91,8 +91,8 @@ ul.risk{margin:6px 0 0;padding-left:18px;font-size:13px;line-height:1.6;color:#e
     coverage, that is stated rather than padded.
   </p>
   <div class="tabs">
-    <a class="tab" href="./index.html">Screen</a>
-    <a class="tab active" href="./thesis.html">Short theses</a>
+    <a class="tab" href="/china-adr-shortbook/">Screen</a>
+    <a class="tab active" href="/china-adr-shortbook/thesis">Short theses</a>
   </div>
   <div class="pills" id="pills"></div>
 
@@ -258,7 +258,7 @@ function render(){
   document.querySelectorAll('.tc-head').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('open')));
 }
 
-fetch('./theses.json').then(r=>r.json()).then(d=>{
+fetch('/china-adr-shortbook/theses.json').then(r=>r.json()).then(d=>{
   ALL=d.theses||[];
   const withX=ALL.filter(t=>t.x_chars>500).length;
   const withAE=ALL.filter(t=>(t.sellside||{}).count>0).length;

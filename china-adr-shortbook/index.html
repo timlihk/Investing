@@ -105,8 +105,8 @@ tbody tr:hover{background:rgba(125,211,252,.07)}
     Click any row for full statements and charts.
   </p>
   <div class="tabs">
-    <a class="tab active" href="./index.html">Screen</a>
-    <a class="tab" href="./thesis.html">Short theses</a>
+    <a class="tab active" href="/china-adr-shortbook/">Screen</a>
+    <a class="tab" href="/china-adr-shortbook/thesis">Short theses</a>
   </div>
   <div class="pills" id="pills"></div>
 
@@ -530,7 +530,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeDrawer(); });
 document.getElementById('drawer').addEventListener('click',e=>{ if(e.target.id==='drawer') closeDrawer(); });
 
 /* ---------- boot ---------- */
-fetch('./data.json').then(r=>r.json()).then(d=>{
+fetch('/china-adr-shortbook/data.json').then(r=>r.json()).then(d=>{
   ROWS=d.names;
   const c=d.coverage||{};
   document.getElementById('pills').innerHTML=[
