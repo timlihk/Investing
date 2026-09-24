@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>China ADR Short Book</title>
+<style>
+:root{
+  --bg:#0a0f18; --panel:#101826; --panel-strong:#131d2f; --line:rgba(255,255,255,.08);
+  --text:#e8edf7; --muted:#96a3ba; --accent:#7dd3fc; --accent-2:#a78bfa;
+  --good:#34d399; --bad:#f87171; --warn:#fbbf24;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(125,211,252,.14), transparent 26%),
+    radial-gradient(circle at top right, rgba(167,139,250,.14), transparent 22%),
+    linear-gradient(180deg,#08111d 0%, var(--bg) 100%);
+}
+.page{max-width:1660px;margin:0 auto;padding:32px 22px 80px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+h1{font-size:30px;margin:0 0 8px;letter-spacing:-.02em}
+h2{font-size:18px;margin:0 0 10px}
+h3{font-size:12.5px;margin:0 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:.16em;font-size:11px;margin:0 0 10px;font-weight:600}
+.sub{color:var(--muted);font-size:14px;max-width:1080px;line-height:1.62;margin:0 0 18px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.pill{border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted);
+  border-radius:999px;padding:5px 12px;font-size:12px}
+.pill b{color:var(--text);font-weight:600}
+.panel{background:linear-gradient(180deg,var(--panel) 0%,var(--panel-strong) 100%);
+  border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:18px;
+  box-shadow:0 18px 50px rgba(0,0,0,.28)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+input[type=text],select{background:rgba(0,0,0,.28);border:1px solid var(--line);color:var(--text);
+  border-radius:9px;padding:8px 11px;font-size:13px;font-family:inherit;outline:none}
+input[type=text]{min-width:230px}
+input[type=text]:focus,select:focus{border-color:rgba(125,211,252,.5)}
+label.chk{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;cursor:pointer}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:right;color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;
+  letter-spacing:.05em;padding:9px 8px;border-bottom:1px solid var(--line);cursor:pointer;
+  white-space:nowrap;position:sticky;top:0;background:#0f1726;z-index:2}
+th:first-child,td:first-child{text-align:left}
+th.l,td.l{text-align:left}
+td{padding:7px 8px;border-bottom:1px solid rgba(255,255,255,.045);text-align:right;white-space:nowrap}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:rgba(125,211,252,.07)}
+.tk{font-weight:600;color:var(--text)}
+.nm{color:var(--muted);font-size:11.5px;display:block;font-weight:400;max-width:220px;
+  overflow:hidden;text-overflow:ellipsis}
+.sc{display:inline-block;min-width:38px;padding:2px 7px;border-radius:6px;font-weight:700;font-size:12px}
+.neg{color:var(--bad)} .pos{color:var(--good)} .mut{color:var(--muted)}
+.tier{font-size:10px;padding:1.5px 6px;border-radius:5px;border:1px solid var(--line);color:var(--muted)}
+.scroll{max-height:72vh;overflow:auto;border:1px solid var(--line);border-radius:10px}
+#drawer{position:fixed;inset:0;background:rgba(4,8,15,.74);backdrop-filter:blur(3px);
+  display:none;z-index:50;overflow:auto;padding:28px 16px}
+#drawer.open{display:block}
+.sheet{max-width:1460px;margin:0 auto;background:linear-gradient(180deg,#101826,#0d1522);
+  border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+.sheet-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:16px}
+.close{background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--text);
+  border-radius:9px;padding:7px 13px;cursor:pointer;font-size:13px;font-family:inherit}
+.close:hover{background:rgba(248,113,113,.18);border-color:rgba(248,113,113,.5)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:1fr 1fr}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:1100px){.g2,.g4{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:1fr auto;gap:3px 12px;font-size:12.5px}
+.kv dt{color:var(--muted)} .kv dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
+.card{background:rgba(255,255,255,.022);border:1px solid var(--line);border-radius:11px;padding:13px}
+.chart{width:100%;height:auto;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:11.5px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+.bar-row{display:grid;grid-template-columns:74px 1fr 40px;gap:8px;align-items:center;font-size:11.5px;
+  color:var(--muted);margin-bottom:5px}
+.bar{height:7px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden}
+.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+.note{color:var(--muted);font-size:12px;line-height:1.65}
+.warnbox{border-left:3px solid var(--warn);background:rgba(251,191,36,.07);padding:11px 14px;
+  border-radius:0 9px 9px 0;font-size:12.5px;color:#e4d5b0;line-height:1.6}
+.flag{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:5px;margin:2px 3px 2px 0;
+  background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--line)}
+.flag.hot{background:rgba(248,113,113,.14);color:#fca5a5;border-color:rgba(248,113,113,.3)}
+.small{font-size:11.5px;color:var(--muted)}
+.scroll-x{overflow:auto}
+</style>
+</head>
+<body>
+<div class="page">
+  <p class="eyebrow">Mangrove Research · Short Book</p>
+  <h1>China ADRs — shortability screen</h1>
+  <p class="sub">
+    Every US exchange-listed Chinese ADR: 3–4 fiscal years and up to 8 quarters of headline financials,
+    cash flow and cash-flow margins, valuation multiples, short interest, float and liquidity.
+    Two scores are shown separately — <b>Shortable</b> (can you actually put the trade on?) and
+    <b>Thesis</b> (is there a reason to?) — plus <b>Conviction</b>, their geometric mean.
+    Click any row for full statements and charts.
+  </p>
+  <div class="pills" id="pills"></div>
+
+  <div class="panel">
+    <div class="controls">
+      <input type="text" id="q" placeholder="Search ticker, name, sector…">
+      <select id="sector"><option value="">All sectors</option></select>
+      <select id="tier">
+        <option value="">All tradability tiers</option>
+        <option value="T1 liquid">T1 · liquid (ADT ≥20mn, cap ≥1bn)</option>
+        <option value="T2 tradable">T2 · tradable (ADT ≥5mn, cap ≥300mn)</option>
+        <option value="T3 restricted">T3 · restricted (below that)</option>
+      </select>
+      <select id="sortsel">
+        <option value="conviction">Sort: conviction</option>
+        <option value="score">Sort: shortability (feasibility)</option>
+        <option value="thesis">Sort: thesis strength</option>
+        <option value="mcap_usd">Sort: market cap</option>
+        <option value="adt_usd">Sort: dollar volume (ADT)</option>
+        <option value="si_ratio">Sort: short interest %</option>
+        <option value="fcfm">Sort: FCF margin (low first)</option>
+        <option value="ps_ttm">Sort: P/S</option>
+        <option value="ret_6m">Sort: 6m return (low first)</option>
+      </select>
+      <label class="chk"><input type="checkbox" id="f_burn"> Cash burners</label>
+      <label class="chk"><input type="checkbox" id="f_neg"> Negative FCF</label>
+      <span class="small" id="count"></span>
+    </div>
+    <div class="scroll">
+      <table id="tbl">
+        <thead><tr>
+          <th class="l" data-k="ticker">Name</th>
+          <th data-k="conviction">Conviction</th>
+          <th data-k="score">Shortable</th>
+          <th data-k="thesis">Thesis</th>
+          <th data-k="mcap_usd">Mkt cap $mn</th>
+          <th data-k="adt_usd">ADT $mn</th>
+          <th data-k="si_ratio">SI %</th>
+          <th data-k="ps_ttm">P/S</th>
+          <th data-k="ev_ebitda_ttm">EV/EBITDA</th>
+          <th data-k="rev_yoy">Rev YoY</th>
+          <th data-k="om_ttm">Op mgn</th>
+          <th data-k="ocfm">OCF mgn</th>
+          <th data-k="fcfm">FCF mgn</th>
+          <th data-k="net_cash_pct_mcap">Net cash/MC</th>
+          <th data-k="ret_6m">6m ret</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="small" style="margin:10px 0 0">
+      Click a column header to sort. "Cash burners" filters to negative trailing free cash flow.
+      Margins marked as derived from the latest fiscal year where quarterly cash flow is not reported — the basis is shown in each company sheet.
+    </p>
+  </div>
+
+  <div class="panel">
+    <h3>How the two scores are built</h3>
+    <div class="grid g4">
+      <div class="card"><h3>Shortable 0–100</h3><p class="note">
+        Liquidity and size 30% (ADT, market cap, float), fundamental weakness 30%, borrow/crowding 15%,
+        valuation 15%, momentum 10%. Then a tradability gate scales the result down for names under
+        USD 300mn market cap or USD 3mn ADT, so micro-cap shells cannot lead the table.</p></div>
+      <div class="card"><h3>Thesis 0–100</h3><p class="note">
+        The same weakness, valuation, momentum and borrow blocks with liquidity deliberately excluded.
+        This is the "is there a reason to be short" number, independent of whether you can trade it.</p></div>
+      <div class="card"><h3>Conviction = √(Shortable × Thesis)</h3><p class="note">
+        A geometric mean, so a name has to be both tradable and weak to rank. A liquid compounder
+        scores high on Shortable and low on Thesis; a burning micro-cap is the reverse. Both are penalised.</p></div>
+      <div class="card"><h3>Borrow &amp; crowding 15%</h3><p class="note">
+        Short interest as a percentage of float. Too little means borrow is available and cheap; too much
+        means the trade is crowded, expensive and squeeze-prone. Godel floors this field at 1.00, so a
+        1.00 print with no float data is treated as unknown rather than as a real reading.</p></div>
+    </div>
+    <div class="warnbox" style="margin-top:12px">
+      <b>This is a screen, not a recommendation.</b> The score blends measurable inputs and deliberately
+      prices borrow availability, not short-thesis conviction. ADR shorting carries risks no score
+      captures: borrow can be withdrawn without notice, depositary banks can cancel unsponsored
+      programmes, ADR ratios can change your per-share economics, and China policy or VIE structures
+      can re-rate a name overnight in either direction. Verify borrow and the current ratio before sizing.
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Data coverage in this build</h3>
+    <div class="grid g4" id="coverage"></div>
+    <p class="note" style="margin:12px 0 0">
+      Godel reports quarterly cash flow for roughly 40% of these ADRs and quarterly capex for almost none,
+      so trailing cash-flow margins fall back to the latest full fiscal year where a 4-quarter roll-up is
+      not possible. Each company sheet states which basis was used. Quarterly revenue, net income and
+      balance-sheet data are well covered. Cells with no source data show "n/r" and are never estimated.
+    </p>
+  </div>
+
+  <div class="panel">
+    <h3>OTC unsponsored ADRs — Chinese companies, not shortable</h3>
+    <p class="note" style="margin-top:0">
+      Chinese companies whose ADRs trade only over the counter. Listed here for completeness; there is no
+      meaningful borrow or liquidity so they are excluded from the screen. Most are the OTC line of a
+      Hong Kong- or mainland-listed company.
+    </p>
+    <div class="scroll" style="max-height:320px;margin-top:10px">
+      <table id="otc"><thead><tr>
+        <th class="l">Ticker</th><th class="l">Name</th><th>Mkt cap $mn</th><th>SI %</th><th class="l">HQ</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <p class="small" id="foot"></p>
+</div>
+
+<div id="drawer"><div class="sheet" id="sheet"></div></div>
+
+<script>
+const fmt = {
+  n(v,d=0){ if(v===null||v===undefined||Number.isNaN(v)) return 'n/r';
+    return Number(v).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}); },
+  usd(v){ if(v===null||v===undefined) return 'n/r';
+    const a=Math.abs(v);
+    if(a>=1e12) return (v/1e12).toFixed(2)+'T';
+    if(a>=1e9) return (v/1e9).toFixed(2)+'B';
+    if(a>=1e6) return (v/1e6).toFixed(1)+'M';
+    if(a>=1e3) return (v/1e3).toFixed(0)+'K';
+    return v.toFixed(0); },
+  pct(v,d=1){ if(v===null||v===undefined) return 'n/r'; return (v*100).toFixed(d)+'%'; },
+  x(v,d=1){ if(v===null||v===undefined||!isFinite(v)) return 'n/r'; return v.toFixed(d)+'x'; },
+  cls(v){ if(v===null||v===undefined) return 'mut'; return v<0?'neg':(v>0?'pos':'mut'); }
+};
+let ROWS=[], sortKey='conviction', sortDir=-1;
+
+function scoreColor(s){
+  if(s>=70) return 'background:rgba(248,113,113,.20);color:#fca5a5';
+  if(s>=58) return 'background:rgba(251,191,36,.18);color:#fcd34d';
+  if(s>=45) return 'background:rgba(125,211,252,.16);color:#7dd3fc';
+  return 'background:rgba(255,255,255,.07);color:#96a3ba';
+}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function niceMax(v){ if(v<=0) return 1; const e=Math.pow(10,Math.floor(Math.log10(v)));
+  const f=v/e; const m=f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10; return m*e; }
+
+/* ---------- SVG chart engine ---------- */
+function comboChart(opts){
+  const W=opts.w||640,H=opts.h||240,m={t:16,r:54,b:26,l:58};
+  const iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const bars=opts.bars||[], lines=opts.lines||[], labels=opts.labels||[], colors=opts.colors||[];
+  const allB=bars.flatMap(b=>b.values.filter(v=>v!==null&&v!==undefined));
+  const allL=lines.flatMap(l=>l.values.filter(v=>v!==null&&v!==undefined));
+  let bmax=niceMax(Math.max(0,...allB.map(Math.abs)));
+  if(allB.some(v=>v<0)) bmax=niceMax(Math.max(bmax, Math.max(...allB.map(v=>Math.abs(v)))*1.1));
+  let lmin=Math.min(0,...allL), lmax=Math.max(0,...allL);
+  if(!allL.length){lmin=0;lmax=1;}
+  const pad=(lmax-lmin)||1; lmin-=pad*0.15; lmax+=pad*0.15;
+  const n=labels.length||1, bw=iw/n*0.62, step=iw/n;
+  const yB=v=>m.t+ih-(v/bmax)*ih;
+  const yL=v=>m.t+ih-((v-lmin)/(lmax-lmin))*ih;
+  let s=`<svg class="chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">`;
+  for(let i=0;i<=4;i++){ const y=m.t+ih*i/4;
+    s+=`<line x1="${m.l}" y1="${y}" x2="${W-m.r}" y2="${y}" stroke="rgba(255,255,255,.07)"/>`;
+    s+=`<text x="${m.l-7}" y="${y+4}" fill="#96a3ba" font-size="10" text-anchor="end">${fmt.usd(bmax*(4-i)/4)}</text>`; }
+  if(lmax>0&&lmin<0){ const y=yL(0);
+    s+=`<line x1="${m.l}" y1="${y}" x2="${W-m.r}" y2="${y}" stroke="rgba(255,255,255,.22)" stroke-dasharray="3 3"/>`; }
+  bars.forEach((b,bi)=>{
+    const gw=bw/bars.length;
+    b.values.forEach((v,i)=>{
+      if(v===null||v===undefined) return;
+      const x=m.l+step*i+(step-bw)/2+gw*bi, y0=yB(0), y1=yB(v);
+      const top=Math.min(y0,y1), hgt=Math.max(1.5,Math.abs(y1-y0));
+      s+=`<rect x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${(gw*0.86).toFixed(1)}" height="${hgt.toFixed(1)}" fill="${colors[bi]||'#334155'}" rx="2"><title>${esc(labels[i])} ${b.name}: ${fmt.usd(v)}</title></rect>`;
+    });
+  });
+  lines.forEach(l=>{
+    const pts=l.values.map((v,i)=>(v===null||v===undefined)?null:[m.l+step*i+step/2, yL(v)]).filter(Boolean);
+    if(pts.length>1) s+=`<polyline fill="none" stroke="${l.color}" stroke-width="1.9" points="${pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')}"/>`;
+    pts.forEach(p=>{ s+=`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.4" fill="${l.color}"><title>${esc(l.name)}</title></circle>`; });
+    const lv=l.values.filter(v=>v!==null&&v!==undefined).slice(-1)[0];
+    if(pts.length&&lv!==undefined) s+=`<text x="${W-m.r+6}" y="${(pts[pts.length-1][1]+3.5).toFixed(1)}" fill="${l.color}" font-size="10">${fmt.pct(lv)}</text>`;
+  });
+  labels.forEach((lb,i)=>{ s+=`<text x="${(m.l+step*i+step/2).toFixed(1)}" y="${H-8}" fill="#96a3ba" font-size="10" text-anchor="middle">${esc(lb)}</text>`; });
+  return s+'</svg>';
+}
+
+function lineChart(opts){
+  const W=opts.w||900,H=opts.h||230,m={t:14,r:58,b:24,l:52};
+  const iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const pts=(opts.points||[]).filter(p=>p&&p.c!=null);
+  if(!pts.length) return '<p class="small">No price history available.</p>';
+  const vals=pts.map(p=>p.c);
+  let lo=Math.min(...vals), hi=Math.max(...vals); const pad=(hi-lo)||1; lo-=pad*.06; hi+=pad*.06;
+  const X=i=>m.l+(i/(pts.length-1||1))*iw, Y=v=>m.t+ih-((v-lo)/(hi-lo))*ih;
+  let s=`<svg class="chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">`;
+  for(let i=0;i<=4;i++){ const y=m.t+ih*i/4;
+    s+=`<line x1="${m.l}" y1="${y}" x2="${W-m.r}" y2="${y}" stroke="rgba(255,255,255,.07)"/>`;
+    s+=`<text x="${m.l-7}" y="${y+4}" fill="#96a3ba" font-size="10" text-anchor="end">${fmt.n(hi-(hi-lo)*i/4,1)}</text>`; }
+  const d=pts.map((p,i)=>`${i?'L':'M'}${X(i).toFixed(1)},${Y(p.c).toFixed(1)}`).join(' ');
+  s+=`<defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7dd3fc" stop-opacity=".45"/><stop offset="100%" stop-color="#7dd3fc" stop-opacity="0"/></linearGradient></defs>`;
+  s+=`<path d="${d} L${X(pts.length-1).toFixed(1)},${m.t+ih} L${m.l},${m.t+ih} Z" fill="url(#pg)" opacity=".5"/>`;
+  s+=`<path d="${d}" fill="none" stroke="#7dd3fc" stroke-width="1.7"/>`;
+  const chg=(pts[pts.length-1].c/pts[0].c-1);
+  s+=`<text x="${m.l}" y="${H-6}" fill="#96a3ba" font-size="10">${esc(pts[0].d)}</text>`;
+  s+=`<text x="${W-m.r}" y="${H-6}" fill="#96a3ba" font-size="10" text-anchor="end">${esc(pts[pts.length-1].d)}</text>`;
+  s+=`<text x="${W-m.r+6}" y="${m.t+11}" fill="${chg>=0?'#34d399':'#f87171'}" font-size="10.5">${(chg*100).toFixed(0)}%</text>`;
+  return s+'</svg>';
+}
+
+/* ---------- table ---------- */
+function rowHtml(r){
+  const t=r.ttm||{};
+  return `<tr data-t="${r.ticker}">
+    <td class="l"><span class="tk">${r.ticker}</span> <span class="tier">${(r.tier||'').replace('T1 ','T1·').replace('T2 ','T2·').replace('T3 ','T3·')}</span><span class="nm">${esc(r.name)}</span></td>
+    <td><span class="sc" style="${scoreColor(r.conviction)}">${r.conviction.toFixed(0)}</span></td>
+    <td>${r.score.toFixed(0)}</td>
+    <td>${r.thesis.toFixed(0)}</td>
+    <td>${r.mcap_usd?fmt.n(r.mcap_usd/1e6):'n/r'}</td>
+    <td>${r.adt_usd?fmt.n(r.adt_usd/1e6,1):'n/r'}</td>
+    <td>${r.si_ratio!=null?r.si_ratio.toFixed(1):'n/r'}</td>
+    <td>${fmt.x(r.ps_ttm)}</td>
+    <td>${fmt.x(r.ev_ebitda_ttm)}</td>
+    <td class="${fmt.cls(r.rev_yoy)}">${fmt.pct(r.rev_yoy,0)}</td>
+    <td class="${fmt.cls(r.om_ttm)}">${fmt.pct(r.om_ttm,0)}</td>
+    <td class="${fmt.cls(t.ocfm)}">${fmt.pct(t.ocfm,0)}</td>
+    <td class="${fmt.cls(t.fcfm)}">${fmt.pct(t.fcfm,0)}</td>
+    <td class="${fmt.cls(r.net_cash_pct_mcap)}">${fmt.pct(r.net_cash_pct_mcap,0)}</td>
+    <td class="${fmt.cls(r.ret_6m)}">${fmt.pct(r.ret_6m,0)}</td>
+  </tr>`;
+}
+
+function val(r,k){
+  if(k==='fcfm') return (r.ttm||{}).fcfm;
+  if(k==='ocfm') return (r.ttm||{}).ocfm;
+  return r[k];
+}
+
+function apply(){
+  const q=document.getElementById('q').value.trim().toLowerCase();
+  const sec=document.getElementById('sector').value;
+  const tier=document.getElementById('tier').value;
+  const burn=document.getElementById('f_burn').checked;
+  const neg=document.getElementById('f_neg').checked;
+  let rows=ROWS.filter(r=>{
+    if(q && !(r.ticker.toLowerCase().includes(q)||(r.name||'').toLowerCase().includes(q)
+       ||(r.sector||'').toLowerCase().includes(q)||(r.industry||'').toLowerCase().includes(q))) return false;
+    if(sec && r.sector!==sec) return false;
+    if(tier && r.tier!==tier) return false;
+    if(burn && !(r.flags||[]).includes('cash burner')) return false;
+    if(neg && !((r.ttm||{}).fcfm!=null && r.ttm.fcfm<0)) return false;
+    return true;
+  });
+  rows.sort((a,b)=>{
+    const av=val(a,sortKey), bv=val(b,sortKey);
+    if(av===null||av===undefined) return 1;
+    if(bv===null||bv===undefined) return -1;
+    if(typeof av==='string') return sortDir*av.localeCompare(bv);
+    return sortDir*(av-bv);
+  });
+  document.querySelector('#tbl tbody').innerHTML=rows.map(rowHtml).join('');
+  document.getElementById('count').textContent=`${rows.length} of ${ROWS.length} names shown`;
+}
+
+/* ---------- detail sheet ---------- */
+function sheetHtml(r){
+  const t=r.ttm||{}, bs=r.bs||{};
+  const qs=r.quarters||[], ys=r.years||[];
+  const yl=ys.map(x=>x.p.slice(0,4)), ql=qs.map(x=>x.p.slice(2,7));
+  const sp=r.score_parts||{};
+  const bar=(lbl,v)=>`<div class="bar-row"><span>${lbl}</span><div class="bar"><span style="width:${Math.max(2,Math.min(100,v||0))}%"></span></div><span style="text-align:right">${(v||0).toFixed(0)}</span></div>`;
+
+  const annTable=`<table><thead><tr><th class="l">Fiscal year</th><th>Revenue</th><th>Gross mgn</th>
+    <th>Op mgn</th><th>Net mgn</th><th>OCF</th><th>Capex</th><th>FCF</th><th>OCF mgn</th><th>FCF mgn</th></tr></thead><tbody>
+    ${ys.map(x=>`<tr><td class="l">${x.p}</td><td>${fmt.usd(x.rev)}</td><td>${fmt.pct(x.gm,1)}</td>
+      <td>${fmt.pct(x.om,1)}</td><td class="${fmt.cls(x.nm)}">${fmt.pct(x.nm,1)}</td>
+      <td>${fmt.usd(x.ocf)}</td><td>${fmt.usd(x.capex)}</td>
+      <td class="${fmt.cls(x.fcf)}">${fmt.usd(x.fcf)}</td>
+      <td class="${fmt.cls(x.ocfm)}">${fmt.pct(x.ocfm,1)}</td>
+      <td class="${fmt.cls(x.fcfm)}">${fmt.pct(x.fcfm,1)}</td></tr>`).join('')||'<tr><td colspan="10" class="l">n/r</td></tr>'}
+    </tbody></table>`;
+
+  const qTable=`<table><thead><tr><th class="l">Quarter</th><th>Revenue</th><th>Rev YoY</th>
+    <th>Net mgn</th><th>OCF</th><th>OCF mgn</th><th>Capex</th><th>FCF</th><th>FCF mgn</th></tr></thead><tbody>
+    ${qs.map((x,i)=>{
+      const yoy=(i>=4&&qs[i-4]&&qs[i-4].rev)?(x.rev/qs[i-4].rev-1):null;
+      return `<tr><td class="l">${x.p}</td><td>${fmt.usd(x.rev)}</td>
+      <td class="${fmt.cls(yoy)}">${fmt.pct(yoy,0)}</td>
+      <td class="${fmt.cls(x.nm)}">${fmt.pct(x.nm,1)}</td>
+      <td>${fmt.usd(x.ocf)}</td><td class="${fmt.cls(x.ocfm)}">${fmt.pct(x.ocfm,1)}</td>
+      <td>${fmt.usd(x.capex)}</td>
+      <td class="${fmt.cls(x.fcf)}">${fmt.usd(x.fcf)}</td>
+      <td class="${fmt.cls(x.fcfm)}">${fmt.pct(x.fcfm,1)}</td></tr>`;}).join('')||'<tr><td colspan="9" class="l">n/r</td></tr>'}
+    </tbody></table>`;
+
+  const flags=(r.flags||[]).map((f,i)=>`<span class="flag${i<3&&/burn|collapse|runway/.test(f)?' hot':''}">${esc(f)}</span>`).join('');
+
+  return `
+  <div class="sheet-head">
+    <div>
+      <h1 style="font-size:23px;margin-bottom:4px">${r.ticker} · ${esc(r.name)}</h1>
+      <p class="small" style="margin:0 0 8px">
+        ${r.venue||''} · ${esc(r.sector||'')}${r.industry?' / '+esc(r.industry):''} ·
+        HQ ${r.hq||'n/r'}${r.hq_city?' ('+esc(r.hq_city)+')':''} ·
+        ${r.employees?fmt.n(r.employees)+' employees':'n/r'} ·
+        ADR ratio 1:${r.adr_ratio!=null?r.adr_ratio:'n/r'} · statements in ${r.currency_reported}
+      </p>
+      <div>${flags||'<span class="small">no flags</span>'}</div>
+    </div>
+    <div style="text-align:right">
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <div><div class="sc" style="${scoreColor(r.conviction)};font-size:19px;padding:6px 12px">${r.conviction.toFixed(0)}</div><div class="small" style="margin-top:4px">conviction</div></div>
+        <div><div class="sc" style="background:rgba(125,211,252,.14);color:#7dd3fc;font-size:19px;padding:6px 12px">${r.score.toFixed(0)}</div><div class="small" style="margin-top:4px">shortable</div></div>
+        <div><div class="sc" style="background:rgba(167,139,250,.16);color:#c4b5fd;font-size:19px;padding:6px 12px">${r.thesis.toFixed(0)}</div><div class="small" style="margin-top:4px">thesis</div></div>
+      </div>
+      <button class="close" style="margin-top:12px" onclick="closeDrawer()">Close</button>
+    </div>
+  </div>
+
+  ${r.desc?`<p class="note" style="margin:0 0 14px">${esc(r.desc)}</p>`:''}
+
+  <div class="grid g4" style="margin-bottom:14px">
+    <div class="card"><h3>Score blocks</h3>
+      ${bar('Liquidity',sp.liquidity)}${bar('Weakness',sp.weakness)}${bar('Borrow',sp.borrow)}
+      ${bar('Valuation',sp.valuation)}${bar('Momentum',sp.momentum)}
+      <div class="small" style="margin-top:8px">tradability gate ×${sp.gate!=null?sp.gate:'n/r'}</div>
+    </div>
+    <div class="card"><h3>Market</h3><dl class="kv">
+      <dt>Market cap</dt><dd>${fmt.usd(r.mcap_usd)}</dd>
+      <dt>Enterprise value</dt><dd>${fmt.usd(r.ev_usd)}</dd>
+      <dt>Last close</dt><dd>${r.last_close!=null?('USD '+r.last_close.toFixed(2)):'n/r'}</dd>
+      <dt>ADT (30d)</dt><dd>${fmt.usd(r.adt_usd)}</dd>
+      <dt>52w position</dt><dd>${fmt.pct(r.pos_52w,0)}</dd>
+      <dt>Beta</dt><dd>${r.beta!=null?r.beta.toFixed(2):'n/r'}</dd>
+    </dl></div>
+    <div class="card"><h3>Multiples</h3><dl class="kv">
+      <dt>P/E ttm / ntm</dt><dd>${fmt.x(r.pe_ttm)} / ${fmt.x(r.pe_ntm)}</dd>
+      <dt>P/S ttm / ntm</dt><dd>${fmt.x(r.ps_ttm)} / ${fmt.x(r.ps_ntm)}</dd>
+      <dt>P/B ttm</dt><dd>${fmt.x(r.pb_ttm)}</dd>
+      <dt>P/CF ttm</dt><dd>${fmt.x(r.pcf_ttm)}</dd>
+      <dt>EV/Sales ttm</dt><dd>${fmt.x(r.ev_sales_ttm)}</dd>
+      <dt>EV/EBITDA ttm</dt><dd>${fmt.x(r.ev_ebitda_ttm)}</dd>
+      <dt>FCF yield</dt><dd class="${fmt.cls(r.fcf_yield)}">${fmt.pct(r.fcf_yield,1)}</dd>
+    </dl></div>
+    <div class="card"><h3>Short interest &amp; balance sheet</h3><dl class="kv">
+      <dt>Short % of float</dt><dd>${r.si_ratio!=null?r.si_ratio.toFixed(2)+'%':'n/r'}</dd>
+      <dt>Shares short</dt><dd>${fmt.usd(r.shares_short)}</dd>
+      <dt>Float</dt><dd>${fmt.usd(r.shares_float)}</dd>
+      <dt>Cash</dt><dd>${fmt.usd(bs.cash)}</dd>
+      <dt>Debt</dt><dd>${fmt.usd(bs.debt)}</dd>
+      <dt>Net cash</dt><dd class="${fmt.cls(bs.net_cash)}">${fmt.usd(bs.net_cash)}</dd>
+      <dt>Net cash / mcap</dt><dd class="${fmt.cls(r.net_cash_pct_mcap)}">${fmt.pct(r.net_cash_pct_mcap,0)}</dd>
+      <dt>Cash runway</dt><dd>${r.runway_years!=null?r.runway_years.toFixed(1)+'y':'n/a'}</dd>
+      <dt>Share count YoY</dt><dd class="${fmt.cls(r.dilution_yoy)}">${fmt.pct(r.dilution_yoy,1)}</dd>
+    </dl></div>
+  </div>
+
+  <div class="grid g2" style="margin-bottom:14px">
+    <div class="card"><h3>Revenue vs margins — fiscal years (${r.currency_reported})</h3>
+      ${comboChart({labels:yl, bars:[{name:'Revenue',values:ys.map(x=>x.rev)}], colors:['#1e3a5f'],
+        lines:[{name:'Gross margin',color:'#34d399',values:ys.map(x=>x.gm)},
+               {name:'Operating margin',color:'#7dd3fc',values:ys.map(x=>x.om)},
+               {name:'Net margin',color:'#a78bfa',values:ys.map(x=>x.nm)}]})}
+      <div class="legend"><span><i style="background:#1e3a5f"></i>Revenue</span>
+      <span><i style="background:#34d399"></i>Gross margin</span>
+      <span><i style="background:#7dd3fc"></i>Operating margin</span>
+      <span><i style="background:#a78bfa"></i>Net margin</span></div>
+    </div>
+    <div class="card"><h3>Cash flow — fiscal years</h3>
+      ${comboChart({labels:yl, bars:[{name:'OCF',values:ys.map(x=>x.ocf)},
+                                    {name:'Capex',values:ys.map(x=>x.capex)},
+                                    {name:'FCF',values:ys.map(x=>x.fcf)}],
+        colors:['#334155','#7f1d1d','#0e7490'],
+        lines:[{name:'OCF margin',color:'#34d399',values:ys.map(x=>x.ocfm)},
+               {name:'FCF margin',color:'#fbbf24',values:ys.map(x=>x.fcfm)}]})}
+      <div class="legend"><span><i style="background:#334155"></i>Operating cash flow</span>
+      <span><i style="background:#7f1d1d"></i>Capex</span>
+      <span><i style="background:#0e7490"></i>Free cash flow</span>
+      <span><i style="background:#34d399"></i>OCF margin</span>
+      <span><i style="background:#fbbf24"></i>FCF margin</span></div>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-bottom:14px">
+    <div class="card"><h3>Quarterly revenue vs cash-flow margin</h3>
+      ${comboChart({labels:ql, bars:[{name:'Revenue',values:qs.map(x=>x.rev)}], colors:['#1e3a5f'],
+        lines:[{name:'FCF margin',color:'#fbbf24',values:qs.map(x=>x.fcfm)},
+               {name:'OCF margin',color:'#34d399',values:qs.map(x=>x.ocfm)}]})}
+      <p class="small" style="margin:6px 0 0">${r.q_cf_quarters>=4?'Quarterly cash flow reported.':'Quarterly cash flow is not reported by the data source for this name — the annual chart carries the cash-flow analysis.'}</p>
+    </div>
+    <div class="card"><h3>Share price — 3 years (weekly closes, USD)</h3>
+      ${lineChart({points:r.chart||[]})}
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-bottom:14px">
+    <div class="card"><h3>Headline financials &amp; cash flow — annual</h3><div class="scroll-x">${annTable}</div></div>
+    <div class="card"><h3>Headline financials &amp; cash flow — quarterly</h3><div class="scroll-x">${qTable}</div></div>
+  </div>
+
+  <div class="card"><h3>Returns</h3>
+    <div class="grid g4">
+      ${[['1 month','ret_1m'],['3 months','ret_3m'],['6 months','ret_6m'],['1 year','ret_1y'],
+         ['YTD','ret_ytd'],['3 years','ret_3y']].map(([lbl,k])=>
+        `<div><div class="small">${lbl}</div><div class="${fmt.cls(r[k])}" style="font-size:17px;font-weight:600">${fmt.pct(r[k],1)}</div></div>`).join('')}
+    </div>
+  </div>
+
+  <p class="small" style="margin-top:14px">
+    Rolling cash-flow basis: <b>${esc(t.basis||'n/r')}</b>. Statements reported in ${r.currency_reported} and converted to
+    USD at ${r.fx_to_usd} for display; margins and growth are currency-neutral. Multiples are Godel
+    instrument / legal-entity metrics and already USD-consistent. Quarterly financial detail: ${r.q_cf_quarters} of the last 8 quarters carry operating cash flow.
+  </p>`;
+}
+
+function openDrawer(tk){
+  const r=ROWS.find(x=>x.ticker===tk); if(!r) return;
+  document.getElementById('sheet').innerHTML=sheetHtml(r);
+  document.getElementById('drawer').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeDrawer(); });
+document.getElementById('drawer').addEventListener('click',e=>{ if(e.target.id==='drawer') closeDrawer(); });
+
+/* ---------- boot ---------- */
+fetch('./data.json').then(r=>r.json()).then(d=>{
+  ROWS=d.names;
+  const c=d.coverage||{};
+  document.getElementById('pills').innerHTML=[
+    `<span class="pill"><b>${d.count}</b> exchange-listed ADRs scored</span>`,
+    `<span class="pill"><b>${d.otc.length}</b> OTC lines listed separately</span>`,
+    `<span class="pill">3–4 fiscal years + up to 8 quarters</span>`,
+    `<span class="pill">Cash flow, margins &amp; multiples</span>`,
+    `<span class="pill">Short interest, float &amp; liquidity</span>`,
+    `<span class="pill">Generated ${d.generated}</span>`
+  ].join('');
+  document.getElementById('coverage').innerHTML=[
+    ['Names in universe', c.names],['With 3+ fiscal years', c.with_3y_annual],
+    ['With 4+ quarters revenue', c.with_4q_revenue],['With 4-quarter cash flow', c.with_4q_cashflow],
+    ['With annual cash flow', c.with_annual_cashflow],['With short-interest data', c.with_short_interest],
+    ['OTC lines excluded', d.otc.length],['T1 liquid names', ROWS.filter(r=>r.tier==='T1 liquid').length]
+  ].map(([l,v])=>`<div class="card"><h3 style="margin-bottom:4px">${l}</h3><div style="font-size:22px;font-weight:600">${v}</div></div>`).join('');
+  const secs=[...new Set(ROWS.map(r=>r.sector).filter(Boolean))].sort();
+  document.getElementById('sector').innerHTML='<option value="">All sectors</option>'+
+    secs.map(s=>`<option>${esc(s)}</option>`).join('');
+  document.querySelector('#otc tbody').innerHTML=d.otc.map(o=>`<tr>
+      <td class="l"><span class="tk">${o.ticker}</span></td>
+      <td class="l"><span class="nm" style="max-width:440px">${esc(o.name)}</span></td>
+      <td>${o.mcap_usd?fmt.n(o.mcap_usd/1e6):'n/r'}</td>
+      <td>${o.si_ratio!=null?o.si_ratio.toFixed(2):'n/r'}</td>
+      <td class="l">${o.hq||'n/r'}</td></tr>`).join('');
+  document.getElementById('foot').textContent =
+    `Universe: NYSE / Nasdaq / NYSE American-listed Chinese ADRs. Financials, multiples, short interest and float from Godel Terminal; ` +
+    `prices are the ADR daily bars. Cash-flow margins use a 4-quarter roll-up where reported, otherwise the latest fiscal year (basis shown per name). ` +
+    `A screen, not investment advice. Generated ${d.generated}.`;
+  apply();
+  // deep link: index.html#BABA opens that company directly
+  const h=(location.hash||'').replace('#','').toUpperCase();
+  if(h && ROWS.some(r=>r.ticker===h)) openDrawer(h);
+}).catch(e=>{
+  document.getElementById('pills').innerHTML='<span class="pill">Failed to load data.json: '+e+'</span>';
+});
+
+document.getElementById('q').addEventListener('input',apply);
+document.getElementById('sector').addEventListener('change',apply);
+document.getElementById('tier').addEventListener('change',apply);
+['f_burn','f_neg'].forEach(id=>document.getElementById(id).addEventListener('change',apply));
+document.getElementById('sortsel').addEventListener('change',e=>{
+  const v=e.target.value; sortKey=v; sortDir=(v==='fcfm'||v==='ret_6m')?1:-1; apply();
+});
+document.querySelector('#tbl tbody').addEventListener('click',e=>{
+  const tr=e.target.closest('tr'); if(tr) openDrawer(tr.dataset.t);
+});
+document.querySelectorAll('#tbl thead th').forEach(th=>{
+  th.addEventListener('click',()=>{
+    const k=th.dataset.k; if(!k) return;
+    if(sortKey===k) sortDir*=-1; else { sortKey=k; sortDir=(k==='ticker')?1:-1; }
+    apply();
+  });
+});
+</script>
+</body>
+</html>
