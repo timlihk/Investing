@@ -8,6 +8,7 @@ window.WATCHLIST_THEMES = [
     name: "AI Compute & Silicon 半导体核心",
     tagline: "CPUs, GPUs, IP, foundries, FPGAs — dies that run models or fabricate them.",
     tickers: [
+      { symbol: "1347.HK", name: "Hua Hong Grace Semiconductor 华虹半导体 / 特色工艺代工" },
       { symbol: "3661.TW", name: "Alchip / 世芯-KY" },
       { symbol: "AMD", name: "AMD" },
       { symbol: "ARM", name: "Arm Holdings" },
@@ -37,6 +38,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "2337.TW", name: "Macronix 旺宏" },
       { symbol: "2737.T", name: "Tomen Devices 东棉器件" },
       { symbol: "285A.T", name: "Kioxia 铠侠" },
+      { symbol: "3986.HK", name: "GigaDevice 兆易创新 / NOR·MCU·利基DRAM" },
       { symbol: "MU", name: "Micron 美光" },
       { symbol: "SIMO", name: "Silicon Motion" },
       { symbol: "SNDK", name: "SanDisk" },
