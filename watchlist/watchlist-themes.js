@@ -86,6 +86,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "009150.KS", name: "Samsung Electro-Mechanics 三星电机" },
       { symbol: "011070.KS", name: "LG Innotek" },
       { symbol: "011790.KS", name: "SKC (Absolics glass)" },
+      { symbol: "1888.HK", name: "Kingboard Laminates 建滔积层板" },
       { symbol: "2327.TW", name: "Yageo 国巨" },
       { symbol: "2802.T", name: "Ajinomoto 味之素 (ABF film)" },
       { symbol: "3037.TW", name: "Unimicron 欣兴电子" },
