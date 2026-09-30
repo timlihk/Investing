@@ -325,6 +325,7 @@ window.WATCHLIST_THEMES = [
     tickers: [
       { symbol: "1548.HK", name: "GenScript Biotech 金斯瑞" },
       { symbol: "2158.HK", name: "医渡科技" },
+      { symbol: "2269.HK", name: "WuXi Biologics 药明生物" },
       { symbol: "ABCL", name: "AbCellera Biologics" },
       { symbol: "ABVX", name: "Abivax (ADR)" },
       { symbol: "ACOG", name: "Alpha Cognition / 阿尔法认知" },
@@ -406,6 +407,7 @@ window.WATCHLIST_THEMES = [
     name: "Mobility & Robotics 出行机器人",
     tagline: "EV, autonomous driving, humanoid robotics SPACs.",
     tickers: [
+      { symbol: "1810.HK", name: "Xiaomi 小米集团" },
       { symbol: "2015.HK", name: "Li Auto 理想汽车" },
       { symbol: "601127.SS", name: "赛力斯" },
       { symbol: "7272.T", name: "ヤマハ発動機" },
