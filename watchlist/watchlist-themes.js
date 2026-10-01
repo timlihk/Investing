@@ -345,6 +345,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "MRNA", name: "Moderna (莫德纳)" },
       { symbol: "NKTR", name: "Nektar" },
       { symbol: "NTRA", name: "Natera / 纳特拉" },
+      { symbol: "QURE", name: "uniQure N.V." },
       { symbol: "TWST", name: "Twist Bioscience" },
       { symbol: "TXG", name: "10x Genomics / 10x 基因组" },
       { symbol: "XNCR", name: "Xencor / 泽科生物" },
