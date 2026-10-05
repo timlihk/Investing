@@ -332,7 +332,6 @@ window.WATCHLIST_THEMES = [
       { symbol: "ALNY", name: "Alnylam Pharmaceuticals / 阿里拉姆" },
       { symbol: "AMLX", name: "Amylyx Pharmaceuticals / 艾米莱克斯" },
       { symbol: "ARGX", name: "argenx SE / 阿尔金克斯" },
-      { symbol: "ATAI", name: "AtaiBeckley / 礼来收购" },
       { symbol: "BHVN", name: "Biohaven" },
       { symbol: "CDNA", name: "CareDx" },
       { symbol: "CMPS", name: "Compass Pathways / COMP360" },
