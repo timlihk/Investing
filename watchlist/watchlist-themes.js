@@ -8,6 +8,7 @@ window.WATCHLIST_THEMES = [
     name: "AI Compute & Silicon 半导体核心",
     tagline: "CPUs, GPUs, IP, foundries, FPGAs — dies that run models or fabricate them.",
     tickers: [
+      { symbol: "0981.HK", name: "SMIC 中芯国际" },
       { symbol: "1347.HK", name: "Hua Hong Grace Semiconductor 华虹半导体 / 特色工艺代工" },
       { symbol: "3661.TW", name: "Alchip / 世芯-KY" },
       { symbol: "AMD", name: "AMD" },
