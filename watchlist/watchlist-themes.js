@@ -370,6 +370,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "PAYS", name: "Paysign, Inc." },
       { symbol: "SHB-A.ST", name: "SHB-A.ST" },
       { symbol: "STT", name: "State Street / 道富" },
+      { symbol: "VALU", name: "Value Line, Inc." },
     ]
   },
   {
