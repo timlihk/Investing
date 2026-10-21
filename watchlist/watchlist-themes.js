@@ -378,6 +378,7 @@ window.WATCHLIST_THEMES = [
     name: "Communications & Media 通信媒体",
     tagline: "Telecom operators, social platforms, and digital media businesses.",
     tickers: [
+      { symbol: "0700.HK", name: "Tencent 腾讯控股" },
       { symbol: "SKM", name: "SK Telecom" },
       { symbol: "TME", name: "Tencent Music 腾讯音乐" },
       { symbol: "WB", name: "Weibo Corp 微博" },
