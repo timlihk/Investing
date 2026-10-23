@@ -182,7 +182,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "BRUN", name: "Boost Run" },
       { symbol: "CORZ", name: "Core Scientific" },
       { symbol: "CRWV", name: "CoreWeave" },
-      { symbol: "DDOG", name: "Datadog Inc." },
+      { symbol: "DDOG", name: "Datadog 数据狗" },
       { symbol: "DELL", name: "Dell" },
       { symbol: "DOCN", name: "DigitalOcean" },
       { symbol: "FSLY", name: "Fastly" },
