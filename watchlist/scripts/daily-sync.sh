@@ -22,10 +22,15 @@ if git diff --quiet watchlist/watchlist-themes.js; then
 fi
 
 echo "== STEP deploy =="
-if ! wrangler deploy 2>&1 | tail -3; then
+wrangler deploy > /tmp/wrangler_deploy.log 2>&1
+if [ $? -ne 0 ]; then
+  # NOTE: do not use `wrangler deploy | tail` here — the pipeline exit status is
+  # tail's, so a failed deploy (e.g. expired auth) was silently reported as OK.
+  tail -3 /tmp/wrangler_deploy.log
   echo "DEPLOY_FAILED"
   exit 1
 fi
+tail -3 /tmp/wrangler_deploy.log
 
 echo "== STEP commit =="
 git add -A
