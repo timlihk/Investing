@@ -539,7 +539,8 @@ fetch('/china-adr-shortbook/data.json').then(r=>r.json()).then(d=>{
     `<span class="pill">3–4 fiscal years + up to 8 quarters</span>`,
     `<span class="pill">Cash flow, margins &amp; multiples</span>`,
     `<span class="pill">Short interest, float &amp; liquidity</span>`,
-    `<span class="pill">Generated ${d.generated}</span>`
+    `<span class="pill">Market data ${d.market_data_date||d.generated}</span>`,
+    `<span class="pill">Statements ${d.statement_data_date||'2026-09-25'}</span>`
   ].join('');
   document.getElementById('coverage').innerHTML=[
     ['Names in universe', c.names],['With 3+ fiscal years', c.with_3y_annual],
@@ -557,7 +558,8 @@ fetch('/china-adr-shortbook/data.json').then(r=>r.json()).then(d=>{
       <td>${o.si_ratio!=null?o.si_ratio.toFixed(2):'n/r'}</td>
       <td class="l">${o.hq||'n/r'}</td></tr>`).join('');
   document.getElementById('foot').textContent =
-    `Universe: NYSE / Nasdaq / NYSE American-listed Chinese ADRs. Financials, multiples, short interest and float from Godel Terminal; ` +
+    `Universe: NYSE / Nasdaq / NYSE American-listed Chinese ADRs. Market data (price, size, turnover, multiples, days to cover) from Bloomberg reference data refreshed 28 Oct 2026; ` +
+    `short interest and float from yfinance, cross-checked against Bloomberg shares-short; statements and margins carried from the 25 Sep 2026 Godel pull; ` +
     `prices are the ADR daily bars. Cash-flow margins use a 4-quarter roll-up where reported, otherwise the latest fiscal year (basis shown per name). ` +
     `A screen, not investment advice. Generated ${d.generated}.`;
   apply();

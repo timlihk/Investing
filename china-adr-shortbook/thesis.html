@@ -85,10 +85,12 @@ ul.risk{margin:6px 0 0;padding-left:18px;font-size:13px;line-height:1.6;color:#e
   <p class="eyebrow">Mangrove Research · Short Book</p>
   <h1>China ADR — company short theses</h1>
   <p class="sub">
-    One synthesised short thesis per company, built from three independent inputs: the
-    financial and shortability screen, live X/Twitter sentiment, and sell-side research
-    pulled from AlphaEngine. Where a company has no meaningful X chatter or no analyst
-    coverage, that is stated rather than padded.
+    One synthesised short thesis per company. The screen underneath was re-pulled on
+    28 October 2026 (market layer from Bloomberg, statements from the last Godel pull),
+    sell-side coverage was re-collected from AlphaEngine the same day, and one input is
+    missing: the live X sweep, because the Grok subscription returned HTTP 402 mid-run.
+    Every card states which evidence it rests on, and where coverage is absent that is
+    said rather than padded.
   </p>
   <div class="tabs">
     <a class="tab" href="/china-adr-shortbook/">Screen</a>
@@ -106,7 +108,7 @@ ul.risk{margin:6px 0 0;padding-left:18px;font-size:13px;line-height:1.6;color:#e
         <option value="mcap">Sort: market cap</option>
         <option value="aecount">Sort: sell-side coverage</option>
       </select>
-      <label class="chk"><input type="checkbox" id="f_x"> Has X chatter</label>
+      <label class="chk" title="No X sweep this cycle: Grok returned HTTP 402"><input type="checkbox" id="f_x" disabled> Has X chatter — none this cycle</label>
       <label class="chk"><input type="checkbox" id="f_ae"> Has sell-side coverage</label>
       <span class="small" id="count"></span>
     </div>
@@ -118,12 +120,30 @@ ul.risk{margin:6px 0 0;padding-left:18px;font-size:13px;line-height:1.6;color:#e
   <div class="panel">
     <h3>Method and sourcing</h3>
     <p class="note">
-      Each thesis is synthesised by an agent that reads three inputs: (1) the financial screen for that
-      company — trailing margins, cash flow, multiples, short interest, liquidity and the two shortability
-      scores; (2) a live X/Twitter sweep run through the logged-in Grok subscription, which returns
-      per-ticker density, sentiment lean, source classification and post links; (3) sell-side research
-      metadata from AlphaEngine, filtered to documents that actually reference the company's ADR ticker,
-      preferring broker notes and earnings reviews over market-wide morning commentary.
+      <b>Market layer, 28 October 2026.</b> Price, market cap, shares out, average daily turnover, days to
+      cover, trailing and forward multiples come from Bloomberg reference data, with three years of daily
+      price history from yfinance for the returns and the 52-week range. Short interest as a percent of
+      float is yfinance, cross-checked against Bloomberg shares-short; where the two diverge by more than
+      twice, the card flags it.
+    </p>
+    <p class="note">
+      <b>Statement layer, 25 September 2026.</b> Revenue, margins, cash flow and the three-to-four-year
+      fiscal series are carried from the last Godel Terminal pull. Godel's browser session was rejected on
+      28 October (HTTP 401 <span class="mono">token_invalid</span>); fiscal-year data does not move between
+      quarters, but the Q3 2026 prints are not in these figures. Each card labels its TTM basis.
+    </p>
+    <p class="note">
+      <b>Sell-side, 28 October 2026.</b> AlphaEngine was queried by company name for all 315 names and
+      filtered to documents that actually name the company — the platform's ticker tags produce namesake
+      collisions (PONY matched a Malaysian bank note, JD fuzzy-matches BOE), so ticker-only matches are
+      treated as unverified. 274 names returned documents; 130 returned coverage that names the company in
+      the title.
+    </p>
+    <p class="note">
+      <b>X / Twitter: not collected this cycle.</b> The Grok subscription returned
+      <span class="mono">HTTP 402 Payment Required — usage balance exhausted</span> on the first batch and on
+      every retry, so no social read exists for 28 October. The previous sweep (24 September) is a month
+      stale and is not presented as current. Cards say so explicitly rather than implying neutral sentiment.
     </p>
     <p class="note">
       The synthesised text is a research aid, not investment advice, and not a substitute for reading the
@@ -131,9 +151,10 @@ ul.risk{margin:6px 0 0;padding-left:18px;font-size:13px;line-height:1.6;color:#e
       reported as data points, not endorsements.
     </p>
     <div class="warnbox" style="margin-top:10px">
-      <b>Coverage is uneven by design of the underlying sources.</b> Large-cap ADRs have deep analyst and
-      social coverage; micro-caps frequently have neither. Where both are absent the thesis rests on the
-      financials alone, and the card says so.
+      <b>Coverage is uneven by design of the underlying sources.</b> 91 cards are written from the screen plus
+      sell-side evidence; 224 micro-caps have no broker, no transcript and no borrow, and their cards are
+      assembled from the screen data alone. Where that is the case the card says so, omits ratios that are
+      small-denominator artefacts, and is rated low confidence.
     </div>
   </div>
 
@@ -262,16 +283,20 @@ fetch('/china-adr-shortbook/theses.json').then(r=>r.json()).then(d=>{
   ALL=d.theses||[];
   const withX=ALL.filter(t=>t.x_chars>500).length;
   const withAE=ALL.filter(t=>(t.sellside||{}).count>0).length;
+  const cov=d.coverage||{};
   document.getElementById('pills').innerHTML=[
     `<span class="pill"><b>${ALL.length}</b> company theses</span>`,
     `<span class="pill"><b>${withAE}</b> with sell-side coverage</span>`,
-    `<span class="pill"><b>${withX}</b> with X chatter</span>`,
-    `<span class="pill">Sources: screen + X + AlphaEngine</span>`,
+    `<span class="pill"><b>${cov.hand_written||0}</b> written / <b>${cov.screen_generated||0}</b> screen-only</span>`,
+    `<span class="pill">Market data ${d.market_data_date||''}</span>`,
+    `<span class="pill">Statements ${d.statement_data_date||''}</span>`,
+    `<span class="pill" style="border-color:rgba(251,191,36,.5);color:#fcd34d">X: unavailable (402)</span>`,
     `<span class="pill">Generated ${d.generated||''}</span>`
   ].join('');
   document.getElementById('foot').textContent=
-    `Synthesised from the China ADR short-book screen, a live X/Twitter sweep via the Grok subscription, `+
-    `and AlphaEngine sell-side documents filtered to each company's ADR ticker. Generated ${d.generated||''}.`;
+    `Screen re-pulled 28 Oct 2026: market layer from Bloomberg reference data and yfinance price history; `+
+    `statements carried from the 25 Sep 2026 Godel pull; sell-side from an AlphaEngine sweep on 28 Oct 2026; `+
+    `X/Twitter unavailable in this cycle (Grok HTTP 402). Generated ${d.generated||''}.`;
   render();
 }).catch(e=>{document.getElementById('pills').innerHTML='<span class="pill">Failed to load theses.json: '+e+'</span>';});
 
