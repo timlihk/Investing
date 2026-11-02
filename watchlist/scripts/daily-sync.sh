@@ -3,6 +3,12 @@
 # 1. regenerate themes from Obsidian   2. verify symbols on live Yahoo API
 # 3. deploy + commit IF themes changed 4. report status on stdout
 set -u
+# Cloudflare auth: API token, not the wrangler OAuth login (expired 2026-09-24).
+# The systemd unit passes it via EnvironmentFile; the hermes agent cron does not.
+if [ -z "${CLOUDFLARE_API_TOKEN:-}" ] && [ -f "$HOME/.config/hermes-watchlist-sync.env" ]; then
+  set -a; . "$HOME/.config/hermes-watchlist-sync.env"; set +a
+fi
+
 cd "$(dirname "$0")/../.." || exit 1   # repo root = Code/Investing
 
 echo "== STEP generate =="
