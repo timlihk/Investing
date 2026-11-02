@@ -190,6 +190,8 @@ MANUAL = {
     "3931.HK",
     # 1138.HK COSCO Shipping Energy — oil/LNG tanker fleet (energy transport, core revenue)
     "1138.HK",
+    # 0883.HK CNOOC — upstream oil & gas E&P (core revenue; recurring southbound flow magnet)
+    "0883.HK",
     # BAK Braskem — LatAm petrochemicals / extra-judicial RE (core revenue, not country residual)
     "BAK",
     # UIE.CO — Copenhagen holdco of United Plantations (CPO soft-commodity producer)

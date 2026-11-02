@@ -279,6 +279,7 @@ window.WATCHLIST_THEMES = [
     name: "Energy & Materials 能源材料",
     tagline: "Energy storage, solar, SiC/power, grid infrastructure, industrial.",
     tickers: [
+      { symbol: "0883.HK", name: "CNOOC 中国海洋石油" },
       { symbol: "1133.HK", name: "Harbin Electric 哈尔滨电气" },
       { symbol: "1138.HK", name: "COSCO SHIPPING Energy / 中远海能" },
       { symbol: "3931.HK", name: "CALB 中创新航" },
