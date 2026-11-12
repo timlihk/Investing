@@ -347,6 +347,7 @@ window.WATCHLIST_THEMES = [
       { symbol: "NKTR", name: "Nektar" },
       { symbol: "NTRA", name: "Natera / 纳特拉" },
       { symbol: "QURE", name: "uniQure N.V." },
+      { symbol: "SNDX", name: "Syndax Pharmaceuticals" },
       { symbol: "TWST", name: "Twist Bioscience" },
       { symbol: "TXG", name: "10x Genomics / 10x 基因组" },
       { symbol: "XNCR", name: "Xencor / 泽科生物" },
