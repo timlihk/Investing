@@ -77,7 +77,7 @@ ZH_NAMES = {
  "CRWV":"CoreWeave","NBIS":"Nebius","APLD":"Applied Digital","DOCN":"DigitalOcean","FSLY":"Fastly",
  "ICHR":"Ichor Holdings","VICR":"Vicor","LWLG":"Lightwave Logic","OPTX":"Syntec Optics","SATL":"Satellogic",
  "ENLT":"Enlight","PL":"Planet Labs","AUR":"Aurora Innovation","CNC":"Centene","USAR":"USA Rare Earth",
- "UUUU":"Energy Fuels","BE":"Bloom Energy","QCOM":"Qualcomm","CCXI":"Churchill Capital XI / Agility Robotics",
+ "UUUU":"Energy Fuels","BE":"Bloom Energy","QCOM":"Qualcomm","AGLT":"Agility Robotics",
  "SKM":"SK Telecom","DXYZ":"Destiny Tech100","OSCR":"Oscar Health","DHR":"Danaher","NKTR":"Nektar",
  "ABVX":"Abivax (ADR)","RXT":"Rackspace","MARA":"MARA Holdings",
  "CIFR":"Cipher Mining","RIOT":"Riot Platforms","WULF":"TeraWulf","IREN":"IREN","CORZ":"Core Scientific",
@@ -212,7 +212,7 @@ MANUAL = {
   "it-services": ["ACN"],
   # App platforms / ad-tech / consumer software (not IT consulting, not infra SaaS)
   "software-apps": ["APPS", "ROKU"],
-  "mobility-robotics": ["RIVN", "AUR", "CCXI", "601127.SS", "2015.HK", "LI", "NIO"],
+  "mobility-robotics": ["RIVN", "AUR", "AGLT", "601127.SS", "2015.HK", "LI", "NIO"],
   "consumer": [
     "CAVA", "1876.HK", "601888.SS", "605499.SS",
     "9633.HK", "2097.HK", "9992.HK", "CHA",
